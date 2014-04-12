@@ -73,7 +73,7 @@
       <file leaf-file-name="responsive.css" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/css/webmarket/responsive.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1213" column="9" selection-start="22676" selection-end="22676" vertical-scroll-proportion="0.3427835" vertical-offset="2674" max-vertical-offset="3660">
+            <state line="1213" column="12" selection-start="22679" selection-end="22679" vertical-scroll-proportion="0.3427835" vertical-offset="2674" max-vertical-offset="3660">
               <folding>
                 <element signature="e#551#860#0" expanded="false" />
                 <element signature="e#862#1146#0" expanded="false" />
@@ -85,10 +85,10 @@
                 <element signature="e#1653#1812#0" expanded="false" />
                 <element signature="e#1814#10874#0" expanded="false" />
                 <element signature="e#10876#19759#0" expanded="false" />
-                <element signature="e#23332#24602#0" expanded="false" />
-                <element signature="e#24604#28697#0" expanded="false" />
-                <element signature="e#28699#29246#0" expanded="false" />
-                <element signature="e#29248#30349#0" expanded="false" />
+                <element signature="e#23335#24605#0" expanded="false" />
+                <element signature="e#24607#28700#0" expanded="false" />
+                <element signature="e#28702#29249#0" expanded="false" />
+                <element signature="e#29251#30352#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -847,7 +847,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/css/webmarket/responsive.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1213" column="9" selection-start="22676" selection-end="22676" vertical-scroll-proportion="0.3427835" vertical-offset="2674" max-vertical-offset="3660">
+        <state line="1213" column="12" selection-start="22679" selection-end="22679" vertical-scroll-proportion="0.3427835" vertical-offset="2674" max-vertical-offset="3660">
           <folding>
             <element signature="e#551#860#0" expanded="false" />
             <element signature="e#862#1146#0" expanded="false" />
@@ -859,10 +859,10 @@
             <element signature="e#1653#1812#0" expanded="false" />
             <element signature="e#1814#10874#0" expanded="false" />
             <element signature="e#10876#19759#0" expanded="false" />
-            <element signature="e#23332#24602#0" expanded="false" />
-            <element signature="e#24604#28697#0" expanded="false" />
-            <element signature="e#28699#29246#0" expanded="false" />
-            <element signature="e#29248#30349#0" expanded="false" />
+            <element signature="e#23335#24605#0" expanded="false" />
+            <element signature="e#24607#28700#0" expanded="false" />
+            <element signature="e#28702#29249#0" expanded="false" />
+            <element signature="e#29251#30352#0" expanded="false" />
           </folding>
         </state>
       </provider>
