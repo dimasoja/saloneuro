@@ -1,0 +1,33 @@
+Order allow,deny
+Allow from all
+
+# Turn on URL rewriting
+RewriteEngine On
+
+# Installation directory
+RewriteBase /
+
+# Protect hidden files from being viewed
+<Files .*>
+	Order Deny,Allow
+	Deny From All
+</Files>
+
+# Protect application and system files from being viewed
+RewriteRule ^(?:application|modules|system)\b - [F,L]
+
+#RewriteRule dropbox/(.*)$ index.php/$1 [PT,L]
+
+#RewriteRule sitemap.xml$ index.php/generatexml [L]
+
+RewriteCond $1 ^(bin)
+RewriteRule ^(.*)$ - [PT,L]
+# Allow any files or directories that exist to be displayed directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite all other URLs to index.php/URL
+RewriteRule .* index.php [L]
+AddDefaultCharset utf-8
+#Action php5.2-script  /cgi-bin/php5.2.cgi
+#AddType php5.2-script .php
