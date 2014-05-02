@@ -158,7 +158,7 @@
             <?php } ?>
         </div>
     </div>
-</div>
+</div>   
 <div class="fancy-ways" style="display:none">
     <div id="ways">
         <div class="ways-header">
