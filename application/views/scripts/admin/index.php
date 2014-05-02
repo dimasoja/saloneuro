@@ -9,7 +9,7 @@
             </div>
             <div class="widget-content no-padding">
                 <?php foreach ($settings as $setting) {
-                    if (($setting->short_name != 'complex_content') and ($setting->short_name != 'benefits') and ($setting->short_name != 'addr_num') and ($setting->short_name != 'grade') and ($setting->short_name != 'callus') and ($setting->short_name != 'makeorder_content')) {
+                    if (($setting->short_name != 'complex_content') and ($setting->short_name != 'call_us')  and ($setting->short_name != 'keywerds')  and ($setting->short_name != 'title')  and ($setting->short_name != 'description') and ($setting->short_name != 'benefits') and ($setting->short_name != 'production') and ($setting->short_name != 'addr_num') and ($setting->short_name != 'grade') and ($setting->short_name != 'callus') and ($setting->short_name != 'makeorder_content')) {
                         ?>
                         <div class="form-row">
                             <label class="field-name" for="standard"><?php echo $setting->name_setting; ?></label>
@@ -27,6 +27,9 @@
                         if ($setting->short_name == 'makeorder_content') {
                             $makeorder_content = $setting->value;
                         }
+                        if ($setting->short_name == 'call_us') {
+                            $call_us = $setting->value;
+                        }
                     }
                 } ?>
                 <br/>
@@ -37,7 +40,7 @@
         </form>
     </div>
 </div>
-<div class="row-fluid">
+<div class="row-fluid" style="display:none">
     <div class="widget">
         <form class="form-horizontal" id='asdf' style="text-align:center;">
             <div class="widget-header">
@@ -57,6 +60,33 @@
 
                 <br/>
                 <a href="#" class=" tutu button button-turquoise small-button configuration-button"
+                   style="width: 296px !important; box-shadow: 2px 2px 12px lightgrey !important;">Сохранить</a>
+                <br/><br/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="widget">
+        <form class="form-horizontal" id='asdf' style="text-align:center;">
+            <div class="widget-header">
+                <h5>Блок "Позвоните нам" (в хедере):</h5>
+            </div>
+            <div class="widget-content no-padding">
+                <div class="form-row">
+                    <label class="field-name" for="standard">Блок:</label>
+
+                    <div class="field">
+                        <textarea name="call_us" id="call_us"
+                                  style="width: 100%; height: 600px;"><?php if (isset($call_us)) {
+                                echo $call_us;
+                            } ?></textarea>
+                    </div>
+                </div>
+
+                <br/>
+                <a href="#" class=" tutucall button button-turquoise small-button configuration-button"
                    style="width: 296px !important; box-shadow: 2px 2px 12px lightgrey !important;">Сохранить</a>
                 <br/><br/>
             </div>
@@ -130,26 +160,31 @@
                 uiColor: 'lightgrey',
                 language: 'en'
             });
-        var editor = CKEDITOR.replace('strength',
+        var editor = CKEDITOR.replace('call_us',
             {
                 uiColor: 'lightgrey',
                 language: 'en'
             });
-        var editor = CKEDITOR.replace('noise',
-            {
-                uiColor: 'lightgrey',
-                language: 'en'
-            });
-        var editor = CKEDITOR.replace('heat',
-            {
-                uiColor: 'lightgrey',
-                language: 'en'
-            });
-        var editor = CKEDITOR.replace('mo_content',
-            {
-                uiColor: 'lightgrey',
-                language: 'en'
-            });
+//        var editor = CKEDITOR.replace('strength',
+//            {
+//                uiColor: 'lightgrey',
+//                language: 'en'
+//            });
+//        var editor = CKEDITOR.replace('noise',
+//            {
+//                uiColor: 'lightgrey',
+//                language: 'en'
+//            });
+//        var editor = CKEDITOR.replace('heat',
+//            {
+//                uiColor: 'lightgrey',
+//                language: 'en'
+//            });
+//        var editor = CKEDITOR.replace('mo_content',
+//            {
+//                uiColor: 'lightgrey',
+//                language: 'en'
+//            });
         CKFinder.setupCKEditor(editor, '/js/ckeditor/ckfinder/');
 
         jQuery('.tutu').click(function () {
@@ -201,6 +236,16 @@
             CKEDITOR.instances['makeorder_content'].updateElement();
             var complex_content = jQuery('#makeorder_content').val();
             jQuery.post('/admin/index/savemakeorder', {makeorder_content: complex_content}, function (data) {
+                console.log(data);
+                jQuery('.alert.alert-info.noMargin font').html('Конфигурация сайта успешно сохранена');
+                jQuery('.alert.alert-info.noMargin').css('display', 'block');
+                jQuery('.alert.alert-info.noMargin').fadeOut(3000);
+            });
+        });
+        jQuery('.tutucall').click(function () {
+            CKEDITOR.instances['call_us'].updateElement();
+            var call_us = jQuery('#call_us').val();
+            jQuery.post('/admin/index/callus', {call_us: call_us}, function (data) {
                 console.log(data);
                 jQuery('.alert.alert-info.noMargin font').html('Конфигурация сайта успешно сохранена');
                 jQuery('.alert.alert-info.noMargin').css('display', 'block');

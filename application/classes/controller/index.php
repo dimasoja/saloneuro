@@ -6,7 +6,7 @@ class Controller_Index extends Controller_Base {
 
     public $template = 'layouts/common';
 
-    public function __construct($request) {   
+    public function __construct($request) {
         $id_page = Request::instance()->param('id', '');        
         if ($id_page == '') {
             $this->template = 'layouts/index';
@@ -14,10 +14,14 @@ class Controller_Index extends Controller_Base {
         parent::__construct($request);
     }
 
-    public function action_index() {    
+    public function action_index() {
         $id_page = Request::instance()->param('id', '');        
         if (($id_page == '')) {
-            $meta = ORM::factory('meta')->where('request', '=', 'home')->find_all()->as_array();
+            $meta = ORM::factory('meta')->where('request', '=', '/')->find_all()->as_array();
+            $content = ORM::factory('pages')->where('browser_name','=','/')->find();
+            if(isset($content->value)) {
+                $this->template->index_content = $content->value;
+            }
         } else {
             $meta = ORM::factory('meta')->where('request', '=', $this->request->param('id'))->find_all()->as_array();
         }
@@ -57,7 +61,7 @@ class Controller_Index extends Controller_Base {
             $view->content = $page_content['value'];     
             $view->checked = '';
         }  
-
+        $this->template->id_page = $page_content['id_page'];
         $view->browser_name = $page_content['browser_name'];       
         $this->page_title = $page_content['title'];
         //$this->cname = $page_content['cname'];
@@ -79,6 +83,19 @@ class Controller_Index extends Controller_Base {
         //slider
         $this->template->productscat = ORM::factory('productscat')->order_by('order')->find_all()->as_array();
         $this->template->menu = ORM::factory('menu')->where('published','=','on')->where('parent','=','on')->where('type','=','topmenu')->order_by('position', 'asc')->find_all()->as_array();
+        $this->template->certificates = ORM::factory('certificates')->where('featured','=','on')->find_all()->as_array();
+        $city_limit = ORM::factory('settings')->getSetting('addr_num');
+
+        $geo_data = Geoipthermo::getData();
+        $geo_data = simplexml_load_string($geo_data);
+        $geo_data = $geo_data->ip;
+        if(isset($geo_data->city))
+            $this->template->city = $geo_data->city;
+        else
+            $this->template->city = '';
+        $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city','=', $geo_data->city)->find_all()->as_array();
+        $this->template->order_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array();
+        $this->template->all_cities = ORM::factory('addresses')->find_all()->as_array();
         $this->display($view, $keywords, $description);
     }
 
@@ -150,7 +167,30 @@ class Controller_Index extends Controller_Base {
         $sendLetter = $settings->sendLetter($admin_email = $settings->getSetting('admin_email'), $subject, $settings->paramsToHtml($body_params));          
         die('ok');
     }
-    
+
+    public function action_getsizes() {
+        $post = Safely::safelyGet($_POST);
+        $width = (int)$post['value'];
+        $heights = ORM::factory('catalog')->where('width', '=', $width)->group_by('length')->find_all()->as_array();
+        $h_array = array();
+        $i = 0;
+        foreach ($heights as $height) {
+            $h_array[$i] = $height->length;
+            $i++;
+        }
+        echo json_encode($h_array);
+        die();
+    }
+
+    public function action_reviewsave() {
+        $post = Safely::safelyGet($_POST);
+        $post['created'] = time();
+        $saved = ORM::factory('response')->saveReview($post);
+        if($saved) {
+            echo 'saved';
+        }
+        exit();
+    }
 
 
 }

@@ -51,5 +51,16 @@ class Controller_Admin_Blocks extends Controller_AdminBase {
         $this->display($view);
     }
 
+    public function action_production() {
+        $view = new View('scripts/admin/blocks/production');
+        $view->success = FrontHelper::successNotif();
+        $view->content = ORM::factory('settings')->getSetting('production');
+        $view->error = FrontHelper::errorNotif();
+        $view->addresses = ORM::factory('addresses')->find_all()->as_array();
+        $this->page_title = 'Настройки блока "Продукция Thermolux"';
+        $this->cname = "production";
+        $this->display($view);
+    }
+
 
 }

@@ -233,6 +233,7 @@ abstract class Kohana_Auth
             'Блоки -> Позвоните нам' => 'admin/blocks/callus',
             'Блоки -> Скомплектовать ванну' => 'admin/blocks/grade',
             'Блоки -> Адреса' => 'admin/addresses',
+            'Блоки -> Продукция Thermolux' => 'admin/blocks/production',
             'Слайдер' => 'admin/slider',
             'Товары -> Категории товаров' => 'admin/productscat',
             'Товары -> Справочник' => 'admin/directory',
@@ -245,6 +246,7 @@ abstract class Kohana_Auth
             'Покупатели -> Звонки' => 'admin/callback',
             'Покупатели -> Поисковые фразы' => 'admin/searchlog',
             'Покупатели -> Связаться' => 'admin/contacts',
+            'Покупатели -> Обратная связь' => 'admin/consult',
             'Покупатели -> Шаблоны' => 'admin/templates'
             //            'Mainmenu' => 'admin/mainmenu',
             //            'Edit Pages -> Edit Categorys' => 'admin/categorys',

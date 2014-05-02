@@ -14,167 +14,236 @@
 <?php } ?>
 <div class="inner-content">
 <div class="widget-content" align="center">
-    <?php if (!isset($add_product)) { ?>
-        <a href="#" class="button button-blue marginbottom30"><img src="/images/admin/icon/14x14/white/download4.png"
-                                                                   alt=""> Добавить товар</a>
-    <?php } ?>
-    <br/>
-    <br/>
+<?php if (!isset($add_product)) { ?>
+    <a href="#" class="button button-blue marginbottom30"><img src="/images/admin/icon/14x14/white/download4.png"
+                                                               alt=""> Добавить товар</a>
+<?php } ?>
+<br/>
+<br/>
 
-    <div class="category-toggle" style="display: none;overflow:auto">
-        <div class="span4" style="float: none !important; width:100%; margin-left:0px ">
-            <div class="widget">
-                <form class="form-horizontal" action="/admin/catalog/newproduct" method="POST"
-                      enctype="multipart/form-data">
-                    <div class="widget-header">
-                        <h5>Новый товар <?php if (isset($add_product)) { ?>(<?php echo $category->name; ?>) <?php } ?>:</h5>
-                    </div>
-                    <div class="widget-content no-padding">
-                        <div class="form-row">
-                            <label class="field-name" for="standard">Наименование:</label>
+<div class="category-toggle" style="display: none;overflow:auto">
+<div class="span4" style="float: none !important; width:100%; margin-left:0px ">
+<div class="widget">
+<form class="form-horizontal" action="/admin/catalog/newproduct" method="POST"
+      enctype="multipart/form-data">
+<div class="widget-header">
+    <h5>Новый товар <?php if (isset($add_product)) { ?>(<?php echo $category->name; ?>) <?php } ?>:</h5>
+</div>
+<div class="widget-content no-padding">
+<div class="form-row">
+    <label class="field-name" for="standard">Наименование:</label>
 
-                            <div class="field">
-                                <input type="text" class="input-large name-edit" name="name"
-                                       style="float: left;width: 100%;">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <label class="field-name" for="standard">Описание:</label>
+    <div class="field">
+        <input type="text" class="input-large name-edit" name="name"
+               style="float: left;width: 100%;">
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Описание:</label>
 
-                            <div class="field">
-                                <textarea name="description" id="add-answer"
-                                          class="input-large name-edit"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <label class="field-name" for="standard">Цена:</label>
+    <div class="field">
+        <textarea name="description" id="add-answer"
+                  class="input-large name-edit"></textarea>
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Цена:</label>
 
-                            <div class="field">
-                                <input type="text" class="input-large name-edit" name="price"
-                                       style="float: left;width: 100%;">
-                            </div>
-                        </div>
-                        <!--                            <div class="form-row">-->
-                        <!--                                <label class="field-name" for="standard">Изображение:</label>-->
-                        <!--                                <div class="field">-->
-                        <!--                                    <input type="file" class="input-large name-edit" name="image" style="float: left;width: 100%;">-->
-                        <!--                                </div>-->
-                        <!--                                <input type="submit" class="button button-blue small-button margintop18 marginleft128" value="Добавить">-->
-                        <!--                            </div>-->
-                        <?php foreach ($directory as $dir) { ?>
-                            <div class="form-row">
-                                <label class="field-name" for="standard"><?php echo $dir->name; ?>:</label>
+    <div class="field">
+        <input type="text" class="input-large name-edit" name="price"
+               style="float: left;width: 100%;">
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Ширина:</label>
 
-                                <div class="field" style="text-align:left;">
-                                    <?php if($dir->type=='select') { ?>
-                                    <select name="dir-<?php echo $dir->id; ?>" class="uniform">
-                                        <?php $all_children = ORM::factory('directory')->where('parent_id', '=', $dir->id)->find_all()->as_array(); ?>
-                                        <option value=""></option>
-                                        <?php foreach ($all_children as $ac) { ?>
-                                            <option value="<?php echo $ac->id; ?>"><?php echo $ac->name; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <?php } else { ?>
-                                        <input type="text" name="dir-<?php echo $dir->id; ?>" class="input-large name-edit" style="float:left; width:100%"/>
-                                    <?php } ?>
+    <div class="field">
+        <input type="text" class="input-large name-edit" name="length"
+               style="float: left;width: 100%;">
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Длина:</label>
 
-                                </div>
-                            </div>
-                        <?php } ?>
-                        <?php if (isset($add_product)) { ?>
-                            <?php if ($massage_on == 'on') { ?>
-                                <div class="form-row">
-                                    <label class="field-name" for="standard">Массажные опции:</label>
+    <div class="field">
+        <input type="text" class="input-large name-edit" name="width"
+               style="float: left;width: 100%;">
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Тип:</label>
 
-                                    <div class="field" style="text-align:left;">
-                                        <select multiple name="massage[]" style="height: 100%">
-                                            <option value=""></option>
-                                            <?php foreach ($massages as $ac) { ?>
-                                                <option value="<?php echo $ac->id; ?>"><?php echo $ac->name; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        <?php } ?>
-                        <?php if (isset($add_product)) { ?>
-                            <?php if ($grade_on == 'on') { ?>
-                                <div class="form-row">
-                                    <label class="field-name" for="standard">Комплектация:</label>
+    <div class="field" style="text-align: left;">
+        <select class="form-control uniform" name="type">
+            <option value="angular">Угловая</option>
+            <option value="rectangular">Прямоугольная</option>
+            <option value="increased">Увеличенного объема</option>
+        </select>
+    </div>
+</div>
+<!--                            <div class="form-row">-->
+<!--                                <label class="field-name" for="standard">Изображение:</label>-->
+<!--                                <div class="field">-->
+<!--                                    <input type="file" class="input-large name-edit" name="image" style="float: left;width: 100%;">-->
+<!--                                </div>-->
+<!--                                <input type="submit" class="button button-blue small-button margintop18 marginleft128" value="Добавить">-->
+<!--                            </div>-->
+<?php foreach ($directory as $dir) { ?>
+    <div class="form-row">
+        <label class="field-name" for="standard"><?php echo $dir->name; ?>:</label>
 
-                                    <div class="field" style="text-align:left;">
-                                        <select multiple name="grade[]" style="height: 100%">
-                                            <option value=""></option>
-                                            <?php foreach ($grades as $ac) { ?>
-                                                <option value="<?php echo $ac->id; ?>"><?php echo $ac->name; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        <?php } ?>
-                        <div class="form-row">
-                            <label class="field-name" for="standard">С этим товаром покупают (аксессуары):</label>
+        <div class="field" style="text-align:left;">
+            <?php if ($dir->type == 'select') { ?>
+                <select name="dir-<?php echo $dir->id; ?>" class="uniform">
+                    <?php $all_children = ORM::factory('directory')->where('parent_id', '=', $dir->id)->find_all()->as_array(); ?>
+                    <option value=""></option>
+                    <?php foreach ($all_children as $ac) { ?>
+                        <option value="<?php echo $ac->id; ?>"><?php echo $ac->name; ?></option>
+                    <?php } ?>
+                </select>
+            <?php } else { ?>
+                <input type="text" name="dir-<?php echo $dir->id; ?>" class="input-large name-edit"
+                       style="float:left; width:100%"/>
+            <?php } ?>
 
-                            <div class="field" style="text-align:left;">
-                                <select multiple name="products[]" style="height: 100%">
-                                    <option value=""></option>
-                                    <?php foreach ($products as $ac) { ?>
-                                        <option value="<?php echo $ac->id; ?>"><?php echo $ac->name; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <label class="field-name" for="standard">Изображения:</label>
-
-                            <div class="field" style="text-align: left;">
-                                <a id="upload3">
-                                    Загрузить изображение для портфолио
-                                </a>
-
-                                <div class="images">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <label class="field-name" for="standard">Схема монтажа:</label>
-
-                            <div class="field" style="text-align: left;">
-                                <input type="file" name="scheme"/>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <label class="field-name" for="standard">Инструкция по эксплуатации:</label>
-
-                            <div class="field" style="text-align: left;">
-                                <input type="file" name="instruction"/>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <label class="field-name" for="standard">Технические характеристики:</label>
-
-                            <div class="field" style="text-align: left;">
-
-                                <input class="button-turquoise button" value="Добавить характеристику"
-                                       onclick="addOption()" style="width: 200px"/>
-                            </div>
-                        </div>
-                        <div class="options">
-
-                        </div>
-                        <input type="hidden" class="num_options" value="0"/>
-                        <input type="hidden" class="" name="category" value="<?php if(isset($add_product)) echo $category->id; ?>"/>
-                        <br/>
-                        <input type="submit" class="button-turquoise button" value="Отправить"/>
-                        <br/><br/>
-                    </div>
-
-                </form>
-            </div>
         </div>
     </div>
+<?php } ?>
+<?php if (isset($add_product)) { ?>
+    <?php if ($massage_on == 'on') { ?>
+        <div class="form-row">
+            <label class="field-name" for="standard">Массажные опции:</label>
+
+            <!--                                    <div class="field" style="text-align:left;">-->
+            <!--                                        <select multiple name="massage[]" style="height: 100%">-->
+            <!--                                            <option value=""></option>-->
+            <!--                                            --><?php //foreach ($massages as $ac) { ?>
+            <!--                                                <option value="--><?php //echo $ac->id; ?><!--">-->
+            <?php //echo $ac->name; ?><!--</option>-->
+            <!--                                            --><?php //} ?>
+            <!--                                        </select>-->
+            <!--                                    </div>-->
+            <div style="text-align:left;">
+                <a id="upload4">
+                    Загрузить изображение для массажа
+                </a>
+
+                <div class="massage-options"></div>
+            </div>
+        </div>
+        <div style="display:none" class="select_for_massage">
+            <select class="massage-select" name="option_massage[]" style="height: auto">
+                <option value=""></option>
+                <?php foreach ($massages as $ac) { ?>
+                    <option value="<?php echo $ac->id; ?>"><?php echo $ac->name; ?></option>
+                <?php } ?>
+            </select>
+        </div>
+
+
+
+    <?php } ?>
+<?php } ?>
+<?php if (isset($add_product)) { ?>
+    <?php if ($grade_on == 'on') { ?>
+        <div class="form-row">
+            <label class="field-name" for="standard">Комплектация:</label>
+
+            <div class="field" style="text-align:left;">
+                <select multiple name="grade[]" style="height: 100%">
+                    <option value=""></option>
+                    <?php foreach ($grades as $ac) { ?>
+                        <option value="<?php echo $ac->id; ?>"><?php echo $ac->name; ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+        </div>
+    <?php } ?>
+<?php } ?>
+<div class="form-row">
+    <label class="field-name" for="standard">Выбрать технологии:</label>
+
+    <div class="field" style="text-align:left;">
+        <select multiple name="techn[]" style="height: 100%">
+            <option value=""></option>
+            <?php foreach ($techn as $ac) { ?>
+                <option value="<?php echo $ac->id; ?>"><?php echo $ac->name; ?></option>
+            <?php } ?>
+        </select>
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">С этим товаром покупают (аксессуары):</label>
+
+    <div class="field" style="text-align:left;">
+        <select multiple name="products[]" style="height: 100%">
+            <option value=""></option>
+            <?php foreach ($products as $ac) { ?>
+                <option value="<?php echo $ac->id; ?>"><?php echo $ac->name; ?></option>
+            <?php } ?>
+        </select>
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Изображения:</label>
+
+    <div class="field" style="text-align: left;">
+        <a id="upload3">
+            Загрузить изображение для портфолио
+        </a>
+
+        <div class="images">
+
+        </div>
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Схема монтажа:</label>
+
+    <div class="field" style="text-align: left;">
+        <input type="file" name="scheme"/>
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Инструкция по эксплуатации:</label>
+
+    <div class="field" style="text-align: left;">
+        <input type="file" name="instruction"/>
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Технические характеристики:</label>
+
+    <div class="field" style="text-align: left;">
+
+        <input class="button-turquoise button" value="Добавить характеристику"
+               onclick="addOption()" style="width: 200px"/>
+    </div>
+</div>
+<!--                        <div class="form-row">-->
+<!--                            <label class="field-name" for="standard">Технологии:</label>-->
+<!---->
+<!--                            <div class="field">-->
+<!--                                <textarea name="technologies" id="technologies"-->
+<!--                                          class="input-large name-edit"></textarea>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<div class="options">
+
+</div>
+<input type="hidden" class="num_options" value="0"/>
+<input type="hidden" class="" name="category" value="<?php if (isset($add_product)) {
+    echo $category->id;
+} ?>"/>
+<br/>
+<input type="submit" class="button-turquoise button" value="Отправить"/>
+<br/><br/>
+</div>
+
+</form>
+</div>
+</div>
+</div>
 </div>
 <script type="text/javascript" src="/js/admin/fileupload.js"></script>
 
@@ -207,12 +276,48 @@
                                            <div class="del_block">\n\
                                                 <a href="javascript:void:(0);" class="del_vid" onclick="deletePortfolio(' + id_image + ');">Удалить</a>\n\
                                            </div>\n\
+                                           <input type="radio" name="featured[]" value="' + id_image + '"/>Обложка товара\n\
                                    </div>';
                 var hidden = '<input type="hidden" class="image' + id_image + '" name="image[' + id_image + ']" rel="' + id_image + '"/> ';
                 portfolio.append(image_html);
                 portfolio.append(hidden);
             }
         });
+        <?php if(isset($_GET['type'])) { ?>
+        var btnUpload2 = jQuery('#upload4');
+
+        var status = jQuery('#status');
+        var upload1 = new AjaxUpload(btnUpload2, {
+            action: '/admin/catalog/uploadmassage',
+            name: 'uploadfile',
+            data: {id: '123'},
+            onSubmit: function (file, ext) {
+                if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) {
+                    status.text('Поддерживаемые форматы JPG, PNG или GIF');
+                    return false;
+                }
+//status.text('Загрузка...');
+            },
+            onComplete: function (file, response) {
+                var response_image = response.split("~");
+                var id_image = response_image[0];
+                var path = response_image[1];
+                var select_html = jQuery('.select_for_massage').html();
+                var portfolio = jQuery('.massage-options');
+                var image_html = '<div class="sws_img_block imagerel' + id_image + '">\n\
+                                           <div class="img_block">\n\
+                                                <img src="' + path + '" style="max-width: 194px;">\n\
+                                           </div>\n\
+                                           <div class="del_block">\n\
+                                                <a href="javascript:void:(0);" class="del_vid" onclick="deletePortfolio(' + id_image + ');">Удалить</a>\n\
+                                           </div>' + select_html + '\n\
+                                   </div>';
+                var hidden = '<input type="hidden" class="image' + id_image + '" name="massage[' + id_image + ']" rel="' + id_image + '"/> ';
+                portfolio.append(image_html);
+                portfolio.append(hidden);
+            }
+        });
+        <?php } ?>
 
 
     });
@@ -245,19 +350,22 @@
                 <td><?php echo $item->name; ?></td>
                 <td><?php echo $item->price; ?></td>
                 <?php $categorys = ORM::factory('productscat', $item->category); ?>
-                <?php if(isset($categorys->id)) {
+                <?php if (isset($categorys->id)) {
                     $category = $categorys->name;
                 } else {
-                     $category = '';
+                    $category = '';
                 } ?>
                 <th style="text-align: left;"><?php echo $category; ?></th>
                 <td><?php echo date("Y-m-d H:i:s", $item->time); ?></td>
-                <td style="padding-left: 0px !important;padding-right: 0px !important;"><input class="button-turquoise button" value="Редактировать"
-                           onclick="edit(<?php echo $item->id; ?>)"/></td>
-                <td style="padding-left: 0px !important;padding-right: 0px !important;"><input class="button-turquoise button" value="Удалить"
-                           onclick="deletecat(<?php echo $item->id; ?>)"/></td>
-                <td style="padding-left: 0px !important;padding-right: 0px !important;"><input class="button-turquoise button" value="Копировать"
-                           onclick="copy(<?php echo $item->id; ?>)"/></td>
+                <td style="padding-left: 0px !important;padding-right: 0px !important;"><input
+                        class="button-turquoise button" value="Редактировать"
+                        onclick="edit(<?php echo $item->id; ?>)"/></td>
+                <td style="padding-left: 0px !important;padding-right: 0px !important;"><input
+                        class="button-turquoise button" value="Удалить"
+                        onclick="deletecat(<?php echo $item->id; ?>)"/></td>
+                <td style="padding-left: 0px !important;padding-right: 0px !important;"><input
+                        class="button-turquoise button" value="Копировать"
+                        onclick="copy(<?php echo $item->id; ?>)"/></td>
             </tr>
         <?php } ?>
         </tbody>
@@ -309,6 +417,7 @@
                 language: 'en'
             });
         CKFinder.setupCKEditor(editor, '/js/ckeditor/ckfinder/');
+
         jQuery('.button.button-blue.marginbottom30').click(function () {
             jQuery.fancybox(jQuery('.category').html(), {
                 afterShow: function () {

@@ -19,7 +19,7 @@ class Controller_Callback extends Controller_Base {
 
     public function action_new() {
         $response = ORM::factory('callback');
-        $post = $_POST;
+        $post = Safely::safelyGet($_POST);
         $response->name = trim(htmlspecialchars($post['name']));
         $response->phone = trim(htmlspecialchars($post['phone']));
         $response->time_from = trim(htmlspecialchars($post['time_from']));
@@ -38,12 +38,14 @@ class Controller_Callback extends Controller_Base {
         $admin_email = $settings->getSetting('admin_email');        
         $sendLetter = $settings->sendLetter($admin_email, $subject, $settings->paramsToHtml($body_params)); 
         $response->save();
-        Request::instance()->redirect(Route::get('callback')->uri(array('controller' => 'callback', 'action' => 'success')));
+        die('success');
+        //FrontHelper::setRedirect('index');
     }
 
     public function action_success() {
-        $view = new View('scripts/callback/success');
-        $this->display($view);
+//        $view = new View('scripts/callback/success');
+//        $this->display($view);
+        FrontHelper::setRedirect('index');
     }
 
             public function action_delete() {

@@ -9,7 +9,7 @@
     </div>
 <?php } ?>
 </div>
-<form method="post" action="<?php echo URL::base(); ?>admin/pages/new/" id="edit-form-submit" class="form-horizontal">
+<form method="post" action="<?php echo URL::base(); ?>admin/pages/edit/<?php echo $id; ?>" id="edit-form-submit" class="form-horizontal">
     <button class="button submit button-blue small-button" onclick="validate()">Сохранить страницу</button>
     <br/><br/>
     <div class="widget">

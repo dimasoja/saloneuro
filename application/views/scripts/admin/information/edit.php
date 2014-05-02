@@ -33,6 +33,12 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <label class="field-name" for="standard">Технология? (Выводится в товарах):</label>
+                                <div class="field" style="text-align: left;">
+                                    <input type="checkbox" name="technologies" class="uniform" <?php if(isset($page->technologies)) {if($page->technologies=='on') echo 'checked';}; ?>>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <label class="field-name" for="standard">Изображение:</label>
                                 <div class="field">
                                     <input type="file" class="input-large name-edit" name="image" style="float: left;width: 100%;">

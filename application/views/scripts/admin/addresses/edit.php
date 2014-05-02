@@ -36,7 +36,7 @@
                             <div class="form-row">
                                 <label class="field-name" for="standard">Яндекс карты (<a target="_blank" href="http://api.yandex.ru/maps/tools/constructor/">Generator</a>)</label>
                                 <div class="field">
-                                    <input type="text" class="span12 map_code" name="map" id="standard" value="<?php if(isset($addresses->map)) echo $addresses->map; ?>">
+                                    <input type="text" class="span12 map_code" name="map" id="standard" value='<?php if(isset($addresses->map)) echo $addresses->map; ?>'>
                                 </div>
                             </div>
                             <br/>

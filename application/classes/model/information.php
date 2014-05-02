@@ -24,6 +24,10 @@ class Model_Information extends ORM_MPTT {
         $this->clear();
         $this->content = $data['content'];
         $this->name = $data['title'];
+        if(isset($data['technologies']))
+            $this->technologies = $data['technologies'];
+        else
+            $this->technologies = 'off';
         if(isset($data['featured'])) {
             $this->featured = 'on';
         } else {
@@ -45,6 +49,10 @@ class Model_Information extends ORM_MPTT {
         $info->name = $data['title'];
         $info->parent_id = $data['parent_id'];
         $info->content = $data['content'];
+        if(isset($data['technologies']))
+            $this->technologies = $data['technologies'];
+        else
+            $this->technologies = 'off';
         if(isset($data['featured'])) {
             $info->featured = 'on';
         } else {

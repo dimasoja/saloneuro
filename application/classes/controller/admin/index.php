@@ -59,6 +59,10 @@ class Controller_Admin_Index extends Controller_AdminBase
         ORM::factory('settings')->saveSetting('makeorder_content', $_POST['makeorder_content']);    
     exit();
     }
+    function action_savecallus() {
+        ORM::factory('settings')->saveSetting('callus', $_POST['callus']);
+        exit();
+    }
 
     function action_savenoise() {
         ORM::factory('settings')->saveSetting('noise', $_POST['noise']);
@@ -83,8 +87,12 @@ class Controller_Admin_Index extends Controller_AdminBase
         ORM::factory('settings')->saveSetting('grade', $_POST['grade']);
         exit();
     }
-    function action_savecallus() {
-        ORM::factory('settings')->saveSetting('callus', $_POST['callus']);
+    function action_callus() {
+        ORM::factory('settings')->saveSetting('call_us', $_POST['call_us']);
+        exit();
+    }
+    function action_saveproduction() {
+        ORM::factory('settings')->saveSetting('production', $_POST['production']);
         exit();
     }
 }

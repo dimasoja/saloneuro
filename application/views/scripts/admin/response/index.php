@@ -8,7 +8,7 @@
                     <th>Время поступления</th>
                     <th>Отзыв</th>
                     <th>Рейтинг</th>
-                    <th>Тип услуги</th>
+                    <th>Товар</th>
                     <th>Опубликовано</th>
                     <th>Удалить</th>
 
@@ -26,20 +26,7 @@
               //  else echo "Общий отзыв"; ?></td>-->
                         <td>
 <div class="field noSearch">
-                    <select onchange='sendTo(jQuery(this).attr("rel"), jQuery(this).attr("value"))' data-placeholder="Выберите услуги" style="width:350px;" rel="<?php echo $contact->id; ?>" class="chosen" tabindex="5">
-                      <option value=""></option>
-                      <optgroup label="Для бизнеса">
-                        <?php foreach($for_business as $fb) { ?>
-                              <option value="<?php echo $fb->id_product; ?>" <?php if($fb->id_product==$contact->to) echo 'selected' ?> ><?php echo $fb->title; ?></option>
-                        <?php } ?>
-                      <optgroup>
-                      <optgroup label="Для дома">
-                        <?php foreach($for_home as $fh) { ?>
-                              <option value="<?php echo $fh->id_product; ?>" <?php if($fh->id_product==$contact->to) echo 'selected' ?>><?php echo $fh->title; ?></option>
-                        <?php } ?>
-                      </optgroup>                                           
-                        <option value='no' <?php if('no'==$contact->to) echo 'selected' ?>>Общий отзыв</option>                      
-                    </select>
+                    <?php echo ORM::factory('catalog')->where('id','=',$contact->to)->find()->name; ?>
                   </div>
                         </td>
                         <td align="center">

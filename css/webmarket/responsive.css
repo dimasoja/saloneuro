@@ -120,7 +120,7 @@
     }
 
     .shop {
-        margin-left: 122px;
+        margin-left: 52px;
     }
 
     .row:before, .row:after {
@@ -530,6 +530,29 @@
     .welcome .fullwidthbanner-container {
         width: 755px !important;
     }
+    .common .fullwidthbanner-container {
+        width: 755px !important;
+    }
+    .width862 {
+        width: 862px !important;
+        float: left;
+        margin-bottom: 16px;
+    }
+    .rightblock {
+        float:left;
+        width: 300px;
+    }
+    .catalog .rightblock {
+        float: left;
+        width: 300px;
+        margin-top: 12px;
+    }
+    .information .rightblock {
+        width: 400px !important;
+    }
+    .information .container {
+        margin-top: 12px;
+    }
     .fullwidthbanner-container .tp-bgimg.defaultimg {
         height:450px !important;
     }
@@ -588,6 +611,9 @@
     }
     .category-right-wrapper {
         width: 378px !important;
+    }
+    .catalog-wrapper {
+        width: 266px !important;
     }
 }
 
@@ -1211,7 +1237,7 @@
     }
     .category-right-wrapper {
         width: 93% !important;
-    }       
+    }
     .promo-block-welcome {
         overflow: auto;
         width: 100%;

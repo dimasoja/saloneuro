@@ -22,7 +22,7 @@ class Model_Settings extends ORM {
     
     public function generateBreadcrumbProducts($id_product) {    
         $html = '';        
-        $html .= '<a href="/">Главная</a> / ';        
+        $html .= '<a href="/">Главная</a> > ';
         $product = ORM::factory('products')->where('id_product','=',$id_product)->find();
         $html .= '<a href="'.$this->_links[$product->type].'">'.$this->_types[$product->type].'</a> / ';
         $html .= '<a href="/'.$product->browser_name.'">'.$product->title.'</a>';
@@ -31,8 +31,48 @@ class Model_Settings extends ORM {
     
     public function generateBreadcrumbPage($title, $link) {
         $html = '';
-        $html .= '<a href="/">Главная</a> / ';
+        $html .= '<a href="/">Главная</a> > ';
         $html .= '<a href="/'.$link.'">'.$title.'</a>';
+        return $html;
+    }
+
+    public function generateBreadcrumbInformation($type, $title1='', $link1='', $title2='', $link2='') {
+        $html = '';
+        if($type=='index') {
+            $html .= '<a href="/">Главная</a> > ';
+            $html .= '<a href="/information">Информация</a> ';
+        }
+        if($type=='category') {
+            $html .= '<a href="/">Главная</a> > ';
+            $html .= '<a href="/information">Информация</a> > ';
+            $html .= '<a href="/'.$link1.'">'.$title1.'</a>';
+        }
+        if($type=='inner') {
+            $html .= '<a href="/">Главная</a> > ';
+            $html .= '<a href="/information">Информация</a> > ';
+            $html .= '<a href="/'.$link1.'">'.$title1.'</a> > ';
+            $html .= '<a href="/'.$link2.'">'.$title2.'</a>';
+        }
+        return $html;
+    }
+
+    public function generateBreadcrumbCatalog($type, $title1='', $link1='', $title2='', $link2='') {
+        $html = '';
+        if($type=='index') {
+            $html .= '<a href="/">Главная</a> > ';
+            $html .= '<a href="/catalog">Продукция</a> ';
+        }
+        if($type=='category') {
+            $html .= '<a href="/">Главная</a> > ';
+            $html .= '<a href="/catalog">Продукция</a> > ';
+            $html .= '<a href="/'.$link1.'">'.$title1.'</a>';
+        }
+        if($type=='inner') {
+            $html .= '<a href="/">Главная</a> > ';
+            $html .= '<a href="/catalog">Продукция</a> > ';
+            $html .= '<a href="/'.$link1.'">'.$title1.'</a> > ';
+            $html .= '<a href="/'.$link2.'">'.$title2.'</a>';
+        }
         return $html;
     }
     public function getSetting($setting) {

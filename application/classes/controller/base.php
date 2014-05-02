@@ -15,7 +15,6 @@ class Controller_Base extends Controller_Template {
     }
 
     public function display(& $view, $keywords = "", $description = "") {
-
         $this->template->site_name = ORM::factory('settings')->getSetting('title');
         $this->template->page_title = '';
         $this->template->page_title_split = '';
@@ -42,6 +41,20 @@ class Controller_Base extends Controller_Template {
         foreach ($images as $image) {
             $postdata[$image->id_image] = ORM::factory('postmeta')->getDataById($image->id_image);
         }
+        $this->template->menu = ORM::factory('menu')->where('published','=','on')->where('parent','=','on')->where('type','=','topmenu')->order_by('position', 'asc')->find_all()->as_array();
+        $this->template->certificates = ORM::factory('certificates')->where('featured','=','on')->find_all()->as_array();
+        $city_limit = ORM::factory('settings')->getSetting('addr_num');
+
+        $geo_data = Geoipthermo::getData();
+        $geo_data = simplexml_load_string($geo_data);
+        $geo_data = $geo_data->ip;
+        if(isset($geo_data->city))
+            $this->template->city = $geo_data->city;
+        else
+            $this->template->city = '';
+        $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city','=', $geo_data->city)->find_all()->as_array();
+        $this->template->order_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array();
+        $this->template->all_cities = ORM::factory('addresses')->find_all()->as_array();
         $this->template->sliderdata_home = ORM::factory('postmeta')->get_for_home($postdata);
         $this->template->sliderdata_business = ORM::factory('postmeta')->get_for_business($postdata);    
         $this->template->products_home = ORM::factory('products')->where('published','=','on')->where('type','=','for_home')->find_all();

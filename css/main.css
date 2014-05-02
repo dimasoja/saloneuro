@@ -3543,3 +3543,9 @@ padding-right: 18px;
 .size13 {
     font-size: 13px;
 }
+.information .category-right-wrapper {
+    border: 0px solid white !important;
+    margin-left: 0px !important;
+    margin-bottom: 0px !important;
+}
+.right-cat {float:right !important}

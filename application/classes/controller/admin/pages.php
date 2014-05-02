@@ -93,11 +93,13 @@ class Controller_Admin_Pages extends Controller_AdminBase
             }
             $content->published = $published;
             $content->value = $_POST['content'];
-            $content->type = $_POST['type'];
+            //$content->type = $_POST['type'];
+            $content->type = 'simple';
             $content->title = $_POST['title'];
             $content->updated_at = strtotime("now");
             //reindex Data
             ORM::factory('settings')->reindexData();
+
             if ($content->save()) {
                 if ($success == 'found_url') {
                     Request::instance()->redirect(Route::get('admin')->uri(array('controller' => 'pages', 'action' => 'edit', 'id' => $content->id_page)) . '?success=' . $success);

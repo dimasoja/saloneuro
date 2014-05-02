@@ -59,7 +59,7 @@ Kohana::modules(array(
     'orm' => MODPATH . 'orm', // Object Relationship Mapping
     'atemail' => MODPATH . 'atemail', // Object Relationship Mapping
     'mptt' => MODPATH . 'mptt', // Object Relationship Mapping
-        // 'pagination' => MODPATH.'pagination', // Paging of results
+    'geoip' => MODPATH.'geoip3', // Paging of results
         // 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 ));
 
@@ -74,6 +74,7 @@ require Kohana::find_file('classes', 'helpers/hsbc');
 require Kohana::find_file('classes', 'helpers/xlsexporter');
 require Kohana::find_file('classes', 'helpers/globaliris');
 require Kohana::find_file('classes', 'helpers/Phpmailer');
+require Kohana::find_file('classes', 'helpers/Geoipthermo');
 require Kohana::find_file('classes', 'helpers/Morphy/src/common');
 
         $dir = $_SERVER['DOCUMENT_ROOT'].'/application/classes/helpers/Morphy/dicts/';
@@ -242,6 +243,16 @@ Route::set('portfolio', 'portfolio(/<action>(/<id>))')
             'controller' => 'portfolio',
             'action' => 'index'
         ));
+Route::set('information', 'information(/<category>(/<id>))')
+    ->defaults(array(
+        'controller' => 'information',
+        'action' => 'index'
+    ));
+Route::set('catalog', 'catalog(/<category>(/<id>))')
+    ->defaults(array(
+        'controller' => 'catalog',
+        'action' => 'index'
+    ));
 
 Route::set('search', 'search(/<action>(/<id>))')
         ->defaults(array(

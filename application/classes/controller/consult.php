@@ -33,8 +33,9 @@ class Controller_Consult extends Controller_Base {
                              'Открыта'   =>date('Y-m-d H:i:s', $consult->created)
                        );
         $settings = ORM::factory('settings');        
-        $sendLetter = $settings->sendLetter($admin_email = $settings->getSetting('admin_email'), $subject, $settings->paramsToHtml($body_params));        
-        Request::instance()->redirect(Route::get('consult')->uri(array('controller' => 'consult', 'action' => 'success')));
+        $sendLetter = $settings->sendLetter($admin_email = $settings->getSetting('admin_email'), $subject, $settings->paramsToHtml($body_params));
+        die('success');
+//        Request::instance()->redirect(Route::get('consult')->uri(array('controller' => 'consult', 'action' => 'success')));
     }
 
     public function action_success() {

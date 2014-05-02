@@ -2,59 +2,38 @@
 
 defined('SYSPATH') or die('No direct script access.');
 
-class FrontHelper {
+class FrontHelper
+{
 
     public function __construct() {
-        
+
     }
 
     static function setParamRedirect($param, $value, $controller, $action = 'index', $id = '') {
         Session::instance()->set($param, $value);
         if ($id == '') {
-            HTTP::redirect(Route::get('default')->uri(
-                            array(
-                                'controller' => $controller,
-                                'action' => $action
-                            )
-            ));
+            Request::current()->redirect(Route::get('default')->uri(array('controller' => $controller, 'action' => $action)));
             return;
         } else {
-            HTTP::redirect(Route::get('default')->uri(
-                            array(
-                                'controller' => $controller,
-                                'action' => $action,
-                                'id' => $id
-                            )
-            ));
+            Request::current()->redirect(Route::get('default')->uri(array('controller' => $controller, 'action' => $action, 'id' => $id)));
             return;
         }
     }
 
     static function setParamRedirectWithId($param, $value, $controller, $action = 'index', $id) {
         Session::instance()->set($param, $value);
-        HTTP::redirect(Route::get('default')->uri(
-                        array(
-                            'controller' => $controller,
-                            'action' => $action,
-                            'id' => $id
-                        )
-        ));
+        Request::current()->redirect(Route::get('default')->uri(array('controller' => $controller, 'action' => $action, 'id' => $id)));
         return;
     }
 
     static function setPaymentRedirect($param, $value, $controller, $action = 'index', $coin, $entity) {
         Session::instance()->set($param, $value);
-        HTTP::redirect('/profile/buycoins/' . $coin . '/' . $entity);
+        Request::current()->redirect('/profile/buycoins/' . $coin . '/' . $entity);
         return;
     }
 
     static function setRedirect($controller, $action = 'index') {
-        HTTP::redirect(Route::get('default')->uri(
-                        array(
-                            'controller' => $controller,
-                            'action' => $action
-                        )
-        ));
+        Request::instance()->redirect(Route::get('default')->uri(array('controller' => $controller, 'action' => $action)));
         return;
     }
 
@@ -76,8 +55,8 @@ class FrontHelper {
     }
 
     static function transliterate($string) {
-        $roman = array("Sch", "sch", 'Yo', 'Zh', 'Kh', 'Ts', 'Ch', 'Sh', 'Yu', 'ya', 'yo', 'zh', 'kh', 'ts', 'ch', 'sh', 'yu', 'ya', 'A', 'B', 'V', 'G', 'D', 'E', 'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'F', '', 'Y', '', 'E', 'a', 'b', 'v', 'g', 'd', 'e', 'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', '', 'y', '', 'e');
-        $cyrillic = array("Щ", "щ", 'Ё', 'Ж', 'Х', 'Ц', 'Ч', 'Ш', 'Ю', 'я', 'ё', 'ж', 'х', 'ц', 'ч', 'ш', 'ю', 'я', 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Ь', 'Ы', 'Ъ', 'Э', 'а', 'б', 'в', 'г', 'д', 'е', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'ь', 'ы', 'ъ', 'э');
+        $roman = array("Sch", "sch", 'Yo', 'Zh', 'Kh', 'Ts', 'Ch', 'Sh', 'Yu', 'ya', 'yo', 'zh', 'kh', 'ts', 'ch', 'sh', 'yu', 'ya', 'A', 'B', 'V', 'G', 'D', 'E', 'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'F', '', 'Y', '', 'E', 'a', 'b', 'v', 'g', 'd', 'e', 'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', '', 'y', '', 'e', '_');
+        $cyrillic = array("Щ", "щ", 'Ё', 'Ж', 'Х', 'Ц', 'Ч', 'Ш', 'Ю', 'я', 'ё', 'ж', 'х', 'ц', 'ч', 'ш', 'ю', 'я', 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Ь', 'Ы', 'Ъ', 'Э', 'а', 'б', 'в', 'г', 'д', 'е', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'ь', 'ы', 'ъ', 'э', ' ');
         return str_replace($cyrillic, $roman, $string);
     }
 
@@ -224,10 +203,11 @@ class FrontHelper {
     static function checkGold($id_user) {
         $balance = ORM::factory('coins')->getBalance($id_user);
         $goldCost = self::getCost('gold');
-        if ($balance > $goldCost)
+        if ($balance > $goldCost) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     static function makeGold($id_user) {
@@ -239,10 +219,11 @@ class FrontHelper {
 
     static function isGold($id_user) {
         $is_gold = ORM::factory('user')->isGold($id_user);
-        if ($is_gold == '1')
+        if ($is_gold == '1') {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     static function addPaidChat($id_user) {
@@ -264,8 +245,9 @@ class FrontHelper {
             return false;
         } else {
             foreach ($paid as $id) {
-                if ($id == $id_user)
+                if ($id == $id_user) {
                     return true;
+                }
             }
         }
         return false;
@@ -274,10 +256,11 @@ class FrontHelper {
     static function getMinCostGift($id_user) {
         $gifts = ORM::factory('gifts')->order_by('coins', 'asc')->find_all()->as_array();
         $giftcost = self::getCost('gift');
-        if (isset($gifts[0]))
+        if (isset($gifts[0])) {
             return $gifts[0]->coins + $giftcost;
-        else
+        } else {
             return 0;
+        }
     }
 
     static function sendGift($this_user, $id_to, $data) {
@@ -304,12 +287,12 @@ class FrontHelper {
             return View::factory('views/profile/gifts/notenough');
         }
     }
-    
+
     static function incrementGiftCount($id_user) {
         $user = ORM::factory('user', $id_user);
         $user->gift_count = (int)$user->gift_count + 1;
         $user->save();
-        return ;
+        return;
     }
 
     static function getCostGift($id) {
@@ -338,15 +321,7 @@ class FrontHelper {
         $diff->w = floor($diff->d / 7);
         $diff->d -= $diff->w * 7;
 
-        $string = array(
-            'y' => 'year',
-            'm' => 'month',
-            'w' => 'week',
-            'd' => 'day',
-            'h' => 'hour',
-            'i' => 'minute',
-            's' => 'second',
-        );
+        $string = array('y' => 'year', 'm' => 'month', 'w' => 'week', 'd' => 'day', 'h' => 'hour', 'i' => 'minute', 's' => 'second',);
         foreach ($string as $k => &$v) {
             if ($diff->$k) {
                 $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
@@ -355,8 +330,9 @@ class FrontHelper {
             }
         }
 
-        if (!$full)
+        if (!$full) {
             $string = array_slice($string, 0, 1);
+        }
         return $string ? implode(', ', $string) . ' ago' : 'just now';
     }
 
@@ -384,23 +360,24 @@ class FrontHelper {
     static function checkAge($date) {
         $birthDate = explode("/", $date);
         $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md") ? ((date("Y") - $birthDate[2]) - 1) : (date("Y") - $birthDate[2]));
-        if ($age < 18)
+        if ($age < 18) {
             return false;
-        else
+        } else {
             return true;
+        }
     }
 
-    static function getCountGiftsGold($id_user) {        
-        return (int)ORM::factory('user', $id_user)->gift_count;                
+    static function getCountGiftsGold($id_user) {
+        return (int)ORM::factory('user', $id_user)->gift_count;
     }
-    
+
     static function checkSetting($setting, $user_id) {
-        $check_setting = ORM::factory('settings')->where('user','=', $user_id)->find();
-         return $check_setting === "true";
+        $check_setting = ORM::factory('settings')->where('user', '=', $user_id)->find();
+        return $check_setting === "true";
     }
-    
+
     static function redirect($url) {
-        header('Location: '.$url);
+        header('Location: ' . $url);
         exit();
     }
 
@@ -409,6 +386,35 @@ class FrontHelper {
         return $users;
     }
 
-}
+    static function maxsite_str_word($text, $counttext = 10, $sep = ' ') {
+        $words = explode($sep, $text);
+        if (count($words) > $counttext) {
+            $text = join($sep, array_slice($words, 0, $counttext));
+        }
+        return $text;
+    }
 
-?>
+    static function output($path, $width, $height, $in_width, $in_height) {
+        if (file_exists('.' . $path)) {
+            $sizes = ImageWork::getImageSize('.' . $path, $width, $height, $width, $height);
+            $margin_left = ($in_height - $sizes['newwidth'])/2;
+            $margin_top = ($in_width - $sizes['newheight'])/2;
+            if ($path != '') {
+                $html = "<img src = '".$path."' width = '".$sizes['newwidth']."' height = '".$sizes['newheight']."' style = 'margin-top:".$margin_top."px;margin-left:".$margin_left."px;'/>";
+            }
+        }
+        return $html;
+    }
+
+    static function outputRender($path, $width, $height, $in_width, $in_height) {
+        if (file_exists('.' . $path)) {
+            $sizes = ImageWork::getImageSize('.' . $path, $width, $height, $width, $height);
+            $margin_left = ($in_height - $sizes['newwidth'])/2;
+            $margin_top = ($in_width - $sizes['newheight'])/2;
+            if ($path != '') {
+                $html = "<img src = '".$path."' width = '".$sizes['newwidth']."' height = '".$sizes['newheight']."' style = 'margin-top:".$margin_top."px;margin-left:".$margin_left."px;'/>";
+            }
+        }
+        return $html;
+    }
+}

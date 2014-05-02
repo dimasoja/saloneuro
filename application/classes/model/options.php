@@ -24,12 +24,43 @@ class Model_Options extends ORM {
 
     public function saveMassage($data, $id_product) {
         if(isset($data['massage'])) {
-            $massage = $data['massage'];
+            $count = 0;
+            foreach($data['massage'] as $key=>$massage) {
+                $array = array();
+                if(isset($data['option_massage'][$count])) {
+                    $array[$data['option_massage'][$count]] = $key;
+                }
+                $this->clear();
+
+                $this->value = json_encode($array);
+                $this->id_product = $id_product;
+                $this->type = 'massage';
+                $this->save();
+                $count++;
+            }
+        }
+        return true;
+//        if(isset($data['massage'])) {
+//            $massage = $data['massage'];
+//            foreach($massage as $item) {
+//                $this->clear();
+//                $this->value = $item;
+//                $this->id_product = $id_product;
+//                $this->type = 'massage';
+//                $this->save();
+//            }
+//        }
+//        return true;
+    }
+
+    public function saveTechnologies($data, $id_product) {
+        if(isset($data['techn'])) {
+            $massage = $data['techn'];
             foreach($massage as $item) {
                 $this->clear();
                 $this->value = $item;
                 $this->id_product = $id_product;
-                $this->type = 'massage';
+                $this->type = 'technologies';
                 $this->save();
             }
         }
@@ -113,5 +144,14 @@ class Model_Options extends ORM {
             $this->values($option_arr)->save();
         }
         return true;
+    }
+
+    public function getMassageImage($id_product, $id_option) {
+        $options = $this->where('id_product','=', $id_product)->find_all()->as_array();
+        foreach($options as $option) {
+            $json = json_decode($option->value, true);
+            if(key($json)==$id_option) return $json[$id_option];
+        }
+        return false;
     }
 }

@@ -193,9 +193,9 @@
         </ul>
     </li>
 <?php } ?>
-<?php if ((in_array('admin/blocks/benefits', $allowed)) || (in_array('admin/blocks/wheretoby', $allowed)) || (in_array('admin/blocks/callus', $allowed)) || (in_array('admin/blocks/grade', $allowed)) || (in_array('admin/blocks/addresses', $allowed))) { ?>
+<?php if ((in_array('admin/blocks/benefits', $allowed)) || (in_array('admin/blocks/wheretoby', $allowed))|| (in_array('admin/blocks/production', $allowed)) || (in_array('admin/blocks/callus', $allowed)) || (in_array('admin/blocks/grade', $allowed)) || (in_array('admin/blocks/addresses', $allowed))) { ?>
     <li class="dropdown"><a href="#" <?php if (isset($cname)) {
-            if (($cname == 'benefits') || ($cname == 'callus') || ($cname == 'gradeblock') || ($cname == 'addresses')) {
+            if (($cname == 'benefits') || ($cname == 'callus') || ($cname == 'gradeblock') || ($cname == 'production') || ($cname == 'addresses')) {
                 echo 'class="active"';
             }
         } ?>><span><img src="/images/admin/icon/mainNav/ui.png"> Блоки</span></a>
@@ -227,6 +227,13 @@
                             echo 'class="active"';
                         }
                     } ?>><span></span> Адреса</a></li>
+            <?php } ?>
+            <?php if (in_array('admin/blocks/production', $allowed)) { ?>
+                <li><a href="/admin/blocks/production" <?php if (isset($cname)) {
+                        if ($cname == 'production') {
+                            echo 'class="active"';
+                        }
+                    } ?>><span></span> Продукция Thermolux</a></li>
             <?php } ?>
         </ul>
     </li>
@@ -298,7 +305,7 @@
 
 <?php if ((in_array('admin/orders', $allowed)) || (in_array('admin/response', $allowed)) || (in_array('admin/callback', $allowed)) || (in_array('admin/searchlog', $allowed)) || (in_array('admin/templates', $allowed))) { ?>
     <li class="dropdown"><a href="#" <?php if (isset($cname)) {
-            if (($cname == 'response') || ($cname == 'callback') || ($cname == 'searchlog') || ($cname == 'templates') || ($cname == 'contacts') || ($cname == 'orders')) {
+            if (($cname == 'response') || ($cname == 'callback') || ($cname == 'consult ') || ($cname == 'searchlog') || ($cname == 'templates') || ($cname == 'contacts') || ($cname == 'orders')) {
                 echo 'class="active"';
             }
         } ?>><span><img src="/images/admin/icon/mainNav/ui.png"> Покупатели</span></a>
@@ -341,6 +348,13 @@
             <?php if (in_array('admin/contacts', $allowed)) { ?>
                 <li><a href="/admin/contacts" <?php if (isset($cname)) {
                         if ($cname == 'contacts') {
+                            echo 'class="active"';
+                        }
+                    } ?>><span></span> Связаться</a></li>
+            <?php } ?>
+            <?php if (in_array('admin/consult', $allowed)) { ?>
+                <li><a href="/admin/consult" <?php if (isset($cname)) {
+                        if ($cname == 'consult') {
                             echo 'class="active"';
                         }
                     } ?>><span></span> Обратная связь</a></li>

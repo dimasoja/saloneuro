@@ -45,6 +45,7 @@ class Controller_Admin_Catalog extends Controller_AdminBase
         } else {
             $type = false;
         }
+        $view->techn = ORM::factory('information')->where('lvl','!=','1')->where('technologies','=','on')->find_all()->as_array();
         $view->categories = ORM::factory('productscat')->find_all()->as_array();
         $view->products = ORM::factory('catalog')->find_all()->as_array();
         $view->catalog = ORM::factory('catalog')->find_all()->as_array();
@@ -68,14 +69,20 @@ class Controller_Admin_Catalog extends Controller_AdminBase
         $id = trim(htmlspecialchars($this->request->param('id')));
         $view->success = FrontHelper::successNotif();
         $view->error = FrontHelper::errorNotif();
+
         if ($_POST) {
             ORM::factory('options')->deleteAll($id);
             $post = Safely::safelyGet($_POST);
             $id_product = ORM::factory('catalog')->editProduct($post, $id);
             $options = ORM::factory('options');
+            if(isset($post['option_massage'])) {
+                unset($post['option_massage'][0]);
+                sort($post['option_massage']);
+            }
             $directorysave = $options->saveOptions($post, 'directory', $id_product);
             $gradesave = $options->saveGrade($post, $id_product);
             $massagesave = $options->saveMassage($post, $id_product);
+            $technologiessave = $options->saveTechnologies($post, $id_product);
             $productssave = $options->saveProducts($post, $id_product);
             $imagesave = $options->saveImages($post, $id_product);
             $customsave = $options->saveCustom($post, $id_product);
@@ -106,6 +113,13 @@ class Controller_Admin_Catalog extends Controller_AdminBase
         exit();
     }
 
+    public function action_uploadmassage() {
+        $image = ImageWork::saveNewMassageImage($_FILES);
+        echo $image;
+        exit();
+    }
+
+
     public function action_uploadinstruction() {
         $document = ImageWork::saveNewInstructionImage($_FILES);
         echo $document;
@@ -125,6 +139,7 @@ class Controller_Admin_Catalog extends Controller_AdminBase
         $directorysave = $options->saveOptions($post, 'directory', $id_product);
         $gradesave = $options->saveGrade($post, $id_product);
         $massagesave = $options->saveMassage($post, $id_product);
+        $technologiessave = $options->saveTechnologies($post, $id_product);
         $productssave = $options->saveProducts($post, $id_product);
         $imagesave = $options->saveImages($post, $id_product);
         $customsave = $options->saveCustom($post, $id_product);

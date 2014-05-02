@@ -446,6 +446,35 @@ class ImageWork {
         return FALSE;
     }
 
+    static function saveNewMassageImage($image) {
+        $image = $image['uploadfile'];
+        if (
+            !Upload::valid($image) OR
+            !Upload::not_empty($image) OR
+            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
+            return FALSE;
+        }
+
+        $directory = DOCROOT . 'uploads/massageimages/';
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777);
+        }
+        if ($file = Upload::save($image, NULL, $directory)) {
+            $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
+            Image::factory($file)
+                ->save($directory . $filename);
+            unlink($file);
+            $image = ORM::factory('images');
+            $image->path = '/uploads/massageimages/' . $filename;
+            $image->type = 'catalog';
+            $saving = $image->save();
+            return $saving->id_image.'~'.'/uploads/massageimages/' . $filename;
+        }
+        return FALSE;
+    }
+
+
+
 }
 
 ?>
