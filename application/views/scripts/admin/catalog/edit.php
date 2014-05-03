@@ -498,25 +498,26 @@
 <script type="text/javascript">
     jQuery(document).ready(function () {
         var btnUpload = jQuery('#upload3');
-        var status = jQuery('#status');
-        var upload = new AjaxUpload(btnUpload, {
-            action: '/admin/catalog/uploadimage',
-            name: 'uploadfile',
-            data: {id: '123'},
-            onSubmit: function (file, ext) {
-                if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) {
-                    status.text('Поддерживаемые форматы JPG, PNG или GIF');
-                    return false;
-                }
+        if (btnUpload.length) {
+            var status = jQuery('#status');
+            var upload = new AjaxUpload(btnUpload, {
+                action: '/admin/catalog/uploadimage',
+                name: 'uploadfile',
+                data: {id: '123'},
+                onSubmit: function (file, ext) {
+                    if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) {
+                        status.text('Поддерживаемые форматы JPG, PNG или GIF');
+                        return false;
+                    }
 //status.text('Загрузка...');
-            },
-            onComplete: function (file, response) {
-                console.log(response);
-                var response_image = response.split("~");
-                var id_image = response_image[0];
-                var path = response_image[1];
-                var portfolio = jQuery('.images');
-                var image_html = '<div class="sws_img_block imagerel' + id_image + '">\n\
+                },
+                onComplete: function (file, response) {
+                    console.log(response);
+                    var response_image = response.split("~");
+                    var id_image = response_image[0];
+                    var path = response_image[1];
+                    var portfolio = jQuery('.images');
+                    var image_html = '<div class="sws_img_block imagerel' + id_image + '">\n\
                                            <div class="img_block">\n\
                                                 <img src="' + path + '" style="max-width: 194px;">\n\
                                            </div>\n\
@@ -524,15 +525,16 @@
                                                 <a href="javascript:void:(0);" class="del_vid" onclick="deletePortfolio(' + id_image + ');">Удалить</a>\n\
                                            </div>\n\
                                    </div>';
-                var hidden = '<input type="hidden" class="image' + id_image + '"  name="image[' + id_image + ']" rel="' + id_image + '"/> ';
-                portfolio.append(image_html);
-                portfolio.append(hidden);
-            }
-        });
+                    var hidden = '<input type="hidden" class="image' + id_image + '"  name="image[' + id_image + ']" rel="' + id_image + '"/> ';
+                    portfolio.append(image_html);
+                    portfolio.append(hidden);
+                }
+            });
+        }
 
 
         var btnUpload2 = jQuery('#upload4');
-        if (btnUpload2 != undefined) {
+        if (btnUpload2.length) {
             var status = jQuery('#status');
             var upload1 = new AjaxUpload(btnUpload2, {
                 action: '/admin/catalog/uploadmassage',

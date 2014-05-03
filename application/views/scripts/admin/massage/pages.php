@@ -20,7 +20,7 @@
         <div class="category-toggle" style="display: none;overflow:auto">
             <div class="span4" style="float: none !important; width:100%; margin-left:0px ">
                 <div class="widget">
-                    <form class="form-horizontal" action="/admin/massage/newgrade" method="POST" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="/admin/massage/newmassage" method="POST" enctype="multipart/form-data">
                         <div class="widget-header">
                             <h5>Новая:</h5>
                         </div>
@@ -89,12 +89,12 @@
     <script type="text/javascript">
         function deletecat(id) {
             if (confirm('Вы уверены?')) {
-                window.location = '/admin/grade/delete/' + id;
+                window.location = '/admin/massage/delete/' + id;
             }
         }
 
         function edit(id) {
-            window.location = '/admin/grade/editpage/' + id;
+            window.location = '/admin/massage/editpage/' + id;
         }
 
         jQuery(document).ready(function() {

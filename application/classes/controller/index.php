@@ -193,5 +193,12 @@ class Controller_Index extends Controller_Base {
         exit();
     }
 
+    public function action_writeorder() {
+        echo "<pre>";
+        print_r($_POST['order']);
+        print_r(json_decode($_POST['order']));
+        exit();
+    }
+
 
 }
