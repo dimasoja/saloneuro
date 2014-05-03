@@ -40,7 +40,6 @@ if (count($top_pages) > 0) {
         <tr>
             <th></th>
             <th>Имя страницы</th>
-            <th>Тип страницы</th>
             <th>Опубликовано &nbsp;<a href="/admin/pages/index/0/asc?order_by=published<?php if(isset($code)) echo '&code='.$code;?>"><img src="/images/s_asc.png"></a><a href="/admin/pages/index/0/desc?order_by=published<?php if(isset($code)) echo '&code='.$code;?>"><img src="/images/s_desc.png"></a></th>
             <th>Создана &nbsp;<a href="/admin/pages/index/0/asc?order_by=created_at<?php if(isset($code)) echo '&code='.$code;?>"><img src="/images/s_asc.png"></a><a href="/admin/pages/index/0/desc?order_by=created_at<?php if(isset($code)) echo '&code='.$code;?>"><img src="/images/s_desc.png"></a></th>
             <th>Обновлена &nbsp;<a href="/admin/pages/index/0/asc?order_by=updated_at<?php if(isset($code)) echo '&code='.$code;?>"><img src="/images/s_asc.png"></a><a href="/admin/pages/index/0/desc?order_by=updated_at<?php if(isset($code)) echo '&code='.$code;?>"><img src="/images/s_desc.png"></a></th>        
@@ -51,7 +50,6 @@ if (count($top_pages) > 0) {
             <tr>
                 <td align="center" style="width: 30px;"><input type="checkbox" class="chk" rel="<?php echo $page->id_page; ?>" /></td>
                 <td><?php echo $page->title; ?></td>
-                <td align=center><?php echo $types[$page->type]; ?></td>
                 <td align="center">
                     <?php
                     if ($page->published == 'on') {

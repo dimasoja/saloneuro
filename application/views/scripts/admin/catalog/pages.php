@@ -39,6 +39,27 @@
     </div>
 </div>
 <div class="form-row">
+    <label class="field-name" for="standard">Title (мета тэг):</label>
+
+    <div class="field">
+        <input type="text" class="input-large name-edit" name="title_meta" style="float: left;width: 100%;">
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Keywords (мета тэг):</label>
+
+    <div class="field">
+        <input type="text" class="input-large name-edit" name="keywords_meta" style="float: left;width: 100%;">
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Description (мета тэг):</label>
+
+    <div class="field">
+        <input type="text" class="input-large name-edit" name="description_meta" style="float: left;width: 100%;">
+    </div>
+</div>
+<div class="form-row">
     <label class="field-name" for="standard">Описание:</label>
 
     <div class="field">
@@ -139,12 +160,15 @@
                 <?php } ?>
             </select>
         </div>
+        <div style="display:none" class="forsun_for_massage">
+            <br/><input type="text" name="forsun[]" style="width: 100%;margin-top: 8px;" placeholder="Форсунок"/>
+        </div>
 
 
 
     <?php } ?>
 <?php } ?>
-<?php if (isset($add_product)) { ?>
+<!--<?php if (isset($add_product)) { ?>
     <?php if ($grade_on == 'on') { ?>
         <div class="form-row">
             <label class="field-name" for="standard">Комплектация:</label>
@@ -159,8 +183,46 @@
             </div>
         </div>
     <?php } ?>
+<?php } ?>-->
+<?php if (isset($add_product)) { ?>
+    <?php if ($grade_on == 'on') { ?>
+        <div class="form-row complekt">
+            <label class="field-name" for="standard">Комплектация:</label>
+
+            <div class="row-fluid" style="width: 82%;float: left;clear:none">
+                <div class="span6" style="width:100%">
+                    <div class="widget">
+                        <div class="table-container">
+
+                            <table cellpading="0" cellspacing="0" border="0"
+                                   class="default-table stripped turquoise dataTable" id="dynamic2">
+                                <thead>
+                                <tr align="left">
+                                    <th></th>
+                                    <th></th>
+                                    <th>Наименование</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php $count = 1; ?>
+                                <?php foreach ($grades as $item) { ?>
+                                    <tr>
+                                        <td><?php echo $count++; ?></td>
+                                        <td><input type="checkbox" value="<?php echo $item->id; ?>" name="grade[]"/>
+                                        </td>
+                                        <td><?php echo $item->name; ?></td>
+                                    </tr>
+                                <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
 <?php } ?>
-<div class="form-row">
+<!--<div class="form-row">
     <label class="field-name" for="standard">Выбрать технологии:</label>
 
     <div class="field" style="text-align:left;">
@@ -171,8 +233,42 @@
             <?php } ?>
         </select>
     </div>
+</div>-->
+<div class="form-row complekt">
+    <label class="field-name" for="standard">Выбрать технологии:</label>
+
+    <div class="row-fluid" style="width: 82%;float: left;clear:none">
+        <div class="span6" style="width:100%">
+            <div class="widget">
+                <div class="table-container">
+
+                    <table cellpading="0" cellspacing="0" border="0"
+                           class="default-table stripped turquoise dataTable" id="dynamic3">
+                        <thead>
+                        <tr align="left">
+                            <th></th>
+                            <th></th>
+                            <th>Наименование</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $count = 1; ?>
+                        <?php foreach ($techn as $item) { ?>
+                            <tr>
+                                <td><?php echo $count++; ?></td>
+                                <td><input type="checkbox" value="<?php echo $item->id; ?>" name="techn[]"/>
+                                </td>
+                                <td><?php echo $item->name; ?></td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="form-row">
+<!--<div class="form-row">
     <label class="field-name" for="standard">С этим товаром покупают (аксессуары):</label>
 
     <div class="field" style="text-align:left;">
@@ -182,6 +278,40 @@
                 <option value="<?php echo $ac->id; ?>"><?php echo $ac->name; ?></option>
             <?php } ?>
         </select>
+    </div>
+</div>-->
+<div class="form-row">
+    <label class="field-name" for="standard">С этим товаром покупают (аксессуары):</label>
+
+    <div class="row-fluid" style="width: 82%;float: left;clear:none">
+        <div class="span6" style="width:100%">
+            <div class="widget">
+                <div class="table-container">
+
+                    <table cellpading="0" cellspacing="0" border="0"
+                           class="default-table stripped turquoise dataTable" id="dynamic4">
+                        <thead>
+                        <tr align="left">
+                            <th></th>
+                            <th></th>
+                            <th>Наименование</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $count = 1; ?>
+                        <?php foreach ($products as $item) { ?>
+                            <tr>
+                                <td><?php echo $count++; ?></td>
+                                <td><input type="checkbox" value="<?php echo $item->id; ?>" name="products[]"/>
+                                </td>
+                                <td><?php echo $item->name; ?></td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="form-row">
@@ -303,6 +433,7 @@
                 var id_image = response_image[0];
                 var path = response_image[1];
                 var select_html = jQuery('.select_for_massage').html();
+                var forsun_html = jQuery('.forsun_for_massage').html();
                 var portfolio = jQuery('.massage-options');
                 var image_html = '<div class="sws_img_block imagerel' + id_image + '">\n\
                                            <div class="img_block">\n\
@@ -310,7 +441,7 @@
                                            </div>\n\
                                            <div class="del_block">\n\
                                                 <a href="javascript:void:(0);" class="del_vid" onclick="deletePortfolio(' + id_image + ');">Удалить</a>\n\
-                                           </div>' + select_html + '\n\
+                                           </div>' + select_html + forsun_html + '\n\
                                    </div>';
                 var hidden = '<input type="hidden" class="image' + id_image + '" name="massage[' + id_image + ']" rel="' + id_image + '"/> ';
                 portfolio.append(image_html);
@@ -403,7 +534,17 @@
     }
 
     jQuery(document).ready(function () {
-
+        $('#dynamic2, #dynamic3, #dynamic4').dataTable({
+            "sPaginationType": "full_numbers",
+            "sDom": "<'tableHeader'<l><'clearfix'f>r>t<'tableFooter'<i><'clearfix'p>>",
+            "iDisplayLength": 10,
+            "aoColumnDefs": [
+                {
+                    'bSortable': false,
+                    'aTargets': [0]
+                }
+            ]
+        });
         <?php if(isset($add_product)) { ?>
         jQuery('.category-toggle').slideDown('slow', function () {
             jQuery(this).css('display', 'block');

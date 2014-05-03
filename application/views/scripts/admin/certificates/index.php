@@ -67,6 +67,7 @@
                 <th>Номер</th>
                 <th>Описание</th>
                 <th>Дата добавления</th>
+                <th>В блоке?</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -78,6 +79,7 @@
                     <td><?php echo $count++; ?></td>
                     <td><?php echo $item->description; ?></td>
                     <td><?php echo date("Y-m-d H:i:s", $item->time); ?></td>
+                    <td><?php if($item->featured=='on') echo 'Да'; else echo 'Нет'; ?></td>
                     <td><input class="button-turquoise button" value="Редактировать"
                                onclick="edit(<?php echo $item->id; ?>)"/></td>
                     <td><input class="button-turquoise button" value="Удалить"
@@ -87,6 +89,76 @@
             </tbody>
         </table>
     </div>
+
+
+
+<div class="inner-content">
+
+    <script type="text/javascript" src="/js/ckeditor/ckfinder/ckfinder.js"></script>
+    <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
+
+
+    <div class="row-fluid">
+        <div class="widget">
+            <form class="form-horizontal" style="text-align:center;">
+                <div class="widget-header">
+                    <h5>Метатеги:</h5>
+                </div>
+                <div class="widget-content no-padding">
+                    <div class="form-row">
+                        <label class="field-name" for="standard">Title</label>
+
+                        <div class="field">
+                            <input type="text" class="span12 title" name="standard" id="standard" value="<?php echo $cert_title; ?>">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label class="field-name" for="standard">Keywords</label>
+
+                        <div class="field">
+                            <input type="text" class="span12 keywords" name="standard" id="standard" value="<?php echo $cert_keywords; ?>">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label class="field-name" for="standard">Description</label>
+
+                        <div class="field">
+                            <input type="text" class="span12 description" name="standard" id="standard" value="<?php echo $cert_description; ?>">
+                        </div>
+                    </div>
+                    <br>
+                    <a href="#" onclick="saveConf()" class="button button-turquoise small-button configuration-button" style="width: 296px !important; box-shadow: 2px 2px 12px lightgrey !important;">Сохранить</a>
+                    <br><br>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+<script type="">
+    function saveConf() {
+
+        var cert_title = jQuery('.title').val();
+        var cert_description = jQuery('.description').val();
+        var cert_keywords = jQuery('.keywords').val();
+        jQuery.post('/admin/index/saveserttags', {cert_title: cert_title, cert_description: cert_description, cert_keywords: cert_keywords}, function (data) {
+            jQuery('.alert.alert-info.noMargin font').html('Конфигурация сайта успешно сохранена');
+            jQuery('.alert.alert-info.noMargin').css('display', 'block');
+            jQuery('.alert.alert-info.noMargin').fadeOut(3000);
+        });
+    }
+
+
+</script>
+</div>
+
+
+
+
+
+
+
 
     <script type="text/javascript">
         function deletecat(id) {

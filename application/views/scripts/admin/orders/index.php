@@ -7,6 +7,7 @@
                     <th>E-mail</th>
                     <th>Время поступления</th>
                     <th>Товар</th>
+                    <th>Телефон</th>
                     <th>Комплектация</th>
                     <th>Массажные опции</th>
                 </tr>
@@ -19,6 +20,7 @@
                         <td><?php echo date('Y/m/d H:i:s', $contact->created); ?></td>
                         <td><?php echo $contact->response; ?></td>
                         <td><?php echo $contact->rating; ?></td>
+                        <td><?php echo $contact->phone; ?></td>
                        <!-- <td><?php // if ($contact->to != 'no') echo ORM::factory('products')->where('id_product', '=', $contact->to)->find()->title;
               //  else echo "Общий отзыв"; ?></td>-->
                         <td>

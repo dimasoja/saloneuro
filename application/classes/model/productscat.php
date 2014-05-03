@@ -17,6 +17,7 @@ class Model_Productscat extends ORM {
         } else {
             $data['grade_on'] = 'off';
         }
+        $data['title'] = $data['title_meta'];
         return $this->values($data)->save()->id;
     }
 
@@ -40,6 +41,9 @@ class Model_Productscat extends ORM {
         }
         $certificate = ORM::factory('productscat', $id);
         $certificate->name = $data['name'];
+        $certificate->title = $data['title_meta'];
+        $certificate->keywords = $data['keywords'];
+        $certificate->description = $data['description'];
         $certificate->massage_on = $data['massage_on'];
         $certificate->grade_on = $data['grade_on'];
         $certificate->order = $data['order'];

@@ -19,7 +19,7 @@ class Model_Menu extends ORM {
     }
 
     function getMenuForEdit($found_id) {
-        $menus = $this->where('parent', '=', '0')->where('published','=','on')->order_by('position', 'asc')->find_all()->as_array();
+        $menus = $this->where('parent', '=', '0')->where('published','=','on')->where('type','=','topmenu')->order_by('position', 'asc')->find_all()->as_array();
         $result_menu = '<div class="menu">
             <div class="parent-menu"><span class="size13">&#10154;</span><a id="orange-white" onClick=\'addToParent("0", "Корень")\'>Корень</a></div><br/>';
         foreach ($menus as $menu) {

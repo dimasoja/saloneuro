@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="form-row">
-                <label class="field-name" for="predefine">URL - адрес:</label>
+                <label class="field-name" for="predefine">Статическая страница: <br/><br/><br/>URL - адрес:<br/></label>
 
                 <div class="field">
                     <a href='#pages' id='diary-fancy' class="button submit button-turquoise" style='margin-top: 4px;'>Выбрать
@@ -107,13 +107,13 @@
             echo "<font class='title-pages' onClick=putToUri('" . $page->browser_name . "')>" . $page->title . "</font><br/>";
         }
         ?>
-        <h3>Услуги</h3>
+        <!--<h3>Услуги</h3>
         <?php $types = array('for_home' => 'Для дома', 'for_business' => 'Для бизнеса'); ?>
         <?php
         foreach ($products as $product) {
             echo "<font class='title-pages' onClick=putToUri('" . $product->browser_name . "')>" . $product->title . " [" . $types[$product->type] . "]</font><br/>";
         }
-        ?>
+        ?>-->
     </div>
 </div>
 <div id="add-entry-fancy1" style="display:none">

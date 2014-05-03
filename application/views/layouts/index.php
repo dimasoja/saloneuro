@@ -58,7 +58,9 @@
     </div>
 </div>
 
-<?php if(isset($index_content)) echo $index_content; ?>
+<?php if (isset($index_content)) {
+    echo $index_content;
+} ?>
 <div class="boxed-area blocks-spacer">
     <div class="container">
         <div class="welcome">
@@ -66,15 +68,17 @@
                 <div class="fullwidthbanner revslider-initialised tp-simpleresponsive" id="revslider-281"
                      style="max-height: 900px;">
                     <?php foreach ($productscat as $category) { ?>
-                        <?php $sizes = ImageWork::getImageSize('.' . $category->image, '363', '270', '363', '270'); ?>
-                        <?php if ($category->image != '') { ?>
-                            <div class="category-image-wrapper">
-                                <img src='<?php echo $category->image; ?>' width='<?php echo $sizes['newwidth']; ?>'
-                                     height='<?php echo $sizes['newheight']; ?>'
-                                     style="margin-top:<?php echo (363 - $sizes['newheight']) / 2; ?>px;margin-top:<?php echo (250 - $sizes['newheight']) / 2; ?>px;"/>
-                            </div>
-                        <?php } else { ?>
+                        <?php if (file_exists('.' . $category->image)) { ?>
+                            <?php $sizes = ImageWork::getImageSize('.' . $category->image, '363', '270', '363', '270'); ?>
+                            <?php if ($category->image != '') { ?>
+                                <div class="category-image-wrapper">
+                                    <img src='<?php echo $category->image; ?>' width='<?php echo $sizes['newwidth']; ?>'
+                                         height='<?php echo $sizes['newheight']; ?>'
+                                         style="margin-top:<?php echo (363 - $sizes['newheight']) / 2; ?>px;margin-top:<?php echo (250 - $sizes['newheight']) / 2; ?>px;"/>
+                                </div>
+                            <?php } else { ?>
 
+                            <?php } ?>
                         <?php } ?>
                     <?php } ?>
                 </div>
@@ -158,7 +162,7 @@
             <?php } ?>
         </div>
     </div>
-</div>   
+</div>
 <div class="fancy-ways" style="display:none">
     <div id="ways">
         <div class="ways-header">
@@ -214,25 +218,32 @@
                        style="margin-left:0px">
             </div>
         </div>
-        </form>
+    </form>
 </div>
 <div class="fancy-link" style="display:none">
     <form action="/consult/new" id="response-form" method="POST">
         <div class="resp">
             <h3>Консультация</h3>
+
             <div class="input-name">
                 <input type="text" id="response-name" class="link-name" name="name" placeholder="Имя">
+
                 <div class="response-err-name error"></div>
             </div>
             <div class="input-email">
                 <input type="text" id="response-email" class="link-email" name="email" placeholder="E-mail">
+
                 <div class="response-err-email error"></div>
             </div>
             <div class="input-question">
-                <textarea id="response-question" class="link-response" name="response" placeholder="Ваш вопрос..."></textarea>
+                <textarea id="response-question" class="link-response" name="response"
+                          placeholder="Ваш вопрос..."></textarea>
+
                 <div class="response-err-question error"></div>
             </div>
-        </div><br>
+        </div>
+        <br>
+
         <div class="order-submit">
             <input type="button" class="order-button green ways-call-submit" value="Отправить" style="margin-left:0px;">
         </div>
@@ -242,7 +253,6 @@
 
 
 <br>
-
 
 
 <div class="clearboth">&nbsp;</div>
@@ -288,16 +298,16 @@
                 });
                 jQuery('.order-call').click(function () {
                     jQuery.fancybox.close();
-                    jQuery.fancybox(jQuery('.fancy-call').html(),{
+                    jQuery.fancybox(jQuery('.fancy-call').html(), {
                         //'content': jQuery(".fancy-call").html(),
                         beforeShow: function () {
-                            jQuery('.order-button.green.ways-call-submit').click(function(){
+                            jQuery('.order-button.green.ways-call-submit').click(function () {
                                 var name = jQuery('.fancybox-outer #response-name1').val();
                                 var phone = jQuery('.fancybox-outer #response-phone1').val();
                                 var time_from = jQuery('#time_from').val();
                                 var time_to = jQuery('#time_to').val();
-                                jQuery.post('/callback/new', {name: name, phone: phone, time_from: time_from, time_to: time_to}, function(response) {
-                                    if(response=='success') {
+                                jQuery.post('/callback/new', {name: name, phone: phone, time_from: time_from, time_to: time_to}, function (response) {
+                                    if (response == 'success') {
                                         jQuery.fancybox.close();
                                         jQuery.fancybox('<h3 style="width:315px">Ваш вопрос успешно отправлен!</h3>');
                                         jQuery.fancybox.update();
@@ -309,16 +319,16 @@
                 });
                 jQuery('.order-link').click(function () {
                     jQuery.fancybox.close();
-                    jQuery.fancybox(jQuery('.fancy-link').html(),{
+                    jQuery.fancybox(jQuery('.fancy-link').html(), {
                         //'content': jQuery(".fancy-call").html(),
                         beforeShow: function () {
-                            jQuery('.order-button.green.ways-call-submit').click(function(){
+                            jQuery('.order-button.green.ways-call-submit').click(function () {
                                 var name = jQuery('.fancybox-outer .link-name').val();
                                 var email = jQuery('.fancybox-outer .link-email').val();
                                 var response = jQuery('.fancybox-outer .link-response').val();
-                                jQuery.post('/consult/new', {name: name, email: email, response: response}, function(response) {
+                                jQuery.post('/consult/new', {name: name, email: email, response: response}, function (response) {
                                     console.log(response);
-                                    if(response=='success') {
+                                    if (response == 'success') {
                                         jQuery.fancybox.close();
                                         jQuery.fancybox('<h3 style="width:315px">Ваш заказ успешно отправлен!</h3>');
                                         jQuery.fancybox.update();

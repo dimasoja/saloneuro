@@ -96,6 +96,7 @@ class Controller_Admin_Pages extends Controller_AdminBase
             //$content->type = $_POST['type'];
             $content->type = 'simple';
             $content->title = $_POST['title'];
+            $content->meta_title = $_POST['meta_title'];
             $content->updated_at = strtotime("now");
             //reindex Data
             ORM::factory('settings')->reindexData();
@@ -119,6 +120,7 @@ class Controller_Admin_Pages extends Controller_AdminBase
         $view->browser_name = $content_data['browser_name'];
         $view->published = $content_data['published'];
         $view->title = $content_data['title'];
+        $view->meta_title = $content_data['meta_title'];
         $view->text = $content_data['value'];
         $view->type = $content_data['type'];
         ViewHead::addScript('ckeditor/ckeditor.js');
@@ -136,7 +138,7 @@ class Controller_Admin_Pages extends Controller_AdminBase
         $view = new View('scripts/admin/pages/index');
         if ($_POST) {
             $success = '';
-            $post = $_POST;
+            $post = Safely::safelyGet($_POST);
             //проверяем наличие url в базе            
             $url = $post['browser_name'];
             $find_url = ORM::factory('meta')->where('request', '=', $url)->find()->request;
@@ -155,6 +157,8 @@ class Controller_Admin_Pages extends Controller_AdminBase
             } else {
                 $published = 'off';
             }
+//            $content->meta_title = $post['meta_title'];
+
             $post['value'] = $post['content'];
             $content->values($post);
             $content->created_at = strtotime("now");

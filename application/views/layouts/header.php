@@ -97,7 +97,9 @@
     <script type="text/javascript" src="/js/jquery-ui-timepicker-addon.js"></script>
     <script type="text/javascript" src="/js/jquery-ui-sliderAccess.js"></script>
     <script type="text/javascript" src="/js/webmarket/fancy/jquery.fancybox.js"></script>
-
+    <style type="text/css">
+        <?php echo $css; ?>
+    </style>
 </head>
 
 <body class="">

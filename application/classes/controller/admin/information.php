@@ -23,6 +23,7 @@ class Controller_Admin_Information extends Controller_AdminBase {
         $view->success = FrontHelper::successNotif();
         $view->error = FrontHelper::errorNotif();
         $view->information = ORM::factory('information')->getCategories();
+        $this->cname = "infocategories";
         $this->display($view);
     }
 
@@ -92,6 +93,7 @@ class Controller_Admin_Information extends Controller_AdminBase {
             AdminHelper::setParamRedirect('success', 'Отредактировано успешно!', 'information', 'categories');
         }
         $view->cat = ORM::factory('information', $id);
+        $this->cname = "infocategories";
         $this->display($view);
     }
 

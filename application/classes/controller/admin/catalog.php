@@ -79,6 +79,10 @@ class Controller_Admin_Catalog extends Controller_AdminBase
                 unset($post['option_massage'][0]);
                 sort($post['option_massage']);
             }
+            if(isset($post['forsun'])) {
+                unset($post['forsun'][0]);
+                sort($post['forsun']);
+            }
             $directorysave = $options->saveOptions($post, 'directory', $id_product);
             $gradesave = $options->saveGrade($post, $id_product);
             $massagesave = $options->saveMassage($post, $id_product);
@@ -159,7 +163,7 @@ class Controller_Admin_Catalog extends Controller_AdminBase
         $new_product->values($product_arr)->save();
         $new_id = $new_product->id;
         $option_copy = ORM::factory('options')->copyOptions($id, $new_id);
-        AdminHelper::setParamRedirect('success', 'Удалено!', 'catalog', 'index');
+        AdminHelper::setParamRedirect('success', 'Скопировано!', 'catalog', 'index');
     }
 
 

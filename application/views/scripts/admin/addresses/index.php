@@ -53,8 +53,44 @@
 </div>
 
 
+<div class="row-fluid">
+<div class="span6" style="width:100%">
+<div class="widget">
+    <div class="table-container">
 
-
+            <table cellpading="0" cellspacing="0" border="0" class="default-table stripped turquoise dataTable"  id="dynamic2">
+                <thead>
+                <tr align="left">
+                    <th>Номер</th>
+                    <th>Адрес</th>
+                    <th>Телефон</th>
+                    <th>Город</th>
+                    <th>Время добавления</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php $count = 1; ?>
+                <?php foreach ($addresses as $item) { ?>
+                    <tr>
+                        <td><?php echo $count++; ?></td>
+                        <td><?php echo $item->address; ?></td>
+                        <td><?php echo $item->phone; ?></td>
+                        <td><?php echo $item->city; ?></td>
+                        <td><?php echo date("Y-m-d H:i:s", $item->time); ?></td>
+                        <td><input class="button-turquoise button" value="Редактировать"
+                                   onclick="edit(<?php echo $item->id; ?>)"/></td>
+                        <td><input class="button-turquoise button" value="Удалить"
+                                   onclick="deletecat(<?php echo $item->id; ?>)"/></td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+    </div>
+</div>
+</div>
+</div>
 
 
 
@@ -161,6 +197,22 @@
         }
 
         jQuery(document).ready(function () {
+
+
+
+                $('#dynamic2').dataTable({
+                    "sPaginationType": "full_numbers",
+                    "sDom": "<'tableHeader'<l><'clearfix'f>r>t<'tableFooter'<i><'clearfix'p>>",
+                    "iDisplayLength": 10,
+                    "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [0]
+                    }]
+                });
+                $('.dataTables_length select').chosen();
+
+
+
             jQuery('.bs-callout.bs-callout-info, .bs-callout.bs-callout-danger').fadeOut(10000);
 
             jQuery('.button.button-blue.marginbottom30').click(function () {

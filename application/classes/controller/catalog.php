@@ -194,7 +194,7 @@ class Controller_Catalog extends Controller_Base
             $view->images = $images;
             $this->template->current = $currents;
         }
-
+        $this->template->css = ORM::factory('settings')->getSetting('css');
         $this->display($view);
     }
 

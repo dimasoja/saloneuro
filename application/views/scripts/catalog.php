@@ -64,7 +64,7 @@
                     <?php echo FrontHelper::maxsite_str_word($item->description, 50); ?>
                 </div>
                 <div class="information-price">
-                    <?php echo number_format($item->price, 0, ' ', ' '); ?> руб.
+                    <?php echo number_format((double)$item->price, 0, ' ', ' '); ?> руб.
                 </div>
             </div>
             <br/>

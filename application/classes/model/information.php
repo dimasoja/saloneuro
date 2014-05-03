@@ -6,6 +6,9 @@ class Model_Information extends ORM_MPTT {
 
     public function addCategory($data) {
         $this->name = $data['name'];
+        $this->title = $data['title'];
+        $this->description = $data['description'];
+        $this->keywords = $data['keywords'];
         $this->order = $data['order'];
         $this->time = $data['time'];
         $this->make_root();
@@ -33,6 +36,9 @@ class Model_Information extends ORM_MPTT {
         } else {
             $this->featured = 'off';
         }
+        $this->title = $data['title_meta'];
+        $this->description = $data['description'];
+        $this->keywords = $data['keywords'];
         $this->time = time();
         $category = ORM::factory('information', $data['parent_id']);
         return $this->insert_as_first_child($category)->id;
@@ -49,6 +55,9 @@ class Model_Information extends ORM_MPTT {
         $info->name = $data['title'];
         $info->parent_id = $data['parent_id'];
         $info->content = $data['content'];
+        $this->title = $data['title_meta'];
+        $this->description = $data['description'];
+        $this->keywords = $data['keywords'];
         if(isset($data['technologies']))
             $this->technologies = $data['technologies'];
         else

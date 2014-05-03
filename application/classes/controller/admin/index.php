@@ -39,8 +39,11 @@ class Controller_Admin_Index extends Controller_AdminBase
     }
 
     public function action_savelogo() {
-        if($_FILES) {
+        if($_FILES['logo']['name']!='') {
             $upload = ORM::factory('settings')->uploadLogo($_FILES);
+        } else {
+            header("Location: /admin/index");
+            exit();
         }
     }
 
@@ -89,10 +92,19 @@ class Controller_Admin_Index extends Controller_AdminBase
     }
     function action_callus() {
         ORM::factory('settings')->saveSetting('call_us', $_POST['call_us']);
+        ORM::factory('settings')->saveSetting('logotext', $_POST['logotext']);
         exit();
     }
     function action_saveproduction() {
         ORM::factory('settings')->saveSetting('production', $_POST['production']);
+        exit();
+    }
+
+    function action_saveserttags() {
+        $post = Safely::safelyGet($_POST);
+        ORM::factory('settings')->saveSetting('cert_title', $post['cert_title']);
+        ORM::factory('settings')->saveSetting('cert_description', $post['cert_description']);
+        ORM::factory('settings')->saveSetting('cert_keywords', $post['cert_keywords']);
         exit();
     }
 }

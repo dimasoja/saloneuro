@@ -38,6 +38,30 @@
     </div>
 </div>
 <div class="form-row">
+    <label class="field-name" for="standard">Title (мета тэг):</label>
+
+    <div class="field">
+        <input type="text" class="input-large name-edit" name="title_meta" style="float: left;width: 100%;"
+               value="<?php echo $product->title_meta; ?>">
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Keywords (мета тэг):</label>
+
+    <div class="field">
+        <input type="text" class="input-large name-edit" name="keywords_meta" style="float: left;width: 100%;"
+               value="<?php echo $product->keywords_meta; ?>">
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Description (мета тэг):</label>
+
+    <div class="field">
+        <input type="text" class="input-large name-edit" name="description_meta" style="float: left;width: 100%;"
+               value="<?php echo $product->description_meta; ?>">
+    </div>
+</div>
+<div class="form-row">
     <label class="field-name" for="standard">Описание:</label>
 
     <div class="field">
@@ -135,6 +159,9 @@
                 <?php } ?>
             </select>
         </div>
+        <div style="display:none" class="forsun_for_massage">
+            <br/><input type="text" name="forsun[]" style="width: 100%;margin-top: 8px;" placeholder="Форсунок"/>
+        </div>
         <div class="form-row">
             <?php $options = ORM::factory('options')->where('type', '=', 'massage')->where('id_product', '=', $product->id)->find_all()->as_array(); ?>
             <label class="field-name" for="standard">Массажные опции:</label>
@@ -150,36 +177,35 @@
                     <div class="images massage-options">
                         <?php foreach ($options as $option) { ?>
                             <?php $massage_image = json_decode($option->value, true); ?>
-                            <?php $key = key($massage_image); ?>
-                            <?php $keys = array_keys($massage_image); ?>
-                            <?php if (isset($massage_image[$key])) { ?>
-                                <?php $id_image = $massage_image[$key]; ?>
-
-                                <?php $image = ORM::factory('images')->where('id_image', '=', $id_image)->find(); ?>
-                                <div class="sws_img_block imagerel<?php echo $id_image; ?>">
-                                    <div class="img_block">
-                                        <img src="<?php echo $image->path; ?>" style="max-width: 194px;">
-                                    </div>
-                                    <div class="del_block">
-                                        <a href="javascript:void:(0);" class="del_vid"
-                                           onclick="deletePortfolio(<?php echo $id_image; ?>);">Удалить</a>
-                                    </div>
-                                    <div class="select_for_massage">
-                                        <select class="massage-select" name="option_massage[]" style="height: auto">
-                                            <option value=""></option>
-                                            <?php foreach ($massages as $ac) { ?>
-                                                <?php $search = array_key_exists($ac->id, $massage_image); ?>
-                                                <option value="<?php echo $ac->id; ?>" <?php if ($search) {
-                                                    echo 'selected';
-                                                } ?>><?php echo $ac->name; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
+                            <?php $key = $massage_image[1]; ?>
+                            <?php $id_image = $massage_image[0]; ?>
+                            <?php $forsun = $massage_image[2]; ?>
+                            <?php $image = ORM::factory('images')->where('id_image', '=', $id_image)->find(); ?>
+                            <div class="sws_img_block imagerel<?php echo $id_image; ?>">
+                                <div class="img_block">
+                                    <img src="<?php echo $image->path; ?>" style="max-width: 194px;">
                                 </div>
-                                <input type="hidden" class="massage<?php echo $id_image; ?>"
-                                       name="massage[<?php echo $id_image; ?>]"
-                                       rel="<?php echo $id_image; ?>"/>
-                            <?php } ?>
+                                <div class="del_block">
+                                    <a href="javascript:void:(0);" class="del_vid"
+                                       onclick="deletePortfolio(<?php echo $id_image; ?>);">Удалить</a>
+                                </div>
+                                <div class="select_for_massage">
+                                    <select class="massage-select" name="option_massage[]" style="height: auto">
+                                        <option value=""></option>
+                                        <?php foreach ($massages as $ac) { ?>
+
+                                            <option value="<?php echo $ac->id; ?>" <?php if ($key == $ac->id) {
+                                                echo 'selected';
+                                            } ?>><?php echo $ac->name; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <br/><input type="text" name="forsun[]" style="width: 100%;margin-top: 8px;"
+                                                placeholder="Форсунок" value="<?php echo $forsun; ?>"/>
+                                </div>
+                            </div>
+                            <input type="hidden" class="massage<?php echo $id_image; ?>"
+                                   name="massage[<?php echo $id_image; ?>]"
+                                   rel="<?php echo $id_image; ?>"/>
                         <?php } ?>
                     </div>
 
@@ -190,67 +216,179 @@
 <?php } ?>
 <?php if (isset($grade_on)) { ?>
     <?php if ($grade_on == 'on') { ?>
-        <div class="form-row">
+        <div class="form-row complekt">
             <label class="field-name" for="standard">Комплектация:</label>
-            <?php $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $product->id)->find_all()->as_array(); ?>
-            <div class="field" style="text-align:left;">
+            <!--<?php $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $product->id)->find_all()->as_array(); ?>
+
                 <select multiple name="grade[]" style="height: 100%">
                     <option value=""></option>
                     <?php foreach ($grades as $ac) { ?>
                         <?php $selected = ''; ?>
                         <?php foreach ($options as $option) {
-                            if ($ac->id == $option->value) {
-                                $selected = 'selected';
-                            }
-                        } ?>
+                if ($ac->id == $option->value) {
+                    $selected = 'selected';
+                }
+            } ?>
                         <option
                             value="<?php echo $ac->id; ?>" <?php echo $selected; ?>><?php echo $ac->name; ?></option>
                     <?php } ?>
                 </select>
+            </div>-->
+            <div class="field" style="text-align:left;">
+                <div class="row-fluid" style="width: 100%;float: left;clear:none">
+                    <div class="span6" style="width:100%">
+                        <div class="widget">
+                            <div class="table-container">
+                                <?php $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $product->id)->find_all()->as_array(); ?>
+                                <table cellpading="0" cellspacing="0" border="0"
+                                       class="default-table stripped turquoise dataTable" id="dynamic2">
+                                    <thead>
+                                    <tr align="left">
+                                        <th></th>
+                                        <th></th>
+                                        <th>Наименование</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php $count = 1; ?>
+                                    <?php foreach ($grades as $item) { ?>
+                                        <tr>
+                                            <td><?php echo $count++; ?></td>
+                                            <?php $selected = ''; ?>
+                                            <?php foreach ($options as $option) {
+                                                if ($item->id == $option->value) {
+                                                    $selected = 'checked="checked"';
+                                                }
+                                            } ?>
+                                            <td><input type="checkbox" value="<?php echo $item->id; ?>"
+                                                       name="grade[]" <?php echo $selected; ?>/>
+                                            </td>
+                                            <td><?php echo $item->name; ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
     <?php } ?>
 <?php } ?>
-<div class="form-row">
+<div class="form-row complekt">
     <?php $options = ORM::factory('options')->where('type', '=', 'technologies')->where('id_product', '=', $product->id)->find_all()->as_array(); ?>
     <label class="field-name" for="standard">Технологии:</label>
     <?php $technologies = ORM::factory('information')->where('lvl', '!=', '1')->where('technologies', '=', 'on')->find_all()->as_array(); ?>
     <div class="field" style="text-align:left;">
-        <select multiple name="techn[]" style="height: 100%">
+        <!--<select multiple name="techn[]" style="height: 100%">
             <option value=""></option>
             <?php foreach ($technologies as $ac) { ?>
                 <?php $selected = ''; ?>
                 <?php foreach ($options as $option) {
-                    if ($ac->id == $option->value) {
-                        $selected = 'selected';
-                    }
-                } ?>
+            if ($ac->id == $option->value) {
+                $selected = 'selected';
+            }
+        } ?>
                 <option
                     value="<?php echo $ac->id; ?>" <?php echo $selected; ?>><?php echo $ac->name; ?></option>
             <?php } ?>
-        </select>
+        </select>-->
+        <div class="row-fluid" style="width: 100%;float: left;clear:none">
+            <div class="span6" style="width:100%">
+                <div class="widget">
+                    <div class="table-container">
+                        <table cellpading="0" cellspacing="0" border="0"
+                               class="default-table stripped turquoise dataTable" id="dynamic3">
+                            <thead>
+                            <tr align="left">
+                                <th></th>
+                                <th></th>
+                                <th>Наименование</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php $count = 1; ?>
+                            <?php foreach ($technologies as $item) { ?>
+                                <tr>
+                                    <td><?php echo $count++; ?></td>
+                                    <?php $selected = ''; ?>
+                                    <?php foreach ($options as $option) {
+                                        if ($item->id == $option->value) {
+                                            $selected = 'checked="checked"';
+                                        }
+                                    } ?>
+                                    <td><input type="checkbox" value="<?php echo $item->id; ?>"
+                                               name="techn[]" <?php echo $selected; ?>/>
+                                    </td>
+                                    <td><?php echo $item->name; ?></td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="form-row">
+<div class="form-row complekt">
     <?php $options = ORM::factory('options')->where('type', '=', 'products')->where('id_product', '=', $product->id)->find_all()->as_array(); ?>
     <label class="field-name" for="standard">С этим товаром часто покупают (акссесуары):</label>
 
     <div class="field" style="text-align:left;">
-        <select multiple name="products[]" style="height: 100%">
+        <!--<select multiple name="products[]" style="height: 100%">
             <option value=""></option>
             <?php foreach ($products as $ac) { ?>
                 <?php $selected = ''; ?>
                 <?php foreach ($options as $option) {
-                    if ($ac->id == $option->value) {
-                        $selected = 'selected';
-                    }
-                } ?>
+            if ($ac->id == $option->value) {
+                $selected = 'selected';
+            }
+        } ?>
                 <?php if ($ac->id != $product->id) { ?>
                     <option
                         value="<?php echo $ac->id; ?>" <?php echo $selected; ?>><?php echo $ac->name; ?></option>
                 <?php } ?>
             <?php } ?>
-        </select>
+        </select>-->
+        <div class="row-fluid" style="width: 100%;float: left;clear:none">
+            <div class="span6" style="width:100%">
+                <div class="widget">
+                    <div class="table-container">
+                        <table cellpading="0" cellspacing="0" border="0"
+                               class="default-table stripped turquoise dataTable" id="dynamic4">
+                            <thead>
+                            <tr align="left">
+                                <th></th>
+                                <th></th>
+                                <th>Наименование</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php $count = 1; ?>
+                            <?php foreach ($products as $item) { ?>
+                                <tr>
+                                    <td><?php echo $count++; ?></td>
+                                    <?php $selected = ''; ?>
+                                    <?php foreach ($options as $option) {
+                                        if ($item->id == $option->value) {
+                                            $selected = 'checked="checked"';
+                                        }
+                                    } ?>
+                                    <td><input type="checkbox" value="<?php echo $item->id; ?>"
+                                               name="products[]" <?php echo $selected; ?>/>
+                                    </td>
+                                    <td><?php echo $item->name; ?></td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="form-row">
@@ -412,6 +550,7 @@
                     var id_image = response_image[0];
                     var path = response_image[1];
                     var select_html = jQuery('.select_for_massage').html();
+                    var forsun_html = jQuery('.forsun_for_massage').html();
                     var portfolio = jQuery('.massage-options');
                     var image_html = '<div class="sws_img_block imagerel' + id_image + '">\n\
                                            <div class="img_block">\n\
@@ -419,7 +558,7 @@
                                            </div>\n\
                                            <div class="del_block">\n\
                                                 <a href="javascript:void:(0);" class="del_vid" onclick="deletePortfolio(' + id_image + ');">Удалить</a>\n\
-                                           </div>' + select_html + '\n\
+                                           </div>' + select_html + forsun_html + '\n\
                                    </div>';
                     var hidden = '<input type="hidden" class="image' + id_image + '" name="massage[' + id_image + ']" rel="' + id_image + '"/> ';
                     portfolio.append(image_html);
@@ -449,6 +588,17 @@
     }
 
     jQuery(document).ready(function () {
+        $('#dynamic2, #dynamic3, #dynamic4').dataTable({
+            "sPaginationType": "full_numbers",
+            "sDom": "<'tableHeader'<l><'clearfix'f>r>t<'tableFooter'<i><'clearfix'p>>",
+            "iDisplayLength": 10,
+            "aoColumnDefs": [
+                {
+                    'bSortable': false,
+                    'aTargets': [0]
+                }
+            ]
+        });
         jQuery('.bs-callout.bs-callout-info, .bs-callout.bs-callout-danger').fadeOut(10000);
         var editor = CKEDITOR.replace('add-answer',
             {

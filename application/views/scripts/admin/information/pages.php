@@ -32,6 +32,24 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <label class="field-name" for="standard">Title (мета тэг):</label>
+                                <div class="field">
+                                    <input type="text" class="input-large name-edit" name="title_meta" style="float: left;width: 100%;">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="field-name" for="standard">Keywords (мета тэг):</label>
+                                <div class="field">
+                                    <input type="text" class="input-large name-edit" name="keywords" style="float: left;width: 100%;">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="field-name" for="standard">Description (мета тэг):</label>
+                                <div class="field">
+                                    <input type="text" class="input-large name-edit" name="description" style="float: left;width: 100%;">
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <label class="field-name" for="standard">Текст:</label>
                                 <div class="field">
                                     <textarea name="content" id="add-answer" class="input-large name-edit"></textarea>
@@ -50,13 +68,13 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <label class="field-name" for="standard">Изображение:</label>
+                                <label class="field-name" for="standard">Главное Изображение:</label>
                                 <div class="field">
                                     <input type="file" class="input-large name-edit" name="image" style="float: left;width: 100%;">
                                 </div>
                             </div>
                             <div class="form-row">
-                                <label class="field-name" for="standard">Категория:</label>
+                                <label class="field-name" for="standard">Раздел:</label>
                                 <div class="field" style="text-align:left;">
                                     <select name="parent_id" class="uniform">
                                         <?php foreach($categories as $category) { ?>

@@ -27,11 +27,14 @@ class Model_Options extends ORM {
             $count = 0;
             foreach($data['massage'] as $key=>$massage) {
                 $array = array();
+                $array[] = $key;
                 if(isset($data['option_massage'][$count])) {
-                    $array[$data['option_massage'][$count]] = $key;
+                    $array[] = $data['option_massage'][$count];
+                }
+                if(isset($data['forsun'][$count])) {
+                    $array[] = $data['forsun'][$count];
                 }
                 $this->clear();
-
                 $this->value = json_encode($array);
                 $this->id_product = $id_product;
                 $this->type = 'massage';

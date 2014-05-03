@@ -10,6 +10,7 @@
     <link href="/css/admin/bootstrap.css" rel="stylesheet">
     <link href="/css/admin/bootstrap-responsive.css" rel="stylesheet">
     <link href="/css/admin/main.css" rel="stylesheet">
+    <link href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css" rel="stylesheet">
     <!-- <link href="<?php echo URL::base(); ?>css/main-admin.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo URL::base(); ?>css/main-admin.css" rel="stylesheet" type="text/css" />-->
     <!--[if IE 6]>
@@ -31,11 +32,16 @@
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+
     <link href="/css/admin/ie.css" rel="stylesheet">
+
+
     <![endif]-->
+
 </head>
 
 <body>
+
 <?php if (Request::instance()->controller != "login") { ?>
 
 
@@ -193,7 +199,7 @@
         </ul>
     </li>
 <?php } ?>
-<?php if ((in_array('admin/blocks/benefits', $allowed)) || (in_array('admin/blocks/wheretoby', $allowed))|| (in_array('admin/blocks/production', $allowed)) || (in_array('admin/blocks/callus', $allowed)) || (in_array('admin/blocks/grade', $allowed)) || (in_array('admin/blocks/addresses', $allowed))) { ?>
+<?php if ((in_array('admin/blocks/benefits', $allowed)) || (in_array('admin/blocks/wheretoby', $allowed)) || (in_array('admin/blocks/production', $allowed)) || (in_array('admin/blocks/callus', $allowed)) || (in_array('admin/blocks/grade', $allowed)) || (in_array('admin/blocks/addresses', $allowed))) { ?>
     <li class="dropdown"><a href="#" <?php if (isset($cname)) {
             if (($cname == 'benefits') || ($cname == 'callus') || ($cname == 'gradeblock') || ($cname == 'production') || ($cname == 'addresses')) {
                 echo 'class="active"';
@@ -261,6 +267,13 @@
                         }
                     } ?> ><span></span>Категории товаров</a></li>
             <?php } ?>
+            <?php if (in_array('admin/catalog', $allowed)) { ?>
+                <li><a href="/admin/catalog" <?php if (isset($cname)) {
+                        if ($cname == 'catalog') {
+                            echo 'class="active"';
+                        }
+                    } ?>><span></span> Товары</a></li>
+            <?php } ?>
             <?php if (in_array('admin/directory', $allowed)) { ?>
                 <li><a href="/admin/directory" <?php if (isset($cname)) {
                         if ($cname == 'directory') {
@@ -282,13 +295,7 @@
                         }
                     } ?>><span></span> Комплектация</a></li>
             <?php } ?>
-            <?php if (in_array('admin/catalog', $allowed)) { ?>
-                <li><a href="/admin/catalog" <?php if (isset($cname)) {
-                        if ($cname == 'catalog') {
-                            echo 'class="active"';
-                        }
-                    } ?>><span></span> Товары</a></li>
-            <?php } ?>
+
         </ul>
     </li>
 <?php } ?>
@@ -362,6 +369,13 @@
         </ul>
     </li>
 <?php } ?>
+<?php if (in_array('admin/css', $allowed)) { ?>
+    <li><a href="/admin/css" <?php if (isset($cname)) {
+            if ($cname == 'css') {
+                echo 'class="active"';
+            }
+        } ?>><span><img src="/images/admin/icon/mainNav/chat.png"> Редактор css </span></a></li>
+<?php } ?>
 
 
 
@@ -416,224 +430,246 @@
 </div>
 
 <div class="content">
-    <div class="top-bar">
-        <div class="breadcrumbs fLeft">
-            <ul class="breadcrumb">
-                <li class="active"><img src="/images/admin/icon/14x14/light/home5.png" alt=""> Административная панель
-                </li>
-            </ul>
-        </div>
-        <div class="widget-header">
-            <ul class="nav nav-tabs task-container">
-                <?php
-                $count_new_responses = ORM::factory('response')->getNew();
-                $count_new_orders = ORM::factory('orders')->getNew();
-                $count_new_sales = ORM::factory('sales')->getNew();
-                $count_new_callbacks = ORM::factory('callback')->getNew();
-                $count_new_contacts = ORM::factory('contactus')->getNew();
-                $count_new_consult = ORM::factory('consult')->getNew();
-                $count_new_complexorders = ORM::factory('complexorders')->getNew();
-                ?>
-                <?php $controller = Request::instance()->controller; ?>
-                <li class="<?php if ($controller == 'response') {
-                    echo 'active';
-                } ?>">
-                    <a href="/admin/response">Отзывы <?php if ($count_new_responses != 0) { ?><span
-                            class="badge label-important"><?php echo '+' . $count_new_responses; ?></span><?php } ?></a>
-                </li>
-                <li class="<?php if ($controller == 'sales') {
-                    echo 'active';
-                } ?>">
-                    <!--                      <a href="/admin/sales">Продажи (единичные) -->
-                    <?php //if($count_new_orders!=0) { ?><!--<span class="badge label-important">-->
-                    <?php //echo '+'.$count_new_orders; ?><!--</span>--><?php //} ?><!--</a>-->
-                </li>
-                <li class="<?php if ($controller == 'manysales') {
-                    echo 'active';
-                } ?>">
-                    <!--                       <a href="/admin/manysales">Продажи (множественные) -->
-                    <?php //if($count_new_sales!=0) { ?><!--<span class="badge label-important">-->
-                    <?php //echo '+'.$count_new_sales; ?><!--</span>--><?php //} ?><!--</a>-->
-                </li>
-                <li class="<?php if ($controller == 'callback') {
-                    echo 'active';
-                } ?>">
-                    <a href="/admin/callback">Звонки <?php if ($count_new_callbacks != 0) { ?><span
-                            class="badge label-important"><?php echo '+' . $count_new_callbacks; ?></span><?php } ?></a>
-                </li>
-                <li class="<?php if ($controller == 'contacts') {
-                    echo 'active';
-                } ?>">
-                    <a href="/admin/contacts">Связаться <?php if ($count_new_contacts != 0) { ?><span
-                            class="badge label-important"><?php echo '+' . $count_new_contacts; ?></span><?php } ?></a>
-                </li>
-                <li class="<?php if ($controller == 'consult') {
-                    echo 'active';
-                } ?>">
-                    <!--                      <a href="/admin/consult">Консультации -->
-                    <?php //if($count_new_consult!=0) { ?><!--<span class="badge label-important">-->
-                    <?php //echo '+'.$count_new_consult; ?><!--</span>--><?php //} ?><!--</a>-->
-                </li>
-                <li class="<?php if ($controller == 'complexorders') {
-                    echo 'active';
-                } ?>">
-                    <!--                      <a href="/admin/complexorders">Комплексные услуги -->
-                    <?php //if($count_new_complexorders!=0) { ?><!--<span class="badge label-important">-->
-                    <?php //echo '+'.$count_new_complexorders; ?><!--</span>--><?php //} ?><!--</a>-->
-                </li>
-            </ul>
-        </div>
-
-
+<div class="top-bar">
+    <div class="breadcrumbs fLeft">
+        <ul class="breadcrumb">
+            <li class="active"><img src="/images/admin/icon/14x14/light/home5.png" alt=""> Административная панель
+            </li>
+        </ul>
     </div>
-
-    <div class="page-info clearfix">
-        <img src="/images/admin/icon/32x32/Desktop.png" alt="">
-        <h5>
-
-            <?php //if (isset($page_title)) {
-            // echo $page_title;
-            //  } else {
-            //    echo '';
-            //}
+    <div class="widget-header">
+        <ul class="nav nav-tabs task-container">
+            <?php
+            $count_new_responses = ORM::factory('response')->getNew();
+            $count_new_orders = ORM::factory('orders')->getNew();
+            $count_new_sales = ORM::factory('sales')->getNew();
+            $count_new_callbacks = ORM::factory('callback')->getNew();
+            $count_new_contacts = ORM::factory('contactus')->getNew();
+            $count_new_consult = ORM::factory('consult')->getNew();
+            $count_new_complexorders = ORM::factory('complexorders')->getNew();
             ?>
+            <?php $controller = Request::instance()->controller; ?>
+            <li class="<?php if ($controller == 'response') {
+                echo 'active';
+            } ?>">
+                <a href="/admin/response">Отзывы <?php if ($count_new_responses != 0) { ?><span
+                        class="badge label-important"><?php echo '+' . $count_new_responses; ?></span><?php } ?></a>
+            </li>
+            <li class="<?php if ($controller == 'sales') {
+                echo 'active';
+            } ?>">
+                <!--                      <a href="/admin/sales">Продажи (единичные) -->
+                <?php //if($count_new_orders!=0) { ?><!--<span class="badge label-important">-->
+                <?php //echo '+'.$count_new_orders; ?><!--</span>--><?php //} ?><!--</a>-->
+            </li>
+            <li class="<?php if ($controller == 'manysales') {
+                echo 'active';
+            } ?>">
+                <!--                       <a href="/admin/manysales">Продажи (множественные) -->
+                <?php //if($count_new_sales!=0) { ?><!--<span class="badge label-important">-->
+                <?php //echo '+'.$count_new_sales; ?><!--</span>--><?php //} ?><!--</a>-->
+            </li>
+            <li class="<?php if ($controller == 'callback') {
+                echo 'active';
+            } ?>">
+                <a href="/admin/callback">Звонки <?php if ($count_new_callbacks != 0) { ?><span
+                        class="badge label-important"><?php echo '+' . $count_new_callbacks; ?></span><?php } ?></a>
+            </li>
+            <li class="<?php if ($controller == 'contacts') {
+                echo 'active';
+            } ?>">
+                <a href="/admin/contacts">Связаться <?php if ($count_new_contacts != 0) { ?><span
+                        class="badge label-important"><?php echo '+' . $count_new_contacts; ?></span><?php } ?></a>
+            </li>
+            <li class="<?php if ($controller == 'consult') {
+                echo 'active';
+            } ?>">
+                <!--                      <a href="/admin/consult">Консультации -->
+                <?php //if($count_new_consult!=0) { ?><!--<span class="badge label-important">-->
+                <?php //echo '+'.$count_new_consult; ?><!--</span>--><?php //} ?><!--</a>-->
+            </li>
+            <li class="<?php if ($controller == 'complexorders') {
+                echo 'active';
+            } ?>">
+                <!--                      <a href="/admin/complexorders">Комплексные услуги -->
+                <?php //if($count_new_complexorders!=0) { ?><!--<span class="badge label-important">-->
+                <?php //echo '+'.$count_new_complexorders; ?><!--</span>--><?php //} ?><!--</a>-->
+            </li>
+        </ul>
+    </div>
 
-        </h5>
-        <?php if (isset($cname)) {
-            if (($cname == 'news') || ($cname == 'pages') || ($cname == 'certificates') || ($cname == 'info')) {
-                ?>
-                <h5>Статические страницы ( </h5>
-                <?php if ($cname == 'news') { ?>
-                    <h5> &nbsp;Новости и акции | </h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/news"> &nbsp;Новости и акции</a> | </h5>
-                <?php } ?>
-                <?php if ($cname == 'pages') { ?>
-                    <h5> &nbsp;Страницы | </h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/pages"> &nbsp;Страницы</a> | </h5>
-                <?php } ?>
-                <?php if ($cname == 'certificates') { ?>
-                    <h5> &nbsp;Сертификаты&nbsp;</h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/certificates"> &nbsp;Сертификаты&nbsp;</a></h5>
-                <?php } ?>
 
-                <h5>)</h5>
+</div>
+
+<div class="page-info clearfix">
+    <img src="/images/admin/icon/32x32/Desktop.png" alt="">
+    <h5>
+
+        <?php
+
+        ?>
+
+    </h5>
+    <?php $echo_title = true; ?>
+    <?php if (isset($cname)) {
+        if (($cname == 'news') || ($cname == 'pages') || ($cname == 'certificates') || ($cname == 'info') || ($cname == 'infocategories')) {
+            $echo_title = false;
+            ?>
+            <h5>Статические страницы ( </h5>
+            <?php if ($cname == 'news') { ?>
+                <h5> &nbsp;Новости и акции | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/news"> &nbsp;Новости и акции</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'pages') { ?>
+                <h5> &nbsp;Страницы | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/pages"> &nbsp;Страницы</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'certificates') { ?>
+                <h5> &nbsp;Сертификаты&nbsp; | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/certificates"> &nbsp;Сертификаты&nbsp;</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'info') { ?>
+                <h5> &nbsp;Полезная информация (страницы)&nbsp; | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/information/pages"> &nbsp;Полезная информация (страницы)&nbsp;</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'infocategories') { ?>
+                <h5> &nbsp;Полезная информация (разделы)&nbsp;</h5>
+            <?php } else { ?>
+                <h5><a href="/admin/information/categories"> &nbsp;Полезная информация (разделы)&nbsp;</a></h5>
             <?php } ?>
 
-
-
-
-
-
-            <?php if (($cname == 'benefits') || ($cname == 'callus') || ($cname == 'gradeblock') || ($cname == 'addresses')) { ?>
-                <h5>Статические страницы ( </h5>
-                <?php if ($cname == 'benefits') { ?>
-                    <h5> &nbsp;Преимущества | </h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/blocks/benefits"> &nbsp;Преимущества</a> | </h5>
-                <?php } ?>
-                <?php if ($cname == 'callus') { ?>
-                    <h5> &nbsp;Позвоните нам | </h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/blocks/callus"> &nbsp;Позвоните нам</a> | </h5>
-                <?php } ?>
-                <?php if ($cname == 'gradeblock') { ?>
-                    <h5> &nbsp;Скомплектовать ванну | </h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/blocks/grade"> &nbsp;Скомплектовать ванну</a> | </h5>
-                <?php } ?>
-                <?php if ($cname == 'addresses') { ?>
-                    <h5> &nbsp;Адреса&nbsp;</h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/addresses"> &nbsp;Адреса&nbsp;</a></h5>
-                <?php } ?>
-
-                <h5>)</h5>
-            <?php } ?>
-
-
-
-
-
-            <?php if (($cname == 'productscat') || ($cname == 'directory') || ($cname == 'massage') || ($cname == 'grade') || ($cname == 'catalog')) { ?>
-                <h5>Статические страницы ( </h5>
-                <?php if ($cname == 'productscat') { ?>
-                    <h5> &nbsp;Категории товаров | </h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/productscat"> &nbsp;Категории товаров</a> | </h5>
-                <?php } ?>
-                <?php if ($cname == 'directory') { ?>
-                    <h5> &nbsp;Справочник | </h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/directory"> &nbsp;Справочник</a> | </h5>
-                <?php } ?>
-                <?php if ($cname == 'massage') { ?>
-                    <h5> &nbsp;Массажные опции | </h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/massage"> &nbsp;Массажные опции</a> | </h5>
-                <?php } ?>
-                <?php if ($cname == 'grade') { ?>
-                    <h5> &nbsp;Комплектация | </h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/grade"> &nbsp;Комплектация</a> | </h5>
-                <?php } ?>
-                <?php if ($cname == 'catalog') { ?>
-                    <h5> &nbsp;Товары&nbsp;</h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/catalog"> &nbsp;Товары&nbsp;</a></h5>
-                <?php } ?>
-
-                <h5>)</h5>
-            <?php } ?>
-
-
-
-
-
-            <?php if (($cname == 'orders') || ($cname == 'response') || ($cname == 'callback') || ($cname == 'searchlog') || ($cname == 'templates') || ($cname == 'contacts')) { ?>
-                <h5>Статические страницы ( </h5>
-                <?php if ($cname == 'orders') { ?>
-                    <h5> &nbsp;Заказы | </h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/productscat"> &nbsp;Заказы</a> | </h5>
-                <?php } ?>
-                <?php if ($cname == 'response') { ?>
-                    <h5> &nbsp;Отзывы | </h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/response"> &nbsp;Отзывы</a> | </h5>
-                <?php } ?>
-                <?php if ($cname == 'callback') { ?>
-                    <h5> &nbsp;Обратные звонки | </h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/callback"> &nbsp;Обратные звонки</a> | </h5>
-                <?php } ?>
-                <?php if ($cname == 'searchlog') { ?>
-                    <h5> &nbsp;Поисковые фразы | </h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/searchlog"> &nbsp;Поисковые фразы</a> | </h5>
-                <?php } ?>
-                <?php if ($cname == 'contacts') { ?>
-                    <h5> &nbsp;Контакты&nbsp;</h5>
-                <?php } else { ?>
-                    <h5><a href="/admin/contacts"> &nbsp;Контакты&nbsp;</a></h5>
-                <?php } ?>
-
-                <h5>)</h5>
-            <?php } ?>
+            <h5>)</h5>
         <?php } ?>
-    </div>
 
-    <div class="alert alert-info noMargin" style='display:none'>
-        <!--             <button type="button" class="close" data-dismiss="alert">&times;</button> -->
-        <font><strong>Information!</strong> You have changed personal info, but some input fields are still
-            empty.</font>
-    </div>
+
+
+
+
+
+        <?php if (($cname == 'benefits') || ($cname == 'callus') || ($cname == 'gradeblock') || ($cname == 'addresses')) {
+            $echo_title = false;
+            ?>
+            <h5>Статические страницы ( </h5>
+            <?php if ($cname == 'benefits') { ?>
+                <h5> &nbsp;Преимущества | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/blocks/benefits"> &nbsp;Преимущества</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'callus') { ?>
+                <h5> &nbsp;Позвоните нам | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/blocks/callus"> &nbsp;Позвоните нам</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'gradeblock') { ?>
+                <h5> &nbsp;Скомплектовать ванну | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/blocks/grade"> &nbsp;Скомплектовать ванну</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'addresses') { ?>
+                <h5> &nbsp;Адреса&nbsp;</h5>
+            <?php } else { ?>
+                <h5><a href="/admin/addresses"> &nbsp;Адреса&nbsp;</a></h5>
+            <?php } ?>
+
+            <h5>)</h5>
+        <?php } ?>
+
+
+
+
+
+        <?php if (($cname == 'productscat') || ($cname == 'directory') || ($cname == 'massage') || ($cname == 'grade') || ($cname == 'catalog')) {
+            $echo_title = false;
+            ?>
+            <h5>Статические страницы ( </h5>
+            <?php if ($cname == 'productscat') { ?>
+                <h5> &nbsp;Категории товаров | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/productscat"> &nbsp;Категории товаров</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'directory') { ?>
+                <h5> &nbsp;Справочник | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/directory"> &nbsp;Справочник</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'massage') { ?>
+                <h5> &nbsp;Массажные опции | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/massage"> &nbsp;Массажные опции</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'grade') { ?>
+                <h5> &nbsp;Комплектация | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/grade"> &nbsp;Комплектация</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'catalog') { ?>
+                <h5> &nbsp;Товары&nbsp;</h5>
+            <?php } else { ?>
+                <h5><a href="/admin/catalog"> &nbsp;Товары&nbsp;</a></h5>
+            <?php } ?>
+
+            <h5>)</h5>
+        <?php } ?>
+
+
+
+
+
+        <?php if (($cname == 'orders') || ($cname == 'response') || ($cname == 'callback') || ($cname == 'searchlog') || ($cname == 'templates') || ($cname == 'contacts')) {
+            $echo_title = false;
+            ?>
+            <h5>Статические страницы ( </h5>
+            <?php if ($cname == 'orders') { ?>
+                <h5> &nbsp;Заказы | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/productscat"> &nbsp;Заказы</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'response') { ?>
+                <h5> &nbsp;Отзывы | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/response"> &nbsp;Отзывы</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'callback') { ?>
+                <h5> &nbsp;Обратные звонки | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/callback"> &nbsp;Обратные звонки</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'searchlog') { ?>
+                <h5> &nbsp;Поисковые фразы | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/searchlog"> &nbsp;Поисковые фразы</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'contacts') { ?>
+                <h5> &nbsp;Контакты&nbsp;</h5>
+            <?php } else { ?>
+                <h5><a href="/admin/contacts"> &nbsp;Контакты&nbsp;</a></h5>
+            <?php } ?>
+
+            <h5>)</h5>
+        <?php } ?>
     <?php } ?>
-    <div class="inner-content">
-        <?php echo $content; ?>
-    </div>
+    <?php if ($echo_title) {
+        if (isset($page_title)) {
+            echo '<h5>'.$page_title.'</h5>';
+        } else {
+            echo '';
+        }
+    } ?>
+</div>
+
+<div class="alert alert-info noMargin" style='display:none'>
+    <!--             <button type="button" class="close" data-dismiss="alert">&times;</button> -->
+    <font><strong>Information!</strong> You have changed personal info, but some input fields are still
+        empty.</font>
+</div>
+<?php } ?>
+<div class="inner-content">
+    <?php echo $content; ?>
+</div>
 </div>
 
 <!-- Le javascript
@@ -675,6 +711,7 @@
 <script src="/js/admin/range-picker/daterangepicker.js"></script>
 <script src="/js/admin/range-picker/date.js"></script>
 
+<script src="/js/admin/datatable/jquery.dataTables.js"></script>
 <script src="/js/admin/fancybox/jquery.fancybox.js"></script>
 
 <script src="/js/admin/flexslider/jquery.flexslider.js"></script>

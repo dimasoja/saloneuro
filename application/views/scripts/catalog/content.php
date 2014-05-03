@@ -78,7 +78,7 @@
             <div class="order">
                 Ваш заказ:<br/>
                 <span class="floatleft"><?php echo $page->name; ?></span>
-                <span class="floatright"><?php echo number_format($page->price, 0, ' ', ' '); ?><br/><a href="#"
+                <span class="floatright"><?php echo number_format((double)$page->price, 0, ' ', ' '); ?><br/><a href="#"
                                                                                                         class="order-button">Заказать</a></span>
             </div>
         </div>

@@ -26,6 +26,30 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <label class="field-name" for="standard">Title (мета тэг):</label>
+                                <div class="field">
+                                    <input type="text" class="input-large name-edit" name="title" style="float: left;width: 100%;" value="<?php echo $cat->title; ?>">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="field-name" for="standard">Keywords (мета тэг):</label>
+                                <div class="field">
+                                    <input type="text" class="input-large name-edit" name="keywords" style="float: left;width: 100%;" value="<?php echo $cat->keywords; ?>">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="field-name" for="standard">Description (мета тэг):</label>
+                                <div class="field">
+                                    <input type="text" class="input-large name-edit" name="description" style="float: left;width: 100%;" value="<?php echo $cat->description; ?>">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="field-name" for="standard">Порядок:</label>
+                                <div class="field">
+                                    <input type="text" class="input-large name-edit" name="order" style="float: left;width: 100%;">
+                                </div>
+                            </div>
+                            <div class="form-row">
 
 
                                 <input type="submit" class="button button-blue small-button margintop18 marginleft128" value="Добавить">

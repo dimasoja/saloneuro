@@ -71,11 +71,21 @@
             </div>
 
             <div class="form-row">
-                <label class="field-name" for="predefine">URL - адрес:</label>
+                <label class="field-name" for="predefine">Статическая страница: <br/><br/><br/>URL - адрес:<br/></label>
+
 
                 <div class="field">
                     <a href='#pages' id='diary-fancy' class="button submit button-turquoise" style='margin-top: 4px;'>Выбрать
                         страницы</a><br/><br/>
+                    <?php if (isset($uri)) {
+                        $page = ORM::factory('pages')->where('browser_name','=',$uri)->find();
+                        if(isset($page->id_page)) {
+                             ?>
+                            <a href="/<?php echo $page->browser_name; ?>"><span class="label label-info" style="margin-bottom: 4px;margin-top:-15px;"><?php echo $page->title; ?></span></a>
+                        <?php }
+                        ?>
+
+                    <?php } ?>
                     <input type="text" name="uri" class="span12" id="uri" value="<?php if (isset($uri)) {
                         echo $uri;
                     } ?>"><br>
@@ -124,13 +134,13 @@
             echo "<font class='title-pages' onClick=putToUri('" . $page->browser_name . "')>" . $page->title . "</font><br/>";
         }
         ?>
-        <h3 style="color: white">Услуги</h3>
+        <!--<h3 style="color: white">Услуги</h3>
         <?php $types = array('for_home' => 'Для дома', 'for_business' => 'Для бизнеса'); ?>
         <?php
         foreach ($products as $product) {
             echo "<font class='title-pages' onClick=putToUri('" . $product->browser_name . "')>" . $product->title . " [" . $types[$product->type] . "]</font><br/>";
         }
-        ?>
+        ?>-->
     </div>
 </div>
 <div id="add-entry-fancy1" style="display:none">

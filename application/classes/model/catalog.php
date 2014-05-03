@@ -12,6 +12,9 @@ class Model_Catalog extends ORM {
         $this->category = $data['category'];
         $this->type = $data['type'];
         $this->width = $data['width'];
+        $this->title_meta = $data['title_meta'];
+        $this->keywords_meta = $data['keywords_meta'];
+        $this->description_meta = $data['description_meta'];
         if(isset($data['featured']))
             $this->featured = $data['featured'][0];
         $this->length = $data['length'];
@@ -28,6 +31,9 @@ class Model_Catalog extends ORM {
         $product->price = $data['price'];
         $this->type = $data['type'];
         $this->width = $data['width'];
+        $this->title_meta = $data['title_meta'];
+        $this->keywords_meta = $data['keywords_meta'];
+        $this->description_meta = $data['description_meta'];
         if(isset($data['featured']))
             $this->featured = $data['featured'][0];
         $this->length = $data['length'];

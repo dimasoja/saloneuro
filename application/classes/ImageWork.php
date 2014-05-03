@@ -32,8 +32,15 @@ class ImageWork {
                 $img = imagecreatefrompng($address);
                 //$img = $this->imagetranstowhite($src);
                 break;
+            case '.':
+                return false;
+                break;
             default:
-                $src = imagecreatefromjpeg($address);
+                if(file_exists($address)) {
+                    if(imagecreatefromjpeg($address)){
+                        $src = imagecreatefromjpeg($address);
+                    }
+                }
                 break;
         }
         $width = imagesx($img);

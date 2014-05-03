@@ -96,6 +96,7 @@ class Controller_Index extends Controller_Base {
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city','=', $geo_data->city)->find_all()->as_array();
         $this->template->order_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array();
         $this->template->all_cities = ORM::factory('addresses')->find_all()->as_array();
+        $this->template->css = ORM::factory('settings')->getSetting('css');
         $this->display($view, $keywords, $description);
     }
 

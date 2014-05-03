@@ -36,6 +36,16 @@
                 </div>
             </div>
             <div class="form-row">
+                <label class="field-name" for="standard">Тайтл (мета тэг):</label>
+
+                <div class="field">
+                    <input type="text" name="meta_title" style="width: 652px !important;" id="meta_title"
+                           value="<?php if (isset($title)) {
+                               echo $title;
+                           } ?>">
+                </div>
+            </div>
+            <div class="form-row">
                 <label class="field-name" for="standard">Ключевые слова (мета тэг):</label>
 
                 <div class="field">

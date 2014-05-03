@@ -247,7 +247,8 @@ abstract class Kohana_Auth
             'Покупатели -> Поисковые фразы' => 'admin/searchlog',
             'Покупатели -> Связаться' => 'admin/contacts',
             'Покупатели -> Обратная связь' => 'admin/consult',
-            'Покупатели -> Шаблоны' => 'admin/templates'
+            'Покупатели -> Шаблоны' => 'admin/templates',
+            'Редактор css' => 'admin/css'
             //            'Mainmenu' => 'admin/mainmenu',
             //            'Edit Pages -> Edit Categorys' => 'admin/categorys',
             //            'Shopping Cart -> Edit Supplies' => 'admin/supplies',

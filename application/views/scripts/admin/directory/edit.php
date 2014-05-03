@@ -62,7 +62,6 @@
                 </div>
                 <div class="button button-blue small-button cursorpointer" style="clear:both ;margin-left:0px" onclick="saveTest()">
                     Сохранить
-                    тест
                 </div>
             </div>
         </div>

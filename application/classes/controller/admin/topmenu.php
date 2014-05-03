@@ -22,7 +22,7 @@ class Controller_Admin_Topmenu extends Controller_AdminBase {
 
     public function action_index() {
         $view = new View('scripts/admin/topmenu/index');        
-        $view->menus = ORM::factory('menu')->getMenuForIndex();        
+        $view->menus = ORM::factory('menu')->getMenuForIndex();
         $this->display($view);
     }
 
@@ -58,7 +58,7 @@ class Controller_Admin_Topmenu extends Controller_AdminBase {
         $view->uri = $menu->uri;
         $view->published = $menu->published;
         $view->classes = $menu->classes;                                
-        $view->pages = ORM::factory('pages')->where('published','=','on')->order_by('title', 'asc')->find_all()->as_array();  
+        $view->pages = ORM::factory('pages')->where('published','=','on')->order_by('title', 'asc')->find_all()->as_array();
         $view->products = ORM::factory('products')->order_by('title', 'asc')->find_all()->as_array();  
         $view->menu = ORM::factory('menu')->getMenuForEdit($id);
         ViewHead::addScript('ckeditor/ckeditor.js');
@@ -68,8 +68,9 @@ class Controller_Admin_Topmenu extends Controller_AdminBase {
     public function action_add() {
         $view = new View('scripts/admin/topmenu/add');
         $this->page_title = __("Add New Page");
-        $view->menu = ORM::factory('menu')->getMenuForEdit('');    
-        $view->pages = ORM::factory('pages')->where('published','=','on')->order_by('title', 'asc')->find_all()->as_array();    
+        $view->menu = ORM::factory('menu')->getMenuForEdit('');
+
+        $view->pages = ORM::factory('pages')->where('published','=','on')->order_by('title', 'asc')->find_all()->as_array();
         $view->products = ORM::factory('products')->order_by('title', 'asc')->find_all()->as_array();  
         $this->display($view);
     }

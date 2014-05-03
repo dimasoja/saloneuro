@@ -19,6 +19,24 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <label class="field-name" for="standard">Title (мета тэг):</label>
+                                <div class="field">
+                                    <input type="text" class="input-large name-edit" name="title_meta" style="float: left;width: 100%;" value="<?php echo $productscat->title; ?>">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="field-name" for="standard">Keywords (мета тэг):</label>
+                                <div class="field">
+                                    <input type="text" class="input-large name-edit" name="keywords" style="float: left;width: 100%;" value="<?php echo $productscat->keywords; ?>">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="field-name" for="standard">Description (мета тэг):</label>
+                                <div class="field">
+                                    <input type="text" class="input-large name-edit" name="description" style="float: left;width: 100%;" value="<?php echo $productscat->description; ?>">
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <label class="field-name" for="standard">Выводить массажные опции:</label>
 
                                 <div class="field" style="text-align: left;">
