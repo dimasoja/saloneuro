@@ -100,6 +100,17 @@
     <style type="text/css">
         <?php echo $css; ?>
     </style>
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery('.category-image-wrapper').mouseover(function () {
+                jQuery(this).children('.production-hidden').css('display', 'block');
+            });
+            jQuery('.category-image-wrapper').mouseout(function () {
+                jQuery(this).children('.production-hidden').css('display', 'none');
+            });
+        });
+    </script>
+    <link rel="alternate" media="print" href="file.pdf">
 </head>
 
 <body class="">
@@ -137,12 +148,14 @@
                 <!--  ==========  -->
                 <!--  = Logo =  -->
                 <!--  ==========  -->
-                <div class="span7">
+                <div class="span7 logo">
                     <a class="brand" href="/">
-                        <img src="/images/webmarket/logo.png" alt="Webmarket Logo" width="48" height="48"/>
+<!--                        <img src="/images/webmarket/logo.png" alt="Webmarket Logo" width="48" height="48"/>-->
+                        <img src="/uploads/images/<?php echo ORM::factory('settings')->getSetting('logo'); ?>" width="48" height="48" alt="logo"/>
                         <!--                        <span class="tagline">Really Cool e-Commerce HTML Template</span>-->
                     </a>
                 </div>
+                <div class="logotext"><?php echo ORM::factory('settings')->getSetting('logotext'); ?></div>
 
                 <!--  ==========  -->
                 <!--  = Social Icons =  -->
@@ -180,11 +193,9 @@
                             <ul class="nav" id="mainNavigation">
                                 <li class="active"><a href="/">Главная</a></li>
                                 <?php foreach ($menu as $item) { ?>
-                                    <li><a href="<?php echo $item->uri; ?>"><?php echo $item->title; ?></a></li>
+                                    <li><a href="<?php echo $item->uri; ?>" class="<?php echo $item->classes; ?>"><?php echo $item->title; ?></a></li>
                                 <?php } ?>
-                                <li class="shop-backgr">
-                                    <a class="shop" href="/shop">SHOP</a>
-                                </li>
+
                             </ul>
 
                             <!--  ==========  -->

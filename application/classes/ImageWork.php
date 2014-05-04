@@ -33,17 +33,23 @@ class ImageWork {
                 //$img = $this->imagetranstowhite($src);
                 break;
             case '.':
+
                 return false;
                 break;
             default:
                 if(file_exists($address)) {
                     if(imagecreatefromjpeg($address)){
-                        $src = imagecreatefromjpeg($address);
+                        $img = imagecreatefromjpeg($address);
                     }
+                } else {
+                    return false;
                 }
                 break;
         }
+        try{
         $width = imagesx($img);
+        } Catch(Exception $e) {
+        }
         $height = imagesy($img);
         if ($height > $width) {
             $ratio = self::$maxheightpreview / $height;
@@ -366,7 +372,7 @@ class ImageWork {
         if (
             !Upload::valid($image) OR
             !Upload::not_empty($image) OR
-            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif','pdf','doc','docx'))) {
+            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif','pdf','doc','docx','txt'))) {
             return FALSE;
         }
 
@@ -398,7 +404,7 @@ class ImageWork {
         if (
             !Upload::valid($image) OR
             !Upload::not_empty($image) OR
-            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif', 'pdf','doc','docx'))) {
+            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif', 'pdf','doc','docx','txt'))) {
             return FALSE;
         }
 

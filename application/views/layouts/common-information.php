@@ -10,7 +10,7 @@ function transliterate($string) {
 <?php $city_geo = (array)$city; ?>
 <?php $city_geo = $city[0]; ?>
 <div class="geocity" style="display:none">
-    <?php echo $city_geo; ?>
+    <?php echo $session_city; ?>
 </div>
 <div class="darker-stripe blocks-spacer more-space latest-news with-shadows">
     <div class="bread-center">
@@ -22,8 +22,8 @@ function transliterate($string) {
 
     </div>
 </div>
-<div class="common">
-    <div class="container">
+<div class="common information">
+    <div class="container inner-narrow">
         <div class="rightblock">
             <div class="category-right-wrapper">
                 <div class="wheretobuyblock">
@@ -53,25 +53,36 @@ function transliterate($string) {
                         <div class="your-city">
                             Ваш город:
                         </div>
-                        <div class="city">
-                            <?php echo $city_geo; ?>
+                        <div class="city1">
+                            <select class="all_cities" style="width:186px">
+                                <?php $all_group_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array(); ?>
+                                <?php foreach ($all_group_cities as $value) { ?>
+                                    <option value="<?php echo $value->city; ?>" <?php if ($value->city == $session_city) {
+                                        echo 'selected';
+                                    } ?>><?php echo $value->city; ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                     </div>
                     <div class="cities">
                         <?php $i = 0;
-                        foreach ($cities as $value) {
-                            if ($i % 2 == 0) {
-                                ?>
-                                <div class="address"><?php echo $value->city . ', ' . $value->address; ?></div>
-                            <?php } else { ?>
-                                <div class="blue-address"><?php echo $value->city . ', ' . $value->address; ?></div>
-                            <?php
+
+                        foreach ($session_cities as $value) {
+                            if ($value->type == 'address') {
+                                if ($i % 2 == 0) {
+                                    ?>
+                                    <div class="address"><?php echo $value->city . ', ' . $value->address; ?></div>
+                                <?php } else { ?>
+                                    <div
+                                        class="blue-address"><?php echo $value->city . ', ' . $value->address; ?></div>
+                                <?php
+                                }
+                                $i++;
                             }
-                            $i++;
                         } ?>
                     </div>
                     <div class="other">
-                        <a class="fancybox" href="#fancy-body.second">
+                        <a class="fancybox" href="#fancy-body">
                             <input type="button" class="green floatright" value="Подробнее...">
                         </a>
                     </div>
@@ -90,7 +101,7 @@ function transliterate($string) {
     </div>
 </div>
 <div class="fancy-address" style="display:none">
-    <div id="fancy-body" class="second">
+    <div id="fancy-body">
         <h2>Где купить?</h2>
 
         <div class="change-city">
@@ -100,12 +111,19 @@ function transliterate($string) {
                 <?php } ?>
             </select>
         </div>
-        <div class="cities-all">
+        <div class="cities-all" style="overflow:auto">
             <?php foreach ($all_cities as $value) { ?>
                 <div class="city-item rel<?php echo $value->id; ?>" rel="<?php echo $value->id; ?>">
-                    <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
+                    <?php if ($value->type == 'address') { ?>
+                        <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
+                    <?php } else { ?>
+                        <span><?php echo $value->city . ' (все адреса)'; ?></span><br/>
+                    <?php } ?>
                     <i><?php echo $value->phone; ?></i>
+
+                    <div class="balloon"><img src="/images/balloon.png"/></div>
                 </div>
+
             <?php } ?>
         </div>
         <div class="maps">
@@ -218,29 +236,28 @@ function transliterate($string) {
             'beforeShow': function () {
                 var city = jQuery('.geocity').html();
                 if (city != '') {
-                    jQuery('.second .change-city-select option').each(function () {
+                    jQuery('.change-city-select option').each(function () {
                         if (jQuery.trim(city) == jQuery(this).html()) {
                             jQuery(this).attr('selected', 'selected');
                             var id = jQuery(this).html();
                             changeCity(id);
                         }
                     });
-
-                    jQuery('.second .change-city-select :contains("' + city + '")').attr('selected', 'selected');
+                    jQuery('.change-city-select :contains("' + city + '")').attr('selected', 'selected');
                 }
             },
             'afterShow': function () {
-                jQuery('.second .change-city-select').change(function () {
-                    jQuery('.second .map-item').css('display', 'none');
+                jQuery('.change-city-select').change(function () {
+                    jQuery('.map-item').css('display', 'none');
                     var id = jQuery(this).children('option:selected').html();
                     changeCity(id);
                 });
-                jQuery('.second .city-item').click(function () {
-                    jQuery('.second .city-item').removeClass('active');
+                jQuery('.city-item').click(function () {
+                    jQuery('.city-item').removeClass('active');
                     jQuery(this).addClass('active');
                     var id = jQuery(this).attr('rel');
-                    jQuery('.second .map-item').css('display', 'none');
-                    jQuery('.second .map-item.rel' + id).css('display', 'block');
+                    jQuery('.map-item').css('display', 'none');
+                    jQuery('.map-item.rel' + id).css('display', 'block');
                     jQuery.fancybox.update();
                 });
             }
@@ -320,6 +337,12 @@ function transliterate($string) {
             jQuery('.fancy-address-block .map-item.rel' + id).css('display', 'block');
             jQuery.fancybox.update();
         });
+        jQuery('.all_cities').change(function(){
+            $el = jQuery(this).val();
+            jQuery.post('/index/changecity', {city: $el}, function(response){
+                window.location = '<?php echo $_SERVER['REQUEST_URI']; ?>';
+            })
+        });
     })
     ;
 
@@ -334,13 +357,15 @@ function transliterate($string) {
     }
 
     function changeCity(city) {
-        jQuery('.second .city-item').css('display', 'none');
+        jQuery('.city-item').css('display', 'none');
         var city = jQuery.trim(city);
-        jQuery('.second .city-item span:contains("' + city + '")').parents().each(function () {
+        jQuery('.city-item span:contains("' + city + '")').parents().each(function () {
             jQuery(this).css('display', 'block');
         });
-        jQuery('.second .city-item span:contains("' + city + '")').parents().css('display', 'block');
+        console.log(jQuery('span:contains("' + city + '")').html());
+        jQuery('.city-item span:contains("' + city + '")').parents().css('display', 'block');
     }
+
 </script>
 </div>
 <?php require_once 'footer.php'; ?>

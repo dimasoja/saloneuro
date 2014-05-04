@@ -120,7 +120,7 @@
     }
 
     .shop {
-        margin-left: 52px;
+        margin-left: 5px;
     }
 
     .row:before, .row:after {
@@ -538,6 +538,14 @@
         float: left;
         margin-bottom: 16px;
     }
+    .inner-narrow {
+        width:1100px !important;
+    }
+    .inner-narrow .width862 {
+        width: 798px !important;
+        float: left;
+        margin-bottom: 16px;
+    }
     .rightblock {
         float:left;
         width: 300px;
@@ -548,7 +556,7 @@
         margin-top: 12px;
     }
     .information .rightblock {
-        width: 400px !important;
+        width: 356px !important;
     }
     .information .container {
         margin-top: 12px;
@@ -610,7 +618,7 @@
         text-align: center;
     }
     .category-right-wrapper {
-        width: 378px !important;
+        width: 326px !important;
     }
     .catalog-wrapper {
         width: 266px !important;

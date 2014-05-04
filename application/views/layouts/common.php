@@ -2,7 +2,7 @@
 <?php $city_geo = (array)$city; ?>
 <?php $city_geo = $city[0]; ?>
 <div class="geocity" style="display:none">
-    <?php echo $city_geo; ?>
+    <?php echo $session_city; ?>
 </div>
 <div class="darker-stripe blocks-spacer more-space latest-news with-shadows">
     <div class="bread-center">
@@ -53,6 +53,22 @@
         <div class="rightblock">
             <div class="category-right-wrapper">
                 <div class="wheretobuyblock">
+                    <div class="aqua-header">Вход для партнеров</div>
+                    <h4>Личный кабинет</h4>
+
+                    <div class="input-name">
+                        <input type="text" id="response-name1" class="name_call" name="name" placeholder="Логин">
+                    </div>
+                    <div class="input-name">
+                        <input type="text" id="response-name1" class="name_call" name="name" placeholder="Пароль">
+                    </div>
+                    <input type="button" class="green floatright enter-partner" value="Войти">
+                    <br/><br/>
+                    <a href="#" class="requestcoop">Заполнить заявку на сотрудничество</a>
+                    <br/>
+                    <br/>
+                </div>
+                <div class="wheretobuyblock">
                     <div class="aqua-header">Сертификаты</div>
                     <br/>
 
@@ -61,9 +77,15 @@
                         foreach ($certificates as $value) {
                             if ($i % 2 == 0) {
                                 ?>
-                                <div class="address"><?php echo $value->description; ?></div>
+                                <div class="cert-title address">
+                                    <a class="address fancyboxcert" rel="group" href="<?php echo $value->image; ?>"
+                                       title="<?php echo $value->description; ?>"><?php echo $value->description; ?></a>
+                                </div>
                             <?php } else { ?>
-                                <div class="blue-address"><?php echo $value->description; ?></div>
+                                <div class="cert-title blue-address">
+                                    <a class="blue-address fancyboxcert" rel="group" href="<?php echo $value->image; ?>"
+                                       title="<?php echo $value->description; ?>"><?php echo $value->description; ?></a>
+                                </div>
                             <?php
                             }
                             $i++;
@@ -82,25 +104,37 @@
                         <div class="your-city">
                             Ваш город:
                         </div>
-                        <div class="city">
-                            <?php echo $city_geo; ?>
+                        <div class="city1">
+                            <select class="all_cities" style="width:186px">
+                                <?php $all_group_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array(); ?>
+                                <?php foreach ($all_group_cities as $value) { ?>
+                                    <option
+                                        value="<?php echo $value->city; ?>" <?php if ($value->city == $session_city) {
+                                        echo 'selected';
+                                    } ?>><?php echo $value->city; ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                     </div>
                     <div class="cities">
                         <?php $i = 0;
-                        foreach ($cities as $value) {
-                            if ($i % 2 == 0) {
-                                ?>
-                                <div class="address"><?php echo $value->city . ', ' . $value->address; ?></div>
-                            <?php } else { ?>
-                                <div class="blue-address"><?php echo $value->city . ', ' . $value->address; ?></div>
-                            <?php
+
+                        foreach ($session_cities as $value) {
+                            if ($value->type == 'address') {
+                                if ($i % 2 == 0) {
+                                    ?>
+                                    <div class="address"><?php echo $value->city . ', ' . $value->address; ?></div>
+                                <?php } else { ?>
+                                    <div
+                                        class="blue-address"><?php echo $value->city . ', ' . $value->address; ?></div>
+                                <?php
+                                }
+                                $i++;
                             }
-                            $i++;
                         } ?>
                     </div>
                     <div class="other">
-                        <a class="fancybox" href="#fancy-body.second">
+                        <a class="fancybox" href="#fancy-body">
                             <input type="button" class="green floatright" value="Подробнее...">
                         </a>
                     </div>
@@ -111,13 +145,22 @@
                     </div>
                 </div>
                 <?php echo ORM::factory('settings')->getSetting('callus'); ?>
+                <div class="wheretobuyblock">
+                    <div class="aqua-header">Скомплектовать свою ванну</div>
+                    <div class="cities">
+                        <br/>
+                        <a href="/gradebath"><img src="/images/grade.jpg"/></a>
+                    </div>
+                    <br/>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <div class="fancy-address" style="display:none">
-    <div id="fancy-body" class="second">
+    <div id="fancy-body">
         <h2>Где купить?</h2>
+
         <div class="change-city">
             <select class="change-city-select">
                 <?php foreach ($order_cities as $city) { ?>
@@ -125,12 +168,19 @@
                 <?php } ?>
             </select>
         </div>
-        <div class="cities-all">
+        <div class="cities-all" style="overflow:auto">
             <?php foreach ($all_cities as $value) { ?>
                 <div class="city-item rel<?php echo $value->id; ?>" rel="<?php echo $value->id; ?>">
-                    <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
+                    <?php if ($value->type == 'address') { ?>
+                        <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
+                    <?php } else { ?>
+                        <span><?php echo $value->city . ' (все адреса)'; ?></span><br/>
+                    <?php } ?>
                     <i><?php echo $value->phone; ?></i>
+
+                    <div class="balloon"><img src="/images/balloon.png"/></div>
                 </div>
+
             <?php } ?>
         </div>
         <div class="maps">
@@ -229,6 +279,12 @@
         <div class="clearboth">&nbsp;</div>
     </form>
 </div>
+<a href='#map_layout' class='fancy-map' data-map='<script type="text/javascript" charset="utf-8" src="//api-maps.yandex.ru/services/constructor/1.0/js/?sid=xgROt_9_LqRGTxwYWZD1JYNkM5u0DBLf&width=600&height=450"></script>'>Посмотреть на карте</a>
+<div class="dn">
+    <div id="map_layout">
+
+    </div>
+</div>
 
 <script type="text/javascript">
     jQuery(document).ready(function () {
@@ -236,29 +292,28 @@
             'beforeShow': function () {
                 var city = jQuery('.geocity').html();
                 if (city != '') {
-                    jQuery('.second .change-city-select option').each(function () {
+                    jQuery('.change-city-select option').each(function () {
                         if (jQuery.trim(city) == jQuery(this).html()) {
                             jQuery(this).attr('selected', 'selected');
                             var id = jQuery(this).html();
                             changeCity(id);
                         }
                     });
-
-                    jQuery('.second .change-city-select :contains("' + city + '")').attr('selected', 'selected');
+                    jQuery('.change-city-select :contains("' + city + '")').attr('selected', 'selected');
                 }
             },
             'afterShow': function () {
-                jQuery('.second .change-city-select').change(function () {
-                    jQuery('.second .map-item').css('display', 'none');
+                jQuery('.change-city-select').change(function () {
+                    jQuery('.map-item').css('display', 'none');
                     var id = jQuery(this).children('option:selected').html();
                     changeCity(id);
                 });
-                jQuery('.second .city-item').click(function () {
-                    jQuery('.second .city-item').removeClass('active');
+                jQuery('.city-item').click(function () {
+                    jQuery('.city-item').removeClass('active');
                     jQuery(this).addClass('active');
                     var id = jQuery(this).attr('rel');
-                    jQuery('.second .map-item').css('display', 'none');
-                    jQuery('.second .map-item.rel' + id).css('display', 'block');
+                    jQuery('.map-item').css('display', 'none');
+                    jQuery('.map-item.rel' + id).css('display', 'block');
                     jQuery.fancybox.update();
                 });
             }
@@ -338,6 +393,22 @@
             jQuery('.fancy-address-block .map-item.rel' + id).css('display', 'block');
             jQuery.fancybox.update();
         });
+        jQuery('.all_cities').change(function () {
+            $el = jQuery(this).val();
+            jQuery.post('/index/changecity', {city: $el}, function (response) {
+                window.location = '<?php echo $_SERVER['REQUEST_URI']; ?>';
+            })
+        });
+        jQuery('.fancyboxcert').fancybox();
+        jQuery('.fancy-map').fancybox({
+            'beforeLoad': function(){
+               var map = this.element.attr('data-map');
+
+                //var dynamic_map = jQuery.getScript(map);
+                //jQuery('#map_layout').append(dynamic_map);
+                //console.log(dynamic_map);
+            }
+        });
     })
     ;
 
@@ -352,12 +423,14 @@
     }
 
     function changeCity(city) {
-        jQuery('.second .city-item').css('display', 'none');
+
+        jQuery('.city-item').css('display', 'none');
         var city = jQuery.trim(city);
-        jQuery('.second .city-item span:contains("' + city + '")').parents().each(function () {
+        jQuery('.city-item span:contains("' + city + '")').parents().each(function () {
             jQuery(this).css('display', 'block');
         });
-        jQuery('.second .city-item span:contains("' + city + '")').parents().css('display', 'block');
+        console.log(jQuery('span:contains("' + city + '")').html());
+        jQuery('.city-item span:contains("' + city + '")').parents().css('display', 'block');
     }
 </script>
 <?php require_once 'footer.php'; ?>

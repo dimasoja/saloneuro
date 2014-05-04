@@ -1,155 +1,88 @@
 <?php require_once('header.php'); ?>
-
+<?php
+function transliterate($string) {
+    $roman = array("Sch", "sch", 'Yo', 'Zh', 'Kh', 'Ts', 'Ch', 'Sh', 'Yu', 'ya', 'yo', 'zh', 'kh', 'ts', 'ch', 'sh', 'yu', 'ya', 'A', 'B', 'V', 'G', 'D', 'E', 'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'F', '', 'Y', '', 'E', 'a', 'b', 'v', 'g', 'd', 'e', 'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', '', 'y', '', 'e','_');
+    $cyrillic = array("Щ", "щ", 'Ё', 'Ж', 'Х', 'Ц', 'Ч', 'Ш', 'Ю', 'я', 'ё', 'ж', 'х', 'ц', 'ч', 'ш', 'ю', 'я', 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Ь', 'Ы', 'Ъ', 'Э', 'а', 'б', 'в', 'г', 'д', 'е', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'ь', 'ы', 'ъ', 'э',' ');
+    return str_replace($cyrillic, $roman, $string);
+}
+?>
+<div class="information">
+<?php $city_geo = (array)$city; ?>
+<?php $city_geo = $city[0]; ?>
 <div class="geocity" style="display:none">
     <?php echo $session_city; ?>
 </div>
-<div class="slider-full">
-    <div class="fullwidthbanner-container">
-        <div class="fullwidthbanner">
-            <ul>
-                <li data-transition="premium-random" data-slotamount="3">
-                    <img src="/images/webmarket/dummy/slides/slide1.png" alt="slider img" width="1400" height="377"/>
-
-                </li>
-                <li data-transition="premium-random" data-slotamount="3">
-                    <img src="/images/webmarket/dummy/slides/slide2.png" alt="slider img" width="1400" height="377"/>
-
-                </li>
-                <li data-transition="premium-random" data-slotamount="3">
-                    <img src="/images/webmarket/dummy/slides/slide3.png" alt="slider img" width="1400" height="377"/>
-
-                </li>
-                <li data-transition="premium-random" data-slotamount="3">
-                    <img src="/images/webmarket/dummy/slides/slide4.png" alt="slider img" width="1400" height="377"/>
-                </li>
-            </ul>
-            <div class="tp-bannertimer"></div>
-        </div>
-        <div id="sliderRevLeft"><i class="icon-chevron-left"></i></div>
-        <div id="sliderRevRight"><i class="icon-chevron-right"></i></div>
-    </div>
-    <div class="promo-block">
-        <a href="/news">
-            <input type="button" class="biruz" value="НОВОСТИ И/ИЛИ АКЦИИ КОМПАНИИ"/>
-        </a>
-        <br/><br/>
-        <i style="font-size:15px">Акция продукции THERMOLUX у ВСЕХ партнеров! <br/>
-            Или текст какой-либо одной новости, с<br/>
-            ограниченным количеством символов. <br/>
-            Блок реализуется с помощью css</i><br/>
-        <br/>
-        <a href="/news">
-            <input type="button" class="green floatright" value="Подробнее..."/>
-        </a>
+<div class="darker-stripe blocks-spacer more-space latest-news with-shadows">
+    <div class="bread-center">
+        <?php echo $breadcrumbs; ?>
     </div>
 </div>
-
-<div class="container">
-    <div class="row featured-items blocks-spacer">
-        <div class="span12">
-            <div class="main-titles">
-                <div class="arrows">
-                    <a href="#" class="icon-chevron-left" id="featuredItemsLeft"></a>
-                    <a href="#" class="icon-chevron-right" id="featuredItemsRight"></a>
-                </div>
-            </div>
-        </div>
-        <?php echo ORM::factory('settings')->getSetting('benefits'); ?>
+<div class="with-borders">
+    <div class="oncenter">
 
     </div>
 </div>
+<div class="common information">
+    <div class="container inner-narrow">
+        <div class="rightblock">
+            <div class="category-right-wrapper">
+                <div class="wheretobuyblock">
+                    <div class="aqua-header">Где купить?</div>
+                    <i class="find-store">найти магазин дилера</i><br/>
 
-<?php if (isset($index_content)) {
-    echo $index_content;
-} ?>
-<div class="boxed-area blocks-spacer">
-    <div class="container">
-        <div class="welcome">
-            <!-- <div class="fullwidthbanner-container" style="overflow: visible;">
-                <div class="fullwidthbanner revslider-initialised tp-simpleresponsive" id="revslider-281"
-                     style="max-height: 900px;">
-                    <?php foreach ($productscat as $category) { ?>
-                        <?php if (file_exists('.' . $category->image)) { ?>
-                            <?php $sizes = ImageWork::getImageSize('.' . $category->image, '363', '270', '363', '270'); ?>
-                            <?php if ($category->image != '') { ?>
-                                <div class="category-image-wrapper">
-                                    <img src='<?php echo $category->image; ?>' width='<?php echo $sizes['newwidth']; ?>'
-                                         height='<?php echo $sizes['newheight']; ?>'
-                                         style="margin-top:<?php echo (363 - $sizes['newheight']) / 2; ?>px;margin-top:<?php echo (250 - $sizes['newheight']) / 2; ?>px;"/>
-                                </div>
-                            <?php } else { ?>
-
-                            <?php } ?>
-                        <?php } ?>
-                    <?php } ?>
-                </div>
-            </div>-->
-            <div class="production-block-main">
-                <?php echo ORM::factory('settings')->getSetting('production'); ?>
-            </div>
-            <div class="promo-block-welcome">
-                <div class="category-right-wrapper">
-                    <div class="wheretobuyblock">
-                        <div class="aqua-header">Где купить?</div>
-                        <i class="find-store">найти магазин дилера</i><br/>
-
-                        <div class="geo-label">
-                            <div class="geo-image">
-                                <img src="/images/webmarket/savelocale.png"/>
-                            </div>
-                            <div class="your-city">
-                                Ваш город:
-                            </div>
-                            <div class="city1">
-                                <select class="all_cities" style="width:186px">
-                                    <?php $all_group_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array(); ?>
-                                    <?php foreach ($all_group_cities as $value) { ?>
-                                        <option
-                                            value="<?php echo $value->city; ?>" <?php if ($value->city == $session_city) {
-                                            echo 'selected';
-                                        } ?>><?php echo $value->city; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
+                    <div class="geo-label">
+                        <div class="geo-image">
+                            <img src="/images/webmarket/savelocale.png"/>
                         </div>
-                        <div class="cities">
-                            <?php $i = 0;
-
-                            foreach ($session_cities as $value) {
-                                if ($value->type == 'address') {
-                                    if ($i % 2 == 0) {
-                                        ?>
-                                        <div class="address"><?php echo $value->city . ', ' . $value->address; ?></div>
-                                    <?php } else { ?>
-                                        <div
-                                            class="blue-address"><?php echo $value->city . ', ' . $value->address; ?></div>
-                                    <?php
-                                    }
-                                    $i++;
-                                }
-                            } ?>
+                        <div class="your-city">
+                            Ваш город:
                         </div>
-                        <div class="other">
-                            <a class="fancybox" href="#fancy-body">
-                                <input type="button" class="green floatright" value="Подробнее...">
-                            </a>
-                        </div>
-                        <div class="other lightgreytext">
-                            <a href="/news">
-                                Хочу купить онлайн!
-                            </a>
+                        <div class="city1">
+                            <select class="all_cities" style="width:186px">
+                                <?php $all_group_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array(); ?>
+                                <?php foreach ($all_group_cities as $value) { ?>
+                                    <option value="<?php echo $value->city; ?>" <?php if ($value->city == $session_city) {
+                                        echo 'selected';
+                                    } ?>><?php echo $value->city; ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                     </div>
-                    <?php echo ORM::factory('settings')->getSetting('callus'); ?>
+                    <div class="cities">
+                        <?php $i = 0;
+
+                        foreach ($session_cities as $value) {
+                            if ($value->type == 'address') {
+                                if ($i % 2 == 0) {
+                                    ?>
+                                    <div class="address"><?php echo $value->city . ', ' . $value->address; ?></div>
+                                <?php } else { ?>
+                                    <div
+                                        class="blue-address"><?php echo $value->city . ', ' . $value->address; ?></div>
+                                <?php
+                                }
+                                $i++;
+                            }
+                        } ?>
+                    </div>
+                    <div class="other">
+                        <a class="fancybox" href="#fancy-body">
+                            <input type="button" class="green floatright" value="Подробнее...">
+                        </a>
+                    </div>
+                    <div class="other lightgreytext">
+                        <a href="/news">
+                            Хочу купить онлайн!
+                        </a>
+                    </div>
                 </div>
+                <?php echo ORM::factory('settings')->getSetting('callus'); ?>
             </div>
         </div>
-
+        <div class="width755">
+            <?php echo $content; ?>
+        </div>
     </div>
-    <br/>
-    <br/>
-</div>
-<br/>
 </div>
 <div class="fancy-address" style="display:none">
     <div id="fancy-body">
@@ -274,15 +207,15 @@
     </form>
 </div>
 
-
-<br>
-
-
-<div class="clearboth">&nbsp;</div>
-</form>
-</div>
 <script type="text/javascript">
     jQuery(document).ready(function () {
+        jQuery('.cat-info .address').mouseover(function(){
+            jQuery('.cat-info .address').removeClass('active');
+            jQuery(this).addClass('active');
+            jQuery('.cat-info .address .right-cat').remove();
+            jQuery(this).find('span').after('<span class="right-cat" style="float:right">      ></span>');
+        });
+
         jQuery(".fancybox").fancybox({
             'beforeShow': function () {
                 var city = jQuery('.geocity').html();
@@ -364,14 +297,48 @@
             }
         })
         ;
-        jQuery('.all_cities').change(function () {
+        var city = jQuery('.geocity').html();
+        if (city != '') {
+            jQuery('.fancy-address-block .change-city-select option').each(function () {
+                if (jQuery.trim(city) == jQuery(this).html()) {
+                    jQuery(this).attr('selected', 'selected');
+                    var id = jQuery(this).html();
+                    changeCityBlock(id);
+                }
+            });
+            jQuery('.fancy-address-block .change-city-select :contains("' + city + '")').attr('selected', 'selected');
+        }
+        jQuery('.fancy-address-block .change-city-select').change(function () {
+            jQuery('.fancy-address-block .map-item').css('display', 'none');
+            var id = jQuery(this).children('option:selected').html();
+            changeCityBlock(id);
+        });
+        jQuery('.fancy-address-block .city-item').click(function () {
+            jQuery('.fancy-address-block .city-item').removeClass('active');
+            jQuery(this).addClass('active');
+            var id = jQuery(this).attr('rel');
+            jQuery('.fancy-address-block .map-item').css('display', 'none');
+            jQuery('.fancy-address-block .map-item.rel' + id).css('display', 'block');
+            jQuery.fancybox.update();
+        });
+        jQuery('.all_cities').change(function(){
             $el = jQuery(this).val();
-            jQuery.post('/index/changecity', {city: $el}, function (response) {
+            jQuery.post('/index/changecity', {city: $el}, function(response){
                 window.location = '<?php echo $_SERVER['REQUEST_URI']; ?>';
             })
         });
     })
     ;
+
+    function changeCityBlock(city) {
+        jQuery('.fancy-address-block .city-item').css('display', 'none');
+        var city = jQuery.trim(city);
+        jQuery('.fancy-address-block .city-item span:contains("' + city + '")').parents().each(function () {
+            jQuery(this).css('display', 'block');
+        });
+        console.log(jQuery('.fancy-address-block span:contains("' + city + '")').html());
+        jQuery('.fancy-address-block .city-item span:contains("' + city + '")').parents().css('display', 'block');
+    }
 
     function changeCity(city) {
         jQuery('.city-item').css('display', 'none');
@@ -382,12 +349,7 @@
         console.log(jQuery('span:contains("' + city + '")').html());
         jQuery('.city-item span:contains("' + city + '")').parents().css('display', 'block');
     }
+
 </script>
-
-<!-- Start SiteHeart code -->
-
-<!-- End SiteHeart code -->
-<?php require_once('footer_catalog.php'); ?>
-
-
-
+</div>
+<?php require_once 'footer.php'; ?>

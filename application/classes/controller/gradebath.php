@@ -2,23 +2,22 @@
 
 defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Information extends Controller_Base
+class Controller_Gradebath extends Controller_Base
 {
 
-    public $template = 'layouts/common-information';
+    public $template = 'layouts/common-gradebath';
     public $category;
     public $id;
 
     public function __construct($request) {
         parent::__construct($request);
-        $this->cname = "information";
+        $this->cname = "gradebath";
         $this->category = $request->param('category', '');
         $this->id = $request->param('id', '');
     }
 
     public function action_index() {
-
-        $view = new View('scripts/information');
+        $view = new View('scripts/gradebath');
         $this->template->css = ORM::factory('settings')->getSetting('css');
         $city_limit = ORM::factory('settings')->getSetting('addr_num');
         $this->template->session_city = Session::instance()->get('city');

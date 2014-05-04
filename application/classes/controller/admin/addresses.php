@@ -56,6 +56,28 @@ class Controller_Admin_Addresses extends Controller_AdminBase {
         $this->display($view);
     }
 
+    public function action_editcity() {
+        $view = new View('scripts/admin/addresses/editcity');
+        $id = trim(htmlspecialchars($this->request->param('id')));
+        if($_POST) {
+            $post = Safely::safelyGet($_POST);
+            $addresses = ORM::factory('addresses', $id);
+            $addresses->values($post)->save();
+            AdminHelper::setParamRedirect('success', 'Отредактировано успешно!', 'addresses', 'index');
+        }
+        $view->addresses = ORM::factory('addresses', $id);
+        $this->display($view);
+    }
+
+    public function action_newcity() {
+        if($_POST) {
+            $post = Safely::safelyGet($_POST);
+            $post['time'] = time();
+            $save = ORM::factory('addresses')->values($post)->save();
+            AdminHelper::setParamRedirect('success', 'Добавлено!', 'addresses', 'index');
+        }
+    }
+
 
 
 }

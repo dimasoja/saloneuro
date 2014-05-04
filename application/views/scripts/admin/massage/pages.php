@@ -78,8 +78,14 @@
                     <td><?php echo $item->name; ?></td>
                     <td><?php echo $item->price; ?></td>
                     <td><?php echo date("Y-m-d H:i:s", $item->time); ?></td>
-                    <td><input class="button-turquoise button" value="Редактировать" onclick="edit(<?php echo $item->id; ?>)"/></td>
-                    <td><input class="button-turquoise button" value="Удалить" onclick="deletecat(<?php echo $item->id; ?>)"/></td>
+                    <td>
+                        <input class="button-turquoise button" value="Редактировать" onclick="edit(<?php echo $item->id; ?>)"/>
+                    </td>
+                    <td>
+                        <?php if(($item->id!='9')&&($item->id!='10')&&($item->id!='11')) { ?>
+                            <input class="button-turquoise button" value="Удалить" onclick="deletecat(<?php echo $item->id; ?>)"/>
+                        <?php } ?>
+                    </td>
                 </tr>
             <?php } ?>
             </tbody>

@@ -2450,10 +2450,115 @@ label { font-weight: bold; color: #333333; }
 .massage-special {
     width: 60%; margin-left:10%;margin-top:15px;
 }
+.massage-special-price {
+    margin-top:15px;
+}
+.switch-gidro {
+    font-size: 12px;
+    font-style:italic;
+    cursor:pointer;
+}
+.sh_button {
+    display:none !important;
+}
+.lookonthis {
+    text-align: center;
+    width: 149px;
+    font-size: 13px;
+    background-color: lightblue;
+    color: white;
+    margin-top: 0px;
+    z-index: 500;
+    position: absolute;
+    margin-top: -19px;
+    display:none
+}
+.lookonthis a {
+    color: white;
+}
+.big-green {
+    padding: 9px 28px;
+    margin-top: 10px;
+}
+#order-ways {
+    text-align:center;
+}
+.logotext {
+    float: left;
+    font-size: 13px;
+    width: 505px;
+    margin-top: 39px;
+    padding-left: 15px;
+    font-style:italic;
+}
+.logo {
+    width:150px;
+    float:left;
+}
+.inner .width755 {
+    width:755px; overflow; float:left;margin-left: 22px;
+}
+.production-hidden {
+    text-align: center;
+    width: 343px;
+    font-size: 16px;
+    background-color: lightblue;
+    color: white;
+    margin-top: 0px;
+    z-index: 500;
+    position: absolute;
+    margin-top: -6px;
+    display: none;
+}
+.production-hidden {
+    text-align: center;
+    width: 343px;
+    font-size: 16px;
+    background-color: lightblue;
+    color: white;
+    margin-top: 0px;
+    z-index: 500;
+    position: absolute;
+    margin-top: -7px;
+    display: none;
+}
+.production-hidden a {
+    color: white;
+}
+.common.information .information-text {
+    width:493px !important;
+}
+.common.information .width755 {
+    float:left;
+    width:744px;
+}
+.cert-title {
+    text-align:left;
+}
+.cert-title a {
 
-
-
-
+}
+#callback-form .name_call, #callback-form .name_phone {
+    margin-left: 19px;
+}
+#sh_button {
+    visibility:hidden !important;
+}
+.production-block-main {
+    width:795px;
+    float:left;
+}
+.width755 {
+    margin-bottom:50px;
+}
+.enter-partner {
+    margin-right:15px;
+}
+.requestcoop {
+    color:#34353e;
+    width:100%;
+    text-align:center;
+}
 
 
 

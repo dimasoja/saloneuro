@@ -31,7 +31,7 @@ function transliterate($string) {
     </div>
 </div>
 <div class="common">
-    <div class="container">
+    <div class="container inner-narrow">
         <div class="rightblock">
             <div class="category-right-wrapper catalog-wrapper">
                 <div class="wheretobuyblock">

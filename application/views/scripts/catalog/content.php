@@ -32,13 +32,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $(function () {
-        $('.jcarousel').jcarousel({
-            // Configuration goes here
-        });
-    });
-</script>
+
 <div class="information-item">
     <?php if (isset($page->image)) { ?>
         <div class="information-image">
@@ -80,13 +74,14 @@
                 <span class="floatleft"><?php echo $page->name; ?></span>
                 <span class="floatright"><span class="global-price"
                                                data-value="<?php echo $page->price; ?>"><?php echo number_format((double)$page->price, 0, ' ', ' '); ?></span><br/>
-                    <span class="order-button">Заказать</span>
+                    <a href="#order-ways" class="order-form">
+                        <span class="order-button">Заказать</span>
+                    </a>
                 </span>
             </div>
         </div>
         <br/>
     </div>
-
 </div>
 
 <?php if ($category_product->grade_on == 'on') { ?>
@@ -94,47 +89,6 @@
         <div class="grade-title">В комплектацию входит</div>
         <?php $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $page->id)->find_all()->as_array(); ?>
         <div class="field" style="text-align:left;">
-            <div class="grade-item">
-                <div class="grade-first-col">
-                    <div class="grade-image">
-                        <img src="">
-                    </div>
-                    <div class="grade-name">
-                        Гидромассаж (+/-)
-                    </div>
-                </div>
-                <div class="grade-second-col">
-                    <div class="grade-price active first">
-                        <span class="grade-price-value" rel="14000">14 000</span>
-                    </div>
-                </div>
-                <div class="grade-first-col massage-special">
-                    <div class="grade-image">
-                        <img src="">
-                    </div>
-                    <div class="grade-name">
-                        Гидромассаж (+/-)
-                    </div>
-                </div>
-                <div class="grade-second-col">
-                    <div class="grade-price active first">
-                        <span class="grade-price-value" rel="14000">14 000</span>
-                    </div>
-                </div>
-                <div class="grade-first-col massage-special">
-                    <div class="grade-image">
-                        <img src="">
-                    </div>
-                    <div class="grade-name">
-                        Гидромассаж (+/-)
-                    </div>
-                </div>
-                <div class="grade-second-col">
-                    <div class="grade-price active first">
-                        <span class="grade-price-value" rel="14000">14 000</span>
-                    </div>
-                </div>
-            </div>
             <?php foreach ($options as $option) {
                 $grades = ORM::factory('grade')->where('id', '=', $option->value)->find(); ?>
                 <div class="grade-item">
@@ -152,7 +106,7 @@
                                   rel="<?php echo $grades->price; ?>"><?php echo number_format($grades->price, 0, ' ', ' '); ?></span>
                             <br/>
                             <span class="add-grade" data-grade="<?php echo $grades->id; ?>"
-                                  data-price="<?php echo $grades->price; ?>">Добавить комплектацию</span>
+                                  data-price="<?php echo $grades->price; ?>" data-image="<?php echo $grades->image; ?>">Добавить комплектацию</span>
                         </div>
                     </div>
                 </div>
@@ -172,6 +126,80 @@
 
 
             <div class="field" style="text-align:left; display:none">
+                <div class="grade-item">
+                    <div class="grade-first-col">
+                        <div class="massage-image" data-image="<?php echo $gidromassage->image; ?>">
+                            <img src="<?php echo $gidromassage->image; ?>">
+
+                            <div class="lookonthis"><a href="<?php echo $gidromassage->image; ?>">Посмотреть</a></div>
+                        </div>
+                        <div class="massage-info">
+                            <div class="grade-name">
+                                <?php echo $gidromassage->name; ?> (<span class="switch-gidro">Раскрыть</span>)
+                            </div>
+                            <div class="massage-descr">
+                                <?php echo $gidromassage->description; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grade-second-col">
+                        <div class="grade-price active first">
+                            <span class="grade-price-value" rel="7000"><?php echo $gidromassage->price; ?></span>
+                        </div>
+                    </div>
+                    <div class="gidro" style="display:none">
+                        <div class="grade-first-col massage-special">
+                            <div class="massage-image" data-image="<?php echo $backmassage->image; ?>">
+                                <img src="<?php echo $backmassage->image; ?>">
+
+                                <div class="lookonthis"><a href="<?php echo $backmassage->image; ?>">Посмотреть</a>
+                                </div>
+                            </div>
+                            <div class="massage-info">
+                                <div class="grade-name">
+                                    <?php echo $backmassage->name; ?> (<span class="switch-gidro">Раскрыть</span>)
+                                </div>
+                                <div class="massage-descr">
+                                    <?php echo $backmassage->description; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grade-second-col massage-special-price">
+                            <div class="grade-price first">
+                                <span class="grade-price-value"
+                                      rel="<?php echo $backmassage->price; ?>"><?php echo number_format($backmassage->price, 0, ' ', ' '); ?></span><br/>
+                            <span class="add-massage" data-grade="<?php echo $backmassage->id; ?>"
+                                  data-price="<?php echo $backmassage->price; ?>"
+                                  data-image="<?php echo $backmassage->image; ?>">Добавить комплектацию</span>
+                            </div>
+                        </div>
+                        <div class="grade-first-col massage-special">
+                            <div class="massage-image" data-image="<?php echo $feetmassage->image; ?>">
+                                <img src="<?php echo $feetmassage->image; ?>">
+
+                                <div class="lookonthis"><a href="<?php echo $feetmassage->image; ?>">Посмотреть</a>
+                                </div>
+                            </div>
+                            <div class="massage-info">
+                                <div class="grade-name">
+                                    <?php echo $feetmassage->name; ?> (<span class="switch-gidro">Раскрыть</span>)
+                                </div>
+                                <div class="massage-descr">
+                                    <?php echo $feetmassage->description; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grade-second-col massage-special-price">
+                            <div class="grade-price first">
+                                <span class="grade-price-value"
+                                      rel="<?php echo $feetmassage->price; ?>"><?php echo number_format($feetmassage->price, 0, ' ', ' '); ?></span><br/>
+                            <span class="add-massage" data-grade="<?php echo $feetmassage->id; ?>"
+                                  data-price="<?php echo $feetmassage->price; ?>"
+                                  data-image="<?php echo $feetmassage->image; ?>">Добавить комплектацию</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <?php foreach ($options as $option) {
                     $option = json_decode($option->value);
                     $massage = ORM::factory('massage')->where('id', '=', $option[1])->find();
@@ -179,8 +207,10 @@
                     ?>
                     <div class="grade-item">
                         <div class="grade-first-col">
-                            <div class="massage-image">
+                            <div class="massage-image" data-image="<?php echo $massage->image; ?>">
                                 <img src="<?php echo $image->path; ?>"/>
+
+                                <div class="lookonthis"><a href="<?php echo $massage->image; ?>">Посмотреть</a></div>
                             </div>
                             <div class="massage-info">
                                 <div class="grade-name">
@@ -197,7 +227,8 @@
                                   rel="<?php echo $massage->price; ?>"><?php echo number_format($massage->price, 0, ' ', ' '); ?></span>
                                 <br/>
                                 <span class="add-massage" data-massage="<?php echo $massage->id; ?>"
-                                      data-price="<?php echo $massage->price; ?>">Добавить опцию</span>
+                                      data-price="<?php echo $massage->price; ?>"
+                                      data-image="<?php echo $massage->image; ?>">Добавить опцию</span>
                             </div>
                         </div>
                     </div>
@@ -232,16 +263,20 @@
                     <b>Важно! Мы не берем за данный функционал деньги (перефразировать)</b>
                 </p>
             </div>
-            <div class="product-downloads">
-                <a href=""><img src="/images/print.png"/></a>
-                <a href="" class="width32"><img src="/images/download.png"/></a>
-                Схема монтажа
-            </div>
-            <div class="product-downloads">
-                <a href=""><img src="/images/print.png"/></a>
-                <a href="" class="width32"><img src="/images/download.png"/></a>
-                Инструкция по эксплуатации
-            </div>
+            <?php if ($page->scheme != '') { ?>
+                <div class="product-downloads">
+                    <!--                <a href="javascript:window.print()"><img src="/images/print.png"/></a>-->
+                    <a href="/<?php echo $page->scheme; ?>" class="width32"><img src="/images/download.png"/></a>
+                    Схема монтажа
+                </div>
+            <?php } ?>
+            <?php if ($page->instruction != '') { ?>
+                <div class="product-downloads">
+                    <!--                <a href="javascript:window.print()"><img src="/images/print.png"/></a>-->
+                    <a href="/<?php echo $page->instruction; ?>" class="width32"><img src="/images/download.png"/></a>
+                    Инструкция по эксплуатации
+                </div>
+            <?php } ?>
         </div>
     </div>
     <br/><br/>
@@ -457,27 +492,6 @@
             priceproduct.html(number_format(globalprice, 0, ' ', ' '));
             priceproduct.attr('data-value', globalprice);
         });
-        jQuery('.add-massage').click(function () {
-            var priceproduct = jQuery('.global-price')
-            var globalprice = priceproduct.attr('data-value');
-            var e = jQuery(this);
-            var massage = e.attr('data-massage');
-            var price = e.attr('data-price');
-            var hasActive = e.parent().hasClass('active');
-            if (hasActive) {
-                e.parent().removeClass('active');
-                e.html('Добавить опцию');
-                delete order['massages'][massage];
-                globalprice = parseInt(globalprice) - parseInt(price);
-            } else {
-                e.parent().addClass('active');
-                e.html('Убрать опцию');
-                order['massages'][massage] = price;
-                globalprice = parseInt(globalprice) + parseInt(price);
-            }
-            priceproduct.html(number_format(globalprice, 0, ' ', ' '));
-            priceproduct.attr('data-value', globalprice);
-        });
         jQuery('.product-related-add').click(function () {
             var priceproduct = jQuery('.global-price')
             var globalprice = priceproduct.attr('data-value');
@@ -499,15 +513,142 @@
             priceproduct.html(number_format(globalprice, 0, ' ', ' '));
             priceproduct.attr('data-value', globalprice);
         });
-        jQuery('.order-button').click(function () {
-            var order_string = JSON.stringify(order);
-            jQuery.post('/index/writeorder', {order:order_string}, function(response){
-                console.log(response);
-            });
+//        jQuery('.order-button').click(function () {
+//            var order_string = JSON.stringify(order);
+//            jQuery.post('/index/writeorder', {order: order_string}, function (response) {
+//                console.log(response);
+//            });
+//        });
+        jQuery('.switch-gidro').click(function () {
+            var is_active = jQuery('.gidro').css('display');
+            if (is_active == 'block') {
+                jQuery(".gidro").slideUp("slow", function () {
+                    jQuery('.switch-gidro').html('Раскрыть');
+                });
+            } else {
+                jQuery(".gidro").slideDown("slow", function () {
+                    jQuery('.switch-gidro').html('Скрыть');
+                });
+            }
         });
+        jQuery('.add-massage').click(function () {
+            var priceproduct = jQuery('.global-price')
+            var globalprice = priceproduct.attr('data-value');
+            var image_carousel = jQuery('.hidden-carousel-image').html();
+            var big_image = jQuery('.hidden-carousel-image img');
+            var carousel_big = jQuery('.carousel.carousel-stage ul');
+            var carousel_small = jQuery('.carousel.carousel-navigation ul');
+            var e = jQuery(this);
+            var massage = e.attr('data-massage');
+            var price = e.attr('data-price');
+            var hasActive = e.parent().hasClass('active');
+            var image = e.attr('data-image');
+            if (hasActive) {
+                e.parent().removeClass('active');
+                e.html('Добавить опцию');
+                delete order['massages'][massage];
+                globalprice = parseInt(globalprice) - parseInt(price);
+                carousel_small.children('.changed-image-small').html('');
+                carousel_big.children('.changed-image-big').html('');
+            } else {
+                e.parent().addClass('active');
+                e.html('Убрать опцию');
+                order['massages'][massage] = price;
+                globalprice = parseInt(globalprice) + parseInt(price);
+                var check = jQuery('.changed-image-big').length;
+                if (check == 1) {
+                    jQuery.post('/index/generateimages', {image: image}, function (response) {
+                        var images = JSON.parse(response);
+                        if (images['small'].length) {
+                            carousel_small.children('.changed-image-small').html('');
+                            carousel_small.children('.changed-image-small').html(images['small']);
+                            //carousel_small.append(images['small']);
+                        }
+                        if (images['big'].length) {
+                            carousel_big.children('.changed-image-big').html('');
+                            carousel_big.children('.changed-image-big').html(images['big']);
+                        }
+                        jcarouselreload();
+                    });
+                } else {
+                    jQuery.post('/index/generateimagesli', {image: image}, function (response) {
+                        var images = JSON.parse(response);
+                        if (images['small'].length) {
+                            carousel_small.append(images['small']);
+                        }
+                        if (images['big'].length) {
+                            carousel_big.append(images['big']);
+                        }
+                        jcarouselreload();
+                    });
+                }
+            }
+
+            priceproduct.html(number_format(globalprice, 0, ' ', ' '));
+            priceproduct.attr('data-value', globalprice);
+        });
+        jQuery('.massage-image').mouseover(function () {
+            jQuery(this).children('.lookonthis').css('display', 'block');
+        });
+        jQuery('.massage-image').mouseout(function () {
+            jQuery(this).children('.lookonthis').css('display', 'none');
+        });
+        jQuery('.lookonthis a').fancybox();
+        jQuery('.order-form').fancybox({
+            'afterShow': function () {
+                jQuery('.fancy').fancybox({
+                    'beforeShow':function(){
+                        jQuery.fancybox.update();
+                        jQuery('.order-finish').val(JSON.stringify(order));
+                    }
+                });
+            }
+        });
+
     });
 </script>
-
+<div class="dn">
+    <div id="order-ways">
+        <h3>Выберите способ:</h3>
+        <a href="#manufacturer-form" class="fancy"><input type="button" class="green big-green manufacturer" value="У производителя"></a><br/>
+        <a href="#oficial-form" class="fancy"><input type="button" class="green big-green oficial"
+                                       value="В офиц. интернет-магазине"><br/>
+            <a href="#yourcity-form" class="fancy"><input type="button" class="green big-green yourcity" value="В своем городе"><br/>
+    </div>
+</div>
+<div class="dn">
+    <div id="manufacturer-form">
+        Производитель
+    </div>
+</div>
+<div class="dn">
+    <div id="oficial-form">
+        Официальный интернет-магазин
+    </div>
+</div>
+<div class="dn">
+    <div id="yourcity-form">
+        <form action="/orders/new" id="callback-form" method="POST">
+            <div class="resp">
+                <h3>Форма заказа</h3>
+                <div class="input-name">
+                    <input type="text" id="response-name1" class="name_call" name="name" placeholder="Имя">
+                </div>
+                <div class="input-phone">
+                    <input type="text" id="response-phone1" class="name_phone" name="phone" placeholder="Телефон">
+                </div>
+                <div class="input-phone">
+                    <input type="text" id="response-phone1" class="name_phone" name="email" placeholder="Email">
+                </div>
+                <input type="hidden" name="order" class="order-finish" value=""/>
+                <input type="hidden" name="url" value="<?php echo $_SERVER['HTTP_REFERER']; ?>"/>
+                <div class="order-submit">
+                    <input type="submit" class="order-button green ways-call-submit" value="Заказать" style="margin-left:0px">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 
 

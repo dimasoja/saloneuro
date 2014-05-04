@@ -191,6 +191,9 @@ class Controller_Catalog extends Controller_Base
                 $related_images[] = ORM::factory('images')->where('id_image','=',$option_image->value)->find();
             }
             $view->related_images = $related_images;
+            $view->gidromassage = ORM::factory('massage')->where('id','=','9')->find();
+            $view->feetmassage = ORM::factory('massage')->where('id','=','10')->find();
+            $view->backmassage = ORM::factory('massage')->where('id','=','11')->find();
             $view->images = $images;
             $this->template->current = $currents;
         }

@@ -248,6 +248,16 @@ Route::set('information', 'information(/<category>(/<id>))')
         'controller' => 'information',
         'action' => 'index'
     ));
+Route::set('gradebath', 'gradebath(/<category>(/<id>))')
+    ->defaults(array(
+        'controller' => 'gradebath',
+        'action' => 'index'
+    ));
+Route::set('orders', 'orders(/<category>(/<id>))')
+    ->defaults(array(
+        'controller' => 'orders',
+        'action' => 'index'
+    ));
 Route::set('catalog', 'catalog(/<category>(/<id>))')
     ->defaults(array(
         'controller' => 'catalog',

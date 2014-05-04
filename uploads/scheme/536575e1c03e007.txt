@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://pmplatform.alt1.ru">
+		<SOAP-ENV:Header>
+			<ns1:authorizationHeader>
+				<ns1:project>chester_ru</ns1:project>
+				<ns1:login>filmsrv</ns1:login>
+				<ns1:password>65LiFsPfe9m</ns1:password>
+				<ns1:clientIp>46.159.173.143</ns1:clientIp>
+			</ns1:authorizationHeader>
+		</SOAP-ENV:Header>
+		<SOAP-ENV:Body>
+			<ns1:gamePlayed>
+				<ns1:userId>3048282</ns1:userId>
+				<ns1:gameName>orchestra</ns1:gameName>
+				<ns1:createdAt>2014-04-07 07:04:36</ns1:createdAt>
+			</ns1:gamePlayed>
+		</SOAP-ENV:Body>
+	</SOAP-ENV:Envelope>

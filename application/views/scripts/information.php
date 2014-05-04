@@ -1,4 +1,4 @@
-<h2>Полезная информация</h2>
+<h2><?php if(isset($page_name)) echo $page_name; else echo 'Полезная информация'; ?></h2>
 <hr/>
 <?php foreach ($items as $item) { ?>
     <div class="information-item">

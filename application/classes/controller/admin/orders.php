@@ -16,8 +16,6 @@ class Controller_Admin_Orders extends Controller_AdminBase
         $view = new View('scripts/admin/orders/index');
         $orders = ORM::factory('orders');
         $view->contacts = $orders->find_all()->as_array();
-        $view->for_business = ORM::factory('products')->where('type','=','for_business')->find_all()->as_array();
-        $view->for_home = ORM::factory('products')->where('type','=','for_home')->find_all()->as_array();
         $orders->makeAllOld();
         $this->display($view);
     }

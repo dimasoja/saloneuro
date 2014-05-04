@@ -24,6 +24,7 @@ class Controller_Admin_Index extends Controller_AdminBase
         $view->logo = ORM::factory('settings')->getSetting('logo');
         $view->noise = ORM::factory('settings')->getSetting('noise');
         $view->strength = ORM::factory('settings')->getSetting('strength');
+        $view->call_us = ORM::factory('settings')->getSetting('call_us');
         $view->heat = ORM::factory('settings')->getSetting('heat');
         $this->display($view);
     }
@@ -91,6 +92,7 @@ class Controller_Admin_Index extends Controller_AdminBase
         exit();
     }
     function action_callus() {
+
         ORM::factory('settings')->saveSetting('call_us', $_POST['call_us']);
         ORM::factory('settings')->saveSetting('logotext', $_POST['logotext']);
         exit();
@@ -107,4 +109,5 @@ class Controller_Admin_Index extends Controller_AdminBase
         ORM::factory('settings')->saveSetting('cert_keywords', $post['cert_keywords']);
         exit();
     }
+
 }
