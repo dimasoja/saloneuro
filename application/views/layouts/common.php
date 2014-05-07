@@ -91,6 +91,11 @@
                             $i++;
                         } ?>
                     </div>
+                    <div class="all-certy">
+                        <br/>
+                        <a href="/certificates" class="green floatright enter-partner">Все сертификаты</a>
+                        <br/>
+                    </div>
                     <br/>
                 </div>
                 <div class="wheretobuyblock">
@@ -171,17 +176,33 @@
         <div class="cities-all" style="overflow:auto">
             <?php foreach ($all_cities as $value) { ?>
                 <div class="city-item rel<?php echo $value->id; ?>" rel="<?php echo $value->id; ?>">
-                    <?php if ($value->type == 'address') { ?>
-                        <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
-                    <?php } else { ?>
-                        <span><?php echo $value->city . ' (все адреса)'; ?></span><br/>
-                    <?php } ?>
-                    <i><?php echo $value->phone; ?></i>
+                    <div class="ballon-title ball">
+                        <?php if ($value->type == 'address') { ?>
+                            <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
+                        <?php } else { ?>
+                            <span><?php echo $value->city . ' (все адреса)'; ?></span><br/>
+                        <?php } ?>
+                        <i><?php echo $value->phone; ?></i>
+                        <!--                        <div class="balloon"><img src="/images/webmarket/savelocale.png"/></div>-->
+                    </div>
 
-                    <div class="balloon"><img src="/images/balloon.png"/></div>
                 </div>
 
             <?php } ?>
+            <script type="text/javascript">
+                jQuery(document).ready(function(){
+                    jQuery('.ball').mouseenter(function(){
+                        jQuery(this).addClass('active');
+                    });
+                    jQuery('.ball').mouseleave(function(){
+                        jQuery(this).removeClass('active');
+                    });
+                    jQuery('.ball').click(function(){
+                        jQuery('.ball').removeClass('byclick');
+                        jQuery(this).addClass('byclick');
+                    });
+                });
+            </script>
         </div>
         <div class="maps">
             <?php foreach ($all_cities as $value) { ?>
@@ -279,7 +300,7 @@
         <div class="clearboth">&nbsp;</div>
     </form>
 </div>
-<a href='#map_layout' class='fancy-map' data-map='<script type="text/javascript" charset="utf-8" src="//api-maps.yandex.ru/services/constructor/1.0/js/?sid=xgROt_9_LqRGTxwYWZD1JYNkM5u0DBLf&width=600&height=450"></script>'>Посмотреть на карте</a>
+
 <div class="dn">
     <div id="map_layout">
 

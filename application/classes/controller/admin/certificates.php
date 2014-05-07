@@ -25,6 +25,7 @@ class Controller_Admin_Certificates extends Controller_AdminBase {
         $view->certificates = ORM::factory('certificates')->find_all()->as_array();
         $settings = ORM::factory('settings');
         $view->cert_title = $settings->getSetting('cert_title');
+        $view->cert_text = $settings->getSetting('cert_text');
         $view->cert_description = $settings->getSetting('cert_description');
         $view->cert_keywords = $settings->getSetting('cert_keywords');
         $this->display($view);

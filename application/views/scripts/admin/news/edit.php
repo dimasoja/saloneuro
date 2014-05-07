@@ -44,7 +44,7 @@
             </div>
 
             <div class="form-row">
-                <label class="field-name" for="standard">Ключевые слова (мета тэг):</label>
+                <label class="field-name" for="standard">Keywords (мета тэг):</label>
 
                 <div class="field">
                     <input type="text" name="keywords" style="width: 652px !important;"
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="form-row">
-                <label class="field-name" for="standard">Описание (мета тэг):</label>
+                <label class="field-name" for="standard">Description (мета тэг):</label>
 
                 <div class="field">
                     <textarea id="description" name="description" cols="90"
@@ -63,10 +63,20 @@
                         } ?></textarea>
                 </div>
             </div>
+            <div class="form-row">
+                <label class="field-name" for="standard">Title (мета тэг):</label>
+
+                <div class="field">
+                    <textarea id="description" name="description" cols="90"
+                              rows="5"><?php if (isset($meta_title)) {
+                            echo $meta_title;
+                        } ?></textarea>
+                </div>
+            </div>
 
             <div class="form-row">
 
-                <label class="field-name" for="standard">Адрес услуги (от корня):</label>
+                <label class="field-name" for="standard">Адрес Новости (от корня):</label>
 
                 <div class="field">
                     <input type="text" name="browser_name" style="width: 652px !important;"
@@ -196,18 +206,6 @@
         });
     }
 </script>
-<div class="portfolio">
-    <?php foreach ($portfolio as $portfol) { ?>
-        <div class="sws_img_block imagerel<?php echo $portfol->id_image; ?>">
-            <div class="img_block">
-                <img src="<?php echo $portfol->path; ?>" style="max-width: 194px;">
-            </div>
-            <div class="del_block">
-                <a href="javascript:void:(0);" class="del_vid" onclick="deletePortfolio(<?php echo $portfol->id_image; ?>);">Удалить</a>
-            </div>
-        </div>
-    <?php } ?>
-</div>
 
 
 <script type="text/javascript">

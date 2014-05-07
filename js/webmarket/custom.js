@@ -189,6 +189,7 @@ jQuery(document).ready(function($) {
             $(window).off("scroll.onlyDesktop");
         } else {
             var $headerHeight = $("#header").height(), $navbarHeight = $("#stickyNavbar").height();
+
             $(window).on("scroll.onlyDesktop", function() {
                 var scrollX = $(window).scrollTop();
                 if (scrollX > $headerHeight) {
@@ -201,6 +202,11 @@ jQuery(document).ready(function($) {
                     $(".large-screen #header").css({
                         marginBottom: 0
                     });
+                }
+                if(scrollX>400) {
+                    $(".order").addClass('fixed');
+                } else {
+                    $(".order").removeClass('fixed');
                 }
             });
         }

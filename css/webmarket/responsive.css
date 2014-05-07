@@ -122,7 +122,29 @@
     .shop {
         margin-left: 5px;
     }
-
+    /*.footer-benefits .span12 {
+        width:100%;
+    }
+    .footer-benefits .caroufredsel_wrapper {
+        width:100%;
+    }
+    .footer-benefits .span4{
+        margin-left:0px !important;
+    }
+    .footer-benefits .span12{
+        margin-left:0px !important;
+    }
+    .footer-benefits .carouFredSel .span4 {
+        width: 286px;
+    }
+    .footer-benefits .main-titles .arrows {
+        position: absolute;
+        top: 2px;
+        right: -95px !important;
+        bottom: 0;
+        word-spacing: -2px;
+    }
+*/
     .row:before, .row:after {
         display: table;
         content: "";

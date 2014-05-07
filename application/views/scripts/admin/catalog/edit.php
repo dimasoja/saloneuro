@@ -247,6 +247,7 @@
                                         <th></th>
                                         <th></th>
                                         <th>Наименование</th>
+                                        <th>Группировка</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -264,6 +265,12 @@
                                                        name="grade[]" <?php echo $selected; ?>/>
                                             </td>
                                             <td><?php echo $item->name; ?></td>
+                                            <td>
+                                                <?php $product = ORM::factory('catalog')->where('id','=',$item->group)->find(); ?>
+                                                <?php if(isset($product->id)) { ?>
+                                                    <?php echo $product->name; ?>
+                                                <?php } ?>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                     </tbody>

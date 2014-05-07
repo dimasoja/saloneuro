@@ -163,6 +163,21 @@
         <div style="display:none" class="forsun_for_massage">
             <br/><input type="text" name="forsun[]" style="width: 100%;margin-top: 8px;" placeholder="Форсунок"/>
         </div>
+        <div style="display:none" class="price_for_massage">
+            <br/><input type="text" name="price_for_massage[]" style="width: 100%;margin-top: 8px;" placeholder="Цена"/>
+        </div>
+        <div style="display:none" class="default_for_massage">
+            <label>По умолчанию?</label>
+            <input type="checkbox" class="by_default" name="default_for_massage[]"/>
+        </div>
+        <div style="display:none" class="required_for_massage">
+            <label>Обязательно?</label>
+            <input type="checkbox" class="by_required" name="required_for_massage[]"/>
+        </div>
+        <div style="display:none" class="underoption_for_massage" name="underoption_for_massage[]">
+            <label>Подопция?</label>
+            <input type="checkbox" class="by_underoption"/>
+        </div>
 
 
 
@@ -322,7 +337,7 @@
             Загрузить изображение
         </a>
 
-        <div class="images">
+        <div class="images massage-images">
 
         </div>
     </div>
@@ -441,6 +456,10 @@
                     var path = response_image[1];
                     var select_html = jQuery('.select_for_massage').html();
                     var forsun_html = jQuery('.forsun_for_massage').html();
+                    var price_for_massage = jQuery('.price_for_massage').html();
+                    var default_for_massage = jQuery('.default_for_massage').html();
+                    var required_for_massage = jQuery('.required_for_massage').html();
+                    var underoption_for_massage = jQuery('.underoption_for_massage').html();
                     var portfolio = jQuery('.massage-options');
                     var image_html = '<div class="sws_img_block imagerel' + id_image + '">\n\
                                            <div class="img_block">\n\
@@ -448,7 +467,7 @@
                                            </div>\n\
                                            <div class="del_block">\n\
                                                 <a href="javascript:void:(0);" class="del_vid" onclick="deletePortfolio(' + id_image + ');">Удалить</a>\n\
-                                           </div>' + select_html + forsun_html + '\n\
+                                           </div>' + select_html + forsun_html + price_for_massage + default_for_massage + required_for_massage + underoption_for_massage + '\n\
                                    </div>';
                     var hidden = '<input type="hidden" class="image' + id_image + '" name="massage[' + id_image + ']" rel="' + id_image + '"/> ';
                     portfolio.append(image_html);

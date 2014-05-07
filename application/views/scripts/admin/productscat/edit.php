@@ -67,6 +67,16 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <label class="field-name" for="standard">Тип товаров в категории (если ванны):</label>
+                                <div class="field" style="text-align:left;">
+                                    <select name="type" class="uniform">
+                                        <option value="" <?php if($productscat->type=='') echo 'selected'; ?>></option>
+                                        <option value="acrylic" <?php if($productscat->type=='acrylic') echo 'selected'; ?>>Массажные опции скрыты, гидромассажная опция не выбрана</option>
+                                        <option value="massage" <?php if($productscat->type=='massage') echo 'selected'; ?>>Массажные опции раскрыты, гидромассажная опция выбрана</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <label class="field-name" for="standard">Порядок:</label>
 
                                 <div class="field">

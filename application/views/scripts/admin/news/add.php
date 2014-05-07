@@ -48,7 +48,7 @@
             </div>
 
             <div class="form-row">
-                <label class="field-name" for="standard">Ключевые слова (мета тэг):</label>
+                <label class="field-name" for="standard">Keywords (мета тэг):</label>
 
                 <div class="field">
                     <input type="text" name="keywords" style="width: 652px !important;"
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="form-row">
-                <label class="field-name" for="standard">Описание (мета тэг):</label>
+                <label class="field-name" for="standard">Description (мета тэг):</label>
 
                 <div class="field">
                     <textarea id="description" name="description" cols="90"
@@ -67,10 +67,20 @@
                         } ?></textarea>
                 </div>
             </div>
+            <div class="form-row">
+                <label class="field-name" for="standard">Title (мета тэг):</label>
+
+                <div class="field">
+                    <textarea id="description" name="meta_title" cols="90"
+                              rows="5"><?php if (isset($title)) {
+                            echo $title;
+                        } ?></textarea>
+                </div>
+            </div>
 
             <div class="form-row">
 
-                <label class="field-name" for="standard">Адрес услуги (от корня):</label>
+                <label class="field-name" for="standard">Адрес новости (от корня):</label>
 
                 <div class="field">
                     <input type="text" name="browser_name" style="width: 652px !important;"

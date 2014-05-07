@@ -21,6 +21,7 @@ class Controller_Gradebath extends Controller_Base
         $this->template->css = ORM::factory('settings')->getSetting('css');
         $city_limit = ORM::factory('settings')->getSetting('addr_num');
         $this->template->session_city = Session::instance()->get('city');
+        $view->widths = ORM::factory('catalog')->group_by('width')->find_all()->as_array();
         $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
         $this->template->categories = ORM::factory('information')->roots();

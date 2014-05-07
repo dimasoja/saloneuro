@@ -98,17 +98,33 @@ function transliterate($string) {
         <div class="cities-all" style="overflow:auto">
             <?php foreach ($all_cities as $value) { ?>
                 <div class="city-item rel<?php echo $value->id; ?>" rel="<?php echo $value->id; ?>">
-                    <?php if ($value->type == 'address') { ?>
-                        <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
-                    <?php } else { ?>
-                        <span><?php echo $value->city . ' (все адреса)'; ?></span><br/>
-                    <?php } ?>
-                    <i><?php echo $value->phone; ?></i>
+                    <div class="ballon-title ball">
+                        <?php if ($value->type == 'address') { ?>
+                            <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
+                        <?php } else { ?>
+                            <span><?php echo $value->city . ' (все адреса)'; ?></span><br/>
+                        <?php } ?>
+                        <i><?php echo $value->phone; ?></i>
+                        <!--                        <div class="balloon"><img src="/images/webmarket/savelocale.png"/></div>-->
+                    </div>
 
-                    <div class="balloon"><img src="/images/balloon.png"/></div>
                 </div>
 
             <?php } ?>
+            <script type="text/javascript">
+                jQuery(document).ready(function(){
+                    jQuery('.ball').mouseenter(function(){
+                        jQuery(this).addClass('active');
+                    });
+                    jQuery('.ball').mouseleave(function(){
+                        jQuery(this).removeClass('active');
+                    });
+                    jQuery('.ball').click(function(){
+                        jQuery('.ball').removeClass('byclick');
+                        jQuery(this).addClass('byclick');
+                    });
+                });
+            </script>
         </div>
         <div class="maps">
             <?php foreach ($all_cities as $value) { ?>
@@ -352,4 +368,4 @@ function transliterate($string) {
 
 </script>
 </div>
-<?php require_once 'footer.php'; ?>
+<?php require_once 'footer_catalog.php'; ?>

@@ -63,6 +63,7 @@ class Controller_Admin_Grade extends Controller_AdminBase {
         $view = new View('scripts/admin/grade/pages');
         $view->success = FrontHelper::successNotif();
         $view->error = FrontHelper::errorNotif();
+        $view->products = ORM::factory('catalog')->find_all()->as_array();
         $view->grades = ORM::factory('grade')->find_all()->as_array();
         $this->display($view);
     }
@@ -98,6 +99,7 @@ class Controller_Admin_Grade extends Controller_AdminBase {
     public function action_editpage() {
         $view = new View('scripts/admin/grade/edit');
         $id = trim(htmlspecialchars($this->request->param('id')));
+        $view->products = ORM::factory('catalog')->find_all()->as_array();
         $grade = ORM::factory('grade');
         if($_POST) {
             $post = Safely::safelyGet($_POST);

@@ -14,41 +14,67 @@
 <?php } ?>
 <div class="inner-content">
     <div class="widget-content" align="center">
-        <a href="#" class="button button-blue marginbottom30"><img src="/images/admin/icon/14x14/white/download4.png" alt=""> Добавить комплектацию</a>
+        <a href="#" class="button button-blue marginbottom30"><img src="/images/admin/icon/14x14/white/download4.png"
+                                                                   alt=""> Добавить комплектацию</a>
         <br/>
         <br/>
+
         <div class="category-toggle" style="display: none;overflow:auto">
             <div class="span4" style="float: none !important; width:100%; margin-left:0px ">
                 <div class="widget">
-                    <form class="form-horizontal" action="/admin/grade/newgrade" method="POST" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="/admin/grade/newgrade" method="POST"
+                          enctype="multipart/form-data">
                         <div class="widget-header">
                             <h5>Новая:</h5>
                         </div>
                         <div class="widget-content no-padding">
                             <div class="form-row">
                                 <label class="field-name" for="standard">Наименование:</label>
+
                                 <div class="field">
-                                    <input type="text" class="input-large name-edit" name="name" style="float: left;width: 100%;">
+                                    <input type="text" class="input-large name-edit" name="name"
+                                           style="float: left;width: 100%;">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <label class="field-name" for="standard">Описание:</label>
+
                                 <div class="field">
-                                    <textarea name="description" id="add-answer" class="input-large name-edit"></textarea>
+                                    <textarea name="description" id="add-answer"
+                                              class="input-large name-edit"></textarea>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <label class="field-name" for="standard">Цена:</label>
+
                                 <div class="field">
-                                    <input type="text" class="input-large name-edit" name="price" style="float: left;width: 100%;">
+                                    <input type="text" class="input-large name-edit" name="price"
+                                           style="float: left;width: 100%;">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <label class="field-name" for="standard">Изображение:</label>
+
                                 <div class="field">
-                                    <input type="file" class="input-large name-edit" name="image" style="float: left;width: 100%;">
+                                    <input type="file" class="input-large name-edit" name="image"
+                                           style="float: left;width: 100%;">
                                 </div>
-                                <input type="submit" class="button button-blue small-button margintop18 marginleft128" value="Добавить">
+
+                            </div>
+                            <div class="form-row">
+                                <label class="field-name" for="standard">Группировать по продукту:</label>
+
+                                <div class="field" style="text-align:left;">
+                                    <select name="group" class="uniform">
+                                        <option value=""></option>
+                                        <?php foreach ($products as $product) { ?>
+                                            <option value="<?php echo $product->id; ?>"><?php echo $product->name; ?></option>
+                                        <?php } ?>
+
+                                    </select>
+                                </div>
+                                <input type="submit" class="button button-blue small-button margintop18 marginleft128"
+                                       value="Добавить">
                             </div>
                         </div>
                     </form>
@@ -72,14 +98,20 @@
             </thead>
             <tbody>
             <?php $count = 1; ?>
-            <?php foreach($grades as $item) { ?>
+            <?php foreach ($grades as $item) { ?>
                 <tr>
                     <td><?php echo $count++; ?></td>
                     <td><?php echo $item->name; ?></td>
                     <td><?php echo $item->price; ?></td>
                     <td><?php echo date("Y-m-d H:i:s", $item->time); ?></td>
-                    <td><input class="button-turquoise button" value="Редактировать" onclick="edit(<?php echo $item->id; ?>)"/></td>
-                    <td><input class="button-turquoise button" value="Удалить" onclick="deletecat(<?php echo $item->id; ?>)"/></td>
+                    <td><input class="button-turquoise button" value="Редактировать"
+                               onclick="edit(<?php echo $item->id; ?>)"/></td>
+                    <td>
+                        <?php if (($item->id != '1') && ($item->id != '2')) { ?>
+                            <input class="button-turquoise button" value="Удалить"
+                                   onclick="deletecat(<?php echo $item->id; ?>)"/>
+                        <?php } ?>
+                    </td>
                 </tr>
             <?php } ?>
             </tbody>
@@ -97,30 +129,30 @@
             window.location = '/admin/grade/editpage/' + id;
         }
 
-        jQuery(document).ready(function() {
-                jQuery('.bs-callout.bs-callout-info, .bs-callout.bs-callout-danger').fadeOut(10000);
-                var editor = CKEDITOR.replace('add-answer',
-                    {
-                        uiColor : 'lightgrey',
-                        language: 'en'
-                    });
-            CKFinder.setupCKEditor( editor, '/js/ckeditor/ckfinder/' );
-            jQuery('.button.button-blue.marginbottom30').click(function() {
+        jQuery(document).ready(function () {
+            jQuery('.bs-callout.bs-callout-info, .bs-callout.bs-callout-danger').fadeOut(10000);
+            var editor = CKEDITOR.replace('add-answer',
+                {
+                    uiColor: 'lightgrey',
+                    language: 'en'
+                });
+            CKFinder.setupCKEditor(editor, '/js/ckeditor/ckfinder/');
+            jQuery('.button.button-blue.marginbottom30').click(function () {
                 if (jQuery('.category-toggle').css('display') == 'none') {
-                    jQuery('.category-toggle').slideDown('slow', function() {
+                    jQuery('.category-toggle').slideDown('slow', function () {
                         jQuery(this).css('display', 'block');
                     });
                 } else {
-                    jQuery('.category-toggle').slideUp('slow', function() {
+                    jQuery('.category-toggle').slideUp('slow', function () {
                         jQuery(this).css('display', 'none');
                     });
                 }
             });
-            jQuery('.tabitem').click(function() {
+            jQuery('.tabitem').click(function () {
                 jQuery(this).parents(5).children().children('.displayblock').removeClass('displayblock');
             });
             jQuery('.fancybox').fancybox({
-                beforeShow: function() {
+                beforeShow: function () {
                     var id = jQuery(this)[0].element.attr('rel_id');
                     var group_name = jQuery('.group-name-' + id + ' a').html();
                     var question = jQuery('#tabs' + id + ' .span12').val();
@@ -133,4 +165,5 @@
         });
 
 
-    </script>    </div>
+    </script>
+</div>

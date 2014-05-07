@@ -72,6 +72,16 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <label class="field-name" for="standard">Тип товаров в категории (если ванны):</label>
+                                <div class="field" style="text-align:left;">
+                                    <select name="type" class="uniform">
+                                        <option value=""></option>
+                                        <option value="acrylic">Массажные опции скрыты, гидромассажная опция не выбрана</option>
+                                        <option value="massage">Массажные опции раскрыты, гидромассажная опция выбрана</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <label class="field-name" for="standard">Порядок:</label>
                                 <div class="field">
                                     <input type="text" class="input-large name-edit" name="order"

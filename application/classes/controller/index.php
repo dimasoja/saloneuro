@@ -39,6 +39,10 @@ class Controller_Index extends Controller_Base
         }
         $view = new View('scripts/pages');
         $id_page = Request::instance()->param('id', '');
+        if(!isset($meta['0'])) {
+            header('Location: /error/404');
+            exit();
+        }
         if ($meta['0']->id_product) {
             if ($meta['0']->id_product != '0') {
                 $page_content = ORM::factory('products')->where('browser_name', '=', $id_page)->find()->as_array();

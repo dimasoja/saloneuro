@@ -9,7 +9,7 @@
 <html class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <title>Webmarket HTML Template - Home Page</title>
+    <title>Thermolux Euro</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="ProteusThemes">
@@ -108,6 +108,27 @@
             jQuery('.category-image-wrapper').mouseout(function () {
                 jQuery(this).children('.production-hidden').css('display', 'none');
             });
+            jQuery('.order-call-header').click(function () {
+                jQuery.fancybox.close();
+                jQuery.fancybox(jQuery('.fancy-call').html(), {
+                    //'content': jQuery(".fancy-call").html(),
+                    beforeShow: function () {
+                        jQuery('.order-button.green.ways-call-submit').click(function () {
+                            var name = jQuery('.fancybox-outer #response-name1').val();
+                            var phone = jQuery('.fancybox-outer #response-phone1').val();
+                            var time_from = jQuery('#time_from').val();
+                            var time_to = jQuery('#time_to').val();
+                            jQuery.post('/callback/new', {name: name, phone: phone, time_from: time_from, time_to: time_to}, function (response) {
+                                if (response == 'success') {
+                                    jQuery.fancybox.close();
+                                    jQuery.fancybox('<h3 style="width:315px">Ваш вопрос успешно отправлен!</h3>');
+                                    jQuery.fancybox.update();
+                                }
+                            });
+                        });
+                    }
+                });
+            });
         });
     </script>
     <link rel="alternate" media="print" href="file.pdf">
@@ -135,7 +156,7 @@
                                 <!--                                &nbsp; | &nbsp;-->
                                 <!--                                <a href="my-account.html" class="gray-link">Wishlist (2)</a>-->
                                 <!--                                &nbsp; | &nbsp;-->
-                                <a href="checkout-step-1.html" class="gray-link"><i>Вход для партнеров</i></a>
+                                <a href="#" class="gray-link"><i>Вход для партнеров</i></a>
                             </div>
                         </div>
                     </div>

@@ -65,6 +65,7 @@ class Controller_Admin_News extends Controller_AdminBase {
         }
         $page_id = ORM::factory('news')->where('id_new', '=', $id)->find()->id_new;
         if ($_POST) {
+            $_POST = Safely::safelyGet($_POST);
             $url = $_POST['browser_name'];
             $find_url = ORM::factory('meta')->where('request', '=', $url)->find();
             $success = '';
@@ -76,6 +77,7 @@ class Controller_Admin_News extends Controller_AdminBase {
             $meta->keywords = $_POST['keywords'];
             $meta->request = $_POST['browser_name'];
             $meta->description = $_POST['description'];
+            $meta->meta_title = $_POST['meta_title'];
             $meta->save();
             $content->browser_name = $_POST['browser_name'];
             if (isset($_POST['published']))
@@ -154,6 +156,7 @@ class Controller_Admin_News extends Controller_AdminBase {
         $view->keywords = $meta->keywords;
 
         $view->description = $meta->description;
+        $view->meta_title = $meta->meta_title;
         $view->id = $id;
         $view->types = ORM::factory('productsitems')->where('to','=',$page_id)->find_all()->as_array();
         $view->image = ORM::factory('images')->where('id_page', '=', $id)->where('part', '=', 'news')->find()->as_array();
@@ -177,6 +180,7 @@ class Controller_Admin_News extends Controller_AdminBase {
     public function action_new() {
         $view = new View('scripts/admin/news/index');
         if ($_POST) {
+            $_POST = Safely::safelyGet($_POST);
             $success = '';
             $post = $_POST;
             //проверяем наличие url в базе
@@ -191,7 +195,7 @@ class Controller_Admin_News extends Controller_AdminBase {
             $meta->request = $post['browser_name'];
             $meta->keywords = $post['keywords'];
             $meta->description = $post['description'];
-
+            $meta->meta_title = $post['meta_title'];
             $content = ORM::factory('news');
             if (isset($_POST['published']))
                 $published = 'on';

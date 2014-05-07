@@ -8,8 +8,10 @@
                 </div>
             </div>
         </div>
+
         <?php echo ORM::factory('settings')->getSetting('benefits'); ?>
-    </div>
+        </div>
+
 </div>
 <div class="darker-stripe blocks-spacer more-space latest-news with-shadows">
     <br/>

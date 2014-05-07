@@ -46,6 +46,7 @@ class Model_Productscat extends ORM {
         $certificate->description = $data['description'];
         $certificate->massage_on = $data['massage_on'];
         $certificate->grade_on = $data['grade_on'];
+        $certificate->type = $data['type'];
         $certificate->order = $data['order'];
         $certificate->save();
     }

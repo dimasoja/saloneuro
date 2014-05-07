@@ -86,9 +86,12 @@ function transliterate($string) {
                         <label style="text-align:left;">
                             <select class="width">
                                 <option value=""></option>
-                                    <?php foreach ($widths as $width_tut) { ?>
-                                        <option value="<?php echo $width_tut->width; ?>" <?php if($width==$width_tut->width) echo 'selected'; ?>><?php echo $width_tut->width; ?></option>
-                                    <?php } ?>
+                                <?php foreach ($widths as $width_tut) { ?>
+                                    <option
+                                        value="<?php echo $width_tut->width; ?>" <?php if ($width == $width_tut->width) {
+                                        echo 'selected';
+                                    } ?>><?php echo $width_tut->width; ?></option>
+                                <?php } ?>
                             </select>
                         </label>
                     </div>
@@ -98,9 +101,12 @@ function transliterate($string) {
 
                             <select class="height">
                                 <option value=""></option>
-                                <?php if($width!='') { ?>
+                                <?php if ($width != '') { ?>
                                     <?php foreach ($heights as $height_this) { ?>
-                                        <option value="<?php echo $height_this->length; ?>" <?php if($height==$height_this->length) echo 'selected' ; ?>><?php echo $height_this->length; ?></option>
+                                        <option
+                                            value="<?php echo $height_this->length; ?>" <?php if ($height == $height_this->length) {
+                                            echo 'selected';
+                                        } ?>><?php echo $height_this->length; ?></option>
                                     <?php } ?>
                                 <?php } ?>
                             </select>
@@ -119,7 +125,7 @@ function transliterate($string) {
     </div>
 </div>
 <div class="fancy-address" style="display:none">
-    <div id="fancy-body" class="second">
+    <div id="fancy-body">
         <h2>Где купить?</h2>
 
         <div class="change-city">
@@ -129,13 +135,36 @@ function transliterate($string) {
                 <?php } ?>
             </select>
         </div>
-        <div class="cities-all">
+        <div class="cities-all" style="overflow:auto">
             <?php foreach ($all_cities as $value) { ?>
                 <div class="city-item rel<?php echo $value->id; ?>" rel="<?php echo $value->id; ?>">
-                    <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
-                    <i><?php echo $value->phone; ?></i>
+                    <div class="ballon-title ball">
+                        <?php if ($value->type == 'address') { ?>
+                            <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
+                        <?php } else { ?>
+                            <span><?php echo $value->city . ' (все адреса)'; ?></span><br/>
+                        <?php } ?>
+                        <i><?php echo $value->phone; ?></i>
+                        <!--                        <div class="balloon"><img src="/images/webmarket/savelocale.png"/></div>-->
+                    </div>
+
                 </div>
+
             <?php } ?>
+            <script type="text/javascript">
+                jQuery(document).ready(function(){
+                    jQuery('.ball').mouseenter(function(){
+                        jQuery(this).addClass('active');
+                    });
+                    jQuery('.ball').mouseleave(function(){
+                        jQuery(this).removeClass('active');
+                    });
+                    jQuery('.ball').click(function(){
+                        jQuery('.ball').removeClass('byclick');
+                        jQuery(this).addClass('byclick');
+                    });
+                });
+            </script>
         </div>
         <div class="maps">
             <?php foreach ($all_cities as $value) { ?>
@@ -266,9 +295,9 @@ function transliterate($string) {
             }
             var query = resp.join('&');
             <?php if($currents_url_type=='?') { ?>
-                window.location = '/<?php echo $currents_url; ?>?<?php echo $order_by; ?>' + query;
+            window.location = '/<?php echo $currents_url; ?>?<?php echo $order_by; ?>' + query;
             <?php } else { ?>
-                window.location = '/<?php echo $currents_url; ?>&<?php echo $order_by; ?>' + query;
+            window.location = '/<?php echo $currents_url; ?>&<?php echo $order_by; ?>' + query;
             <?php } ?>
         });
         jQuery('.width').change(function () {
@@ -411,4 +440,85 @@ function transliterate($string) {
     }
 </script>
 </div>
+<div class="boxed-area blocks-spacer grey-catalog">
+    <div class="container">
+        <div class="wheretobuyblock">
+            <div class="aqua-header">Полезная информация</div>
+            <div class="promo-block-welcome">
+                <h2 class="biruz-title width286">КАК НЕ ОШИБИТЬСЯ В ВЫБОРЕ ВАННЫ?</h2>
+                <br>
+                <i>Вы когда-нибудь задумывались над тем, что
+                    придется поменять ванну? Если да, то вам не нужно
+                    объяснять, насколько сложно специалисту сделать правильный выбор. Почему?</i><br>
+                <a href="/news"><br>
+                    <input type="button" class="green floatright" value="Подробнее...">
+                </a>
+                <br><br><br>
+            </div>
+        </div>
+        <div class="wheretobuyblock">
+            <div class="aqua-header">Где купить?</div>
+            <i class="find-store">найти магазин дилера</i><br/>
+
+            <div class="geo-label">
+                <div class="geo-image">
+                    <img src="/images/webmarket/savelocale.png"/>
+                </div>
+                <div class="your-city">
+                    Ваш город:
+                </div>
+                <div class="city1">
+                    <select class="all_cities" style="width:186px">
+                        <?php $all_group_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array(); ?>
+                        <?php foreach ($all_group_cities as $value) { ?>
+                            <option
+                                value="<?php echo $value->city; ?>" <?php if ($value->city == $session_city) {
+                                echo 'selected';
+                            } ?>><?php echo $value->city; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
+            <div class="cities">
+                <?php $i = 0;
+
+                foreach ($session_cities as $value) {
+                    if ($value->type == 'address') {
+                        if ($i % 2 == 0) {
+                            ?>
+                            <div class="address"><?php echo $value->city . ', ' . $value->address; ?></div>
+                        <?php } else { ?>
+                            <div
+                                class="blue-address"><?php echo $value->city . ', ' . $value->address; ?></div>
+                        <?php
+                        }
+                        $i++;
+                    }
+                } ?>
+            </div>
+            <div class="other">
+                <a class="fancybox" href="#fancy-body">
+                    <input type="button" class="green floatright" value="Подробнее...">
+                </a>
+            </div>
+            <div class="other lightgreytext">
+                <a href="/news">
+                    Хочу купить онлайн!
+                </a>
+            </div>
+        </div>
+        <?php echo ORM::factory('settings')->getSetting('callus'); ?>
+
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery('.all_cities').change(function () {
+            $el = jQuery(this).val();
+            jQuery.post('/index/changecity', {city: $el}, function (response) {
+                window.location = '<?php echo $_SERVER['REQUEST_URI']; ?>';
+            })
+        });
+    });
+</script>
 <?php require_once 'footer_catalog.php'; ?>

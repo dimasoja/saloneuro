@@ -5439,4 +5439,13 @@ ul.profile-options li a img {
 #adm_users {
     box-shadow: 3px 3px 18px;
 }
-
+.images.massage-images .sws_img_block{
+    margin: 5px;
+    border-radius: 12px;
+    padding: 9px;
+    border: 1px solid #ccc;
+    float: left;
+    height: 316px;
+    box-shadow: 5px 4px 24px lightgrey;
+    width: 315px;
+}

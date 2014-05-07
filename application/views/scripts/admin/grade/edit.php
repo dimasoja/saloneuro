@@ -46,10 +46,23 @@
                                     <img src="<?php echo $grade->image; ?>" width="200"/>
                                 <?php } ?>
                                 <br/><br/><br/>
+
+                            </div>
+                            <div class="form-row">
+                                <label class="field-name" for="standard">Группировать по продукту:</label>
+
+                                <div class="field" style="text-align:left;">
+                                    <select name="group" class="uniform">
+                                        <option value=""></option>
+                                        <?php foreach ($products as $product) { ?>
+                                            <option value="<?php echo $product->id; ?>" <?php if($grade->group==$product->id) echo 'selected'; ?>><?php echo $product->name; ?></option>
+                                        <?php } ?>
+
+                                    </select>
+                                </div>
                                 <input type="submit" class="button button-blue small-button margintop18 marginleft128"
                                        value="Редактировать">
                             </div>
-
                         </div>
                     </form>
                 </div>

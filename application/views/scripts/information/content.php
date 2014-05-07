@@ -8,8 +8,8 @@
                 <?php if ($page['image'] != '') { ?>
                     <div class="category-image-wrapper-information">
                         <img src='<?php echo $page['image']; ?>' width='<?php echo $sizes['newwidth']; ?>'
-                             height='<?php echo $sizes['newheight']; ?>'
-                             style="margin-top:<?php echo (202 - $sizes['newheight']) / 2; ?>px;margin-top:<?php echo (202 - $sizes['newheight']) / 2; ?>px;"/>
+                             height='<?php echo $sizes['newheight']; ?>'/>
+                        <!--     style="margin-top:<?php echo (202 - $sizes['newheight']) / 2; ?>px;margin-top:<?php echo (202 - $sizes['newheight']) / 2; ?>px;"-->
                     </div>
                 <?php } ?>
             <?php } ?>

@@ -75,6 +75,12 @@ require Kohana::find_file('classes', 'helpers/xlsexporter');
 require Kohana::find_file('classes', 'helpers/globaliris');
 require Kohana::find_file('classes', 'helpers/Phpmailer');
 require Kohana::find_file('classes', 'helpers/Geoipthermo');
+require Kohana::find_file('classes', 'helpers/AdminHelper');
+require Kohana::find_file('classes', 'helpers/AdminInfo');
+require Kohana::find_file('classes', 'helpers/FrontHelper');
+require Kohana::find_file('classes', 'helpers/ImageWork');
+require Kohana::find_file('classes', 'helpers/Mails');
+require Kohana::find_file('classes', 'helpers/Safely');
 require Kohana::find_file('classes', 'helpers/Morphy/src/common');
 
         $dir = $_SERVER['DOCUMENT_ROOT'].'/application/classes/helpers/Morphy/dicts/';
@@ -116,6 +122,12 @@ Route::set('checkout', 'checkout(/<action>(/<id>))')
             'controller' => 'checkout',
             'action' => 'index'
         ));
+
+Route::set('error', 'error(/<action>(/<id>))')
+    ->defaults(array(
+        'controller' => 'error',
+        'action' => 'index'
+    ));
 
 Route::set('maintenance', 'online-maintenance(/<action>(/<id>))')
         ->defaults(array(
@@ -222,11 +234,7 @@ Route::set('consult', 'consult(/<action>(/<id>))')
             'controller' => 'consult',
             'action' => 'index'
         ));
-        Route::set('news', 'news(/<action>(/<id>))')
-        ->defaults(array(
-            'controller' => 'news',
-            'action' => 'index'
-        ));
+
 Route::set('callback', 'callback(/<action>(/<id>))')
         ->defaults(array(
             'controller' => 'callback',
@@ -246,6 +254,17 @@ Route::set('portfolio', 'portfolio(/<action>(/<id>))')
 Route::set('information', 'information(/<category>(/<id>))')
     ->defaults(array(
         'controller' => 'information',
+        'action' => 'index'
+    ));
+
+Route::set('news', 'news(/<category>(/<id>))')
+    ->defaults(array(
+        'controller' => 'news',
+        'action' => 'index'
+    ));
+Route::set('certificates', 'certificates(/<category>(/<id>))')
+    ->defaults(array(
+        'controller' => 'certificates',
         'action' => 'index'
     ));
 Route::set('gradebath', 'gradebath(/<category>(/<id>))')

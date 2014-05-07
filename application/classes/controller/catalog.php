@@ -17,9 +17,16 @@ class Controller_Catalog extends Controller_Base
     }
 
     public function action_index() {
+        $this->template->css = ORM::factory('settings')->getSetting('css');
+        $city_limit = ORM::factory('settings')->getSetting('addr_num');
+        $this->template->session_city = Session::instance()->get('city');
+        $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
+        $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
+        $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbPage('Новости', 'news');
+        $this->template->id_page = '';
         $view = new View('scripts/catalog');
         $this->template->widths = ORM::factory('catalog')->group_by('width')->find_all()->as_array();
-        $this->template->categories = ORM::factory('productscat')->order_by('order', 'desc')->find_all()->as_array();
+        $this->template->categories = ORM::factory('productscat')->order_by('order', 'asc')->find_all()->as_array();
         $view->categories = ORM::factory('productscat')->order_by('order', 'desc')->find_all()->as_array();
         $this->template->id_page = '';
         //$this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbPage('index');
@@ -62,9 +69,7 @@ class Controller_Catalog extends Controller_Base
         $this->template->increased = $increased;
         $this->template->width = $width;
         $this->template->height = $height;
-
         $this->template->heights = ORM::factory('catalog')->where('width', '=', $this->template->width)->group_by('length')->find_all()->as_array();
-
         if ($this->category == '') {
             $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbCatalog('index');
         }
@@ -194,6 +199,8 @@ class Controller_Catalog extends Controller_Base
             $view->gidromassage = ORM::factory('massage')->where('id','=','9')->find();
             $view->feetmassage = ORM::factory('massage')->where('id','=','10')->find();
             $view->backmassage = ORM::factory('massage')->where('id','=','11')->find();
+            $view->bath = ORM::factory('grade')->where('id','=','1')->find();
+            $view->frame = ORM::factory('grade')->where('id','=','2')->find();
             $view->images = $images;
             $this->template->current = $currents;
         }
