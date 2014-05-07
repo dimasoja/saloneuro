@@ -34,6 +34,18 @@ class Model_Options extends ORM {
                 if(isset($data['forsun'][$count])) {
                     $array[] = $data['forsun'][$count];
                 }
+                if(isset($data['price_for_massage'][$count])) {
+                    $array[] = $data['price_for_massage'][$count];
+                }
+                if(isset($data['default_for_massage'][$count])) {
+                    $array[] = $data['default_for_massage'][$count];
+                }
+                if(isset($data['required_for_massage'][$count])) {
+                    $array[] = $data['required_for_massage'][$count];
+                }
+                if(isset($data['underoption_for_massage'][$count])) {
+                    $array[] = $data['underoption_for_massage'][$count];
+                }
                 $this->clear();
                 $this->value = json_encode($array);
                 $this->id_product = $id_product;
@@ -42,6 +54,7 @@ class Model_Options extends ORM {
                 $count++;
             }
         }
+
         return true;
 //        if(isset($data['massage'])) {
 //            $massage = $data['massage'];

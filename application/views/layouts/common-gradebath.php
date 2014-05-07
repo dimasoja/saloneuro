@@ -67,7 +67,7 @@ function transliterate($string) {
                     </div>
                     <div class="other">
                         <a class="fancybox" href="#fancy-body">
-                            <input type="button" class="green floatright" value="Подробнее...">
+                            <input type="button" class="green floatright enter-partner" value="Подробнее...">
                         </a>
                     </div>
                     <div class="other lightgreytext">

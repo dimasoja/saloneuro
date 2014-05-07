@@ -168,15 +168,24 @@
         </div>
         <div style="display:none" class="default_for_massage">
             <label>По умолчанию?</label>
-            <input type="checkbox" class="by_default" name="default_for_massage[]"/>
+            <select class="by_default not-uniform" name="default_for_massage[]">
+                <option value="1">Да</option>
+                <option value="0">Нет</option>
+            </select>
         </div>
         <div style="display:none" class="required_for_massage">
             <label>Обязательно?</label>
-            <input type="checkbox" class="by_required" name="required_for_massage[]"/>
+            <select class="by_required not-uniform" name="required_for_massage[]">
+                <option value="1">Да</option>
+                <option value="0">Нет</option>
+            </select>
         </div>
         <div style="display:none" class="underoption_for_massage" name="underoption_for_massage[]">
             <label>Подопция?</label>
-            <input type="checkbox" class="by_underoption"/>
+            <select class="by_underoption not-uniform" name="underoption_for_massage[]">
+                <option value="1">Да</option>
+                <option value="0">Нет</option>
+            </select>
         </div>
 
 
@@ -471,6 +480,7 @@
                                    </div>';
                     var hidden = '<input type="hidden" class="image' + id_image + '" name="massage[' + id_image + ']" rel="' + id_image + '"/> ';
                     portfolio.append(image_html);
+
                     portfolio.append(hidden);
                 }
             });

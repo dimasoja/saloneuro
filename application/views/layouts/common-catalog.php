@@ -55,7 +55,7 @@ function transliterate($string) {
                 <div class="wheretobuyblock">
                     <div class="aqua-header">Фильтр раздела</div>
                     <hr/>
-                    <input type="button" class="green" value="Форма ванны" style="margin-left:-50px"><br/><br/>
+                    <input type="button" class="green" value="Форма ванны" ><br/><br/>
 
                     <div class="checkbox" rel="angular">
                         <label style="text-align:left;">
@@ -79,10 +79,10 @@ function transliterate($string) {
                         </label>
                     </div>
                     <br/>
-                    <input type="button" class="green" value="Размеры ванны" style="margin-left:-35px"><br/>
+                    <input type="button" class="green" value="Размеры ванны" ><br/>
 
                     <div class="sizes">
-                        Ширина
+                        Длина
                         <label style="text-align:left;">
                             <select class="width">
                                 <option value=""></option>
@@ -96,7 +96,7 @@ function transliterate($string) {
                         </label>
                     </div>
                     <div class="sizes">
-                        Длина
+                        Ширина
                         <label style="text-align:left;">
 
                             <select class="height">
@@ -113,7 +113,7 @@ function transliterate($string) {
                         </label>
                     </div>
                     <br/>
-                    <input type="button" class="green accept-filter" value="Применить" style="margin-left:-35px"><br/>
+                    <input type="button" class="green accept-filter" value="Применить" style="margin-bottom:5px;"><br/>
 
 
                 </div>
@@ -440,9 +440,10 @@ function transliterate($string) {
     }
 </script>
 </div>
-<div class="boxed-area blocks-spacer grey-catalog">
+<div class="boxed-area blocks-spacer grey-catalog1">
     <div class="container">
-        <div class="wheretobuyblock">
+        <div class="category-right-wrapper">
+            <div class="wheretobuyblock">
             <div class="aqua-header">Полезная информация</div>
             <div class="promo-block-welcome">
                 <h2 class="biruz-title width286">КАК НЕ ОШИБИТЬСЯ В ВЫБОРЕ ВАННЫ?</h2>
@@ -451,11 +452,13 @@ function transliterate($string) {
                     придется поменять ванну? Если да, то вам не нужно
                     объяснять, насколько сложно специалисту сделать правильный выбор. Почему?</i><br>
                 <a href="/news"><br>
-                    <input type="button" class="green floatright" value="Подробнее...">
+                    <input type="button" class="green floatright enter-partner" value="Подробнее...">
                 </a>
                 <br><br><br>
             </div>
         </div>
+    </div>
+    <div class="category-right-wrapper">
         <div class="wheretobuyblock">
             <div class="aqua-header">Где купить?</div>
             <i class="find-store">найти магазин дилера</i><br/>
@@ -498,7 +501,7 @@ function transliterate($string) {
             </div>
             <div class="other">
                 <a class="fancybox" href="#fancy-body">
-                    <input type="button" class="green floatright" value="Подробнее...">
+                    <input type="button" class="green floatright enter-partner" value="Подробнее...">
                 </a>
             </div>
             <div class="other lightgreytext">
@@ -507,7 +510,10 @@ function transliterate($string) {
                 </a>
             </div>
         </div>
+    </div>
+    <div class="category-right-wrapper">    
         <?php echo ORM::factory('settings')->getSetting('callus'); ?>
+    </div>
 
     </div>
 </div>

@@ -2075,12 +2075,15 @@ label { font-weight: bold; color: #333333; }
     background-color: white;
 }
 .catalog .cat-info .address {
-    border: 1px solid rgb(224,224,224);
-    width: 93% !important;
+    border-right: none;
+	border-left: none;
+	border-top: 1px solid rgb(224,224,224);
+	border-bottom: 1px solid rgb(224,224,224);
+    width: 95% !important;
     padding: 14px 8px !important;
     margin-bottom: -1px !important;
-    border-radius: 0px !important;
-    font-size: 15px !important;
+    border-radius: 1px !important;
+    font-size: 14px !important;
 }
 .catalog .cat-info .blue-address {
     border: 1px solid rgb(224,224,224);
@@ -2095,7 +2098,8 @@ label { font-weight: bold; color: #333333; }
     border-left: 4px solid rgb(105,165,168) !important;
 }
 .cat-info .active {
-    font-weight: bold !important;
+   color:#333;
+   
 }
 .cat-info .address {
     background-color: rgb(243,243,243);
@@ -2449,7 +2453,7 @@ label { font-weight: bold; color: #333333; }
     clear:both;
 }
 .massage-special {
-    width: 60%; margin-left:10%;margin-top:15px;
+    width: 60%; margin-top:15px;
 }
 .massage-special-price {
     margin-top:15px;
@@ -2463,16 +2467,17 @@ label { font-weight: bold; color: #333333; }
     display:none !important;
 }
 .lookonthis {
-    text-align: center;
-    width: 149px;
-    font-size: 13px;
-    background-color: lightblue;
-    color: white;
-    margin-top: 0px;
-    z-index: 500;
-    position: absolute;
-    margin-top: -19px;
-    display:none
+text-align: center;
+width: 149px;
+font-size: 13px;
+background-color: lightblue;
+color: white;
+margin-top: 0px;
+z-index: 500;
+position: absolute;
+margin-top: -27px;
+display: none;
+margin-left: 8px;
 }
 .lookonthis a {
     color: white;
@@ -2876,11 +2881,22 @@ margin-top: 22px;
     text-decoration: underline;
     cursor:pointer;
 }
-
-
-
-
-
+.order {
+	overflow:auto;
+}
+.order .floatleft {
+	width:200px;
+	float:left;
+}
+.gidro .grade-item {
+	margin-left:10%;
+}
+.grey-catalog1 .wheretobuyblock h2 {
+	margin-left:4px;
+}
+.grey-catalog1 .wheretobuyblock {
+	height: 317px;
+} 
 
 
 

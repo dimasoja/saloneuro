@@ -24,20 +24,46 @@
             <?php } else { ?>
                 <div class="fancy-address-block">
                     <div id="fancy-body">
-                        <div class="change-city"><b>Выберите город:</b>
+                        <h2>Где купить?</h2>
+                        <div class="change-city">
                             <select class="change-city-select">
                                 <?php foreach ($order_cities as $city) { ?>
                                     <option value="<?php echo $city->id; ?>"><?php echo $city->city; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="cities-all">
+
+                        
+                        <div class="cities-all" style="overflow:auto">
                             <?php foreach ($all_cities as $value) { ?>
                                 <div class="city-item rel<?php echo $value->id; ?>" rel="<?php echo $value->id; ?>">
-                                    <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
-                                    <i><?php echo $value->phone; ?></i>
+                                    <div class="ballon-title ball">
+                                        <?php if ($value->type == 'address') { ?>
+                                            <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
+                                        <?php } else { ?>
+                                            <span><?php echo $value->city . ' (все адреса)'; ?></span><br/>
+                                        <?php } ?>
+                                        <i><?php echo $value->phone; ?></i>
+                                        <!--                        <div class="balloon"><img src="/images/webmarket/savelocale.png"/></div>-->
+                                    </div>
+
                                 </div>
+
                             <?php } ?>
+                            <script type="text/javascript">
+                                jQuery(document).ready(function(){
+                                    jQuery('.ball').mouseenter(function(){
+                                        jQuery(this).addClass('active');
+                                    });
+                                    jQuery('.ball').mouseleave(function(){
+                                        jQuery(this).removeClass('active');
+                                    });
+                                    jQuery('.ball').click(function(){
+                                        jQuery('.ball').removeClass('byclick');
+                                        jQuery(this).addClass('byclick');
+                                    });
+                                });
+                            </script>
                         </div>
                         <div class="maps">
                             <?php foreach ($all_cities as $value) { ?>
@@ -98,57 +124,7 @@
                     </div>
                     <br/>
                 </div>
-                <div class="wheretobuyblock">
-                    <div class="aqua-header">Где купить?</div>
-                    <i class="find-store">найти магазин дилера</i><br/>
-
-                    <div class="geo-label">
-                        <div class="geo-image">
-                            <img src="/images/webmarket/savelocale.png"/>
-                        </div>
-                        <div class="your-city">
-                            Ваш город:
-                        </div>
-                        <div class="city1">
-                            <select class="all_cities" style="width:186px">
-                                <?php $all_group_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array(); ?>
-                                <?php foreach ($all_group_cities as $value) { ?>
-                                    <option
-                                        value="<?php echo $value->city; ?>" <?php if ($value->city == $session_city) {
-                                        echo 'selected';
-                                    } ?>><?php echo $value->city; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="cities">
-                        <?php $i = 0;
-
-                        foreach ($session_cities as $value) {
-                            if ($value->type == 'address') {
-                                if ($i % 2 == 0) {
-                                    ?>
-                                    <div class="address"><?php echo $value->city . ', ' . $value->address; ?></div>
-                                <?php } else { ?>
-                                    <div
-                                        class="blue-address"><?php echo $value->city . ', ' . $value->address; ?></div>
-                                <?php
-                                }
-                                $i++;
-                            }
-                        } ?>
-                    </div>
-                    <div class="other">
-                        <a class="fancybox" href="#fancy-body">
-                            <input type="button" class="green floatright" value="Подробнее...">
-                        </a>
-                    </div>
-                    <div class="other lightgreytext">
-                        <a href="/news">
-                            Хочу купить онлайн!
-                        </a>
-                    </div>
-                </div>
+                
                 <?php echo ORM::factory('settings')->getSetting('callus'); ?>
                 <div class="wheretobuyblock">
                     <div class="aqua-header">Скомплектовать свою ванну</div>
@@ -173,6 +149,7 @@
                 <?php } ?>
             </select>
         </div>
+        
         <div class="cities-all" style="overflow:auto">
             <?php foreach ($all_cities as $value) { ?>
                 <div class="city-item rel<?php echo $value->id; ?>" rel="<?php echo $value->id; ?>">

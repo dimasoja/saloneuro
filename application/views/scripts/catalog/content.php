@@ -8,7 +8,9 @@
         <div class="carousel carousel-stage">
             <ul>
                 <?php foreach ($related_images as $rimage) { ?>
-                    <li><a href="<?php echo $rimage->path; ?>" class="carouselfancy" rel="groupfancy"><?php echo FrontHelper::output($rimage->path, 420, 400, 420, 400); ?></a></li>
+                    <li><a href="<?php echo $rimage->path; ?>" class="carouselfancy"
+                           rel="groupfancy"><?php echo FrontHelper::output($rimage->path, 420, 400, 420, 400); ?></a>
+                    </li>
                 <?php } ?>
             </ul>
         </div>
@@ -89,8 +91,16 @@
                 <span class="your-order">Ваш заказ:</span><br/>
                 <span class="floatleft"><?php echo $page->name; ?></span>
                 <span class="floatright">
+                    <?php $massage_price = 0; ?>
+                    <?php if ($category_product->massage_on == 'on') { ?>
+                        <?php if (count($gidromassage) > 0) { ?>
+                            <?php if($gidromassage['required']=='1') { ?>
+                                <?php $massage_price = $gidromassage['price']; ?>
+                            <?php } ?>
+                        <?php } ?>
+                    <?php } ?>
                     <?php if ($category_product->grade_on == 'on') { ?>
-                        <?php $priceglobal = $bath->price + $frame->price; ?>
+                        <?php $priceglobal = $bath->price + $frame->price+$massage_price; ?>
                         <span class="global-price"
                               data-value="<?php echo $priceglobal; ?>"><?php echo number_format((double)$priceglobal, 0, ' ', ' '); ?></span>
                         <br/>
@@ -113,7 +123,8 @@
     ?>
     <div class="grade-product">
         <div class="grade-title">В комплектацию входит</div>
-        <div class="grade-item">
+
+        <div class="grade-item required">
             <div class="grade-first-col">
                 <div class="grade-image">
                     <img src="<?php echo $bath->image; ?>">
@@ -196,106 +207,101 @@
                 <?php $class_display = 'none'; ?>
             <?php } ?>
             <div class="field" style="text-align:left; display:<?php echo $class_display; ?>">
-                <div class="grade-item">
-                    <div class="grade-first-col">
-                        <div class="massage-image" data-image="<?php echo $gidromassage->image; ?>">
-                            <img src="<?php echo $gidromassage->image; ?>">
+                <?php if (count($gidromassage) > 0) { ?>
+                    <?php if ($gidromassage['required'] == '1') {
+                        $class_required = 'required';
+                    } else {
+                        $class_required = '';
+                    } ?>
 
-                            <div class="lookonthis"><a href="<?php echo $gidromassage->image; ?>">Посмотреть</a></div>
-                        </div>
-                        <div class="massage-info">
-                            <div class="grade-name">
-                                <?php echo $gidromassage->name; ?> <!-- (<span class="switch-gidro">Раскрыть</span>)-->
-                            </div>
-                            <div class="massage-descr">
-                                <?php echo FrontHelper::maxsite_str_word($gidromassage->description, 40); ?>...
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grade-second-col">
-                        <?php if ($category_product->type == 'massage') {
-                            $class = "active";
-                        } else {
-                            $class = "";
-                        } ?>
-                        <div class="grade-price <?php echo $class; ?> first">
-                                <span class="grade-price-value"
-                                      rel="<?php echo $gidromassage->price; ?>"><?php echo number_format($gidromassage->price, 0, ' ', ' '); ?></span><br/>
-                            <?php if ($category_product->type != 'massage') { ?>
-                                <span class="add-massage" data-massage="<?php echo $gidromassage->id; ?>"
-                                      data-price="<?php echo $gidromassage->price; ?>"
-                                      data-image="<?php echo $gidromassage->image; ?>">Добавить опцию</span>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="gidro" style="display:block">
-                    <div class="grade-item">
-                        <div class="grade-first-col massage-special">
-                            <div class="massage-image" data-image="<?php echo $backmassage->image; ?>">
-                                <img src="<?php echo $backmassage->image; ?>">
+                    <div class="grade-item <?php echo $class_required; ?>">
+                        <div class="grade-first-col">
+                            <?php $image = ORM::factory('images')->where('id_image', '=', $gidromassage['image'])->find(); ?>
+                            <?php $gidrooption = ORM::factory('massage')->where('id', '=', $gidromassage['option_id'])->find(); ?>
+                            <?php $gidroimage = $image->path; ?>
+                            <div class="massage-image" data-image="<?php echo $gidroimage; ?>">
+                                <img src="<?php echo $gidrooption->image; ?>">
 
-                                <div class="lookonthis"><a href="<?php echo $backmassage->image; ?>">Посмотреть</a>
-                                </div>
+                                <div class="lookonthis"><a href="<?php echo $image->path; ?>">Посмотреть</a></div>
                             </div>
+
                             <div class="massage-info">
                                 <div class="grade-name">
-                                    <?php echo $backmassage->name; ?> <!--(<span class="switch-gidro">Раскрыть</span>)-->
+                                    <?php echo $gidrooption->name; ?>
+                                    <!-- (<span class="switch-gidro">Раскрыть</span>)-->
                                 </div>
                                 <div class="massage-descr">
-                                    <?php echo FrontHelper::maxsite_str_word($backmassage->description, 40); ?>...
+                                    <?php echo FrontHelper::maxsite_str_word($gidrooption->description, 40); ?>...
                                 </div>
                             </div>
                         </div>
-                        <div class="grade-second-col massage-special-price">
-                            <div class="grade-price first">
+                        <div class="grade-second-col">
+                            <?php if ($gidromassage['required'] == '1') {
+                                $class = "active";
+                            } else {
+                                $class = "";
+                            } ?>
+                            <div class="grade-price <?php echo $class; ?> first">
                                 <span class="grade-price-value"
-                                      rel="<?php echo $backmassage->price; ?>"><?php echo number_format($backmassage->price, 0, ' ', ' '); ?></span><br/>
-                            <span class="add-massage" data-massage="<?php echo $backmassage->id; ?>"
-                                  data-price="<?php echo $backmassage->price; ?>"
-                                  data-image="<?php echo $backmassage->image; ?>">Добавить опцию</span>
+                                      rel="<?php echo $gidromassage['price']; ?>"><?php echo number_format($gidromassage['price'], 0, ' ', ' '); ?></span><br/>
+                                <?php if ($gidromassage['required'] != '1') { ?>
+                                    <span class="add-massage" data-massage="<?php echo $gidromassage['option_id']; ?>"
+                                          data-price="<?php echo $gidromassage['price']; ?>"
+                                          data-image="<?php echo $gidromassage['image']; ?>">Добавить опцию</span>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
-                    <div class="grade-item">
-                        <div class="grade-first-col massage-special">
-                            <div class="massage-image" data-image="<?php echo $feetmassage->image; ?>">
-                                <img src="<?php echo $feetmassage->image; ?>">
 
-                                <div class="lookonthis"><a href="<?php echo $feetmassage->image; ?>">Посмотреть</a>
+                    <div class="gidro" style="display:block">
+                        <?php foreach ($underoptions as $underoption) { ?>
+                            <?php $image = ORM::factory('images')->where('id_image', '=', $underoption['image'])->find(); ?>
+                            <?php $gidrooption = ORM::factory('massage')->where('id', '=', $underoption['option_id'])->find(); ?>
+                            <?php $underimage = $image->path; ?>
+                            <div class="grade-item">
+                                <div class="grade-first-col massage-special">
+                                    <div class="massage-image" data-image="<?php echo $underimage; ?>">
+                                        <img src="<?php echo $gidrooption->image; ?>">
+
+                                        <div class="lookonthis"><a href="<?php $image->path; ?>">Посмотреть</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="massage-info">
+                                        <div class="grade-name">
+                                            <?php echo $gidrooption->name; ?>
+                                            <!--(<span class="switch-gidro">Раскрыть</span>)-->
+                                        </div>
+                                        <div class="massage-descr">
+                                            <?php echo FrontHelper::maxsite_str_word($gidrooption->description, 40); ?>
+                                            ...
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="massage-info">
-                                <div class="grade-name">
-                                    <?php echo $feetmassage->name; ?> <!--(<span class="switch-gidro">Раскрыть</span>)-->
-                                </div>
-                                <div class="massage-descr">
-                                    <?php echo FrontHelper::maxsite_str_word($feetmassage->description, 40); ?>...
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grade-second-col massage-special-price">
-                            <div class="grade-price first">
+                                <div class="grade-second-col massage-special-price">
+                                    <div class="grade-price first">
                                 <span class="grade-price-value"
-                                      rel="<?php echo $feetmassage->price; ?>"><?php echo number_format($feetmassage->price, 0, ' ', ' '); ?></span><br/>
-                            <span class="add-massage" data-massage="<?php echo $feetmassage->id; ?>"
-                                  data-price="<?php echo $feetmassage->price; ?>"
-                                  data-image="<?php echo $feetmassage->image; ?>">Добавить опцию</span>
+                                      rel="<?php echo $underoption['price']; ?>"><?php echo number_format($underoption['price'], 0, ' ', ' '); ?></span><br/>
+                            <span class="add-massage" data-massage="<?php echo $underoption['option_id']; ?>"
+                                  data-price="<?php echo $underoption['price']; ?>"
+                                  data-image="<?php echo $underoption['image']; ?>">Добавить опцию</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        <?php } ?>
                     </div>
-                </div>
-                <?php foreach ($options as $option) {
-                    $option = json_decode($option->value);
-                    $massage = ORM::factory('massage')->where('id', '=', $option[1])->find();
-                    $image = ORM::factory('images')->where('id_image', '=', $option[0])->find();
+                <?php } ?>
+                <?php foreach ($othersoptions as $option) {
+                    //$option = json_decode($option->value);
+                    $massage = ORM::factory('massage')->where('id', '=', $option['option_id'])->find();
+                    $image = ORM::factory('images')->where('id_image', '=', $option['image'])->find();
                     ?>
                     <div class="grade-item">
                         <div class="grade-first-col">
                             <div class="massage-image" data-image="<?php echo $massage->image; ?>">
-                                <img src="<?php echo $image->path; ?>"/>
+                                <img src="<?php echo $massage->image; ?>"/>
 
-                                <div class="lookonthis"><a href="<?php echo $massage->image; ?>">Посмотреть</a></div>
+                                <div class="lookonthis"><a href="<?php echo $image->path; ?>">Посмотреть</a></div>
                             </div>
                             <div class="massage-info">
                                 <div class="grade-name">
@@ -309,10 +315,10 @@
                         <div class="grade-second-col">
                             <div class="massage-price padding415">
                             <span class="massage-price-value"
-                                  rel="<?php echo $massage->price; ?>"><?php echo number_format($massage->price, 0, ' ', ' '); ?></span>
+                                  rel="<?php echo $option['price']; ?>"><?php echo number_format($option['price'], 0, ' ', ' '); ?></span>
                                 <br/>
-                                <span class="add-massage" data-massage="<?php echo $massage->id; ?>"
-                                      data-price="<?php echo $massage->price; ?>"
+                                <span class="add-massage" data-massage="<?php echo $option['option_id']; ?>"
+                                      data-price="<?php echo $option['price']; ?>"
                                       data-image="<?php echo $massage->image; ?>">Добавить опцию</span>
                             </div>
                         </div>
@@ -524,8 +530,10 @@ $(document).ready(function () {
     order['grades'] = {};
     order['massages'] = {};
     <?php if($category_product->massage_on=='on') { ?>
-    <?php if($category_product->type=='massage') { ?>
-    order['massages'][<?php echo $gidromassage->id; ?>] = "<?php echo $gidromassage->price; ?>";
+    <?php if(count($gidromassage)>1) { ?>
+    <?php if ($gidromassage['required'] == '1') { ?>
+    order['massages'][<?php echo $gidromassage['option_id']; ?>] = "<?php echo $gidromassage['price']; ?>";
+    <?php } ?>
     <?php } ?>
     <?php } ?>
     <?php if($category_product->grade_on=='on') { ?>
@@ -569,7 +577,7 @@ $(document).ready(function () {
             });
         }
     });
-    jQuery('.add-grade').click(function (e) {
+    jQuery('.add-grade').not('.required').click(function (e) {
         var priceproduct = jQuery('.global-price')
         var globalprice = priceproduct.attr('data-value');
         var e = jQuery(this);
@@ -630,7 +638,7 @@ $(document).ready(function () {
             });
         }
     });
-    jQuery('.add-massage').click(function () {
+    jQuery('.add-massage').not('.required').click(function () {
 
         var priceproduct = jQuery('.global-price')
         var globalprice = priceproduct.attr('data-value');
@@ -709,7 +717,7 @@ $(document).ready(function () {
     jQuery('.grade-product .grade-item').mouseleave(function () {
         jQuery(this).css('background-color', 'white');
     });
-    jQuery('.grade-product .grade-item').click(function () {
+    jQuery('.grade-product .grade-item').not('.required').click(function () {
         var priceproduct = jQuery('.global-price')
         var globalprice = priceproduct.attr('data-value');
         var e = jQuery(this).find('.add-grade');
@@ -736,7 +744,7 @@ $(document).ready(function () {
     jQuery('.massage-container .grade-item').mouseleave(function () {
         jQuery(this).removeClass('active');
     });
-    jQuery('.massage-container .grade-item').click(function () {
+    jQuery('.massage-container .grade-item').not('.required').click(function () {
 
         var priceproduct = jQuery('.global-price')
         var globalprice = priceproduct.attr('data-value');
@@ -791,6 +799,7 @@ $(document).ready(function () {
         }
         priceproduct.html(number_format(globalprice, 0, ' ', ' '));
         priceproduct.attr('data-value', globalprice);
+        console.log(order);
     });
 });
 

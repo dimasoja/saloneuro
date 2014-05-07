@@ -1,5 +1,6 @@
 <script type="text/javascript" src="/js/ckeditor/ckfinder/ckfinder.js"></script>
 <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
+<?php $id_prod = $product->id; ?>
 <?php if ($success != '') { ?>
     <div class="alert alert-info noMargin bs-callout bs-callout-info">
         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -15,7 +16,41 @@
 
 <div class="inner-content">
 <div class="widget-content" align="center">
-
+<div style="display:none" class="select_for_massage">
+    <select class="massage-select" name="option_massage[]" style="height: auto">
+        <option value=""></option>
+        <?php foreach ($massages as $ac) { ?>
+            <option value="<?php echo $ac->id; ?>"><?php echo $ac->name; ?></option>
+        <?php } ?>
+    </select>
+</div>
+<div style="display:none" class="forsun_for_massage">
+    <br/><input type="text" name="forsun[]" style="width: 100%;margin-top: 8px;" placeholder="Форсунок"/>
+</div>
+<div style="display:none" class="price_for_massage">
+    <br/><input type="text" name="price_for_massage[]" style="width: 100%;margin-top: 8px;" placeholder="Цена"/>
+</div>
+<div style="display:none" class="default_for_massage">
+    <label>По умолчанию?</label>
+    <select class="by_default not-uniform" name="default_for_massage[]">
+        <option value="1">Да</option>
+        <option value="0">Нет</option>
+    </select>
+</div>
+<div style="display:none" class="required_for_massage">
+    <label>Обязательно?</label>
+    <select class="by_required not-uniform" name="required_for_massage[]">
+        <option value="1">Да</option>
+        <option value="0">Нет</option>
+    </select>
+</div>
+<div style="display:none" class="underoption_for_massage" name="underoption_for_massage[]">
+    <label>Подопция?</label>
+    <select class="by_underoption not-uniform" name="underoption_for_massage[]">
+        <option value="1">Да</option>
+        <option value="0">Нет</option>
+    </select>
+</div>
 
 <div class="category-toggle" style="display: block;overflow:auto">
 <div class="span4" style="float: none !important; width:100%; margin-left:0px ">
@@ -125,7 +160,7 @@
 <!--                                <input type="submit" class="button button-blue small-button margintop18 marginleft128" value="Добавить">-->
 <!--                            </div>-->
 <?php foreach ($directory as $dir) { ?>
-    <?php $option = ORM::factory('options')->where('name', '=', $dir->id)->where('type', '=', 'directory')->where('id_product', '=', $product->id)->find(); ?>
+    <?php $option = ORM::factory('options')->where('name', '=', $dir->id)->where('type', '=', 'directory')->where('id_product', '=', $id_prod)->find(); ?>
     <div class="form-row">
         <label class="field-name" for="standard"><?php echo $dir->name; ?>:</label>
 
@@ -151,24 +186,14 @@
 <?php } ?>
 <?php if (isset($massage_on)) { ?>
     <?php if ($massage_on == 'on') { ?>
-        <div style="display:none" class="select_for_massage">
-            <select class="massage-select" name="option_massage[]" style="height: auto">
-                <option value=""></option>
-                <?php foreach ($massages as $ac) { ?>
-                    <option value="<?php echo $ac->id; ?>"><?php echo $ac->name; ?></option>
-                <?php } ?>
-            </select>
-        </div>
-        <div style="display:none" class="forsun_for_massage">
-            <br/><input type="text" name="forsun[]" style="width: 100%;margin-top: 8px;" placeholder="Форсунок"/>
-        </div>
+
         <div class="form-row">
-            <?php $options = ORM::factory('options')->where('type', '=', 'massage')->where('id_product', '=', $product->id)->find_all()->as_array(); ?>
+            <?php $options = ORM::factory('options')->where('type', '=', 'massage')->where('id_product', '=', $id_prod)->find_all()->as_array(); ?>
             <label class="field-name" for="standard">Массажные опции:</label>
 
             <div class="field" style="text-align:left;">
                 <div class="form-row">
-                    <?php $options = ORM::factory('options')->where('type', '=', 'massage')->where('id_product', '=', $product->id)->find_all()->as_array(); ?>
+                    <?php $options = ORM::factory('options')->where('type', '=', 'massage')->where('id_product', '=', $id_prod)->find_all()->as_array(); ?>
 
                     <a id="upload4">
                         Загрузить изображение для массажа
@@ -177,9 +202,31 @@
                     <div class="images massage-options">
                         <?php foreach ($options as $option) { ?>
                             <?php $massage_image = json_decode($option->value, true); ?>
+                            <?php if(isset($massage_image[1])) { ?>
                             <?php $key = $massage_image[1]; ?>
                             <?php $id_image = $massage_image[0]; ?>
                             <?php $forsun = $massage_image[2]; ?>
+                            <?php if (isset($massage_image[3])) {
+                                $price_for_massage = $massage_image[3];
+                            } else {
+                                $price_for_massage = '';
+                            } ?>
+
+                            <?php if (isset($massage_image[4])) {
+                                $default_for_massage = $massage_image[4];
+                            } else {
+                                $default_for_massage = '0';
+                            } ?>
+                            <?php if (isset($massage_image[5])) {
+                                $required_for_massage = $massage_image[5];
+                            } else {
+                                $required_for_massage = '0';
+                            } ?>
+                            <?php if (isset($massage_image[6])) {
+                                $underoption_for_massage = $massage_image[6];
+                            } else {
+                                $underoption_for_massage = '0';
+                            } ?>
                             <?php $image = ORM::factory('images')->where('id_image', '=', $id_image)->find(); ?>
                             <div class="sws_img_block imagerel<?php echo $id_image; ?>">
                                 <div class="img_block">
@@ -201,11 +248,53 @@
                                     </select>
                                     <br/><input type="text" name="forsun[]" style="width: 100%;margin-top: 8px;"
                                                 placeholder="Форсунок" value="<?php echo $forsun; ?>"/>
+
+                                    <br/><input type="text" name="price_for_massage[]"
+                                                style="width: 100%;margin-top: 8px;" placeholder="Цена"
+                                                value="<?php echo $price_for_massage; ?>"/>
+
+                                    <label>По умолчанию?</label>
+                                    <select class="by_default not-uniform" name="default_for_massage[]">
+                                        <option value="1" <?php if ($default_for_massage == '1') {
+                                            echo 'selected';
+                                        } ?>>Да
+                                        </option>
+                                        <option value="0" <?php if ($default_for_massage == '0') {
+                                            echo 'selected';
+                                        } ?>>Нет
+                                        </option>
+                                    </select>
+
+                                    <label>Обязательно?</label>
+                                    <select class="by_required not-uniform" name="required_for_massage[]">
+                                        <option value="1" <?php if ($required_for_massage == '1') {
+                                            echo 'selected';
+                                        } ?>>Да
+                                        </option>
+                                        <option value="0" <?php if ($required_for_massage == '0') {
+                                            echo 'selected';
+                                        } ?>>Нет
+                                        </option>
+                                    </select>
+
+                                    <label>Подопция?</label>
+                                    <select class="by_underoption not-uniform" name="underoption_for_massage[]">
+                                        <option value="1" <?php if ($underoption_for_massage == '1') {
+                                            echo 'selected';
+                                        } ?>>Да
+                                        </option>
+                                        <option value="0" <?php if ($underoption_for_massage == '0') {
+                                            echo 'selected';
+                                        } ?>>Нет
+                                        </option>
+                                    </select>
+
                                 </div>
                             </div>
                             <input type="hidden" class="massage<?php echo $id_image; ?>"
                                    name="massage[<?php echo $id_image; ?>]"
                                    rel="<?php echo $id_image; ?>"/>
+                        <?php } ?>
                         <?php } ?>
                     </div>
 
@@ -239,7 +328,7 @@
                     <div class="span6" style="width:100%">
                         <div class="widget">
                             <div class="table-container">
-                                <?php $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $product->id)->find_all()->as_array(); ?>
+                                <?php $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $id_prod)->find_all()->as_array(); ?>
                                 <table cellpading="0" cellspacing="0" border="0"
                                        class="default-table stripped turquoise dataTable" id="dynamic2">
                                     <thead>
@@ -266,8 +355,8 @@
                                             </td>
                                             <td><?php echo $item->name; ?></td>
                                             <td>
-                                                <?php $product = ORM::factory('catalog')->where('id','=',$item->group)->find(); ?>
-                                                <?php if(isset($product->id)) { ?>
+                                                <?php $product = ORM::factory('catalog')->where('id', '=', $item->group)->find(); ?>
+                                                <?php if (isset($id_prod)) { ?>
                                                     <?php echo $product->name; ?>
                                                 <?php } ?>
                                             </td>
@@ -285,7 +374,7 @@
     <?php } ?>
 <?php } ?>
 <div class="form-row complekt">
-    <?php $options = ORM::factory('options')->where('type', '=', 'technologies')->where('id_product', '=', $product->id)->find_all()->as_array(); ?>
+    <?php $options = ORM::factory('options')->where('type', '=', 'technologies')->where('id_product', '=', $id_prod)->find_all()->as_array(); ?>
     <label class="field-name" for="standard">Технологии:</label>
     <?php $technologies = ORM::factory('information')->where('lvl', '!=', '1')->where('technologies', '=', 'on')->find_all()->as_array(); ?>
     <div class="field" style="text-align:left;">
@@ -341,7 +430,7 @@
     </div>
 </div>
 <div class="form-row complekt">
-    <?php $options = ORM::factory('options')->where('type', '=', 'products')->where('id_product', '=', $product->id)->find_all()->as_array(); ?>
+    <?php $options = ORM::factory('options')->where('type', '=', 'products')->where('id_product', '=', $id_prod)->find_all()->as_array(); ?>
     <label class="field-name" for="standard">С этим товаром часто покупают (акссесуары):</label>
 
     <div class="field" style="text-align:left;">
@@ -400,7 +489,7 @@
 </div>
 <div class="form-row">
     <label class="field-name" for="standard">Изображения:</label>
-    <?php $options = ORM::factory('options')->where('type', '=', 'image')->where('id_product', '=', $product->id)->find_all()->as_array(); ?>
+    <?php $options = ORM::factory('options')->where('type', '=', 'image')->where('id_product', '=', $id_prod)->find_all()->as_array(); ?>
     <div class="field" style="text-align: left;">
         <a id="upload3">
             Загрузить изображение
@@ -431,6 +520,7 @@
         </div>
     </div>
 </div>
+<?php $product = ORM::factory('catalog')->where('id','=', $id_prod)->find(); ?>
 <div class="form-row">
     <label class="field-name" for="standard">Схема монтажа:</label>
 
@@ -452,7 +542,7 @@
     <?php } ?>
 </div>
 <div class="form-row">
-    <?php $options = ORM::factory('options')->where('type', '=', 'custom')->where('id_product', '=', $product->id)->find_all()->as_array(); ?>
+    <?php $options = ORM::factory('options')->where('type', '=', 'custom')->where('id_product', '=', $id_prod)->find_all()->as_array(); ?>
     <label class="field-name" for="standard">Технические характеристики:</label>
 
     <div class="field" style="text-align: left;">
@@ -487,8 +577,8 @@
     <?php } ?>
 </div>
 <input type="hidden" class="num_options" value="<?php echo $count; ?>"/>
-<input type="hidden" name="category" value="<?php if (isset($product->category)) {
-    echo $product->category;
+<input type="hidden" name="category" value="<?php if (isset($category->id)) {
+    echo $category->id;
 } ?>"/>
 <input type="submit" class="button-turquoise button" value="Отправить"/>
 <br/><br/>
@@ -560,6 +650,10 @@
                     var path = response_image[1];
                     var select_html = jQuery('.select_for_massage').html();
                     var forsun_html = jQuery('.forsun_for_massage').html();
+                    var price_for_massage = jQuery('.price_for_massage').html();
+                    var default_for_massage = jQuery('.default_for_massage').html();
+                    var required_for_massage = jQuery('.required_for_massage').html();
+                    var underoption_for_massage = jQuery('.underoption_for_massage').html();
                     var portfolio = jQuery('.massage-options');
                     var image_html = '<div class="sws_img_block imagerel' + id_image + '">\n\
                                            <div class="img_block">\n\
@@ -567,7 +661,7 @@
                                            </div>\n\
                                            <div class="del_block">\n\
                                                 <a href="javascript:void:(0);" class="del_vid" onclick="deletePortfolio(' + id_image + ');">Удалить</a>\n\
-                                           </div>' + select_html + forsun_html + '\n\
+                                           </div>' + select_html + forsun_html + price_for_massage + default_for_massage + required_for_massage + underoption_for_massage + '\n\
                                    </div>';
                     var hidden = '<input type="hidden" class="image' + id_image + '" name="massage[' + id_image + ']" rel="' + id_image + '"/> ';
                     portfolio.append(image_html);

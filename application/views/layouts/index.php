@@ -102,7 +102,8 @@
                             </div>
                             <div class="city1">
                                 <select class="all_cities" style="width:186px">
-                                    <?php $all_group_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array(); ?>
+                                    <?php $limit = ORM::factory('settings')->getSetting('addr_num'); ?>
+                                    <?php $all_group_cities = ORM::factory('addresses')->group_by('city')->limit($limit)->find_all()->as_array(); ?>
                                     <?php foreach ($all_group_cities as $value) { ?>
                                         <option
                                             value="<?php echo $value->city; ?>" <?php if ($value->city == $session_city) {
@@ -131,7 +132,7 @@
                         </div>
                         <div class="other">
                             <a class="fancybox" href="#fancy-body">
-                                <input type="button" class="green floatright" value="Подробнее...">
+                                <input type="button" class="green floatright enter-partner" value="Подробнее...">
                             </a>
                         </div>
                         <div class="other lightgreytext">
@@ -163,16 +164,17 @@
             </select>
         </div>
         <div class="cities-all" style="overflow:auto">
+            <?php $count = 1; ?>
+            <?php $all_cities = ORM::factory('addresses')->order_by('id', 'desc')->find_all()->as_array(); ?>
             <?php foreach ($all_cities as $value) { ?>
-                <div class="city-item rel<?php echo $value->id; ?>" rel="<?php echo $value->id; ?>">
-                    <div class="ballon-title ball">
-                        <?php if ($value->type == 'address') { ?>
-                            <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
-                        <?php } else { ?>
-                            <span><?php echo $value->city . ' (все адреса)'; ?></span><br/>
+                <div class="city-item rel<?php echo $value->id; ?>" rel="<?php echo $value->id; ?>" style="width:100%">
+                    <div class="">
+                        <?php if ($value->type == 'address') { ?>                            
+                                &#9679;  &nbsp;&nbsp;<span><?php echo $value->city . ', ' . $value->address; ?></span>
+                        <?php } else { ?>                            
+                                <span><img src="/images/webmarket/savelocale.png"/>&nbsp;&nbsp;<?php echo $value->city . ' (все адреса)'; ?></span>
                         <?php } ?>
                         <i><?php echo $value->phone; ?></i>
-<!--                        <div class="balloon"><img src="/images/webmarket/savelocale.png"/></div>-->
                     </div>
 
                 </div>

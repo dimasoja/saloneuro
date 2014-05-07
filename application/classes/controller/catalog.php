@@ -184,23 +184,74 @@ class Controller_Catalog extends Controller_Base
                 $checks = strtolower(FrontHelper::transliterate($item->name));
                 if ($this->id == $checks) {
                     $view->page = $item;
-                    $view->category_product = ORM::factory('productscat')->where('id','=', $item->category)->find();
+                    $view->category_product = ORM::factory('productscat')->where('id', '=', $item->category)->find();
                     $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbCatalog('inner', $category_name->name, 'catalog/' . $found_url, $item->name, 'catalog/' . $check . '/' . $checks);
-                    $view->technologies = ORM::factory('options')->where('id_product','=', $item->id)->where('type','=','technologies')->find_all()->as_array();
+                    $view->technologies = ORM::factory('options')->where('id_product', '=', $item->id)->where('type', '=', 'technologies')->find_all()->as_array();
+                    $massage = ORM::factory('options')->where('id_product', '=', $item->id)->where('type', '=', 'massage')->find_all()->as_array();
+                    $view->gidromassage = array();
+                    $view->feetmassage = array();
+                    $view->backmassage = array();
+                    $view->underoptions = array();
+                    $view->othersoptions = array();
+                    foreach ($massage as $mas) {
+                        $massage_image = json_decode($mas->value, true);
+                        if(isset($massage_image[1])) {
+                        $key = $massage_image[1];
+                        $id_image = $massage_image[0];
+                        $forsun = $massage_image[2];
+                        if (isset($massage_image[4])) {
+                            $default_for_massage = $massage_image[4];
+                            // если гидромассаж
+                            if ($default_for_massage == '1') {
+                                if (isset($massage_image[3])) {
+                                    $view->gidromassage['price'] = $massage_image[3];
+                                }
+                                if (isset($massage_image[5])) {
+                                    $view->gidromassage['required'] = $massage_image[5];
+                                }
+                                $view->gidromassage['image'] = $id_image;
+                                $view->gidromassage['forsun'] = $forsun;
+                                $view->gidromassage['option_id'] = $key;
+                            }
+                            //если массаж спины или ног
+                            if ($default_for_massage == '0') {
+                                if (isset($massage_image[6])) {
+                                    if ($massage_image[6] == '1') {
+                                        $underoption = array();
+                                        if (isset($massage_image[3])) {
+                                            $underoption['price'] = $massage_image[3];
+                                        }
+                                        $underoption['image'] = $id_image;
+                                        $underoption['forsun'] = $forsun;
+                                        $underoption['option_id'] = $key;
+                                        $view->underoptions[] = $underoption;
+                                    } else {
+                                        $others = array();
+                                        if (isset($massage_image[3])) {
+                                            $others['price'] = $massage_image[3];
+                                        }
+                                        $others['image'] = $id_image;
+                                        $others['forsun'] = $forsun;
+                                        $others['option_id'] = $key;
+                                        $view->othersoptions[] = $others;
+                                    }
+                                }
+                            }
+                        }
+                        }
+                    }
                 }
             }
-            $view->responses = ORM::factory('response')->where('to','=', $view->page->id)->where('published','=','on')->find_all()->as_array();
-            $options_images = ORM::factory('options')->where('type','=','image')->where('id_product','=', $view->page->id)->find_all()->as_array();
+            $view->responses = ORM::factory('response')->where('to', '=', $view->page->id)->where('published', '=', 'on')->find_all()->as_array();
+            $options_images = ORM::factory('options')->where('type', '=', 'image')->where('id_product', '=', $view->page->id)->find_all()->as_array();
             $related_images = array();
-            foreach($options_images as $option_image) {
-                $related_images[] = ORM::factory('images')->where('id_image','=',$option_image->value)->find();
+            foreach ($options_images as $option_image) {
+                $related_images[] = ORM::factory('images')->where('id_image', '=', $option_image->value)->find();
             }
             $view->related_images = $related_images;
-            $view->gidromassage = ORM::factory('massage')->where('id','=','9')->find();
-            $view->feetmassage = ORM::factory('massage')->where('id','=','10')->find();
-            $view->backmassage = ORM::factory('massage')->where('id','=','11')->find();
-            $view->bath = ORM::factory('grade')->where('id','=','1')->find();
-            $view->frame = ORM::factory('grade')->where('id','=','2')->find();
+
+            $view->bath = ORM::factory('grade')->where('id', '=', '1')->find();
+            $view->frame = ORM::factory('grade')->where('id', '=', '2')->find();
             $view->images = $images;
             $this->template->current = $currents;
         }

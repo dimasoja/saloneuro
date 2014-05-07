@@ -11,7 +11,11 @@
                              height='<?php echo $sizes['newheight']; ?>'/>
                         <!--     style="margin-top:<?php echo (202 - $sizes['newheight']) / 2; ?>px;margin-top:<?php echo (202 - $sizes['newheight']) / 2; ?>px;"-->
                     </div>
+                <?php } else { ?>
+                    <div class="category-image-wrapper-information"></div>
                 <?php } ?>
+            <?php } else { ?>
+                <div class="category-image-wrapper-information"></div>
             <?php } ?>
         </div>
     <?php } ?>

@@ -29,6 +29,7 @@ class Model_Catalog extends ORM {
         $product->description = $data['description'];
         $product->category = $data['category'];
         $product->price = $data['price'];
+
         $this->type = $data['type'];
         $this->width = $data['width'];
         $this->title_meta = $data['title_meta'];
@@ -39,6 +40,8 @@ class Model_Catalog extends ORM {
         $this->length = $data['length'];
 //        $this->technologies = $data['technologies'];
         $product->time = time();
+        $product->category = $data['category'];
+        
         $product->save();
         return $id;
     }
