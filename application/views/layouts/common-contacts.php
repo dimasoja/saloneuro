@@ -376,6 +376,10 @@
     </form>
 </div>
 <script type="text/javascript">
+function validateEmail(email) {
+    var re =  /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    return re.test(email);
+}
     jQuery(document).ready(function () {
         jQuery('#response-form').validate();
         jQuery('#callback-form').validate();
@@ -525,16 +529,49 @@
                     jQuery.fancybox(jQuery('.fancy-link').html(), {
                         //'content': jQuery(".fancy-call").html(),
                         beforeShow: function () {
+                            var nameelem = jQuery('.fancybox-outer .link-name');
+                            var emailelem = jQuery('.fancybox-outer .link-email');
+                            var responseelem = jQuery('.fancybox-outer .link-response');
+                            nameelem.keypress(function () {
+                                if (nameelem.val() == '') {
+                                    jQuery(this).addClass('error');
+                                } else {
+                                    jQuery(this).removeClass('error');
+                                }
+                            });
+                            emailelem.keypress(function () {
+                                if (emailelem.val() == '') {
+                                    jQuery(this).addClass('error');
+                                } else {
+                                    if (validateEmail(emailelem.val()))
+                                        jQuery(this).removeClass('error');
+                                }
+                            });
+                            responseelem.keypress(function () {
+                                if (nameelem.val() == '') {
+                                    jQuery(this).addClass('error');
+                                } else {
+                                    jQuery(this).removeClass('error');
+                                }
+                            });
                             jQuery('.order-button.green.ways-call-submit').click(function () {
-                                var name = jQuery('.fancybox-outer .link-name').val();
-                                var email = jQuery('.fancybox-outer .link-email').val();
-                                var response = jQuery('.fancybox-outer .link-response').val();
+                                var nameelem = jQuery('.fancybox-outer .link-name');
+                                var emailelem = jQuery('.fancybox-outer .link-email');
+                                var responseelem = jQuery('.fancybox-outer .link-response');
+                                var name = nameelem.val();
+                                var email = emailelem.val();
+                                var response = responseelem.val();
+
                                 var send = '1';
                                 if (name == '') {
                                     send = 0;
                                     jQuery('.fancybox-outer .link-name').addClass('error');
                                 }
                                 if (email == '') {
+                                    send = 0;
+                                    jQuery('.fancybox-outer .link-email').addClass('error');
+                                }
+                                if (!validateEmail(email)) {
                                     send = 0;
                                     jQuery('.fancybox-outer .link-email').addClass('error');
                                 }

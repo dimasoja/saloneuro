@@ -290,7 +290,7 @@ class Controller_Catalog extends Controller_Base
                     }
                 }
                 if (isset($grade_price)) {
-                    if(count($options)>0) {
+                    if (count($options) > 0) {
                         $priceglobal = $massage_price + $grade_price;
                     } else {
                         $priceglobal = $item->price;
@@ -453,27 +453,31 @@ class Controller_Catalog extends Controller_Base
                         $image = $related_images[0];
                         $image = '.' . $image->path;
                         $dest = ImageWork::createImage($image);
-                        imageAlphaBlending($dest, false);
-                        imageSaveAlpha($dest, true);
-                        $x1 = imagesx($dest);
-                        $y1 = imagesy($dest);
-                        $slate = imagecreatetruecolor($x1, $y1);
-                        $transparent = imagecolorallocatealpha($slate, 0, 255, 0, 127);
-                        imagefill($slate, 0, 0, $transparent);
-                        imagecopy($slate, $dest, 0, 0, 0, 0, imagesx($dest) - 1, imagesy($dest) - 1);
-                        foreach ($massages_images as $mi) {
-                            $src = ImageWork::createImage($mi);
-                            imageAlphaBlending($src, false);
-                            imageSaveAlpha($src, true);
-                            $x2 = imagesx($src);
-                            $y2 = imagesy($src);
-                            imagecopy($slate, $src, 0, 0, 0, 0, imagesx($src) - 1, imagesy($src) - 1);
+                        if ($dest) {
+                            imageAlphaBlending($dest, false);
+                            imageSaveAlpha($dest, true);
+                            $x1 = imagesx($dest);
+                            $y1 = imagesy($dest);
+                            $slate = imagecreatetruecolor($x1, $y1);
+                            $transparent = imagecolorallocatealpha($slate, 0, 255, 0, 127);
+                            imagefill($slate, 0, 0, $transparent);
+                            imagecopy($slate, $dest, 0, 0, 0, 0, imagesx($dest) - 1, imagesy($dest) - 1);
+                            foreach ($massages_images as $mi) {
+                                $src = ImageWork::createImage($mi);
+                                imageAlphaBlending($src, false);
+                                imageSaveAlpha($src, true);
+                                $x2 = imagesx($src);
+                                $y2 = imagesy($src);
+                                imagecopy($slate, $src, 0, 0, 0, 0, imagesx($src) - 1, imagesy($src) - 1);
+                            }
+                            imageAlphaBlending($slate, false);
+                            imageSaveAlpha($slate, true);
+                            $mainimagename = '/uploads/mainimage' . time() . '.png';
+                            $view->mainimage = $mainimagename;
+                            imagepng($slate, '.' . $mainimagename);
+                        } else {
+                            $view->mainimage = '';
                         }
-                        imageAlphaBlending($slate, false);
-                        imageSaveAlpha($slate, true);
-                        $mainimagename = '/uploads/mainimage' . time() . '.png';
-                        $view->mainimage = $mainimagename;
-                        imagepng($slate, '.' . $mainimagename);
                     } else {
                         $view->mainimage = '';
                     }
@@ -482,7 +486,8 @@ class Controller_Catalog extends Controller_Base
                         $grade_array = json_decode($grade->value);
                         if (isset($grade_array[1])) {
                             if ($grade_array[1] == '1') {
-                                $view->bath = ORM::factory('grade')->where('id', '=', $grade_array[0])->where('name','LIKE','Ванна')->find();
+                                //var_dump($grade_array[0]);
+                                $view->bath = ORM::factory('grade')->where('id', '=', $grade_array[0])->where('name', 'LIKE', '%Ванна%')->find();
                             }
                         }
                     }

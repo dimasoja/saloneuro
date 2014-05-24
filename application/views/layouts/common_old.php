@@ -25,6 +25,7 @@
                 <div class="fancy-address-block">
                     <div id="fancy-body">
                         <h2>Где купить?</h2>
+
                         <div class="change-city">
                             <select class="change-city-select">
                                 <?php foreach ($order_cities as $city) { ?>
@@ -33,7 +34,7 @@
                             </select>
                         </div>
 
-                        
+
                         <div class="cities-all" style="overflow:auto">
                             <?php foreach ($all_cities as $value) { ?>
                                 <div class="city-item rel<?php echo $value->id; ?>" rel="<?php echo $value->id; ?>">
@@ -51,14 +52,14 @@
 
                             <?php } ?>
                             <script type="text/javascript">
-                                jQuery(document).ready(function(){
-                                    jQuery('.ball').mouseenter(function(){
+                                jQuery(document).ready(function () {
+                                    jQuery('.ball').mouseenter(function () {
                                         jQuery(this).addClass('active');
                                     });
-                                    jQuery('.ball').mouseleave(function(){
+                                    jQuery('.ball').mouseleave(function () {
                                         jQuery(this).removeClass('active');
                                     });
-                                    jQuery('.ball').click(function(){
+                                    jQuery('.ball').click(function () {
                                         jQuery('.ball').removeClass('byclick');
                                         jQuery(this).addClass('byclick');
                                     });
@@ -124,7 +125,7 @@
                     </div>
                     <br/>
                 </div>
-                
+
                 <?php echo ORM::factory('settings')->getSetting('callus'); ?>
                 <div class="wheretobuyblock">
                     <div class="aqua-header">Скомплектовать свою ванну</div>
@@ -149,7 +150,7 @@
                 <?php } ?>
             </select>
         </div>
-        
+
         <div class="cities-all" style="overflow:auto">
             <?php foreach ($all_cities as $value) { ?>
                 <div class="city-item rel<?php echo $value->id; ?>" rel="<?php echo $value->id; ?>">
@@ -167,14 +168,14 @@
 
             <?php } ?>
             <script type="text/javascript">
-                jQuery(document).ready(function(){
-                    jQuery('.ball').mouseenter(function(){
+                jQuery(document).ready(function () {
+                    jQuery('.ball').mouseenter(function () {
                         jQuery(this).addClass('active');
                     });
-                    jQuery('.ball').mouseleave(function(){
+                    jQuery('.ball').mouseleave(function () {
                         jQuery(this).removeClass('active');
                     });
-                    jQuery('.ball').click(function(){
+                    jQuery('.ball').click(function () {
                         jQuery('.ball').removeClass('byclick');
                         jQuery(this).addClass('byclick');
                     });
@@ -285,6 +286,10 @@
 </div>
 
 <script type="text/javascript">
+    function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
     jQuery(document).ready(function () {
         jQuery(".fancybox").fancybox({
             'beforeShow': function () {
@@ -348,7 +353,35 @@
                     jQuery.fancybox(jQuery('.fancy-link').html(), {
                         //'content': jQuery(".fancy-call").html(),
                         beforeShow: function () {
+                            var nameelem = jQuery('.fancybox-outer .link-name');
+                            var emailelem = jQuery('.fancybox-outer .link-email');
+                            var responseelem = jQuery('.fancybox-outer .link-response');
+                            nameelem.keypress(function () {
+                                if (nameelem.val() == '') {
+                                    jQuery(this).addClass('error');
+                                } else {
+                                    jQuery(this).removeClass('error');
+                                }
+                            });
+                            emailelem.keypress(function () {
+                                if (emailelem.val() == '') {
+                                    jQuery(this).addClass('error');
+                                } else {
+                                    if (validateEmail(emailelem.val()))
+                                        jQuery(this).removeClass('error');
+                                }
+                            });
+                            responseelem.keypress(function () {
+                                if (responseelem.val() == '') {
+                                    jQuery(this).addClass('error');
+                                } else {
+                                    jQuery(this).removeClass('error');
+                                }
+                            });
                             jQuery('.order-button.green.ways-call-submit').click(function () {
+                                var nameelem = jQuery('.fancybox-outer .link-name');
+                                var emailelem = jQuery('.fancybox-outer .link-email');
+                                var responseelem = jQuery('.fancybox-outer .link-response');
                                 var name = jQuery('.fancybox-outer .link-name').val();
                                 var email = jQuery('.fancybox-outer .link-email').val();
                                 var response = jQuery('.fancybox-outer .link-response').val();
@@ -399,8 +432,8 @@
         });
         jQuery('.fancyboxcert').fancybox();
         jQuery('.fancy-map').fancybox({
-            'beforeLoad': function(){
-               var map = this.element.attr('data-map');
+            'beforeLoad': function () {
+                var map = this.element.attr('data-map');
 
                 //var dynamic_map = jQuery.getScript(map);
                 //jQuery('#map_layout').append(dynamic_map);

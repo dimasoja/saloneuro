@@ -75,7 +75,7 @@
                 <?php foreach ($options as $option) {
                     $directory = ORM::factory('directory')->where('id', '=', $option->name)->find();
                     $directory_value = ORM::factory('directory')->where('id', '=', $option->value)->find(); ?>
-                    <b><?php echo $directory->name; ?></b> : <?php echo $directory_value->name; ?><br/>
+                    <b><?php echo $directory->name; ?></b> : <?php echo $option->value; ?><br/>
                 <?php
                 } ?>
                 <?php $options = ORM::factory('options')->where('type', '=', 'custom')->where('id_product', '=', $page->id)->find_all()->as_array(); ?>
@@ -111,7 +111,7 @@
                    rel="groupfancy"><?php echo FrontHelper::output($mainimage, 50, 50, 50, 50); ?></a>
                 <span class="your-order">Ваш заказ:</span><br/>
                 <span class="floatleft"><?php echo $page->name; ?>
-                    <?php if($page->leftright=='on') { ?>
+                    <?php if ($page->leftright == 'on') { ?>
                         <b><span class="leftright">(R)</span></b>
                     <?php } ?>
                 </span>
@@ -168,11 +168,13 @@
     </div>
 </div>
 
-<?php if ($category_product->grade_on == 'on') {
-    ?>
+<?php if ($category_product->grade_on == 'on') { ?>
+    <?php $bath_id = ''; ?>
     <div class="grade-product">
+        <?php $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $page->id)->find_all()->as_array(); ?>
+        <?php if ((count($options) > 0) || (isset($bath->name))) { ?>
         <div class="grade-title">В комплектацию входит</div>
-        <?php $bath_id = ''; ?>
+
         <?php if (isset($bath->name)) { ?>
             <?php $bath_id = $bath->id; ?>
             <div class="grade-item required">
@@ -193,7 +195,8 @@
             </div>
         <?php } ?>
 
-        <?php $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $page->id)->find_all()->as_array(); ?>
+
+
         <div class="field" style="text-align:left;">
             <?php foreach ($options as $option) {
                 $grade_opt = json_decode($option->value);
@@ -223,7 +226,8 @@
                                 }
                             }  ?> padding415">
             <span class="grade-price-value"
-                  rel="<?php echo $grades->price; ?>"><?php echo number_format((double)$grades->price, 0, ' ', ' '); ?> руб.</span>
+                  rel="<?php echo $grades->price; ?>"><?php echo number_format((double)$grades->price, 0, ' ', ' '); ?>
+                руб.</span>
                                 <br/>
         <span class="add-grade" data-grade="<?php echo $grades->id; ?>"
               data-price="<?php echo $grades->price; ?>" data-image="<?php echo $grades->image; ?>">
@@ -243,6 +247,7 @@
                         </div>
                     </div>
                 <?php } ?>
+            <?php } ?>
             <?php } ?>
         </div>
     </div>
@@ -307,7 +312,8 @@
                             } ?>
                             <div class="grade-price <?php echo $class; ?> first">
                                 <span class="grade-price-value"
-                                      rel="<?php echo $gidromassage['price']; ?>"><?php echo number_format($gidromassage['price'], 0, ' ', ' '); ?> руб.</span><br/>
+                                      rel="<?php echo $gidromassage['price']; ?>"><?php echo number_format($gidromassage['price'], 0, ' ', ' '); ?>
+                                    руб.</span><br/>
                                 <?php if ($gidromassage['required'] != '1') { ?>
                                     <span class="add-massage" data-massage="<?php echo $gidromassage['option_id']; ?>"
                                           data-price="<?php echo $gidromassage['price']; ?>"
@@ -353,7 +359,8 @@
                                 <div class="grade-second-col massage-special-price">
                                     <div class="grade-price first">
                                 <span class="grade-price-value"
-                                      rel="<?php echo $underoption['price']; ?>"><?php echo number_format($underoption['price'], 0, ' ', ' '); ?></span> руб.<br/>
+                                      rel="<?php echo $underoption['price']; ?>"><?php echo number_format($underoption['price'], 0, ' ', ' '); ?></span>
+                                        руб.<br/>
                             <span class="add-massage" data-massage="<?php echo $underoption['option_id']; ?>"
                                   data-price="<?php echo $underoption['price']; ?>"
                                   data-image="<?php echo $underoption['image']; ?>">Добавить опцию</span>
@@ -391,7 +398,8 @@
                         <div class="grade-second-col">
                             <div class="massage-price padding415">
                             <span class="massage-price-value"
-                                  rel="<?php echo $option['price']; ?>"><?php echo number_format((double)$option['price'], 0, ' ', ' '); ?></span> руб.
+                                  rel="<?php echo $option['price']; ?>"><?php echo number_format((double)$option['price'], 0, ' ', ' '); ?></span>
+                                руб.
                                 <br/>
                                 <span class="add-massage" data-massage="<?php echo $option['option_id']; ?>"
                                       data-price="<?php echo $option['price']; ?>"
@@ -441,30 +449,32 @@
     <div class="container">
         <div class="product-description">
             <?php //echo $page->technologies; ?>
-            <div class="technologies">
-                Технологии
-            </div>
-            <div class="lenta">
-                <br/>
+            <?php if (count($technologies) > 0) { ?>
+                <div class="technologies">
+                    Технологии
+                </div>
+                <div class="lenta">
+                    <br/>
 
-                <?php foreach ($technologies as $techn) { ?>
-                    <?php $pagei = ORM::factory('information')->where('id', '=', $techn->value)->find(); ?>
-                    <?php if (file_exists('.' . $pagei->image)) { ?>
-                        <?php $sizes = ImageWork::getImageSize('.' . $pagei->image, '100', '100', '100', '100'); ?>
-                        <?php if ($pagei->image != '') { ?>
-                            <div class="category-image-technologies-information">
-                                <?php $category = ORM::factory('information')->where('id', '=', $pagei->parent_id)->find(); ?>
-                                <a href="/information/<?php echo strtolower(FrontHelper::transliterate($category->name)) . '/'; ?><?php echo strtolower(FrontHelper::transliterate($pagei->name)); ?>">
-                                    <img src='<?php echo $pagei->image; ?>' width='<?php echo $sizes['newwidth']; ?>'
-                                         height='<?php echo $sizes['newheight']; ?>'
-                                         style="margin-top:<?php echo (102 - $sizes['newheight']) / 2; ?>px;margin-top:<?php echo (102 - $sizes['newheight']) / 2; ?>px;"/>
-                                </a>
-                            </div>
+                    <?php foreach ($technologies as $techn) { ?>
+                        <?php $pagei = ORM::factory('information')->where('id', '=', $techn->value)->find(); ?>
+                        <?php if (file_exists('.' . $pagei->image)) { ?>
+                            <?php $sizes = ImageWork::getImageSize('.' . $pagei->image, '100', '100', '100', '100'); ?>
+                            <?php if ($pagei->image != '') { ?>
+                                <div class="category-image-technologies-information">
+                                    <?php $category = ORM::factory('information')->where('id', '=', $pagei->parent_id)->find(); ?>
+                                    <a href="/information/<?php echo strtolower(FrontHelper::transliterate($category->name)) . '/'; ?><?php echo strtolower(FrontHelper::transliterate($pagei->name)); ?>">
+                                        <img src='<?php echo $pagei->image; ?>'
+                                             width='<?php echo $sizes['newwidth']; ?>'
+                                             height='<?php echo $sizes['newheight']; ?>'
+                                             style="margin-top:<?php echo (102 - $sizes['newheight']) / 2; ?>px;margin-top:<?php echo (102 - $sizes['newheight']) / 2; ?>px;"/>
+                                    </a>
+                                </div>
+                            <?php } ?>
                         <?php } ?>
                     <?php } ?>
-                <?php } ?>
-
-            </div>
+                </div>
+            <?php } ?>
             <?php $options = ORM::factory('options')->where('type', '=', 'products')->where('id_product', '=', $page->id)->find_all()->as_array(); ?>
             <?php if (count($options) > 0) { ?>
                 <div class="technologies">
@@ -969,7 +979,14 @@ $(document).ready(function () {
         jQuery(this).addClass('active');
     });
 
-    $("#callback-form").validate();
+    $("#callback-form").validate({
+        rules: {
+            email: {
+                required: true,
+                email: true
+            }
+        }
+    });
 
 });
 
@@ -1017,8 +1034,9 @@ function redirect() {
                            required>
                 </div>
                 <div class="input-phone">
-                    <input type="text" id="response-phone1" class="name_phone" name="email" placeholder="Email"
-                           required>
+                    <input type="text" id="response-phone1" id="email" class="name_phone" name="email"
+                           placeholder="Email"
+                           email>
                 </div>
                 <div class="input-name">
                     <input type="text" id="response-phone11" class="name_phone" name="city" placeholder="Город"

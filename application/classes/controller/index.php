@@ -254,16 +254,17 @@ class Controller_Index extends Controller_Base
 
 
         $items = ORM::factory('catalog')->where('width', '=', $width)->group_by('length')->find_all()->as_array();
+
         if (($angular == 'true') || ($rectangular == 'true') || ($increased == 'true')) {
             foreach ($items as $key => $item) {
                 if ($angular != 'true') {
                     if ($item->type == 'angular') {
                         if($rectangular=='true') {
-                            if($item->additional_type!='rectangular') {
+                            if(($item->additional_type!='rectangular')&&($item->additional_type2!='rectangular')) {
                                 unset($items[$key]);
                             }
                         } elseif ($increased=='true') {
-                            if($item->additional_type!='increased') {
+                            if(($item->additional_type!='increased')&&($item->additional_type2!='increased')) {
                                 unset($items[$key]);
                             }
                         } else {
@@ -274,11 +275,11 @@ class Controller_Index extends Controller_Base
                 if ($rectangular != 'true') {
                     if ($item->type == 'rectangular') {
                         if($angular=='true') {
-                            if($item->additional_type!='angular') {
+                            if(($item->additional_type!='angular')&&($item->additional_type2!='angular')) {
                                 unset($items[$key]);
                             }
                         } elseif ($increased=='true') {
-                            if($item->additional_type!='increased') {
+                            if(($item->additional_type!='increased')&&($item->additional_type2!='increased')) {
                                 unset($items[$key]);
                             }
                         } else {
@@ -289,11 +290,11 @@ class Controller_Index extends Controller_Base
                 if ($increased != 'true') {
                     if ($item->type == 'increased') {
                         if($angular=='true') {
-                            if($item->additional_type!='angular') {
+                            if(($item->additional_type!='angular')&&($item->additional_type2!='angular')) {
                                 unset($items[$key]);
                             }
                         } elseif ($rectangular=='true') {
-                            if($item->additional_type!='rectangular') {
+                            if(($item->additional_type!='rectangular')&&($item->additional_type2!='rectangular')) {
                                 unset($items[$key]);
                             }
                         } else {
@@ -318,23 +319,29 @@ class Controller_Index extends Controller_Base
         if ($post['angular'] == 'true') {
             $angular = 'angular';
         } else {
-            $angular = '';
+            $angular = 'none';
         }
         if ($post['increased'] == 'true') {
             $increased = 'increased';
         } else {
-            $increased = '';
+            $increased = 'none';
         }
         if ($post['rectangular'] == 'true') {
             $rectangular = 'rectangular';
         } else {
-            $rectangular = '';
+            $rectangular = 'none';
         }
         //$width = (int)$post['value'];
-        $h1 = ORM::factory('catalog')->where('type', '=', $angular)->group_by('width')->find_all()->as_array();
-        $h2 = ORM::factory('catalog')->where('type', '=', $rectangular)->group_by('width')->find_all()->as_array();
-        $h3 = ORM::factory('catalog')->where('type', '=', $increased)->group_by('width')->find_all()->as_array();
-        $heights = array_merge($h1, $h2, $h3);
+        $h11 = ORM::factory('catalog')->where('type', '=', $angular)->group_by('width')->find_all()->as_array();
+        $h21 = ORM::factory('catalog')->where('type', '=', $rectangular)->group_by('width')->find_all()->as_array();
+        $h31 = ORM::factory('catalog')->where('type', '=', $increased)->group_by('width')->find_all()->as_array();
+        $h12 = ORM::factory('catalog')->where('additional_type', '=', $angular)->group_by('width')->find_all()->as_array();
+        $h22 = ORM::factory('catalog')->where('additional_type', '=', $rectangular)->group_by('width')->find_all()->as_array();
+        $h32 = ORM::factory('catalog')->where('additional_type', '=', $increased)->group_by('width')->find_all()->as_array();
+        $h13 = ORM::factory('catalog')->where('additional_type2', '=', $angular)->group_by('width')->find_all()->as_array();
+        $h23 = ORM::factory('catalog')->where('additional_type2', '=', $rectangular)->group_by('width')->find_all()->as_array();
+        $h33 = ORM::factory('catalog')->where('additional_type2', '=', $increased)->group_by('width')->find_all()->as_array();
+        $heights = array_merge($h11, $h21, $h31, $h12, $h22, $h32, $h13, $h23, $h33);
         $h_array = array();
         $i = 0;
         foreach ($heights as $height) {

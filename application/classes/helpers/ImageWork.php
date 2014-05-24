@@ -429,39 +429,43 @@ class ImageWork
     }
 
     static function createImage($address) {
-        $path_info = pathinfo($address);
+        if (file_exists($address)) {
+            $path_info = pathinfo($address);
 
-        $ext = "." . $path_info['extension'];
+            $ext = "." . $path_info['extension'];
 
-        switch ($ext) {
-            case '.jpg':
-                $img = imagecreatefromjpeg($address);
-                break;
-            case '.jpeg':
-                $img = imagecreatefromjpeg($address);
-                break;
-            case '.gif':
-                $img = imagecreatefromgif($address);
-                break;
-            case '.png':
-                $img = imagecreatefrompng($address);
-                //$img = $this->imagetranstowhite($src);
-                break;
-            case '.':
+            switch ($ext) {
+                case '.jpg':
+                    $img = imagecreatefromjpeg($address);
+                    break;
+                case '.jpeg':
+                    $img = imagecreatefromjpeg($address);
+                    break;
+                case '.gif':
+                    $img = imagecreatefromgif($address);
+                    break;
+                case '.png':
+                    $img = imagecreatefrompng($address);
+                    //$img = $this->imagetranstowhite($src);
+                    break;
+                case '.':
 
-                return false;
-                break;
-            default:
-                if (file_exists($address)) {
-                    if (imagecreatefromjpeg($address)) {
-                        $img = imagecreatefromjpeg($address);
-                    }
-                } else {
                     return false;
-                }
-                break;
+                    break;
+                default:
+                    if (file_exists($address)) {
+                        if (imagecreatefromjpeg($address)) {
+                            $img = imagecreatefromjpeg($address);
+                        }
+                    } else {
+                        return false;
+                    }
+                    break;
+            }
+            return $img;
+        } else {
+            return false;
         }
-        return $img;
     }
 
 
