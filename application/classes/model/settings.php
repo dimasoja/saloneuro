@@ -77,16 +77,16 @@ class Model_Settings extends ORM
         $html = '';
         if ($type == 'index') {
             $html .= '<a href="/">Главная</a> > ';
-            $html .= '<a href="/catalog">Продукция</a> ';
+            $html .= '<a href="#">Продукция</a> ';
         }
         if ($type == 'category') {
             $html .= '<a href="/">Главная</a> > ';
-            $html .= '<a href="/catalog">Продукция</a> > ';
+            $html .= '<a href="#">Продукция</a> > ';
             $html .= '<a href="/' . $link1 . '">' . $title1 . '</a>';
         }
         if ($type == 'inner') {
             $html .= '<a href="/">Главная</a> > ';
-            $html .= '<a href="/catalog">Продукция</a> > ';
+            $html .= '<a href="#">Продукция</a> > ';
             $html .= '<a href="/' . $link1 . '">' . $title1 . '</a> > ';
             $html .= '<a href="/' . $link2 . '">' . $title2 . '</a>';
         }
@@ -270,6 +270,149 @@ class Model_Settings extends ORM
         ORM::factory($model)->where('id', '=', $id)->delete_all();
         //var_dump($op);
         //die();
+    }
+
+    public function reindexProduct($id) {
+        $searchind = ORM::factory('searchindex')->where('post_id','=', $id);
+        $searchind->delete_all();
+        //$posts = ORM::factory('pages')->where('published', '=', 'on')->find_all()->as_array();
+        //foreach ($posts as $post) {
+        $post = ORM::factory('catalog')->where('id', '=', $id)->find();
+        $words = array();
+        $title = mb_strtoupper(str_ireplace("ё", "е", strip_tags($post->name)), "UTF-8");
+        $text = mb_strtoupper(str_ireplace("ё", "е", strip_tags($post->description)), "UTF-8");
+        preg_match_all('/([a-zа-яё]+)/ui', $title, $word_title); // Разбиваем текст на слова
+        preg_match_all('/([a-zа-яё]+)/ui', $text, $word_text);
+        $dir = $_SERVER['DOCUMENT_ROOT'] . 'application/classes/helpers/Morphy/dicts/';
+
+        $lang = 'ru_RU';
+        $opts = array('storage' => PHPMORPHY_STORAGE_FILE,);
+        try {
+            $morphy = new phpMorphy($dir, $lang, $opts);
+        } catch (phpMorphy_Exception $e) {
+            die('Error occured while creating phpMorphy instance: ' . $e->getMessage());
+        }
+        $start_form_title = $morphy->lemmatize($word_title[1]);
+        $start_form_text = $morphy->lemmatize($word_text[1]);
+
+
+        foreach ($start_form_title as $k => $w) {
+            if (!$w) {
+                // Если не получилось определить начальную форму слова, используем исходное слово
+                $w[0] = $k;
+            }
+            if (mb_strlen($w[0], "UTF-8") > 2) // Проверяем длину слова, не индексируем короткие слова
+            {
+                if (!isset ($words[$w[0]])) {
+                    $words[$w[0]] = 0;
+                }
+                $words[$w[0]] += 3; // Устанавливаем вес для слова
+            }
+        }
+
+        foreach ($start_form_text as $k => $w) {
+            if (!$w) {
+                // Если не получилось определить начальную форму слова, используем исходное слово
+                $w[0] = $k;
+            }
+            if (mb_strlen($w[0], "UTF-8") > 2) // Проверяем длину слова, не индексируем короткие слова
+            {
+                if (!isset ($words[$w[0]])) {
+                    $words[$w[0]] = 0;
+                }
+                $words[$w[0]] += 3; // Устанавливаем вес для слова
+            }
+        }
+
+        // Тут перебираем массив значений и заносим их в базу
+        foreach ($words as $word => $weight) {
+
+            $data['post_id'] = $id;
+            $data['word'] = $word;
+            $data['weight'] = $weight;
+            $data['type'] = 'product';
+
+            $addindex = ORM::factory('searchindex');
+
+            $addindex->values($data);
+            try {
+                $addindex->save();
+            } catch (ORM_Validation_Exception $e) {
+                $errors = $e->errors('validation');
+            }
+        }
+
+        // }
+
+//
+//        $posts = ORM::factory('products')->where('published', '=', 'on')->find_all()->as_array();
+//        foreach ($posts as $post) {
+//            $words = array();
+//            $title = mb_strtoupper(str_ireplace("ё", "е", strip_tags($post->title)), "UTF-8");
+//            $text = mb_strtoupper(str_ireplace("ё", "е", strip_tags($post->content)), "UTF-8");
+//            preg_match_all('/([a-zа-яё]+)/ui', $title, $word_title); // Разбиваем текст на слова
+//            preg_match_all('/([a-zа-яё]+)/ui', $text, $word_text);
+//            $dir = $_SERVER['DOCUMENT_ROOT'] . 'application/classes/helpers/Morphy/dicts/';
+//
+//            $lang = 'ru_RU';
+//            $opts = array('storage' => PHPMORPHY_STORAGE_FILE,);
+//            try {
+//                $morphy = new phpMorphy($dir, $lang, $opts);
+//            } catch (phpMorphy_Exception $e) {
+//                die('Error occured while creating phpMorphy instance: ' . $e->getMessage());
+//            }
+//            $start_form_title = $morphy->lemmatize($word_title[1]);
+//            $start_form_text = $morphy->lemmatize($word_text[1]);
+//
+//
+//            foreach ($start_form_title as $k => $w) {
+//                if (!$w) {
+//                    // Если не получилось определить начальную форму слова, используем исходное слово
+//                    $w[0] = $k;
+//                }
+//                if (mb_strlen($w[0], "UTF-8") > 2) // Проверяем длину слова, не индексируем короткие слова
+//                {
+//                    if (!isset ($words[$w[0]])) {
+//                        $words[$w[0]] = 0;
+//                    }
+//                    $words[$w[0]] += 3; // Устанавливаем вес для слова
+//                }
+//            }
+//
+//            foreach ($start_form_text as $k => $w) {
+//                if (!$w) {
+//                    // Если не получилось определить начальную форму слова, используем исходное слово
+//                    $w[0] = $k;
+//                }
+//                if (mb_strlen($w[0], "UTF-8") > 2) // Проверяем длину слова, не индексируем короткие слова
+//                {
+//                    if (!isset ($words[$w[0]])) {
+//                        $words[$w[0]] = 0;
+//                    }
+//                    $words[$w[0]] += 3; // Устанавливаем вес для слова
+//                }
+//            }
+//
+//            // Тут перебираем массив значений и заносим их в базу
+//            foreach ($words as $word => $weight) {
+//                $data['post_id'] = '';
+//                $data['product_id'] = $post->id_product;
+//                $data['word'] = $word;
+//                $data['weight'] = $weight;
+//
+//                $addindex = ORM::factory('searchindex');
+//
+//                $addindex->values($data);
+//                try {
+//                    $addindex->save();
+//                } catch (ORM_Validation_Exception $e) {
+//                    $errors = $e->errors('validation');
+//                }
+//            }
+//
+//        }
+
+        return true;
     }
 
     public function uploadLogo($file) {

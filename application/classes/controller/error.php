@@ -22,6 +22,7 @@ class Controller_Error extends Controller_Base {
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
         $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbPage('Новости', 'news');
         $this->template->id_page = '';
+        $this->template->meta_title = '';
         if($this->category=='') {
             $view = new View('scripts/news/index');
             $view->news = ORM::factory('news')->where('published','=','on')->find_all()->as_array();

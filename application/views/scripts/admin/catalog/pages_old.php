@@ -342,6 +342,13 @@
     </div>
 </div>
 <div class="form-row">
+    <label class="field-name" for="standard">Ссылка на производителя:</label>
+
+    <div class="field" style="text-align: left;">
+        <input type="file" name="manufacturer"/>
+    </div>
+</div>
+<div class="form-row">
     <label class="field-name" for="standard">Технические характеристики:</label>
 
     <div class="field" style="text-align: left;">

@@ -1,50 +1,8 @@
 
 <div class="darker-stripe blocks-spacer more-space latest-news with-shadows">
     <br/>
-    <div class="container">
-        <div class="footer-block1">
-            <div class="inner-footer-block1">
-                <a href="#">О компании</a><br/>
-                <a href="#">Сотрудничество</a><br/>
-                <a href="#">Частным лицам</a><br/>
-                <a href="#">Полезная информация</a><br/>
-                <a href="#">Контакты</a>
-            </div>
-        </div>
-        <div class="footer-block2">
-            <div class="inner-footer-block1">
-                <a href="#">Продукция</a><br/>
-                <a href="#">Наши сертификаты</a><br/>
-                <a href="#">Новости и акции</a><br/>
-                <a href="#">Интернет магазин производителя</a><br/>
-                <a href="#">Политика безопасности</a>
-            </div>
-        </div>
-        <div class="footer-block3">
-            <div class="inner-footer-block1">
-                <a href="#">Заказать обратный звонок</a><br/>
-                <a href="#">Онлайн-консультант</a><br/>
-                <a href="#">Форма обратной связи</a><br/>
-            </div>
-        </div>
-        <div class="footer-block4">
-            <div class="social">
-                <a href="#">
-                    <img src="/images/webmarket/twitter.png"/>
-                </a>
-                <a href="#">
-                    <img src="/images/webmarket/facebook.png"/>
-                </a>
-                <a href="#">
-                    <img src="/images/webmarket/vkontakte.png"/>
-                </a>
-                <a href="#">
-                    <img src="/images/webmarket/odnoklassniki.png"/>
-                </a>
-
-            </div>
-        </div>
-    </div>
+    <br/>
+    <?php echo ORM::factory('settings')->getSetting('footer'); ?>
 </div>
 <!-- /latest news -->
 

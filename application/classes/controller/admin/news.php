@@ -84,8 +84,13 @@ class Controller_Admin_News extends Controller_AdminBase {
                 $published = 'on';
             else
                 $published = 'off';
-            $content->published = $published;
+            if (isset($_POST['main']))
+                $main = 'on';
+            else
+                $main = 'off';
+            $content->main = $main;
             //$content->type = $_POST['type'];
+            $content->short = $_POST['short'];
             $content->content = $_POST['content'];
             $content->title = $_POST['title'];
             $content->updated_at = strtotime("now");
@@ -133,7 +138,7 @@ class Controller_Admin_News extends Controller_AdminBase {
                     ViewMessage::adminMessage("Нельзя загрузить изображение, так как оно таковым не является.", 'error');
                 }
             }
-            ORM::factory('settings')->reindexData('news');
+            //ORM::factory('settings')->reindexData('news');
 
             if ($content->save()) {
                  $pi = ORM::factory('productsitems');
@@ -163,8 +168,10 @@ class Controller_Admin_News extends Controller_AdminBase {
         $view->browser_name = $content_data['browser_name'];
         $view->type = $content_data['type'];
         $view->published = $content_data['published'];
+        $view->main = $content_data['main'];
         $view->title = $content_data['title'];
         $view->text = $content_data['content'];
+        $view->short = $content_data['short'];
         $view->portfolio = ORM::factory('images')->where('part', '=', 'other')->where('id_page', '=', $id)->find_all()->as_array();
         ViewHead::addScript('ckeditor/ckeditor.js');
         $this->display($view);
@@ -201,9 +208,12 @@ class Controller_Admin_News extends Controller_AdminBase {
                 $published = 'on';
             else
                 $published = 'off';
+
             $content->values($post);
+
             $content->created_at = strtotime("now");
             $id_prod = $content->save();
+
             $pi = ORM::factory('productsitems');
             if(isset($_POST['value-type'])) {
                   $pi->savePi($_POST['value-type'], $id_prod->id_new);

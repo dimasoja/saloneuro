@@ -16,13 +16,14 @@ class Controller_Search extends Controller_Base {
         $view = new View('scripts/search');
         $this->page_title = __("");          
         $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbPage('Поиск',substr($_SERVER['REQUEST_URI'],1));
-        $word = $_GET['word'];
+        $get = Safely::safelyGet($_GET);
+        $word = $get['word'];
         $data = null;
         $request = null;
         $errors = null;
-        if (!empty($_GET['word'])) { // Получаем поисковый запрос   
+        if (!empty($get['word'])) { // Получаем поисковый запрос
             $searchlog = ORM::factory('searchlog');
-            $searchlog->work = $_GET['word'];
+            $searchlog->work = $get['word'];
             $searchlog->time = time();
             $searchlog->save();
             $search = mb_strtoupper(str_ireplace("ё", "е", strip_tags($_GET['word'])), "UTF-8"); 
@@ -58,6 +59,7 @@ class Controller_Search extends Controller_Base {
                 // Обрабатываем ошибку (нет ни одного слова длиннее 2 символов)
             } else {
                 foreach ($s_words as $s_word) {
+                    //echo $s_word;
                     $search_index = ORM::factory('searchindex')->where('word', '=', $s_word)->where('product_id','=','0')->find_all()->as_array();                                        
                     foreach ($search_index as $si) {
                         if (!empty($pre_result[$si->post_id])) {
@@ -91,7 +93,17 @@ class Controller_Search extends Controller_Base {
         }
         $view->search = $data;
         $view->search_product = $data_products;
-        $view->word = $word; 
+        $view->word = $word;
+        $this->template->meta_title = '';
+        $this->template->css = ORM::factory('settings')->getSetting('css');
+        $city_limit = ORM::factory('settings')->getSetting('addr_num');
+        $this->template->session_city = Session::instance()->get('city');
+        $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
+        $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
+        $this->template->categories = ORM::factory('information')->roots();
+        $view->categories = ORM::factory('information')->roots();
+        $this->template->id_page = '';
+        $this->template->page_title = '';
      //   $keywords = $meta['value'];
      //   $meta = ORM::factory('settings')->where('short_name', '=', 'description')->find()->as_array();
      //   $description = $meta['value'];

@@ -14,7 +14,7 @@ class Controller_News extends Controller_Base {
     }
 
     public function action_index() {
-
+        $item_founded = false;
         $this->template->css = ORM::factory('settings')->getSetting('css');
         $city_limit = ORM::factory('settings')->getSetting('addr_num');
         $this->template->session_city = Session::instance()->get('city');
@@ -22,8 +22,14 @@ class Controller_News extends Controller_Base {
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
         $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbPage('Новости', 'news');
         $this->template->id_page = '';
+
         if($this->category=='') {
+            $item_founded = true;
             $view = new View('scripts/news/index');
+            $this->template->meta_title = 'Новости';
+            //$keywords = $view->page['keywords'];
+            //$description = $view->page['description'];
+            $this->template->page_title = '';
             $view->news = ORM::factory('news')->where('published','=','on')->find_all()->as_array();
         } else {
             $view = new View('scripts/news/custom');
@@ -32,10 +38,21 @@ class Controller_News extends Controller_Base {
             foreach($news as $new) {
                 $check = strtolower(FrontHelper::transliterate($new->title));
                 if ($this->category == $check) {
+                    $item_founded = true;
                     $view->new = $new;
+                    $meta = ORM::factory('meta')->where('id_new','=',$new->id_new)->find();
+                    $this->template->meta_title = $meta->meta_title;
+                    $keywords = $meta->keywords;
+                    $description = $meta->description;
+                    $this->template->page_title = '';
                     $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbNews($new->title, 'news/'.$check);
                 }
             }
+        }
+
+        if(!$item_founded) {
+            header('Location: /error/404');
+            exit();
         }
         $this->display($view);
     }

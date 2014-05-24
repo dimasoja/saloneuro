@@ -289,6 +289,12 @@ Route::set('search', 'search(/<action>(/<id>))')
             'action' => 'index'
         ));
 
+Route::set('partner', 'partner(/<action>(/<id>))')
+    ->defaults(array(
+        'controller' => 'partner',
+        'action' => 'index'
+    ));
+
 Route::set('index', 'index(/<action>(/<id>))')
         ->defaults(array(
             'controller' => 'index',

@@ -100,6 +100,27 @@
                 </div>
             </div>
             <div class="form-row">
+                <label class="field-name" for="standard">Главная?</label>
+
+                <div class="field">
+                    <input type="checkbox"
+                           name="main" <?php if ((isset($published)) and ($published == 'on')) {
+                        echo "checked='checked'";
+                    } ?>/>
+                </div>
+            </div>
+            <div class="form-row">
+
+                <label class="field-name" for="standard">Короткое описание:</label>
+
+                <div class="field">
+                    <textarea name="short" style="width: 100%; height: 600px;"><?php if (isset($short)) {
+                            echo $short;
+                        } ?></textarea>
+                </div>
+            </div>
+
+            <div class="form-row">
 
                 <label class="field-name" for="standard">Контент:</label>
 
@@ -138,6 +159,11 @@
     jQuery(document).ready(function () {
         jQuery('.alert').fadeOut(10000);
         var editor = CKEDITOR.replace('content',
+            {
+                uiColor: 'lightgrey',
+                language: 'en'
+            });
+        var editor = CKEDITOR.replace('short',
             {
                 uiColor: 'lightgrey',
                 language: 'en'

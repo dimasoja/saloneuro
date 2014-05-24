@@ -72,6 +72,11 @@ class FrontHelper
         return $notif;
     }
 
+    static function setHardRedirect($route) {
+        header('Location: '.$route);
+        exit();
+    }
+
     static function getTranslation() {
         $csv = new Translation;
         $csv->load(APPPATH . 'views/translations/translate.csv');
@@ -394,7 +399,21 @@ class FrontHelper
         return $text;
     }
 
-    static function output($path, $width, $height, $in_width, $in_height) {
+    static function output($path, $width, $height, $in_width, $in_height, $additional_path='') {
+        $html = '';
+        if (file_exists('.' .$additional_path. $path)) {
+            $sizes = ImageWork::getImageSize('.' .$additional_path. $path, $width, $height, $width, $height);
+            $margin_left = ($in_height - $sizes['newwidth'])/2;
+            $margin_top = ($in_width - $sizes['newheight'])/2;
+            if ($path != '') {
+                $html = "<img src = '".$additional_path.$path."' width = '".$sizes['newwidth']."' height = '".$sizes['newheight']."' style = 'margin-top:".$margin_top."px;margin-left:".$margin_left."px;'/>";
+            }
+        }
+        return $html;
+    }
+
+    static function outputRender($path, $width, $height, $in_width, $in_height) {
+        $html = '';
         if (file_exists('.' . $path)) {
             $sizes = ImageWork::getImageSize('.' . $path, $width, $height, $width, $height);
             $margin_left = ($in_height - $sizes['newwidth'])/2;
@@ -406,15 +425,4 @@ class FrontHelper
         return $html;
     }
 
-    static function outputRender($path, $width, $height, $in_width, $in_height) {
-        if (file_exists('.' . $path)) {
-            $sizes = ImageWork::getImageSize('.' . $path, $width, $height, $width, $height);
-            $margin_left = ($in_height - $sizes['newwidth'])/2;
-            $margin_top = ($in_width - $sizes['newheight'])/2;
-            if ($path != '') {
-                $html = "<img src = '".$path."' width = '".$sizes['newwidth']."' height = '".$sizes['newheight']."' style = 'margin-top:".$margin_top."px;margin-left:".$margin_left."px;'/>";
-            }
-        }
-        return $html;
-    }
 }

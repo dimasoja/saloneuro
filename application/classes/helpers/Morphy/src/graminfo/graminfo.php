@@ -261,7 +261,7 @@ class phpMorphy_GramInfo_Proxy_WithHeader extends phpMorphy_GramInfo_Proxy {
     }
     
     protected function readCache($fileName) {
-$fileName = str_replace('saloneuroapplication', 'saloneuro/application', $fileName);
+$fileName = str_replace('new.thermolux-euro.ruapplication', 'new.thermolux-euro.ru/application', $fileName);
         if(!is_array($result = include($fileName))) {
             throw new phpMorphy_Exception("Can`t get header cache from '$fileName' file'");
         }

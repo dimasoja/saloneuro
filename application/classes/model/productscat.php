@@ -41,6 +41,8 @@ class Model_Productscat extends ORM {
         }
         $certificate = ORM::factory('productscat', $id);
         $certificate->name = $data['name'];
+        $certificate->type_filter = $data['type_filter'];
+        $certificate->content = $data['content'];
         $certificate->title = $data['title_meta'];
         $certificate->keywords = $data['keywords'];
         $certificate->description = $data['description'];

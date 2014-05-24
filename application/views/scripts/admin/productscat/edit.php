@@ -1,3 +1,5 @@
+<script type="text/javascript" src="/js/ckeditor/ckfinder/ckfinder.js"></script>
+<script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
 <div class="inner-content">
     <div class="widget-content" align="center">
 
@@ -34,6 +36,12 @@
                                 <label class="field-name" for="standard">Description (мета тэг):</label>
                                 <div class="field">
                                     <input type="text" class="input-large name-edit" name="description" style="float: left;width: 100%;" value="<?php echo $productscat->description; ?>">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="field-name" for="standard">Текст:</label>
+                                <div class="field">
+                                    <textarea name="content" id="add-answer" class="input-large name-edit"><?php echo $productscat->content; ?></textarea>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -77,6 +85,17 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <label class="field-name" for="standard">Тип (для фильтров):</label>
+
+                                <div class="field" style="text-align: left;">
+                                    <select class="form-control uniform" name="type_filter">
+                                        <option value="bath" <?php if($productscat->type_filter=='bath') echo 'selected'; ?>>Ванна</option>
+                                        <option value="accessory" <?php if($productscat->type_filter=='accessory') echo 'selected'; ?>>Аксессуар</option>
+                                        <option value="shower" <?php if($productscat->type_filter=='shower') echo 'selected'; ?>>Душевая Кабина</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <label class="field-name" for="standard">Порядок:</label>
 
                                 <div class="field">
@@ -97,3 +116,13 @@
     </div>
 </div>
 </div>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        var editor = CKEDITOR.replace('add-answer',
+            {
+                uiColor : 'lightgrey',
+                language: 'en'
+            });
+        CKFinder.setupCKEditor( editor, '/js/ckeditor/ckfinder/' );
+    });
+</script>

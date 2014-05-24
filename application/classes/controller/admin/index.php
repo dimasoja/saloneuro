@@ -111,4 +111,8 @@ class Controller_Admin_Index extends Controller_AdminBase
         exit();
     }
 
+    function action_savefooter() {
+        ORM::factory('settings')->saveSetting('footer', $_POST['production']);
+        exit();
+    }
 }

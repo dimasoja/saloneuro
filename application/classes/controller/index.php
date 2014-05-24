@@ -11,21 +11,44 @@ class Controller_Index extends Controller_Base
         $id_page = Request::instance()->param('id', '');
         if ($id_page == '') {
             $this->template = 'layouts/index';
+
+        }
+        if ($id_page == 'about') {
+            $this->template = 'layouts/common-about';
+        }
+        if ($id_page == 'individuals') {
+            $this->template = 'layouts/common-ind';
+        }
+        if ($id_page == 'contacts') {
+            $this->template = 'layouts/common-contacts';
         }
         parent::__construct($request);
     }
 
     public function action_index() {
         $id_page = Request::instance()->param('id', '');
+        if ($id_page == 'about') {
+            $this->template->front_name = '/about';
+        }
+        if ($id_page == 'individuals') {
+            $this->template->front_name = '/individuals';
+        }
+
         if (($id_page == '')) {
+            $this->template->front_name = '/';
             $meta = ORM::factory('meta')->where('request', '=', '/')->find_all()->as_array();
             $content = ORM::factory('pages')->where('browser_name', '=', '/')->find();
+            $this->template->meta_title = $content->meta_title;
             if (isset($content->value)) {
                 $this->template->index_content = $content->value;
             }
         } else {
             $meta = ORM::factory('meta')->where('request', '=', $this->request->param('id'))->find_all()->as_array();
         }
+        if(!isset($this->template->front_name)) {
+            $this->template->front_name = '/'.$id_page;
+        }
+
         if (isset($meta['0'])) {
             if (($meta['0']->keywords != '') or ($meta['0']->description != '')) {
                 $keywords = $meta['0']->keywords;
@@ -39,7 +62,7 @@ class Controller_Index extends Controller_Base
         }
         $view = new View('scripts/pages');
         $id_page = Request::instance()->param('id', '');
-        if(!isset($meta['0'])) {
+        if (!isset($meta['0'])) {
             header('Location: /error/404');
             exit();
         }
@@ -57,6 +80,9 @@ class Controller_Index extends Controller_Base
             }
         } else {
             $page_content = ORM::factory('pages')->where('browser_name', '=', $id_page)->find()->as_array();
+            if ($id_page != '') {
+                $this->template->meta_title = $page_content['meta_title'];
+            }
             $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbPage($page_content['title'], $page_content['browser_name']);
             $this->template->portfolio = ORM::factory('images')->where('id_page', '=', $page_content['id_page'])->where('part', '=', 'other')->find_all()->as_array();
             if ($page_content['id_page'] == '58') {
@@ -69,6 +95,9 @@ class Controller_Index extends Controller_Base
         $this->template->id_page = $page_content['id_page'];
         $view->browser_name = $page_content['browser_name'];
         $this->page_title = $page_content['title'];
+        $this->template->page_title = $page_content['title'];
+
+
         //$this->cname = $page_content['cname'];
         // $description = $page_content['description'];
         //            $view = new View('scripts/index');
@@ -189,18 +218,135 @@ class Controller_Index extends Controller_Base
     }
 
     public function action_getsizes() {
+
         $post = Safely::safelyGet($_POST);
         $width = (int)$post['value'];
-        $heights = ORM::factory('catalog')->where('width', '=', $width)->group_by('length')->find_all()->as_array();
+        $angular = '';
+        $rectangular = '';
+        $increased = '';
+        $where_angular = 'check';
+        $where_rectangular = 'check';
+        $where_increased = 'check';
+        $angular_value = '';
+        $rectangular_value = '';
+        $increased_value = '';
+        if (isset($post['angular'])) {
+            $angular = $post['angular'];
+        }
+        if (isset($post['rectangular'])) {
+            $rectangular = $post['rectangular'];
+        }
+        if (isset($post['increased'])) {
+            $increased = $post['increased'];
+        }
+        if ($angular == 'true') {
+            $where_angular = 'type';
+            $angular_value = 'angular';
+        }
+        if ($rectangular == 'true') {
+            $where_rectangular = 'type';
+            $rectangular_value = 'rectangular';
+        }
+        if ($increased == 'true') {
+            $where_increased = 'type';
+            $increased_value = 'increased';
+        }
+
+
+        $items = ORM::factory('catalog')->where('width', '=', $width)->group_by('length')->find_all()->as_array();
+        if (($angular == 'true') || ($rectangular == 'true') || ($increased == 'true')) {
+            foreach ($items as $key => $item) {
+                if ($angular != 'true') {
+                    if ($item->type == 'angular') {
+                        if($rectangular=='true') {
+                            if($item->additional_type!='rectangular') {
+                                unset($items[$key]);
+                            }
+                        } elseif ($increased=='true') {
+                            if($item->additional_type!='increased') {
+                                unset($items[$key]);
+                            }
+                        } else {
+                            unset($items[$key]);
+                        }
+                    }
+                }
+                if ($rectangular != 'true') {
+                    if ($item->type == 'rectangular') {
+                        if($angular=='true') {
+                            if($item->additional_type!='angular') {
+                                unset($items[$key]);
+                            }
+                        } elseif ($increased=='true') {
+                            if($item->additional_type!='increased') {
+                                unset($items[$key]);
+                            }
+                        } else {
+                            unset($items[$key]);
+                        }
+                    }
+                }
+                if ($increased != 'true') {
+                    if ($item->type == 'increased') {
+                        if($angular=='true') {
+                            if($item->additional_type!='angular') {
+                                unset($items[$key]);
+                            }
+                        } elseif ($rectangular=='true') {
+                            if($item->additional_type!='rectangular') {
+                                unset($items[$key]);
+                            }
+                        } else {
+                            unset($items[$key]);
+                        }
+                    }
+                }
+            }
+        }
         $h_array = array();
         $i = 0;
-        foreach ($heights as $height) {
+        foreach ($items as $height) {
             $h_array[$i] = $height->length;
             $i++;
         }
         echo json_encode($h_array);
         die();
     }
+
+    public function action_getwidths() {
+        $post = Safely::safelyGet($_POST);
+        if ($post['angular'] == 'true') {
+            $angular = 'angular';
+        } else {
+            $angular = '';
+        }
+        if ($post['increased'] == 'true') {
+            $increased = 'increased';
+        } else {
+            $increased = '';
+        }
+        if ($post['rectangular'] == 'true') {
+            $rectangular = 'rectangular';
+        } else {
+            $rectangular = '';
+        }
+        //$width = (int)$post['value'];
+        $h1 = ORM::factory('catalog')->where('type', '=', $angular)->group_by('width')->find_all()->as_array();
+        $h2 = ORM::factory('catalog')->where('type', '=', $rectangular)->group_by('width')->find_all()->as_array();
+        $h3 = ORM::factory('catalog')->where('type', '=', $increased)->group_by('width')->find_all()->as_array();
+        $heights = array_merge($h1, $h2, $h3);
+        $h_array = array();
+        $i = 0;
+        foreach ($heights as $height) {
+            $h_array[$i] = $height->width;
+            $i++;
+        }
+        $h_array = array_unique($h_array);
+        $h_array = array_filter($h_array);
+        echo json_encode($h_array);
+        die();
+    }
+
 
     public function action_reviewsave() {
         $post = Safely::safelyGet($_POST);
@@ -241,10 +387,77 @@ class Controller_Index extends Controller_Base
 
     function action_changecity() {
         $post = Safely::safelyGet($_POST);
-        if(isset($post['city'])) {
+        if (isset($post['city'])) {
             Session::instance()->set('city', $post['city']);
         }
         exit();
+    }
+
+    function action_getmap() {
+        $post = Safely::safelyGet($_POST);
+        $id = (int)$post['id'];
+        $address = ORM::factory('addresses')->where('id', '=', $id)->find();
+        echo $address->map;
+        exit();
+    }
+
+    function action_generatesimages() {
+        $post = Safely::safelyGet($_POST);
+        $order_pre = json_decode($post['order']);
+        $order_pre = (array)$order_pre;
+        $order_pre = (array)$order_pre['massages'];
+        $order_pre = (array)$order_pre;
+        $order = array();
+        foreach($order_pre as $key=>$item) {
+            $order[$key] = $item;
+        }
+        $massages_images = array();
+        $massage = ORM::factory('options')->where('id_product', '=', $post['id'])->where('type', '=', 'massage')->find_all()->as_array();
+        foreach ($massage as $mas) {
+            $massage_image = json_decode($mas->value, true);
+            if (isset($massage_image[1])) {
+                $id_image = $massage_image[0];
+                $key = $massage_image[1];
+                $massage_im = ORM::factory('images')->where('id_image', '=', $id_image)->find();
+                if (isset($massage_im)) {
+                    if (isset($order[$key])) {
+                        $massages_images[$key] = '.'.$massage_im->path;
+                    }
+                }
+            }
+        }
+        $image = '.'.$post['image'];
+        //$desting = ImageWork::createImage($image);
+        //imagepng($desting, './uploads/1235.png');
+        $dest = ImageWork::createImage($image);
+        imageAlphaBlending($dest, false);
+        imageSaveAlpha($dest, true);
+        $x1 = imagesx($dest);
+        $y1 = imagesy($dest);
+        $slate = imagecreatetruecolor($x1, $y1);
+        $transparent = imagecolorallocatealpha($slate,0,255,0,127);
+        imagefill($slate,0,0,$transparent);
+        imagecopy($slate, $dest, 0, 0, 0, 0, imagesx($dest)-1, imagesy($dest)-1);
+        foreach($massages_images as $mi) {
+            $src = ImageWork::createImage($mi);
+            imageAlphaBlending($src, false);
+            imageSaveAlpha($src, true);
+            $x2 = imagesx($src);
+            $y2 = imagesy($src);
+            imagecopy($slate, $src, 0, 0, 0, 0, imagesx($src)-1, imagesy($src)-1);
+        }
+        imageAlphaBlending($slate, false);
+        imageSaveAlpha($slate, true);
+        $fn = '/uploads/withopt'.time().'.png';
+        imagepng($slate, '.');
+        die();
+
+        //header('Content-Type: image/png');
+
+        $image = './uploads/123.png';
+        imagepng($dest, './uploads/123.png');
+        echo 'asdf';
+        die();
     }
 
 }

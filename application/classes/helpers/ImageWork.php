@@ -2,94 +2,88 @@
 
 defined('SYSPATH') or die('No direct script access.');
 
-class ImageWork {
+class ImageWork
+{
 
     static public $maxwidthpreview = 195;
     static public $maxheightpreview = 195;
     static public $maxwidthfull = 665;
     static public $maxheightfull = 416;
 
-    static function getImageSize($address, $maxwidthpreview='', $maxheightpreview='', $maxwidthfull='',$maxheightfull='' ) {
-        if($maxwidthpreview!='') {
+    static function getImageSize($address, $maxwidthpreview = '', $maxheightpreview = '', $maxwidthfull = '', $maxheightfull = '') {
+        if ($maxwidthpreview != '') {
             self::$maxwidthpreview = $maxwidthpreview;
             self::$maxheightpreview = $maxheightpreview;
             self::$maxwidthfull = $maxwidthfull;
             self::$maxheightfull = $maxheightfull;
         }
         $path_info = pathinfo($address);
-        $ext = "." . $path_info['extension'];
-        switch ($ext) {
-            case '.jpg':
-                $img = imagecreatefromjpeg($address);
-                break;
-            case '.jpeg':
-                $img = imagecreatefromjpeg($address);
-                break;
-            case '.gif':
-                $img = imagecreatefromgif($address);
-                break;
-            case '.png':
-                $img = imagecreatefrompng($address);
-                //$img = $this->imagetranstowhite($src);
-                break;
-            case '.':
-
-                return false;
-                break;
-            default:
-                if(file_exists($address)) {
-                    if(imagecreatefromjpeg($address)){
+        if (isset($path_info['extension'])) {
+            if (file_exists($address)) {
+                $ext = "." . $path_info['extension'];
+                switch ($ext) {
+                    case '.jpg':
                         $img = imagecreatefromjpeg($address);
-                    }
-                } else {
-                    return false;
-                }
-                break;
-        }
-        try{
-        $width = imagesx($img);
-        } Catch(Exception $e) {
-        }
-        $height = imagesy($img);
-        if ($height > $width) {
-            $ratio = self::$maxheightpreview / $height;
-            $newheight = round(self::$maxheightpreview);
-            $newwidth = round($width * $ratio);
-            $ratiofull = self::$maxheightfull / $height;
-            $newheightfull = round(self::$maxheightfull);
-            $newwidthfull = round($width * $ratiofull);
-        } else {
-            $ratio = self::$maxwidthpreview / $width;
-            $newwidth = round(self::$maxwidthpreview);
-            $newheight = round($height * $ratio);
-            $ratiofull = self::$maxwidthfull / $width;
-            $newwidthfull = round(self::$maxwidthfull);
-            $newheightfull = round($height * $ratiofull);
-        }
+                        break;
+                    case '.jpeg':
+                        $img = imagecreatefromjpeg($address);
+                        break;
+                    case '.gif':
+                        $img = imagecreatefromgif($address);
+                        break;
+                    case '.png':
+                        $img = imagecreatefrompng($address);
+                        //$img = $this->imagetranstowhite($src);
+                        break;
+                    case '.':
 
-        return array(
-            'newwidthfull' => $newwidthfull,
-            'newheightfull' => $newheightfull,
-            'newwidth' => $newwidth,
-            'newheight' => $newheight,
-            'width' => $width,
-            'height' => $height
-        );
+                        return false;
+                        break;
+                    default:
+                        if (file_exists($address)) {
+                            if (imagecreatefromjpeg($address)) {
+                                $img = imagecreatefromjpeg($address);
+                            }
+                        } else {
+                            return false;
+                        }
+                        break;
+                }
+                $width = imagesx($img);
+                $height = imagesy($img);
+                if ($height > $width) {
+                    $ratio = self::$maxheightpreview / $height;
+                    $newheight = round(self::$maxheightpreview);
+                    $newwidth = round($width * $ratio);
+                    $ratiofull = self::$maxheightfull / $height;
+                    $newheightfull = round(self::$maxheightfull);
+                    $newwidthfull = round($width * $ratiofull);
+                } else {
+                    $ratio = self::$maxwidthpreview / $width;
+                    $newwidth = round(self::$maxwidthpreview);
+                    $newheight = round($height * $ratio);
+                    $ratiofull = self::$maxwidthfull / $width;
+                    $newwidthfull = round(self::$maxwidthfull);
+                    $newheightfull = round($height * $ratiofull);
+                }
+
+                return array('newwidthfull' => $newwidthfull, 'newheightfull' => $newheightfull, 'newwidth' => $newwidth, 'newheight' => $newheight, 'width' => $width, 'height' => $height);
+            } else {
+                return array('newwidthfull' => 0, 'newheightfull' => 0, 'newwidth' => 0, 'newheight' => 0, 'width' => 0, 'height' => 0);
+            }
+        } else {
+            return array('newwidthfull' => 0, 'newheightfull' => 0, 'newwidth' => 0, 'newheight' => 0, 'width' => 0, 'height' => 0);
+        }
     }
 
     static function uploadPhoto($image, $id_user) {
-        if (
-                !Upload::valid($image) OR
-                !Upload::not_empty($image) OR
-                !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
             return FALSE;
         }
         $directory = DOCROOT . 'uploads/' . $id_user . '/albumphoto/';
         if ($file = Upload::save($image, NULL, $directory)) {
             $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-            Image::factory($file)
-                    ->resize(200, 200, Image::AUTO)
-                    ->save($directory . $filename);
+            Image::factory($file)->resize(200, 200, Image::AUTO)->save($directory . $filename);
             unlink($file);
             return $filename;
         }
@@ -98,18 +92,14 @@ class ImageWork {
     }
 
     static function uploadEventPhoto($image, $path) {
-        if (
-                !Upload::valid($image) OR
-                !Upload::not_empty($image) OR
-                !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
             return FALSE;
         }
         $directory = DOCROOT . 'uploads/events/';
         if ($file = Upload::save($image, NULL, $directory)) {
             $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-            Image::factory($file)->resize(606, 406, Image::INVERSE)->crop(606, 406, 0, 0)
-                    //->resize(200, 200, Image::AUTO)
-                    ->save($directory . $filename);
+            Image::factory($file)->resize(606, 406, Image::INVERSE)->crop(606, 406, 0, 0) //->resize(200, 200, Image::AUTO)
+                ->save($directory . $filename);
             unlink($file);
             return '/uploads/events/' . $filename;
         }
@@ -118,18 +108,13 @@ class ImageWork {
     }
 
     static function uploadGift($image) {
-        if (
-                !Upload::valid($image) OR
-                !Upload::not_empty($image) OR
-                !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
             return FALSE;
         }
         $directory = DOCROOT . 'uploads/gift/';
         if ($file = Upload::save($image, NULL, $directory)) {
             $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-            Image::factory($file)
-                    ->resize(200, 200, Image::AUTO)
-                    ->save($directory . $filename);
+            Image::factory($file)->resize(200, 200, Image::AUTO)->save($directory . $filename);
             unlink($file);
             return $filename;
         }
@@ -138,18 +123,13 @@ class ImageWork {
     }
 
     static function uploadBadge($image) {
-        if (
-                !Upload::valid($image) OR
-                !Upload::not_empty($image) OR
-                !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
             return FALSE;
         }
         $directory = DOCROOT . 'uploads/badges/';
         if ($file = Upload::save($image, NULL, $directory)) {
             $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-            Image::factory($file)
-                    ->resize(200, 200, Image::AUTO)
-                    ->save($directory . $filename);
+            Image::factory($file)->resize(200, 200, Image::AUTO)->save($directory . $filename);
             unlink($file);
             return $filename;
         }
@@ -198,10 +178,7 @@ class ImageWork {
     }
 
     static function uploadConcertPhoto($image, $path) {
-        if (
-                !Upload::valid($image) OR
-                !Upload::not_empty($image) OR
-                !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
             return FALSE;
         }
         $directory = DOCROOT . 'uploads/concerts/';
@@ -210,8 +187,7 @@ class ImageWork {
         }
         if ($file = Upload::save($image, NULL, $directory)) {
             $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-            Image::factory($file)->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
-                    ->save($directory . $filename);
+            Image::factory($file)->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)->save($directory . $filename);
             unlink($file);
             return '/uploads/concerts/' . $filename;
         }
@@ -225,29 +201,24 @@ class ImageWork {
             mkdir($directory, 0777);
         }
         $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-        Image::factory('.' . $image)->resize(240, 230, Image::INVERSE)->crop(240, 230, 0, 0)
-                ->save($directory . $filename);
+        Image::factory('.' . $image)->resize(240, 230, Image::INVERSE)->crop(240, 230, 0, 0)->save($directory . $filename);
         return '/uploads/concerts/' . $filename;
     }
 
-    static function generateImageThumbPhotos($image) {        
+    static function generateImageThumbPhotos($image) {
         $directory = DOCROOT . 'uploads/concerts/';
         if (!is_dir($directory)) {
             mkdir($directory, 0777);
         }
         $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-        Image::factory('.' . $image)->resize(120, 120, Image::INVERSE)->crop(120, 120, 0, 0)
-                ->save($directory . $filename);
-        
+        Image::factory('.' . $image)->resize(120, 120, Image::INVERSE)->crop(120, 120, 0, 0)->save($directory . $filename);
+
         return '/uploads/concerts/' . $filename;
     }
 
     static function saveInfoImage($image) {
         $image = $image['image'];
-        if (
-            !Upload::valid($image) OR
-            !Upload::not_empty($image) OR
-            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
             return FALSE;
         }
 
@@ -257,8 +228,7 @@ class ImageWork {
         }
         if ($file = Upload::save($image, NULL, $directory)) {
             $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-            Image::factory($file)
-                //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
+            Image::factory($file) //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
                 ->save($directory . $filename);
             unlink($file);
             return '/uploads/information/' . $filename;
@@ -268,10 +238,7 @@ class ImageWork {
 
     static function saveMassageImage($image) {
         $image = $image['image'];
-        if (
-            !Upload::valid($image) OR
-            !Upload::not_empty($image) OR
-            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
             return FALSE;
         }
 
@@ -281,8 +248,7 @@ class ImageWork {
         }
         if ($file = Upload::save($image, NULL, $directory)) {
             $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-            Image::factory($file)
-                //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
+            Image::factory($file) //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
                 ->save($directory . $filename);
             unlink($file);
             return '/uploads/massages/' . $filename;
@@ -293,10 +259,7 @@ class ImageWork {
 
     static function saveCertificateImage($image) {
         $image = $image['image'];
-        if (
-            !Upload::valid($image) OR
-            !Upload::not_empty($image) OR
-            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
             return FALSE;
         }
 
@@ -306,8 +269,7 @@ class ImageWork {
         }
         if ($file = Upload::save($image, NULL, $directory)) {
             $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-            Image::factory($file)
-                //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
+            Image::factory($file) //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
                 ->save($directory . $filename);
             unlink($file);
             return '/uploads/certificates/' . $filename;
@@ -317,10 +279,7 @@ class ImageWork {
 
     static function saveGradeImage($image) {
         $image = $image['image'];
-        if (
-            !Upload::valid($image) OR
-            !Upload::not_empty($image) OR
-            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
             return FALSE;
         }
 
@@ -330,8 +289,7 @@ class ImageWork {
         }
         if ($file = Upload::save($image, NULL, $directory)) {
             $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-            Image::factory($file)
-                //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
+            Image::factory($file) //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
                 ->save($directory . $filename);
             unlink($file);
             return '/uploads/grades/' . $filename;
@@ -341,10 +299,7 @@ class ImageWork {
 
     static function saveNewCatalogImage($image) {
         $image = $image['uploadfile'];
-        if (
-            !Upload::valid($image) OR
-            !Upload::not_empty($image) OR
-            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
             return FALSE;
         }
 
@@ -354,25 +309,21 @@ class ImageWork {
         }
         if ($file = Upload::save($image, NULL, $directory)) {
             $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-            Image::factory($file)
-                //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
+            Image::factory($file) //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
                 ->save($directory . $filename);
             unlink($file);
             $image = ORM::factory('images');
             $image->path = '/uploads/catalogimages/' . $filename;
             $image->type = 'catalog';
             $saving = $image->save();
-            return $saving->id_image.'~'.'/uploads/catalogimages/' . $filename;
+            return $saving->id_image . '~' . '/uploads/catalogimages/' . $filename;
         }
         return FALSE;
     }
 
     static function saveNewInstructionImage($image, $id_product) {
         $image = $image['instruction'];
-        if (
-            !Upload::valid($image) OR
-            !Upload::not_empty($image) OR
-            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif','pdf','doc','docx','txt'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'txt'))) {
             return FALSE;
         }
 
@@ -382,16 +333,16 @@ class ImageWork {
         }
         if ($file = Upload::save($image, NULL, $directory)) {
             //$filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-//            Image::factory($file)
-//                //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
-//                ->save($directory . $filename);
-//            unlink($file);
+            //            Image::factory($file)
+            //                //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
+            //                ->save($directory . $filename);
+            //            unlink($file);
 
             $image = ORM::factory('images');
             $image->path = str_replace(DOCROOT, '', $file);
             $image->type = 'catalog';
             $saving = $image->save();
-            $product = ORM::factory('catalog')->where('id','=',$id_product)->find();
+            $product = ORM::factory('catalog')->where('id', '=', $id_product)->find();
             $product->instruction = str_replace(DOCROOT, '', $file);
             $product->save();
             return true;
@@ -401,10 +352,7 @@ class ImageWork {
 
     static function saveNewSchemeImage($image, $id_product) {
         $image = $image['scheme'];
-        if (
-            !Upload::valid($image) OR
-            !Upload::not_empty($image) OR
-            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif', 'pdf','doc','docx','txt'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'txt'))) {
             return FALSE;
         }
 
@@ -413,16 +361,16 @@ class ImageWork {
             mkdir($directory, 0777);
         }
         if ($file = Upload::save($image, NULL, $directory)) {
-//            $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-//            Image::factory($file)
-//                //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
-//                ->save($directory . $filename);
-//            unlink($file);
+            //            $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
+            //            Image::factory($file)
+            //                //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
+            //                ->save($directory . $filename);
+            //            unlink($file);
             $image = ORM::factory('images');
             $image->path = str_replace(DOCROOT, '', $file);
             $image->type = 'catalog';
             $saving = $image->save();
-            $product = ORM::factory('catalog')->where('id','=',$id_product)->find();
+            $product = ORM::factory('catalog')->where('id', '=', $id_product)->find();
             $product->scheme = str_replace(DOCROOT, '', $file);
             $product->save();
             return true;
@@ -433,10 +381,7 @@ class ImageWork {
 
     static function saveProductscatImage($image, $id_product) {
         $image = $image['image'];
-        if (
-            !Upload::valid($image) OR
-            !Upload::not_empty($image) OR
-            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif'))) {
             return FALSE;
         }
 
@@ -446,12 +391,11 @@ class ImageWork {
         }
         if ($file = Upload::save($image, NULL, $directory)) {
             $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-            Image::factory($file)
-                //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
+            Image::factory($file) //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
                 ->save($directory . $filename);
             unlink($file);
 
-            $product = ORM::factory('productscat')->where('id','=',$id_product)->find();
+            $product = ORM::factory('productscat')->where('id', '=', $id_product)->find();
             $product->image = '/uploads/grades/' . $filename;
             $product->save();
             return '/uploads/grades/' . $filename;
@@ -461,10 +405,7 @@ class ImageWork {
 
     static function saveNewMassageImage($image) {
         $image = $image['uploadfile'];
-        if (
-            !Upload::valid($image) OR
-            !Upload::not_empty($image) OR
-            !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif','JPG'))) {
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif', 'JPG'))) {
             return FALSE;
         }
 
@@ -473,19 +414,55 @@ class ImageWork {
             mkdir($directory, 0777);
         }
         if ($file = Upload::save($image, NULL, $directory)) {
-            $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-            Image::factory($file)
-                ->save($directory . $filename);
+            $filename = strtolower(Text::random('alnum', 20)) . '.png';
+
+            Image::factory($file)->save($directory . $filename);
+
             unlink($file);
             $image = ORM::factory('images');
             $image->path = '/uploads/massageimages/' . $filename;
             $image->type = 'catalog';
             $saving = $image->save();
-            return $saving->id_image.'~'.'/uploads/massageimages/' . $filename;
+            return $saving->id_image . '~' . '/uploads/massageimages/' . $filename;
         }
         return FALSE;
     }
 
+    static function createImage($address) {
+        $path_info = pathinfo($address);
+
+        $ext = "." . $path_info['extension'];
+
+        switch ($ext) {
+            case '.jpg':
+                $img = imagecreatefromjpeg($address);
+                break;
+            case '.jpeg':
+                $img = imagecreatefromjpeg($address);
+                break;
+            case '.gif':
+                $img = imagecreatefromgif($address);
+                break;
+            case '.png':
+                $img = imagecreatefrompng($address);
+                //$img = $this->imagetranstowhite($src);
+                break;
+            case '.':
+
+                return false;
+                break;
+            default:
+                if (file_exists($address)) {
+                    if (imagecreatefromjpeg($address)) {
+                        $img = imagecreatefromjpeg($address);
+                    }
+                } else {
+                    return false;
+                }
+                break;
+        }
+        return $img;
+    }
 
 
 }

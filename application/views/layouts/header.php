@@ -9,11 +9,10 @@
 <html class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <title>Thermolux Euro</title>
+    <title><?php echo $meta_title; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="ProteusThemes">
-
+    <meta name="keywords" content="<?php echo $keywords; ?>"/>
+    <meta name="Description" content="<?php echo $description; ?>"/>
     <!--  = Google Fonts =  -->
     <script type="text/javascript">
         WebFontConfig = {
@@ -60,8 +59,9 @@
     <script type="text/javascript" src="/js/webmarket/jquery.js"></script>
     <script src="/js/webmarket/underscore/underscore-min.js" type="text/javascript"></script>
     <script src="/js/webmarket/jquery.bxslider.js"></script>
+    <script src="/js/webmarket/jquery.validation.js"></script>
     <!-- bxSlider CSS file -->
-    <link href="/css/webmarket/jquery.bxslider.css" rel="stylesheet" />
+    <link href="/css/webmarket/jquery.bxslider.css" rel="stylesheet"/>
     <!--  = Bootstrap =  -->
     <script src="/js/webmarket/bootstrap.min.js" type="text/javascript"></script>
 
@@ -101,7 +101,7 @@
         <?php echo $css; ?>
     </style>
     <script type="text/javascript">
-        jQuery(document).ready(function(){
+        jQuery(document).ready(function () {
             jQuery('.category-image-wrapper').mouseover(function () {
                 jQuery(this).children('.production-hidden').css('display', 'block');
             });
@@ -171,8 +171,9 @@
                 <!--  ==========  -->
                 <div class="span7 logo">
                     <a class="brand" href="/">
-<!--                        <img src="/images/webmarket/logo.png" alt="Webmarket Logo" width="48" height="48"/>-->
-                        <img src="/uploads/images/<?php echo ORM::factory('settings')->getSetting('logo'); ?>" width="48" height="48" alt="logo"/>
+                        <!--                        <img src="/images/webmarket/logo.png" alt="Webmarket Logo" width="48" height="48"/>-->
+                        <img src="/uploads/images/<?php echo ORM::factory('settings')->getSetting('logo'); ?>"
+                             width="48" height="48" alt="logo"/>
                         <!--                        <span class="tagline">Really Cool e-Commerce HTML Template</span>-->
                     </a>
                 </div>
@@ -212,9 +213,30 @@
                         <!--  ==========  -->
                         <div class="nav-collapse collapse">
                             <ul class="nav" id="mainNavigation">
-                                <li class="active"><a href="/">Главная</a></li>
+                                <li class="<?php if (isset($front_name)) {
+                                    if ($front_name == '/') {
+                                        echo 'active';
+                                    }
+                                } ?>"><a href="/">Главная</a></li>
                                 <?php foreach ($menu as $item) { ?>
-                                    <li><a href="<?php echo $item->uri; ?>" class="<?php echo $item->classes; ?>"><?php echo $item->title; ?></a></li>
+                                    <?php $childrens = ORM::factory('menu')->where('type', '=', 'topmenu')->where('published', '=', 'on')->where('parent', '=', $item->id)->find_all()->as_array(); ?>
+                                    <li class="<?php if (count($childrens) > 0) {
+                                        echo 'dropdown';
+                                    } ?> <?php if (isset($front_name)) {
+                                        if ($front_name == $item->uri) {
+                                            echo 'active';
+                                        }
+                                    } ?>">
+                                        <a href="<?php echo $item->uri; ?>"
+                                           class="<?php echo $item->classes; ?> "><?php echo $item->title; ?></a>
+                                        <?php if (count($childrens) > 0) { ?>
+                                            <ul class="dropdown-menu">
+                                                <?php foreach ($childrens as $child) { ?>
+                                                    <li><a href="<?php echo $child->uri; ?>" class="<?php echo $child->classes; ?> "><?php echo $child->title; ?></a></li>
+                                                <?php } ?>
+                                            </ul>
+                                        <?php } ?>
+                                    </li>
                                 <?php } ?>
 
                             </ul>
@@ -232,9 +254,9 @@
                     <!--  = Cart =  -->
                     <!--  ==========  -->
                     <div class="span3">
-                        <form class="navbar-form pull-right" action="#" method="get">
+                        <form class="navbar-form pull-right" action="/search/find" method="get">
                             <button type="submit"><span class="icon-search"></span></button>
-                            <input type="text" class="span1" name="search" id="navSearchInput">
+                            <input type="text" class="span1" name="word" id="navSearchInput">
                         </form>
                     </div>
                     <!-- /cart -->

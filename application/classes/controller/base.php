@@ -16,10 +16,10 @@ class Controller_Base extends Controller_Template {
 
     public function display(& $view, $keywords = "", $description = "") {
         $this->template->site_name = ORM::factory('settings')->getSetting('title');
-        $this->template->page_title = '';
+       // $this->template->page_title = '';
         $this->template->page_title_split = '';
         if (isset($this->page_title)) {
-            $this->template->page_title = $this->page_title;
+         //   $this->template->page_title = $this->page_title;
             $this->template->page_title_split = ' :: ';
         }        
        $this->template->content = $view;

@@ -67,7 +67,7 @@
                 <label class="field-name" for="standard">Title (мета тэг):</label>
 
                 <div class="field">
-                    <textarea id="description" name="description" cols="90"
+                    <textarea id="description" name="meta_title" cols="90"
                               rows="5"><?php if (isset($meta_title)) {
                             echo $meta_title;
                         } ?></textarea>
@@ -93,6 +93,26 @@
                            name="published" <?php if ((isset($published)) and ($published == 'on')) {
                         echo "checked='checked'";
                     } ?>/>
+                </div>
+            </div>
+            <div class="form-row">
+                <label class="field-name" for="standard">Главная?</label>
+
+                <div class="field">
+                    <input type="checkbox"
+                           name="main" <?php if ((isset($main)) and ($main == 'on')) {
+                        echo "checked='checked'";
+                    } ?>/>
+                </div>
+            </div>
+            <div class="form-row">
+
+                <label class="field-name" for="standard">Краткое описание:</label>
+
+                <div class="field">
+                    <textarea name="short" style="width: 100%; height: 600px;"><?php if (isset($short)) {
+                            echo $short;
+                        } ?></textarea>
                 </div>
             </div>
             <div class="form-row">
@@ -136,6 +156,11 @@
                             uiColor: 'lightgrey',
                             language: 'en'
                         });
+                var editor = CKEDITOR.replace('short',
+                    {
+                        uiColor: 'lightgrey',
+                        language: 'en'
+                    });
                 CKFinder.setupCKEditor(editor, '/js/ckeditor/ckfinder/');
             });
             function editTemplate(obj) {

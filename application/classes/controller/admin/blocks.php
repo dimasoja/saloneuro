@@ -62,5 +62,16 @@ class Controller_Admin_Blocks extends Controller_AdminBase {
         $this->display($view);
     }
 
+    public function action_footer() {
+        $view = new View('scripts/admin/blocks/footer');
+        $view->success = FrontHelper::successNotif();
+        $view->content = ORM::factory('settings')->getSetting('footer');
+        $view->error = FrontHelper::errorNotif();
+        $view->addresses = ORM::factory('addresses')->find_all()->as_array();
+        $this->page_title = 'Футер';
+        $this->cname = "footer";
+        $this->display($view);
+    }
+
 
 }

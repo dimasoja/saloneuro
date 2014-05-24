@@ -473,9 +473,10 @@ class ImageWork {
             mkdir($directory, 0777);
         }
         if ($file = Upload::save($image, NULL, $directory)) {
-            $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
+            $filename = strtolower(Text::random('alnum', 20)) . '.png';
             Image::factory($file)
                 ->save($directory . $filename);
+            //die(var_dump($directory . $filename));
             unlink($file);
             $image = ORM::factory('images');
             $image->path = '/uploads/massageimages/' . $filename;

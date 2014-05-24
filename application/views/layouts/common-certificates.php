@@ -124,13 +124,26 @@
                         </a>
                     </div>
                     <div class="other lightgreytext">
-                        <a href="/news">
+                        <a href="http://salonevro.ru/">
                             Хочу купить онлайн!
                         </a>
                     </div>
                 </div>
                 <?php echo ORM::factory('settings')->getSetting('callus'); ?>
-
+                <div class="wheretobuyblock">
+                    <div class="aqua-header">Полезная информация</div>
+                    <div class="promo-block-welcome">
+                        <h2 class="biruz-title width286">КАК НЕ ОШИБИТЬСЯ В ВЫБОРЕ ВАННЫ?</h2>
+                        <br>
+                        <i>Вы когда-нибудь задумывались над тем, что
+                            придется поменять ванну? Если да, то вам не нужно
+                            объяснять, насколько сложно специалисту сделать правильный выбор. Почему?</i><br>
+                        <a href="/news"><br>
+                            <input type="button" class="green floatright enter-partner" value="Подробнее...">
+                        </a>
+                        <br><br><br>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -198,10 +211,10 @@
             <h3>Заказать обратный звонок</h3>
 
             <div class="input-name">
-                <input type="text" id="response-name1" class="name_call" name="name" placeholder="Имя">
+                <input type="text" id="response-name1" class="name_call" name="name" placeholder="Имя" required>
             </div>
             <div class="input-phone">
-                <input type="text" id="response-phone1" class="name_phone" name="phone" placeholder="Телефон">
+                <input type="text" id="response-phone1" class="name_phone" name="phone" placeholder="Телефон" required>
             </div>
             <!-- <div class="input-question">
                  <textarea id="response-question" name="response" placeholder="Сообщение..."></textarea>
@@ -213,12 +226,12 @@
             <div class="time-container-from">
                 <div>
                     <font class="form-font">c</font>
-                    <input type="text" name="time_from" id="time_from" value="09:00" class="hasDatepicker">
+                    <input type="text" name="time_from" id="time_from" value="09:00" class="hasDatepicker" required>
                 </div>
                 <div>
                     <font class="form-font">до</font>
                     <input type="text" name="time_to" id="time_to" class="input-time"
-                           value="17:59"/></div>
+                           value="17:59" required/></div>
             </div>
             <div class="order-submit">
                 <input type="button" class="order-button green ways-call-submit" value="Заказать звонок"
@@ -233,18 +246,18 @@
             <h3>Консультация</h3>
 
             <div class="input-name">
-                <input type="text" id="response-name" class="link-name" name="name" placeholder="Имя">
+                <input type="text" id="response-name" class="link-name" name="name" placeholder="Имя" required>
 
                 <div class="response-err-name error"></div>
             </div>
             <div class="input-email">
-                <input type="text" id="response-email" class="link-email" name="email" placeholder="E-mail">
+                <input type="text" id="response-email" class="link-email" name="email" placeholder="E-mail" required>
 
                 <div class="response-err-email error"></div>
             </div>
             <div class="input-question">
                 <textarea id="response-question" class="link-response" name="response"
-                          placeholder="Ваш вопрос..."></textarea>
+                          placeholder="Ваш вопрос..." required></textarea>
 
                 <div class="response-err-question error"></div>
             </div>
@@ -266,6 +279,8 @@
 
 <script type="text/javascript">
     jQuery(document).ready(function () {
+        jQuery('#response-form').validate();
+        jQuery('#callback-form').validate();
         jQuery(".fancybox").fancybox({
             'beforeShow': function () {
                 var city = jQuery('.geocity').html();
@@ -312,13 +327,32 @@
                                 var phone = jQuery('.fancybox-outer #response-phone1').val();
                                 var time_from = jQuery('#time_from').val();
                                 var time_to = jQuery('#time_to').val();
-                                jQuery.post('/callback/new', {name: name, phone: phone, time_from: time_from, time_to: time_to}, function (response) {
-                                    if (response == 'success') {
-                                        jQuery.fancybox.close();
-                                        jQuery.fancybox('<h3 style="width:315px">Ваш вопрос успешно отправлен!</h3>');
-                                        jQuery.fancybox.update();
-                                    }
-                                });
+                                var send = '1';
+                                if (name == '') {
+                                    send = 0;
+                                    jQuery('.fancybox-outer #response-name1').addClass('error');
+                                }
+                                if (phone == '') {
+                                    send = 0;
+                                    jQuery('.fancybox-outer #response-phone1').addClass('error');
+                                }
+                                if (time_from == '') {
+                                    send = 0;
+                                    jQuery('#time_from').addClass('error');
+                                }
+                                if (time_to == '') {
+                                    send = 0;
+                                    jQuery('#time_to').addClass('error');
+                                }
+                                if (send == '1') {
+                                    jQuery.post('/callback/new', {name: name, phone: phone, time_from: time_from, time_to: time_to}, function (response) {
+                                        if (response == 'success') {
+                                            jQuery.fancybox.close();
+                                            jQuery.fancybox('<h3 style="width:315px">Ваш запрос успешно отправлен!</h3>');
+                                            jQuery.fancybox.update();
+                                        }
+                                    });
+                                }
                             });
                         }
                     });
@@ -332,14 +366,29 @@
                                 var name = jQuery('.fancybox-outer .link-name').val();
                                 var email = jQuery('.fancybox-outer .link-email').val();
                                 var response = jQuery('.fancybox-outer .link-response').val();
-                                jQuery.post('/consult/new', {name: name, email: email, response: response}, function (response) {
-                                    console.log(response);
-                                    if (response == 'success') {
-                                        jQuery.fancybox.close();
-                                        jQuery.fancybox('<h3 style="width:315px">Ваш заказ успешно отправлен!</h3>');
-                                        jQuery.fancybox.update();
-                                    }
-                                });
+                                var send = '1';
+                                if (name == '') {
+                                    send = 0;
+                                    jQuery('.fancybox-outer .link-name').addClass('error');
+                                }
+                                if (email == '') {
+                                    send = 0;
+                                    jQuery('.fancybox-outer .link-email').addClass('error');
+                                }
+                                if (response == '') {
+                                    send = 0;
+                                    jQuery('.fancybox-outer .link-response').addClass('error');
+                                }
+                                if (send == '1') {
+                                    jQuery.post('/consult/new', {name: name, email: email, response: response}, function (response) {
+                                        console.log(response);
+                                        if (response == 'success') {
+                                            jQuery.fancybox.close();
+                                            jQuery.fancybox('<h3 style="width:315px">Ваш заказ успешно отправлен!</h3>');
+                                            jQuery.fancybox.update();
+                                        }
+                                    });
+                                }
                             });
                         }
                     });
@@ -391,6 +440,7 @@
     ;
 
     function changeCityBlock(city) {
+        jQuery('.maps').css('display','none');
         jQuery('.fancy-address-block .city-item').css('display', 'none');
         var city = jQuery.trim(city);
         jQuery('.fancy-address-block .city-item span:contains("' + city + '")').parents().each(function () {
@@ -401,7 +451,7 @@
     }
 
     function changeCity(city) {
-
+        jQuery('.maps').css('display','none');
         jQuery('.city-item').css('display', 'none');
         var city = jQuery.trim(city);
         jQuery('.city-item span:contains("' + city + '")').parents().each(function () {

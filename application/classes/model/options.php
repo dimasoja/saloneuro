@@ -46,6 +46,9 @@ class Model_Options extends ORM {
                 if(isset($data['underoption_for_massage'][$count])) {
                     $array[] = $data['underoption_for_massage'][$count];
                 }
+                if(isset($data['pnevmo'][$key])) {
+                    $array[] = $data['pnevmo'][$key];
+                }
                 $this->clear();
                 $this->value = json_encode($array);
                 $this->id_product = $id_product;
@@ -56,17 +59,6 @@ class Model_Options extends ORM {
         }
 
         return true;
-//        if(isset($data['massage'])) {
-//            $massage = $data['massage'];
-//            foreach($massage as $item) {
-//                $this->clear();
-//                $this->value = $item;
-//                $this->id_product = $id_product;
-//                $this->type = 'massage';
-//                $this->save();
-//            }
-//        }
-//        return true;
     }
 
     public function saveTechnologies($data, $id_product) {
@@ -98,11 +90,30 @@ class Model_Options extends ORM {
     }
 
     public function saveGrade($data, $id_product) {
+
         if(isset($data['grade'])) {
             $massage = $data['grade'];
             foreach($massage as $item) {
                 $this->clear();
-                $this->value = $item;
+                $values = array();
+                $values[] = $item;
+                if(isset($data['bath'])) {
+                    $bath_find = array_search($item, $data['bath']);
+                    if($bath_find!==false) {
+                        $values[] = 1;
+                    } else {
+                        $values[] = 0;
+                    }
+                }
+                if(isset($data['bath_required'])) {
+                    $bath_find = array_search($item, $data['bath_required']);
+                    if($bath_find!==false) {
+                        $values[] = 1;
+                    } else {
+                        $values[] = 0;
+                    }
+                }
+                $this->value = json_encode($values);
                 $this->id_product = $id_product;
                 $this->type = 'grade';
                 $this->save();
@@ -142,6 +153,9 @@ class Model_Options extends ORM {
     }
 
     public function deleteAll($id) {
+        //$featured = ORM::factory('catalog')->where('id','=',$id)->find();
+        $featured->featured = '';
+        //$featured->save();
         $options = $this->where('id_product','=',$id)->find_all()->as_array();
         foreach($options as $option) {
             $option->delete();

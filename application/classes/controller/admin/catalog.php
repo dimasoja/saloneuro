@@ -57,7 +57,7 @@ class Controller_Admin_Catalog extends Controller_AdminBase
 
     public function action_delete() {
         $id = trim(htmlspecialchars($this->request->param('id')));
-        $cat = ORM::factory('catalog', $id);
+        $cat = ORM::factory('catalog')->where('id','=',$id)->find();
         $cat->delete();
         ORM::factory('options')->deleteAll($id);
         AdminHelper::setParamRedirect('success', 'Удалено!', 'catalog', 'index');
@@ -74,35 +74,8 @@ class Controller_Admin_Catalog extends Controller_AdminBase
             ORM::factory('options')->deleteAll($id);
             $post = Safely::safelyGet($_POST);
             $id_product = ORM::factory('catalog')->editProduct($post, $id);
+            //ORM::factory('settings')->reindexProduct($id_product);
             $options = ORM::factory('options');
-//            if(isset($post['option_massage'])) {
-//                unset($post['option_massage'][0]);
-//                sort($post['option_massage']);
-//            }
-//            if(isset($post['forsun'])) {
-//                unset($post['forsun'][0]);
-//                sort($post['forsun']);
-//            }
-//
-//            if(isset($post['price_for_massage'])) {
-//                unset($post['price_for_massage'][0]);
-//                sort($post['price_for_massage']);
-//            }
-//            if(isset($post['default_for_massage'])) {
-//                unset($post['default_for_massage'][0]);
-//                sort($post['default_for_massage']);
-//            }
-//            if(isset($post['underoption_for_massage'])) {
-//                unset($post['underoption_for_massage'][0]);
-//                sort($post['underoption_for_massage']);
-//            }
-//            if(isset($post['required_for_massage'])) {
-//                unset($post['required_for_massage'][0]);
-//                sort($post['required_for_massage']);
-//            }
-//echo "<pre>";
-//            print_r($post);
-//            die();
             $directorysave = $options->saveOptions($post, 'directory', $id_product);
             $gradesave = $options->saveGrade($post, $id_product);
             $massagesave = $options->saveMassage($post, $id_product);
@@ -116,7 +89,7 @@ class Controller_Admin_Catalog extends Controller_AdminBase
             }
             AdminHelper::setParamRedirect('success', 'Товар отредактирован!', 'catalog', 'index');
         }
-        $view->product = ORM::factory('catalog', $id);
+        $view->product = ORM::factory('catalog', $id);        
         $category = ORM::factory('productscat', $view->product->category);
         if (isset($category->id)) {
             $view->massage_on = $category->massage_on;

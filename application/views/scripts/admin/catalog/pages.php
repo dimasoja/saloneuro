@@ -68,6 +68,14 @@
     </div>
 </div>
 <div class="form-row">
+    <label class="field-name" for="standard">Краткое описание:</label>
+
+    <div class="field">
+        <textarea name="short_description" id="add-short"
+                  class="input-large name-edit"></textarea>
+    </div>
+</div>
+<div class="form-row">
     <label class="field-name" for="standard">Цена:</label>
 
     <div class="field">
@@ -91,17 +99,105 @@
                style="float: left;width: 100%;">
     </div>
 </div>
-<div class="form-row">
-    <label class="field-name" for="standard">Тип:</label>
+<?php if (isset($category)) { ?>
+    <?php if ($category->type_filter == 'shower') { ?>
+        <div class="form-row">
+            <label class="field-name" for="standard">Высота:</label>
 
-    <div class="field" style="text-align: left;">
-        <select class="form-control uniform" name="type">
-            <option value="angular">Угловая</option>
-            <option value="rectangular">Прямоугольная</option>
-            <option value="increased">Увеличенного объема</option>
-        </select>
+            <div class="field">
+                <input type="text" class="input-large name-edit" name="height"
+                       style="float: left;width: 100%;">
+            </div>
+        </div>
+        <div class="form-row">
+            <label class="field-name" for="standard">Форма кабины:</label>
+
+            <div class="field" style="text-align: left;">
+                <select class="form-control uniform" name="form">
+                    <option value="angular">Угловая</option>
+                    <option value="semicircular">Полукруглая</option>
+                    <option value="rectangular">Прямоугольная</option>
+                    <option value="pentagon">Пятиугольная</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <label class="field-name" for="standard">Тип кабины:</label>
+
+            <div class="field" style="text-align: left;">
+                <select class="form-control uniform" name="type_shower">
+                    <option value="cabin">Кабинка</option>
+                    <option value="doors">Дверки</option>
+                </select>
+            </div>
+        </div>
+
+    <?php } ?>
+    <?php if ($category->type_filter == 'accessory') { ?>
+        <div class="form-row">
+            <label class="field-name" for="standard">Тип аксессуаров:</label>
+
+            <div class="field" style="text-align: left;">
+                <select class="form-control uniform" name="type_accessory">
+                    <option value="blinds">Шторки для ванн</option>
+                    <option value="mixer">Смесители врезные в ванны</option>
+                    <option value="sink">Слив переливы для ванн</option>
+                    <option value="acessory">Аксессуары в ванную комнату</option>
+                </select>
+            </div>
+        </div>
+
+    <?php } ?>
+<?php } ?>
+<?php if ((isset($massage_on) && (isset($grade_on)))) { ?>
+    <div class="form-row">
+        <label class="field-name" for="standard">Разделение левая/правая?</label>
+
+        <div class="field" style="text-align: left;">
+            <select class="form-control uniform" name="leftright">
+                <option value="off">Нет</option>
+                <option value="on">Да</option>
+            </select>
+        </div>
     </div>
-</div>
+    <div class="form-row">
+        <label class="field-name" for="standard">Тип:</label>
+
+        <div class="field" style="text-align: left;">
+            <select class="form-control uniform" name="type">
+                <option value="angular">Угловая</option>
+                <option value="rectangular">Прямоугольная</option>
+                <option value="increased">Увеличенного объема</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <label class="field-name" for="standard">Дополнительный Тип:</label>
+
+        <div class="field" style="text-align: left;">
+            <select class="form-control uniform" name="additional_type">
+                <option value=""></option>
+                <option value="angular">Угловая</option>
+                <option value="rectangular">Прямоугольная</option>
+                <option value="increased">Увеличенного объема</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <label class="field-name" for="standard">Дополнительный Тип:</label>
+
+        <div class="field" style="text-align: left;">
+            <select class="form-control uniform" name="additional_type2">
+                <option value=""></option>
+                <option value="angular">Угловая</option>
+                <option value="rectangular">Прямоугольная</option>
+                <option value="increased">Увеличенного объема</option>
+            </select>
+        </div>
+    </div>
+<?php } ?>
+
+
 <!--                            <div class="form-row">-->
 <!--                                <label class="field-name" for="standard">Изображение:</label>-->
 <!--                                <div class="field">-->
@@ -225,6 +321,9 @@
                                     <th></th>
                                     <th></th>
                                     <th>Наименование</th>
+                                    <th>Группировка</th>
+                                    <th>Ванна?</th>
+                                    <th>Предопределено?</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -235,6 +334,17 @@
                                         <td><input type="checkbox" value="<?php echo $item->id; ?>" name="grade[]"/>
                                         </td>
                                         <td><?php echo $item->name; ?></td>
+                                        <td>
+                                            <?php $product = ORM::factory('catalog')->where('id', '=', $item->group)->find(); ?>
+                                            <?php if (isset($product->name)) {
+                                                ;
+                                            } ?>
+                                            <?php echo $product->name; ?>
+
+                                        </td>
+                                        <td><input type="checkbox" value="<?php echo $item->id; ?>" name="bath[]"/>
+                                        <td><input type="checkbox" value="<?php echo $item->id; ?>"
+                                                   name="bath_required[]"/>
                                     </tr>
                                 <?php } ?>
                                 </tbody>
@@ -366,6 +476,32 @@
     </div>
 </div>
 <div class="form-row">
+    <label class="field-name" for="standard">Ссылка на производителя:</label>
+
+    <div class="field" style="text-align: left;">
+        <input type="text" class="input-large name-edit" name="manufacturer"
+               style="float: left;width: 100%;">
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Порядок вывода:</label>
+
+    <div class="field" style="text-align: left;">
+        <input type="text" class="input-large name-edit" name="order"
+               style="float: left;width: 100%;">
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Включен?:</label>
+
+    <div class="field" style="text-align: left;">
+        <select class="form-control uniform" name="published">
+            <option value="off">Нет</option>
+            <option value="on">Да</option>
+        </select>
+    </div>
+</div>
+<div class="form-row">
     <label class="field-name" for="standard">Технические характеристики:</label>
 
     <div class="field" style="text-align: left;">
@@ -404,6 +540,7 @@
 <br/>
 <script type="text/javascript">
     jQuery(document).ready(function () {
+        var uploadsB = [];
         var btnUpload = jQuery('#upload3');
         if (btnUpload.length) {
             var status = jQuery('#status');
@@ -462,6 +599,7 @@
                 onComplete: function (file, response) {
                     var response_image = response.split("~");
                     var id_image = response_image[0];
+                    var ids_image = id_image;
                     var path = response_image[1];
                     var select_html = jQuery('.select_for_massage').html();
                     var forsun_html = jQuery('.forsun_for_massage').html();
@@ -472,16 +610,46 @@
                     var portfolio = jQuery('.massage-options');
                     var image_html = '<div class="sws_img_block imagerel' + id_image + '">\n\
                                            <div class="img_block">\n\
-                                                <img src="' + path + '" style="max-width: 194px;">\n\
-                                           </div>\n\
+                                                <img src="' + path + '" style="height:136px !important;clear:both">\n\
+                                           </div><a id="upload'+id_image+'">Загрузить изображение пневмо</a>\n\
                                            <div class="del_block">\n\
                                                 <a href="javascript:void:(0);" class="del_vid" onclick="deletePortfolio(' + id_image + ');">Удалить</a>\n\
                                            </div>' + select_html + forsun_html + price_for_massage + default_for_massage + required_for_massage + underoption_for_massage + '\n\
                                    </div>';
                     var hidden = '<input type="hidden" class="image' + id_image + '" name="massage[' + id_image + ']" rel="' + id_image + '"/> ';
+                    //var uploadsB = jQuery('#upload'+id_image);
+
                     portfolio.append(image_html);
 
                     portfolio.append(hidden);
+                    var upload1 = new AjaxUpload(jQuery('#upload'+id_image), {
+                        action: '/admin/catalog/uploadmassage',
+                        name: 'uploadfile',
+                        data: {id: '123'},
+                        onSubmit: function (file, ext) {
+                            if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) {
+                                status.text('Поддерживаемые форматы JPG, PNG или GIF');
+                                return false;
+                            }
+//status.text('Загрузка...');
+                        },
+                        onComplete: function (file, response) {
+                            var response_image = response.split("~");
+                            var id_image = response_image[0];
+                            var path = response_image[1];
+                            var select_html = jQuery('.select_for_massage').html();
+                            var forsun_html = jQuery('.forsun_for_massage').html();
+                            var price_for_massage = jQuery('.price_for_massage').html();
+                            var default_for_massage = jQuery('.default_for_massage').html();
+                            var required_for_massage = jQuery('.required_for_massage').html();
+                            var underoption_for_massage = jQuery('.underoption_for_massage').html();
+                            var portfolio = jQuery('.massage-options');
+                            var image_html = '<img src="' + path + '" style="height: 136px !important;">';
+                            var hidden = '<input type="hidden" class="image' + id_image + '" name="pnevmo['+ids_image+']" value="' + id_image + '" rel="' + id_image + '"/> ';
+                            console.log(image_html);
+                            jQuery('#upload'+ids_image).parent().find('.img_block').append(image_html).append(hidden).css('height','290px').parent().css('height','538px');
+                        }
+                    });
                 }
             });
 
@@ -525,6 +693,7 @@
                     $category = '';
                 } ?>
                 <th style="text-align: left;"><?php echo $category; ?></th>
+
                 <td><?php echo date("Y-m-d H:i:s", $item->time); ?></td>
                 <td style="padding-left: 0px !important;padding-right: 0px !important;"><input
                         class="button-turquoise button" value="Редактировать"
@@ -591,6 +760,11 @@
 
         jQuery('.bs-callout.bs-callout-info, .bs-callout.bs-callout-danger').fadeOut(10000);
         var editor = CKEDITOR.replace('add-answer',
+            {
+                uiColor: 'lightgrey',
+                language: 'en'
+            });
+        var editor = CKEDITOR.replace('add-short',
             {
                 uiColor: 'lightgrey',
                 language: 'en'

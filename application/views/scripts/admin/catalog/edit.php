@@ -105,6 +105,14 @@
     </div>
 </div>
 <div class="form-row">
+    <label class="field-name" for="standard">Краткое описание:</label>
+
+    <div class="field">
+        <textarea name="short_description" id="add-short"
+                  class="input-large name-edit"><?php echo $product->short_description; ?></textarea>
+    </div>
+</div>
+<div class="form-row">
     <label class="field-name" for="standard">Цена:</label>
 
     <div class="field">
@@ -112,26 +120,172 @@
                style="float: left;width: 100%;" value="<?php echo $product->price; ?>">
     </div>
 </div>
-<div class="form-row">
-    <label class="field-name" for="standard">Тип:</label>
+<?php if ($category->type_filter == 'shower') { ?>
+    <div class="form-row">
+        <label class="field-name" for="standard">Форма кабины:</label>
 
-    <div class="field" style="text-align: left;">
-        <select class="form-control uniform" name="type">
-            <option value="angular" <?php if ($product->type == 'angular') {
-                echo 'selected';
-            } ?>>Угловая
-            </option>
-            <option value="rectangular" <?php if ($product->type == 'rectangular') {
-                echo 'selected';
-            } ?>>Прямоугольная
-            </option>
-            <option value="increased" <?php if ($product->type == 'increased') {
-                echo 'selected';
-            } ?>>Увеличенного объема
-            </option>
-        </select>
+        <div class="field" style="text-align: left;">
+            <select class="form-control uniform" name="form">
+                <option value="angular" <?php if ($product->form == 'angular') {
+                    echo 'selected';
+                } ?>>Угловая
+                </option>
+                <option value="semicircular" <?php if ($product->form == 'semicircular') {
+                    echo 'selected';
+                } ?>>Полукруглая
+                </option>
+                <option value="rectangular" <?php if ($product->form == 'rectangular') {
+                    echo 'selected';
+                } ?>>Прямоугольная
+                </option>
+                <option value="pentagon" <?php if ($product->form == 'pentagon') {
+                    echo 'selected';
+                } ?>>Пятиугольная
+                </option>
+            </select>
+        </div>
     </div>
-</div>
+    <div class="form-row">
+        <label class="field-name" for="standard">Тип кабины:</label>
+
+        <div class="field" style="text-align: left;">
+            <select class="form-control uniform" name="type_shower">
+                <option value="cabin" <?php if ($product->type_shower == 'cabin') {
+                    echo 'selected';
+                } ?>>Кабинка
+                </option>
+                <option value="doors" <?php if ($product->type_shower == 'doors') {
+                    echo 'selected';
+                } ?>>Дверки
+                </option>
+            </select>
+        </div>
+    </div>
+
+<?php } ?>
+<?php if ($category->type_filter == 'accessory') { ?>
+    <div class="form-row">
+        <label class="field-name" for="standard">Тип аксессуаров:</label>
+
+        <div class="field" style="text-align: left;">
+            <select class="form-control uniform" name="type_accessory">
+                <option value="blinds" <?php if ($product->type_accessory == 'blinds') {
+                    echo 'selected';
+                } ?>>Шторки для ванн
+                </option>
+                <option value="mixer" <?php if ($product->type_accessory == 'mixer') {
+                    echo 'selected';
+                } ?>>Смесители врезные в ванны
+                </option>
+                <option value="sink" <?php if ($product->type_accessory == 'sink') {
+                    echo 'selected';
+                } ?>>Слив переливы для ванн
+                </option>
+                <option value="acessory" <?php if ($product->type_accessory == 'acessory') {
+                    echo 'selected';
+                } ?>>Аксессуары в ванную комнату
+                </option>
+            </select>
+        </div>
+    </div>
+
+
+<?php } ?>
+<?php if ((isset($massage_on) && (isset($grade_on)))) { ?>
+    <div class="form-row">
+        <label class="field-name" for="standard">Разделение левая/правая?</label>
+
+        <div class="field" style="text-align: left;">
+            <select class="form-control uniform" name="leftright">
+                <option value="off" <?php if ($product->leftright == 'off') {
+                    echo 'selected';
+                } ?>>Нет
+                </option>
+                <option value="on" <?php if ($product->leftright == 'on') {
+                    echo 'selected';
+                } ?>>Да
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <label class="field-name" for="standard">Тип:</label>
+
+        <div class="field" style="text-align: left;">
+            <select class="form-control uniform" name="type">
+                <option value="angular" <?php if ($product->type == 'angular') {
+                    echo 'selected';
+                } ?>>Угловая
+                </option>
+                <option value="rectangular" <?php if ($product->type == 'rectangular') {
+                    echo 'selected';
+                } ?>>Прямоугольная
+                </option>
+                <option value="increased" <?php if ($product->type == 'increased') {
+                    echo 'selected';
+                } ?>>Увеличенного объема
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <label class="field-name" for="standard">Дополнительный Тип:</label>
+
+        <div class="field" style="text-align: left;">
+            <select class="form-control uniform" name="additional_type">
+                <option value=""></option>
+                <option value="angular" <?php if ($product->additional_type == 'angular') {
+                    echo 'selected';
+                } ?>>Угловая
+                </option>
+                <option value="rectangular" <?php if ($product->additional_type == 'rectangular') {
+                    echo 'selected';
+                } ?>>Прямоугольная
+                </option>
+                <option value="increased" <?php if ($product->additional_type == 'increased') {
+                    echo 'selected';
+                } ?>>Увеличенного объема
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <label class="field-name" for="standard">Дополнительный Тип:</label>
+
+        <div class="field" style="text-align: left;">
+            <select class="form-control uniform" name="additional_type2">
+                <option value=""></option>
+                <option value="angular" <?php if ($product->additional_type2 == 'angular') {
+                    echo 'selected';
+                } ?>>Угловая
+                </option>
+                <option value="rectangular" <?php if ($product->additional_type2 == 'rectangular') {
+                    echo 'selected';
+                } ?>>Прямоугольная
+                </option>
+                <option value="increased" <?php if ($product->additional_type2 == 'increased') {
+                    echo 'selected';
+                } ?>>Увеличенного объема
+                </option>
+            </select>
+        </div>
+    </div>
+<?php } else { ?>
+    <select class="form-control uniform" name="type" style="display:none">
+        <option value="angular" <?php if ($product->type == 'angular') {
+            echo 'selected';
+        } ?>>Угловая
+        </option>
+        <option value="rectangular" <?php if ($product->type == 'rectangular') {
+            echo 'selected';
+        } ?>>Прямоугольная
+        </option>
+        <option value="increased" <?php if ($product->type == 'increased') {
+            echo 'selected';
+        } ?>>Увеличенного объема
+        </option>
+    </select>
+<?php } ?>
 <div class="form-row">
     <label class="field-name" for="standard">Ширина:</label>
 
@@ -152,6 +306,16 @@
         } ?>">
     </div>
 </div>
+<?php if ($category->type_filter == 'shower') { ?>
+    <div class="form-row">
+        <label class="field-name" for="standard">Высота:</label>
+
+        <div class="field">
+            <input type="text" class="input-large name-edit" name="height"
+                   style="float: left;width: 100%;" value="<?php echo $product->height; ?>">
+        </div>
+    </div>
+<?php } ?>
 <!--                            <div class="form-row">-->
 <!--                                <label class="field-name" for="standard">Изображение:</label>-->
 <!--                                <div class="field">-->
@@ -202,99 +366,150 @@
                     <div class="images massage-options">
                         <?php foreach ($options as $option) { ?>
                             <?php $massage_image = json_decode($option->value, true); ?>
-                            <?php if(isset($massage_image[1])) { ?>
-                            <?php $key = $massage_image[1]; ?>
-                            <?php $id_image = $massage_image[0]; ?>
-                            <?php $forsun = $massage_image[2]; ?>
-                            <?php if (isset($massage_image[3])) {
-                                $price_for_massage = $massage_image[3];
-                            } else {
-                                $price_for_massage = '';
-                            } ?>
+                            <?php if (isset($massage_image[1])) { ?>
+                                <?php $key = $massage_image[1]; ?>
+                                <?php $id_image = $massage_image[0]; ?>
+                                <?php $forsun = $massage_image[2]; ?>
+                                <?php if (isset($massage_image[3])) {
+                                    $price_for_massage = $massage_image[3];
+                                } else {
+                                    $price_for_massage = '';
+                                } ?>
 
-                            <?php if (isset($massage_image[4])) {
-                                $default_for_massage = $massage_image[4];
-                            } else {
-                                $default_for_massage = '0';
-                            } ?>
-                            <?php if (isset($massage_image[5])) {
-                                $required_for_massage = $massage_image[5];
-                            } else {
-                                $required_for_massage = '0';
-                            } ?>
-                            <?php if (isset($massage_image[6])) {
-                                $underoption_for_massage = $massage_image[6];
-                            } else {
-                                $underoption_for_massage = '0';
-                            } ?>
-                            <?php $image = ORM::factory('images')->where('id_image', '=', $id_image)->find(); ?>
-                            <div class="sws_img_block imagerel<?php echo $id_image; ?>">
-                                <div class="img_block">
-                                    <img src="<?php echo $image->path; ?>" style="max-width: 194px;">
-                                </div>
-                                <div class="del_block">
-                                    <a href="javascript:void:(0);" class="del_vid"
-                                       onclick="deletePortfolio(<?php echo $id_image; ?>);">Удалить</a>
-                                </div>
-                                <div class="select_for_massage">
-                                    <select class="massage-select" name="option_massage[]" style="height: auto">
-                                        <option value=""></option>
-                                        <?php foreach ($massages as $ac) { ?>
-
-                                            <option value="<?php echo $ac->id; ?>" <?php if ($key == $ac->id) {
-                                                echo 'selected';
-                                            } ?>><?php echo $ac->name; ?></option>
+                                <?php if (isset($massage_image[4])) {
+                                    $default_for_massage = $massage_image[4];
+                                } else {
+                                    $default_for_massage = '0';
+                                } ?>
+                                <?php if (isset($massage_image[5])) {
+                                    $required_for_massage = $massage_image[5];
+                                } else {
+                                    $required_for_massage = '0';
+                                } ?>
+                                <?php if (isset($massage_image[6])) {
+                                    $underoption_for_massage = $massage_image[6];
+                                } else {
+                                    $underoption_for_massage = '0';
+                                } ?>
+                                <?php $image = ORM::factory('images')->where('id_image', '=', $id_image)->find(); ?>
+                                <div
+                                    class="sws_img_block imagerel<?php echo $id_image; ?>" <?php if (count($massage_image) == 8) {
+                                    echo 'style="height:504px"';
+                                } ?>>
+                                    <div class="img_block" <?php if (count($massage_image) == 8) {
+                                        echo 'style="height:272px"';
+                                    } ?>>
+                                        <img src="<?php echo $image->path; ?>"
+                                             style="height:136px !important; clear:both">
+                                        <?php if (count($massage_image) == 8) {
+                                            $id_im_pnevmo = $massage_image[7];
+                                            $image_pnevmo = ORM::factory('images')->where('id_image', '=', $id_im_pnevmo)->find(); ?>
+                                            <img src="<?php echo $image_pnevmo->path; ?>"
+                                                 style="height:136px !important">
+                                            <input type="hidden" class="image<?php echo $id_im_pnevmo; ?>"
+                                                   name="pnevmo[<?php echo $id_image; ?>]"
+                                                   value="<?php echo $id_im_pnevmo; ?>"
+                                                   rel="<?php echo $id_im_pnevmo; ?>"/>
                                         <?php } ?>
-                                    </select>
-                                    <br/><input type="text" name="forsun[]" style="width: 100%;margin-top: 8px;"
-                                                placeholder="Форсунок" value="<?php echo $forsun; ?>"/>
 
-                                    <br/><input type="text" name="price_for_massage[]"
-                                                style="width: 100%;margin-top: 8px;" placeholder="Цена"
-                                                value="<?php echo $price_for_massage; ?>"/>
+                                    </div>
+                                    <?php if (count($massage_image) != 8) { ?>
+                                        <a id="upload<?php echo $id_image; ?>">Загрузить изображение пневмо</a>
+                                        <script type="text/javascript">
+                                            jQuery(document).ready(function () {
+                                                var upload1 = new AjaxUpload(jQuery('#upload<?php echo $id_image; ?>'), {
+                                                    action: '/admin/catalog/uploadmassage',
+                                                    name: 'uploadfile',
+                                                    data: {id: '123'},
+                                                    onSubmit: function (file, ext) {
+                                                        if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) {
+                                                            status.text('Поддерживаемые форматы JPG, PNG или GIF');
+                                                            return false;
+                                                        }
+                                                        //status.text('Загрузка...');
+                                                    },
+                                                    onComplete: function (file, response) {
+                                                        var response_image = response.split("~");
+                                                        var id_image = response_image[0];
+                                                        var path = response_image[1];
+                                                        var select_html = jQuery('.select_for_massage').html();
+                                                        var forsun_html = jQuery('.forsun_for_massage').html();
+                                                        var price_for_massage = jQuery('.price_for_massage').html();
+                                                        var default_for_massage = jQuery('.default_for_massage').html();
+                                                        var required_for_massage = jQuery('.required_for_massage').html();
+                                                        var underoption_for_massage = jQuery('.underoption_for_massage').html();
+                                                        var portfolio = jQuery('.massage-options');
+                                                        var image_html = '<img src="' + path + '" style="height: 136px !important;">';
+                                                        var hidden = '<input type="hidden" class="image' + id_image + '" name="pnevmo[<?php echo $id_image; ?>]" value="' + id_image + '" rel="' + id_image + '"/> ';
+                                                        jQuery('#upload<?php echo $id_image; ?>').parent().find('.img_block').append(image_html).append(hidden).css('height', '290px').parent().css('height', '538px');
+                                                    }
+                                                });
+                                            });
+                                        </script>
+                                    <?php } ?>
+                                    <div class="del_block">
+                                        <a href="javascript:void:(0);" class="del_vid"
+                                           onclick="deletePortfolio(<?php echo $id_image; ?>);">Удалить</a>
+                                    </div>
+                                    <div class="select_for_massage">
+                                        <select class="massage-select" name="option_massage[]" style="height: auto">
+                                            <option value=""></option>
+                                            <?php foreach ($massages as $ac) { ?>
 
-                                    <label>По умолчанию?</label>
-                                    <select class="by_default not-uniform" name="default_for_massage[]">
-                                        <option value="1" <?php if ($default_for_massage == '1') {
-                                            echo 'selected';
-                                        } ?>>Да
-                                        </option>
-                                        <option value="0" <?php if ($default_for_massage == '0') {
-                                            echo 'selected';
-                                        } ?>>Нет
-                                        </option>
-                                    </select>
+                                                <option value="<?php echo $ac->id; ?>" <?php if ($key == $ac->id) {
+                                                    echo 'selected';
+                                                } ?>><?php echo $ac->name; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <br/><input type="text" name="forsun[]" style="width: 100%;margin-top: 8px;"
+                                                    placeholder="Форсунок" value="<?php echo $forsun; ?>"/>
 
-                                    <label>Обязательно?</label>
-                                    <select class="by_required not-uniform" name="required_for_massage[]">
-                                        <option value="1" <?php if ($required_for_massage == '1') {
-                                            echo 'selected';
-                                        } ?>>Да
-                                        </option>
-                                        <option value="0" <?php if ($required_for_massage == '0') {
-                                            echo 'selected';
-                                        } ?>>Нет
-                                        </option>
-                                    </select>
+                                        <br/><input type="text" name="price_for_massage[]"
+                                                    style="width: 100%;margin-top: 8px;" placeholder="Цена"
+                                                    value="<?php echo $price_for_massage; ?>"/>
 
-                                    <label>Подопция?</label>
-                                    <select class="by_underoption not-uniform" name="underoption_for_massage[]">
-                                        <option value="1" <?php if ($underoption_for_massage == '1') {
-                                            echo 'selected';
-                                        } ?>>Да
-                                        </option>
-                                        <option value="0" <?php if ($underoption_for_massage == '0') {
-                                            echo 'selected';
-                                        } ?>>Нет
-                                        </option>
-                                    </select>
+                                        <label>По умолчанию?</label>
+                                        <select class="by_default not-uniform" name="default_for_massage[]">
+                                            <option value="1" <?php if ($default_for_massage == '1') {
+                                                echo 'selected';
+                                            } ?>>Да
+                                            </option>
+                                            <option value="0" <?php if ($default_for_massage == '0') {
+                                                echo 'selected';
+                                            } ?>>Нет
+                                            </option>
+                                        </select>
 
+                                        <label>Обязательно?</label>
+                                        <select class="by_required not-uniform" name="required_for_massage[]">
+                                            <option value="1" <?php if ($required_for_massage == '1') {
+                                                echo 'selected';
+                                            } ?>>Да
+                                            </option>
+                                            <option value="0" <?php if ($required_for_massage == '0') {
+                                                echo 'selected';
+                                            } ?>>Нет
+                                            </option>
+                                        </select>
+
+                                        <label>Подопция?</label>
+                                        <select class="by_underoption not-uniform" name="underoption_for_massage[]">
+                                            <option value="1" <?php if ($underoption_for_massage == '1') {
+                                                echo 'selected';
+                                            } ?>>Да
+                                            </option>
+                                            <option value="0" <?php if ($underoption_for_massage == '0') {
+                                                echo 'selected';
+                                            } ?>>Нет
+                                            </option>
+                                        </select>
+
+                                    </div>
                                 </div>
-                            </div>
-                            <input type="hidden" class="massage<?php echo $id_image; ?>"
-                                   name="massage[<?php echo $id_image; ?>]"
-                                   rel="<?php echo $id_image; ?>"/>
-                        <?php } ?>
+                                <input type="hidden" class="massage<?php echo $id_image; ?>"
+                                       name="massage[<?php echo $id_image; ?>]"
+                                       rel="<?php echo $id_image; ?>"/>
+                            <?php } ?>
                         <?php } ?>
                     </div>
 
@@ -329,6 +544,7 @@
                         <div class="widget">
                             <div class="table-container">
                                 <?php $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $id_prod)->find_all()->as_array(); ?>
+
                                 <table cellpading="0" cellspacing="0" border="0"
                                        class="default-table stripped turquoise dataTable" id="dynamic2">
                                     <thead>
@@ -337,17 +553,33 @@
                                         <th></th>
                                         <th>Наименование</th>
                                         <th>Группировка</th>
+                                        <th>Ванна?</th>
+                                        <th>Предопределено?</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <?php $count = 1; ?>
                                     <?php foreach ($grades as $item) { ?>
+
                                         <tr>
                                             <td><?php echo $count++; ?></td>
                                             <?php $selected = ''; ?>
+                                            <?php $is_bath = ''; ?>
+                                            <?php $is_br = ''; ?>
                                             <?php foreach ($options as $option) {
-                                                if ($item->id == $option->value) {
+                                                $grade_array = json_decode($option->value);
+                                                if ($item->id == $grade_array[0]) {
                                                     $selected = 'checked="checked"';
+                                                    if (isset($grade_array[1])) {
+                                                        if ($grade_array[1] == '1') {
+                                                            $is_bath = 'checked="checked"';
+                                                        }
+                                                    }
+                                                    if (isset($grade_array[2])) {
+                                                        if ($grade_array[2] == '1') {
+                                                            $is_br = 'checked="checked"';
+                                                        }
+                                                    }
                                                 }
                                             } ?>
                                             <td><input type="checkbox" value="<?php echo $item->id; ?>"
@@ -360,6 +592,11 @@
                                                     <?php echo $product->name; ?>
                                                 <?php } ?>
                                             </td>
+                                            <?php $selected = ''; ?>
+                                            <td><input type="checkbox" value="<?php echo $item->id; ?>"
+                                                       name="bath[]" <?php echo $is_bath; ?>/>
+                                            <td><input type="checkbox" value="<?php echo $item->id; ?>"
+                                                       name="bath_required[]" <?php echo $is_br; ?>/>
                                         </tr>
                                     <?php } ?>
                                     </tbody>
@@ -494,7 +731,7 @@
         <a id="upload3">
             Загрузить изображение
         </a>
-
+        <?php $product = ORM::factory('catalog')->where('id', '=', $id_prod)->find(); ?>
         <div class="images">
             <?php foreach ($options as $option) { ?>
                 <?php $image = ORM::factory('images')->where('id_image', '=', $option->value)->find(); ?>
@@ -507,11 +744,11 @@
                            onclick="deletePortfolio(<?php echo $image->id_image; ?>);">Удалить</a>
                     </div>
                     <input type="radio" name="featured[]"
-                           value="<?php echo $image->id_image; ?>" <?php if (isset($product->featured)) {
-                        if ($product->featured == $image->id_image) {
-                            echo 'checked';
-                        }
-                    } ?>/>Обложка товара
+                           value="<?php echo $image->id_image; ?>" <?php
+                    if ($product->featured == $image->id_image) {
+                        echo 'checked';
+                    }
+                    ?>/>Обложка товара
                 </div>
                 <input type="hidden" class="image<?php echo $image->id_image; ?>"
                        name="image[<?php echo $image->id_image; ?>]"
@@ -520,7 +757,7 @@
         </div>
     </div>
 </div>
-<?php $product = ORM::factory('catalog')->where('id','=', $id_prod)->find(); ?>
+<?php $product = ORM::factory('catalog')->where('id', '=', $id_prod)->find(); ?>
 <div class="form-row">
     <label class="field-name" for="standard">Схема монтажа:</label>
 
@@ -540,6 +777,37 @@
     <?php if ($product->instruction != "") { ?>
         <a href="/<?php echo $product->instruction; ?>">Инструкция</a>
     <?php } ?>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Ссылка на производителя:</label>
+
+    <div class="field" style="text-align: left;">
+
+        <input type="text" class="input-large name-edit" name="manufacturer"
+               style="float: left;width: 100%;" value="<?php if (isset($product->manufacturer)) {
+            echo $product->manufacturer;
+        } ?>">
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Порядок вывода:</label>
+
+    <div class="field" style="text-align: left;">
+        <input type="text" class="input-large name-edit" name="order"
+               style="float: left;width: 100%;" value="<?php if (isset($product->order)) {
+            echo $product->order;
+        } ?>">
+    </div>
+</div>
+<div class="form-row">
+    <label class="field-name" for="standard">Включен?:</label>
+
+    <div class="field" style="text-align: left;">
+        <select class="form-control uniform" name="published">
+            <option value="off" <?php if($product->published=='off') echo 'selected'; ?>>Нет</option>
+            <option value="on" <?php if($product->published=='on') echo 'selected'; ?>>Да</option>
+        </select>
+    </div>
 </div>
 <div class="form-row">
     <?php $options = ORM::factory('options')->where('type', '=', 'custom')->where('id_product', '=', $id_prod)->find_all()->as_array(); ?>
@@ -562,18 +830,20 @@
 <div class="options">
     <?php $count = 0; ?>
     <?php foreach ($options as $option) { ?>
-        <div class="form-row">
-            <input type="text" class="input-large name-edit"
-                   name="customname-<?php echo $count; ?>"
-                   style="float: left;width:183px;" value="<?php echo $option->name; ?>">
-
-            <div class="field">
+        <?php if ($option->name != '') { ?>
+            <div class="form-row">
                 <input type="text" class="input-large name-edit"
-                       name="custom-<?php echo $count; ?>"
-                       style="float: left;width: 100%;" value="<?php echo $option->value; ?>">
+                       name="customname-<?php echo $count; ?>"
+                       style="float: left;width:183px;" value="<?php echo $option->name; ?>">
+
+                <div class="field">
+                    <input type="text" class="input-large name-edit"
+                           name="custom-<?php echo $count; ?>"
+                           style="float: left;width: 100%;" value="<?php echo $option->value; ?>">
+                </div>
             </div>
-        </div>
-        <?php $count++; ?>
+            <?php $count++; ?>
+        <?php } ?>
     <?php } ?>
 </div>
 <input type="hidden" class="num_options" value="<?php echo $count; ?>"/>
@@ -647,6 +917,7 @@
                 onComplete: function (file, response) {
                     var response_image = response.split("~");
                     var id_image = response_image[0];
+                    var ids_image = id_image;
                     var path = response_image[1];
                     var select_html = jQuery('.select_for_massage').html();
                     var forsun_html = jQuery('.forsun_for_massage').html();
@@ -657,15 +928,47 @@
                     var portfolio = jQuery('.massage-options');
                     var image_html = '<div class="sws_img_block imagerel' + id_image + '">\n\
                                            <div class="img_block">\n\
-                                                <img src="' + path + '" style="max-width: 194px;">\n\
-                                           </div>\n\
+                                                <img src="' + path + '" style="height:136px !important;clear:both">\n\
+                                           </div><a id="upload'+id_image+'">Загрузить изображение пневмо</a>\n\
                                            <div class="del_block">\n\
                                                 <a href="javascript:void:(0);" class="del_vid" onclick="deletePortfolio(' + id_image + ');">Удалить</a>\n\
                                            </div>' + select_html + forsun_html + price_for_massage + default_for_massage + required_for_massage + underoption_for_massage + '\n\
                                    </div>';
                     var hidden = '<input type="hidden" class="image' + id_image + '" name="massage[' + id_image + ']" rel="' + id_image + '"/> ';
+                    //var uploadsB = jQuery('#upload'+id_image);
+
                     portfolio.append(image_html);
+
                     portfolio.append(hidden);
+                    var upload1 = new AjaxUpload(jQuery('#upload'+id_image), {
+                        action: '/admin/catalog/uploadmassage',
+                        name: 'uploadfile',
+                        data: {id: '123'},
+                        onSubmit: function (file, ext) {
+                            if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) {
+                                status.text('Поддерживаемые форматы JPG, PNG или GIF');
+                                return false;
+                            }
+//status.text('Загрузка...');
+                        },
+                        onComplete: function (file, response) {
+                            var response_image = response.split("~");
+                            var id_image = response_image[0];
+
+                            var path = response_image[1];
+                            var select_html = jQuery('.select_for_massage').html();
+                            var forsun_html = jQuery('.forsun_for_massage').html();
+                            var price_for_massage = jQuery('.price_for_massage').html();
+                            var default_for_massage = jQuery('.default_for_massage').html();
+                            var required_for_massage = jQuery('.required_for_massage').html();
+                            var underoption_for_massage = jQuery('.underoption_for_massage').html();
+                            var portfolio = jQuery('.massage-options');
+                            var image_html = '<img src="' + path + '" style="height: 136px !important;">';
+                            var hidden = '<input type="hidden" class="image' + id_image + '" name="pnevmo['+ids_image+']" value="' + id_image + '" rel="' + id_image + '"/> ';
+                            console.log(image_html);
+                            jQuery('#upload'+ids_image).parent().find('.img_block').append(image_html).append(hidden).css('height','290px').parent().css('height','538px');
+                        }
+                    });
                 }
             });
         }
@@ -704,6 +1007,11 @@
         });
         jQuery('.bs-callout.bs-callout-info, .bs-callout.bs-callout-danger').fadeOut(10000);
         var editor = CKEDITOR.replace('add-answer',
+            {
+                uiColor: 'lightgrey',
+                language: 'en'
+            });
+        var editor = CKEDITOR.replace('add-short',
             {
                 uiColor: 'lightgrey',
                 language: 'en'

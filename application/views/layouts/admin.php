@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title><?php echo $page_title . $page_title_split . $site_name ?></title>
+    <!-- <title><?php //echo $page_title . $page_title_split . $site_name ?></title> -->
+    <title>Thermolux Admin Panel</title>
     <!-- Le styles -->
     <link href="/css/admin/bootstrap.css" rel="stylesheet">
     <link href="/css/admin/bootstrap-responsive.css" rel="stylesheet">
@@ -241,6 +242,13 @@
                         }
                     } ?>><span></span> Продукция Thermolux</a></li>
             <?php } ?>
+            <?php if (in_array('admin/blocks/footer', $allowed)) { ?>
+                <li><a href="/admin/blocks/footer" <?php if (isset($cname)) {
+                        if ($cname == 'footer') {
+                            echo 'class="active"';
+                        }
+                    } ?>><span></span> Футер</a></li>
+            <?php } ?>
         </ul>
     </li>
 <?php } ?>
@@ -310,9 +318,9 @@
 <?php } ?>
 
 
-<?php if ((in_array('admin/orders', $allowed)) || (in_array('admin/response', $allowed)) || (in_array('admin/callback', $allowed)) || (in_array('admin/searchlog', $allowed)) || (in_array('admin/templates', $allowed))) { ?>
+<?php if ((in_array('admin/orders', $allowed)) || (in_array('admin/response', $allowed))|| (in_array('admin/partner', $allowed)) || (in_array('admin/callback', $allowed)) || (in_array('admin/searchlog', $allowed)) || (in_array('admin/templates', $allowed))) { ?>
     <li class="dropdown"><a href="#" <?php if (isset($cname)) {
-            if (($cname == 'response') || ($cname == 'callback') || ($cname == 'consult ') || ($cname == 'searchlog') || ($cname == 'templates') || ($cname == 'contacts') || ($cname == 'orders')) {
+            if (($cname == 'response') || ($cname == 'callback') || ($cname == 'partner') || ($cname == 'consult ') || ($cname == 'searchlog') || ($cname == 'templates') || ($cname == 'contacts') || ($cname == 'orders')) {
                 echo 'class="active"';
             }
         } ?>><span><img src="/images/admin/icon/mainNav/ui.png"> Покупатели</span></a>
@@ -365,6 +373,13 @@
                             echo 'class="active"';
                         }
                     } ?>><span></span> Обратная связь</a></li>
+            <?php } ?>
+            <?php if (in_array('admin/partner', $allowed)) { ?>
+                <li><a href="/admin/partner" <?php if (isset($cname)) {
+                        if ($cname == 'partner') {
+                            echo 'class="active"';
+                        }
+                    } ?>><span></span> Партнеры</a></li>
             <?php } ?>
         </ul>
     </li>
@@ -447,6 +462,7 @@
             $count_new_contacts = ORM::factory('contactus')->getNew();
             $count_new_consult = ORM::factory('consult')->getNew();
             $count_new_complexorders = ORM::factory('complexorders')->getNew();
+            $count_new_partners = ORM::factory('partners')->getNew();
             ?>
             <?php $controller = Request::instance()->controller; ?>
             <li class="<?php if ($controller == 'response') {
@@ -480,6 +496,12 @@
             } ?>">
                 <a href="/admin/contacts">Связаться <?php if ($count_new_contacts != 0) { ?><span
                         class="badge label-important"><?php echo '+' . $count_new_contacts; ?></span><?php } ?></a>
+            </li>
+            <li class="<?php if ($controller == 'partner') {
+                echo 'active';
+            } ?>">
+                <a href="/admin/partner">Партнеры <?php if ($count_new_partners != 0) { ?><span
+                        class="badge label-important"><?php echo '+' . $count_new_partners; ?></span><?php } ?></a>
             </li>
             <li class="<?php if ($controller == 'consult') {
                 echo 'active';

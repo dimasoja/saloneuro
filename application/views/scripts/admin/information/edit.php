@@ -93,6 +93,4 @@
                 });
             CKFinder.setupCKEditor( editor, '/js/ckeditor/ckfinder/' );
         });
-
-
     </script>

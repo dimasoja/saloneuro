@@ -1,5 +1,12 @@
 <h2><?php echo $new->title; ?></h2>
-<?php echo $new->content; ?>
+<?php $image = ORM::factory('images')->where('id_page', '=', $new->id_new)->where('part', '=', 'news')->find(); ?>
+<div class="information-item">
+    <div class="information-image">
+        <div
+            class="category-image-wrapper-information"><?php echo FrontHelper::output($image->path, 200, 200, 200, 200, '/uploads/images/'); ?></div>
+    </div>
+
+    <?php echo $new->content; ?>
 <?php
 function transliterate($string) {
     $roman = array("Sch", "sch", 'Yo', 'Zh', 'Kh', 'Ts', 'Ch', 'Sh', 'Yu', 'ya', 'yo', 'zh', 'kh', 'ts', 'ch', 'sh', 'yu', 'ya', 'A', 'B', 'V', 'G', 'D', 'E', 'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'F', '', 'Y', '', 'E', 'a', 'b', 'v', 'g', 'd', 'e', 'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', '', 'y', '', 'e', '_');
@@ -8,3 +15,4 @@ function transliterate($string) {
 }
 
 ?>
+</div>

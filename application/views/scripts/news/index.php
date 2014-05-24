@@ -19,7 +19,7 @@
                 <h4><a href="/news/<?php echo strtolower(transliterate($new->title)); ?>"><?php echo $new->title; ?></a></h4>
             </div>
             <div class="information-pretext">
-                <?php echo FrontHelper::maxsite_str_word($new->content, 50); ?>
+                <?php echo FrontHelper::maxsite_str_word($new->short, 50); ?>
             </div>
             <div class="more">
                 <a href="/news/<?php echo strtolower(transliterate($new->title)); ?>">Подробнее...</a>

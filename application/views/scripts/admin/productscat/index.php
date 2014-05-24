@@ -1,3 +1,5 @@
+<script type="text/javascript" src="/js/ckeditor/ckfinder/ckfinder.js"></script>
+<script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
 <?php if ($success != '') { ?>
     <div class="alert alert-info noMargin bs-callout bs-callout-info">
         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -52,6 +54,12 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <label class="field-name" for="standard">Текст:</label>
+                                <div class="field">
+                                    <textarea name="content" id="add-answer" class="input-large name-edit"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <label class="field-name" for="standard">Выводить массажные опции:</label>
 
                                 <div class="field" style="text-align: left;">
@@ -78,6 +86,17 @@
                                         <option value=""></option>
                                         <option value="acrylic">Массажные опции скрыты, гидромассажная опция не выбрана</option>
                                         <option value="massage">Массажные опции раскрыты, гидромассажная опция выбрана</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="field-name" for="standard">Тип (для фильтров):</label>
+
+                                <div class="field" style="text-align: left;">
+                                    <select class="form-control uniform" name="type_filter">
+                                        <option value="bath">Ванна</option>
+                                        <option value="accessory">Аксессуар</option>
+                                        <option value="shower">Душевая Кабинаы</option>
                                     </select>
                                 </div>
                             </div>
@@ -156,6 +175,12 @@
         }
 
         jQuery(document).ready(function () {
+            var editor = CKEDITOR.replace('add-answer',
+                {
+                    uiColor : 'lightgrey',
+                    language: 'en'
+                });
+            CKFinder.setupCKEditor( editor, '/js/ckeditor/ckfinder/' );
             jQuery('.bs-callout.bs-callout-info, .bs-callout.bs-callout-danger').fadeOut(10000);
 
             jQuery('.button.button-blue.marginbottom30').click(function () {

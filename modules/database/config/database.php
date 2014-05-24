@@ -21,7 +21,7 @@ return array
 			'username'   => 'root',
 			'password'   => 'root',
 			'persistent' => FALSE,
-			'database'   => 'saloneuro',
+			'database'   => 'newsalon',
 		),
 		'table_prefix' => '',
 		'charset'      => 'utf8',

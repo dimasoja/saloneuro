@@ -99,7 +99,7 @@ class Controller_Admin_Pages extends Controller_AdminBase
             $content->meta_title = $_POST['meta_title'];
             $content->updated_at = strtotime("now");
             //reindex Data
-            ORM::factory('settings')->reindexData();
+            //ORM::factory('settings')->reindexData();
 
             if ($content->save()) {
                 if ($success == 'found_url') {
