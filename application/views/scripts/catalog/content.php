@@ -74,8 +74,13 @@
                 <?php $options = ORM::factory('options')->where('type', '=', 'directory')->where('id_product', '=', $page->id)->find_all()->as_array(); ?>
                 <?php foreach ($options as $option) {
                     $directory = ORM::factory('directory')->where('id', '=', $option->name)->find();
-                    $directory_value = ORM::factory('directory')->where('id', '=', $option->value)->find(); ?>
-                    <b><?php echo $directory->name; ?></b> : <?php echo $option->value; ?><br/>
+                    $directory_value = ORM::factory('directory')->where('id', '=', $option->value)->find();
+                    if($directory->type=='select')
+                        $dir_value = $directory_value->name;
+                    else
+                        $dir_value = $option->value;
+                    ?>
+                    <b><?php echo $directory->name; ?></b> : <?php echo $dir_value; ?><br/>
                 <?php
                 } ?>
                 <?php $options = ORM::factory('options')->where('type', '=', 'custom')->where('id_product', '=', $page->id)->find_all()->as_array(); ?>
@@ -431,15 +436,17 @@
             <?php if ($page->scheme != '') { ?>
                 <div class="product-downloads">
                     <!--                <a href="javascript:window.print()"><img src="/images/print.png"/></a>-->
-                    <a href="/<?php echo $page->scheme; ?>" class="width32"><img src="/images/download.png"/></a>
+                    <a href="/<?php echo $page->scheme; ?>" class="width32"><img src="/images/download.png"/>
                     Схема монтажа
+                    </a>
                 </div>
             <?php } ?>
             <?php if ($page->instruction != '') { ?>
                 <div class="product-downloads">
                     <!--                <a href="javascript:window.print()"><img src="/images/print.png"/></a>-->
-                    <a href="/<?php echo $page->instruction; ?>" class="width32"><img src="/images/download.png"/></a>
+                    <a href="/<?php echo $page->instruction; ?>" class="width32"><img src="/images/download.png"/>
                     Инструкция по эксплуатации
+                    </a>
                 </div>
             <?php } ?>
         </div>
@@ -795,9 +802,13 @@ $(document).ready(function () {
     });
     jQuery('.lookonthis a').fancybox();
     jQuery('.order-form').fancybox({
+        'beforeShow' : function() {
+            jQuery('.fancybox-wrap').addClass('certif-fancybox');
+        },
         'afterShow': function () {
             jQuery('.fancy').fancybox({
                 'beforeShow': function () {
+                    jQuery('.fancybox-wrap').addClass('certif-fancybox');
                     jQuery.fancybox.update();
                     jQuery('.order-finish').val(JSON.stringify(order));
                 }

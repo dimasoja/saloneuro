@@ -1,4 +1,4 @@
-<h2>Сертификаты</h2>
+<h2>Наши достижения</h2>
 <?php echo $text; ?>
 <?php foreach ($certificates as $certificate) { ?>
     <?php if (file_exists('.' . $certificate->image)) { ?>
@@ -17,6 +17,10 @@
 <?php } ?>
 <script type="text/javascript">
     jQuery(document).ready(function(){
-        jQuery('.certyfancy').fancybox();
+        jQuery('.certyfancy').fancybox({
+            'beforeShow' : function() {
+                jQuery('.fancybox-wrap').addClass('certif-fancybox');
+            }
+        });
     });
 </script>

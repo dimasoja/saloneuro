@@ -544,10 +544,13 @@
         margin-left: 0;
     }
     .fullwidthbanner-container {
-        width: 700px !important;
+        width: 691px !important;
         float:left;
         height:450px;
         margin: 0 auto !important;
+    }
+    .promo-block  {
+        width: 32% !important;
     }
     .welcome .fullwidthbanner-container {
         width: 755px !important;
@@ -615,10 +618,19 @@
     }
     .benefit {
         background: url(/images/webmarket/benefits.png);
-        width: 347px !important;
+        width: 292px !important;
+        float:left;
         height: 106px !important;
         background-size: 300px !important;
         background-repeat: no-repeat;
+    }
+    .row.featured-items.blocks-spacer .row .span12 {
+        margin-left: 59px;
+    }
+    .caroufredsel_wrapper {
+        margin-top:12px;
+        width: 1171px !important;
+        overflow:hidden !important;
     }
     .welcome {
         width: 1170px;

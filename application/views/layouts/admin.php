@@ -178,7 +178,7 @@
                         if ($cname == 'certificates') {
                             echo 'class="active"';
                         }
-                    } ?>><span></span> Сертификаты</a></li>
+                    } ?>><span></span> Наши достижения</a></li>
             <?php } ?>
             <?php if ((in_array('admin/information/categories', $allowed)) || (in_array('admin/information/pages', $allowed))) { ?>
                 <li><a href="#" <?php if (isset($cname)) {
@@ -549,9 +549,9 @@
                 <h5><a href="/admin/pages"> &nbsp;Страницы</a> | </h5>
             <?php } ?>
             <?php if ($cname == 'certificates') { ?>
-                <h5> &nbsp;Сертификаты&nbsp; | </h5>
+                <h5> &nbsp;Наши достижения&nbsp; | </h5>
             <?php } else { ?>
-                <h5><a href="/admin/certificates"> &nbsp;Сертификаты&nbsp;</a> | </h5>
+                <h5><a href="/admin/certificates"> &nbsp;Наши достижения&nbsp;</a> | </h5>
             <?php } ?>
             <?php if ($cname == 'info') { ?>
                 <h5> &nbsp;Полезная информация (страницы)&nbsp; | </h5>

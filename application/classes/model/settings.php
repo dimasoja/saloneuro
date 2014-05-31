@@ -68,7 +68,7 @@ class Model_Settings extends ORM
     public function generateBreadcrumbNews($title1 = '', $link1 = '') {
         $html = '';
         $html .= '<a href="/">Главная</a> > ';
-        $html .= '<a href="/news">Новости</a> > ';
+        $html .= '<a href="/news">Новости и акции</a> > ';
         $html .= '<a href="/' . $link1 . '">' . $title1 . '</a>';
         return $html;
     }

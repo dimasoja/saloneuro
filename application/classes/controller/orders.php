@@ -11,13 +11,14 @@ class Controller_Orders extends Controller_Base {
     }
 
     public function action_index() {
-
         $post = Safely::safelyGet($_POST);
         $item = ORM::factory('catalog')->where('id', '=', (int)$post['productid'])->find();
         $parent = ORM::factory('productscat')->where('id', '=', $item->category)->find();
         $url = '/catalog/'.strtolower(FrontHelper::transliterate($parent->name)).'/'.strtolower(FrontHelper::transliterate($item->name));
         $post['created'] = time();
-        ORM::factory('orders')->values($post)->save();
+        $saved = ORM::factory('orders')->values($post)->save();
+        $system_email = ORM::factory('settings')->getSetting('admin_email');
+        Mails::sendTemplateWithParamsToEmail($system_email, 'order', $saved->id);
         header('Location: '.$url);
         exit();
     }

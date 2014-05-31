@@ -2,12 +2,13 @@
 
 defined('SYSPATH') or die('No direct script access.');
 
-class Geoipthermo {
+class Geoipthermo
+{
 
     private $ip;
     private $allowed_regions;
 
-    function __construct() {        
+    function __construct() {
         $this->ip = Request::$client_ip;
     }
 
@@ -19,10 +20,11 @@ class Geoipthermo {
 
         $data = $this->getData();
 
-        if (isset($data->region))
+        if (isset($data->region)) {
             return (int)$data->region;
-        else
+        } else {
             return FALSE;
+        }
     }
 
     /*
@@ -32,7 +34,11 @@ class Geoipthermo {
     public function getData() {
         $ip = Request::$client_ip;
         $ip = '178.76.234.123';
-        $data = file_get_contents('http://ipgeobase.ru:7020/geo?ip='.$ip);
+        try {
+            $data = file_get_contents('http://ipgeobase.ru:7020/geo?ip=' . $ip);
+        } Catch (Exception $e) {
+            $data = '<?xml version="1.0" encoding="windows-1251"?><ip-answer><ip value="178.76.234.123"><inetnum>178.76.216.0 - 178.76.234.255</inetnum><country>RU</country><city>Ростов-на-Дону</city><region>Ростовская область</region><district>����� ����������� �����</district><lat>47.233189</lat><lng>39.715000</lng></ip></ip-answer>';
+        }
         return $data;
         //return Geoip3::instance()->record_chester($ip);
     }
@@ -43,11 +49,13 @@ class Geoipthermo {
 
     public function checkMoscow() {
 
-        if (!$this->getRegion())
+        if (!$this->getRegion()) {
             return FALSE;
-        
-        if (in_array($this->getRegion(), $this->allowed_regions))
+        }
+
+        if (in_array($this->getRegion(), $this->allowed_regions)) {
             return TRUE;
+        }
 
         return FALSE;
     }

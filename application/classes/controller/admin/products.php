@@ -313,7 +313,7 @@ class Controller_Admin_Products extends Controller_AdminBase {
             $filetypes = array('.jpg', '.gif', '.bmp', '.png', '.JPG', '.BMP', '.GIF', '.PNG', '.jpeg', '.JPEG');
             $filename = str_replace($ext, '', $_FILES['uploadfile']['name']);
             $filename = str_replace('.', '', $filename);
-            $filename = $this->transliterate($filename);
+            $filename = FrontHelper::transliterate($filename);
             $filename = str_replace(' ', '', $filename);
             $file = $uploaddir . $filename . $ext;
             if (!in_array($ext, $filetypes)) {

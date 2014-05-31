@@ -27,7 +27,12 @@ body.pattern-9 { background: url('/images/webmarket/backgrounds/pattern-9.gif?13
 body.pattern-10 { background: url('/images/webmarket/backgrounds/pattern-10.gif?1390384914') repeat center top; }
 body.pattern-11 { background: url('/images/webmarket/backgrounds/pattern-11.gif?1390384914') repeat center top; }
 body.pattern-12 { background: url('/images/webmarket/backgrounds/pattern-12.gif?1390384914') repeat center top; }
-
+.geo-label, .city1 {
+    overflow:hidden;
+}
+.all_cities {
+    width: 179px !important;
+}
 hr { border-top-color: #e0e0e0; }
 
 a { color: #00becc; -webkit-transition: color 0.2s ease; -moz-transition: color 0.2s ease; -o-transition: color 0.2s ease; transition: color 0.2s ease; }
@@ -58,6 +63,12 @@ h6 { font-size: 13px; }
     font-weight: bold;
     font-size: 19px;
     padding: 5px;
+}
+.filter-shower .sizes {
+    margin-left: 14px !important;
+}
+.inner-benefit-right {
+    line-height:13px;
 }
 .main-titles .arrows:after, .main-titles.lined:after, .sidebar-filters .accordion-group:after, .blog .post:after { content: ""; position: absolute; bottom: 0; width: 35px; height: 1px; background-color: #e0e0e0; }
 .main-titles .arrows:after {
@@ -2548,7 +2559,7 @@ margin-left: 8px;
     color: white;
 }
 .common.information .information-text {
-    width:493px !important;
+    width:493px;
     padding-top: 9px;
 }
 .common.information .width755 {
@@ -2749,6 +2760,10 @@ margin-left: 8px;
     width: 503px;
     float: left;
 }
+.fullwidthnew {
+    width: 100% !important;
+}
+
 .more {
     width: 100%;
     text-align:right;
@@ -2810,6 +2825,13 @@ margin-left: 8px;
 }
 .catalog .information-pretext {
     width:417px;
+}
+.fullwidthnew .information-pretext {
+    width: 100% !important;
+}
+.product-downloads a {
+    text-decoration:none;
+    color:#727272;
 }
 .catalog .information-item {
     overflow:hidden;

@@ -850,7 +850,7 @@
 <input type="hidden" name="category" value="<?php if (isset($category->id)) {
     echo $category->id;
 } ?>"/>
-<input type="submit" class="button-turquoise button" value="Отправить"/>
+<input type="button" class="button-turquoise button button-send-main" value="Отправить"/>
 <br/><br/>
 </div>
 
@@ -994,10 +994,12 @@
     }
 
     jQuery(document).ready(function () {
-        $('#dynamic2, #dynamic3, #dynamic4').dataTable({
+
+        var table2 = $('#dynamic2').dataTable({
             "sPaginationType": "full_numbers",
             "sDom": "<'tableHeader'<l><'clearfix'f>r>t<'tableFooter'<i><'clearfix'p>>",
             "iDisplayLength": 10,
+            "bStateSave": true,
             "aoColumnDefs": [
                 {
                     'bSortable': false,
@@ -1005,6 +1007,48 @@
                 }
             ]
         });
+        var table3 = $('#dynamic3').dataTable({
+            "sPaginationType": "full_numbers",
+            "sDom": "<'tableHeader'<l><'clearfix'f>r>t<'tableFooter'<i><'clearfix'p>>",
+            "iDisplayLength": 10,
+            "bStateSave": true,
+            "aoColumnDefs": [
+                {
+                    'bSortable': false,
+                    'aTargets': [0]
+                }
+            ]
+        });
+        var table4 = $('#dynamic4').dataTable({
+            "sPaginationType": "full_numbers",
+            "sDom": "<'tableHeader'<l><'clearfix'f>r>t<'tableFooter'<i><'clearfix'p>>",
+            "iDisplayLength": 10,
+            "bStateSave": true,
+            "aoColumnDefs": [
+                {
+                    'bSortable': false,
+                    'aTargets': [0]
+                }
+            ]
+        });
+
+        $('.button-send-main').click(function(event){
+            var nHidden1 = table2.fnGetHiddenTrNodes( );
+            var nHidden2 = table3.fnGetHiddenTrNodes( );
+            var nHidden3 = table4.fnGetHiddenTrNodes( );
+            var $form = jQuery('.form-horizontal');
+            $form.append(nHidden1).append(nHidden2).append(nHidden3);
+            $form.submit();
+
+        } );
+//        $('button').click( function() {
+//            var data = table.$('input, select').serialize();
+//            alert(
+//                "The following data would have been submitted to the server: \n\n"+
+//                    data.substr( 0, 120 )+'...'
+//            );
+//            return false;
+//        } );
         jQuery('.bs-callout.bs-callout-info, .bs-callout.bs-callout-danger').fadeOut(10000);
         var editor = CKEDITOR.replace('add-answer',
             {

@@ -33,7 +33,7 @@ function transliterate($string) {
                     <div class="cities">
                         <div class="cat-info">
                             <?php foreach ($categories as $value) { ?>
-                                <?php $current_url = strtolower(transliterate($value->name)); ?>
+                                <?php $current_url = strtolower(FrontHelper::transliterate($value->name)); ?>
                                 <a href="/information/<?php echo $current_url; ?>">
                                     <div class="address <?php if($current_url==$current) echo 'current'; ?>"><span><?php echo $value->name; ?></span></div>
                                 </a>
@@ -472,22 +472,22 @@ function validateEmail(email) {
         jQuery('.maps').css('display','none');
         jQuery('.fancy-address-block .city-item').css('display', 'none');
         var city = jQuery.trim(city);
-        jQuery('.fancy-address-block .city-item span:contains("' + city + '")').parents().each(function () {
+        jQuery('.fancy-address-block .city-item span:contains("' + city + ',")').parents().each(function () {
             jQuery(this).css('display', 'block');
         });
         console.log(jQuery('.fancy-address-block span:contains("' + city + '")').html());
-        jQuery('.fancy-address-block .city-item span:contains("' + city + '")').parents().css('display', 'block');
+        jQuery('.fancy-address-block .city-item span:contains("' + city + ',")').parents().css('display', 'block');
     }
 
     function changeCity(city) {
         jQuery('.maps').css('display','none');
         jQuery('.city-item').css('display', 'none');
         var city = jQuery.trim(city);
-        jQuery('.city-item span:contains("' + city + '")').parents().each(function () {
+        jQuery('.city-item span:contains("' + city + ',")').parents().each(function () {
             jQuery(this).css('display', 'block');
         });
         console.log(jQuery('span:contains("' + city + '")').html());
-        jQuery('.city-item span:contains("' + city + '")').parents().css('display', 'block');
+        jQuery('.city-item span:contains("' + city + ',")').parents().css('display', 'block');
     }
 
 </script>

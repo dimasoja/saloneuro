@@ -20,7 +20,7 @@ class Controller_News extends Controller_Base {
         $this->template->session_city = Session::instance()->get('city');
         $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
-        $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbPage('Новости', 'news');
+        $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbPage('Новости и акции', 'news');
         $this->template->id_page = '';
 
         if($this->category=='') {

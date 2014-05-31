@@ -41,7 +41,7 @@ function transliterate($string) {
                     <div class="cities">
                         <div class="cat-info">
                             <?php foreach ($categories as $value) { ?>
-                                <?php $current_url = strtolower(transliterate($value->name)); ?>
+                                <?php $current_url = strtolower(FrontHelper::transliterate($value->name)); ?>
                                 <a href="/catalog/<?php echo $current_url; ?>">
                                     <div class="address <?php if ($current_url == $current) {
                                         echo 'current';
@@ -52,77 +52,175 @@ function transliterate($string) {
                     </div>
                     <br/>
                 </div>
-                <div class="wheretobuyblock">
-                    <div class="aqua-header">Фильтр раздела</div>
-                    <hr/>
+                <?php if ($this_category->type_filter == 'bath') { ?>
+                    <div class="wheretobuyblock">
+                        <div class="aqua-header">Фильтр раздела</div>
+                        <hr/>
 
-                    <div class="green-head">Форма ванны</div>
-                    <br/>
+                        <div class="green-head">Форма ванны</div>
+                        <br/>
 
-                    <div class="checkbox" rel="angular">
-                        <label style="text-align:left;">
-                            <input type="checkbox" class="angular" <?php if ($angular == 'on') {
-                                echo 'checked';
-                            } ?>> Угловая ванна
-                        </label>
-                    </div>
-                    <div class="checkbox" rel="rectangular">
-                        <label style="text-align:left;">
-                            <input type="checkbox" class="rectangular" <?php if ($rectangular == 'on') {
-                                echo 'checked';
-                            } ?>> Прямоугольная ванна
-                        </label>
-                    </div>
-                    <div class="checkbox" rel="increased">
-                        <label style="text-align:left;">
-                            <input type="checkbox" class="increased " <?php if ($increased == 'on') {
-                                echo 'checked';
-                            } ?>> Увеличенного объема
-                        </label>
-                    </div>
-                    <br/>
-
-                    <div class="green-head">Размеры ванны</div>
-                    <br/>
-
-                    <div>
-                        <div class="sizes">
-                            Длина
+                        <div class="checkbox" rel="angular">
                             <label style="text-align:left;">
-                                <select class="width">
-                                    <option value=""></option>
-                                    <?php foreach ($widths as $width_tut) { ?>
-                                        <option
-                                            value="<?php echo $width_tut->width; ?>" <?php if ($width == $width_tut->width) {
-                                            echo 'selected';
-                                        } ?>><?php echo $width_tut->width; ?></option>
-                                    <?php } ?>
-                                </select>
+                                <input type="checkbox" class="angular" <?php if ($angular == 'on') {
+                                    echo 'checked';
+                                } ?>> Угловая ванна
                             </label>
                         </div>
-                        <div class="sizes">
-                            Ширина
+                        <div class="checkbox" rel="rectangular">
                             <label style="text-align:left;">
+                                <input type="checkbox" class="rectangular" <?php if ($rectangular == 'on') {
+                                    echo 'checked';
+                                } ?>> Прямоугольная ванна
+                            </label>
+                        </div>
+                        <div class="checkbox" rel="increased">
+                            <label style="text-align:left;">
+                                <input type="checkbox" class="increased " <?php if ($increased == 'on') {
+                                    echo 'checked';
+                                } ?>> Увеличенного объема
+                            </label>
+                        </div>
+                        <br/>
 
-                                <select class="height">
-                                    <option value=""></option>
-                                    <?php if ($width != '') { ?>
-                                        <?php foreach ($heights as $height_this) { ?>
+                        <div class="green-head">Размеры ванны</div>
+                        <br/>
+
+                        <div>
+                            <div class="sizes">
+                                Длина
+                                <label style="text-align:left;">
+                                    <select class="width">
+                                        <option value=""></option>
+                                        <?php foreach ($widths as $width_tut) { ?>
                                             <option
-                                                value="<?php echo $height_this->length; ?>" <?php if ($height == $height_this->length) {
+                                                value="<?php echo $width_tut->width; ?>" <?php if ($width == $width_tut->width) {
                                                 echo 'selected';
-                                            } ?>><?php echo $height_this->length; ?></option>
+                                            } ?>><?php echo $width_tut->width; ?></option>
                                         <?php } ?>
-                                    <?php } ?>
-                                </select>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="sizes">
+                                Ширина
+                                <label style="text-align:left;">
+
+                                    <select class="height">
+                                        <option value=""></option>
+                                        <?php if ($width != '') { ?>
+                                            <?php foreach ($heights as $height_this) { ?>
+                                                <option
+                                                    value="<?php echo $height_this->length; ?>" <?php if ($height == $height_this->length) {
+                                                    echo 'selected';
+                                                } ?>><?php echo $height_this->length; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <br/>
+                        <input type="button" class="green accept-filter" value="Применить"
+                               style="margin-bottom:10px;"><br/>
+                    </div>
+                <?php } ?>
+
+                <?php if ($this_category->type_filter == 'shower') { ?>
+                    <div class="wheretobuyblock filter-shower">
+                        <div class="aqua-header">Фильтр раздела</div>
+                        <hr/>
+
+                        <div class="green-head">Форма</div>
+                        <br/>
+
+                        <div class="checkbox" rel="angular">
+                            <label style="text-align:left;">
+                                <input type="checkbox" class="angular" <?php if ($angular == 'on') {
+                                    echo 'checked';
+                                } ?>> Угловая
                             </label>
                         </div>
+                        <div class="checkbox" rel="rectangular">
+                            <label style="text-align:left;">
+                                <input type="checkbox" class="rectangular" <?php if ($semicircular == 'on') {
+                                    echo 'checked';
+                                } ?>> Полукруглая
+                            </label>
+                        </div>
+                        <div class="checkbox" rel="increased">
+                            <label style="text-align:left;">
+                                <input type="checkbox" class="increased " <?php if ($rectangular == 'on') {
+                                    echo 'checked';
+                                } ?>> Прямоугольная
+                            </label>
+                        </div>
+                        <div class="checkbox" rel="increased">
+                            <label style="text-align:left;">
+                                <input type="checkbox" class="increased " <?php if ($rectangular == 'on') {
+                                    echo 'checked';
+                                } ?>> Угловая пятиугольная
+                            </label>
+                        </div>
+                        <br/>
+
+                        <div class="green-head">Размеры</div>
+                        <br/>
+
+                        <div>
+                            <div class="sizes">
+                                Длина
+                                <label style="text-align:left;">
+                                    <select class="width">
+                                        <option value=""></option>
+                                        <?php foreach ($widths as $width_tut) { ?>
+                                            <option
+                                                value="<?php echo $width_tut->width; ?>" <?php if ($width == $width_tut->width) {
+                                                echo 'selected';
+                                            } ?>><?php echo $width_tut->width; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="sizes">
+                                Ширина
+                                <label style="text-align:left;">
+
+                                    <select class="height">
+                                        <option value=""></option>
+                                        <?php if ($width != '') { ?>
+                                            <?php foreach ($heights as $height_this) { ?>
+                                                <option
+                                                    value="<?php echo $height_this->length; ?>" <?php if ($height == $height_this->length) {
+                                                    echo 'selected';
+                                                } ?>><?php echo $height_this->length; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="sizes">
+                                Высота
+                                <label style="text-align:left;">
+
+                                    <select class="high">
+                                        <option value=""></option>
+                                        <?php if ($width != '') { ?>
+                                            <?php foreach ($heights as $height_this) { ?>
+                                                <option
+                                                    value="<?php echo $height_this->length; ?>" <?php if ($height == $height_this->length) {
+                                                    echo 'selected';
+                                                } ?>><?php echo $height_this->length; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <br/>
+                        <input type="button" class="green accept-filter" value="Применить"
+                               style="margin-bottom:10px;"><br/>
                     </div>
-                    <br/>
-                    <input type="button" class="green accept-filter" value="Применить" style="margin-bottom:10px;"><br/>
-
-
-                </div>
+                <?php } ?>
             </div>
         </div>
         <div class="width862">
@@ -273,7 +371,7 @@ function transliterate($string) {
 
 <script type="text/javascript">
 function validateEmail(email) {
-    var re =  /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    var re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     return re.test(email);
 }
 jQuery(document).ready(function () {
@@ -520,32 +618,32 @@ jQuery(document).ready(function () {
                 });
             });
         }
-});
-
-var city = jQuery('.geocity').html();
-if (city != '') {
-    jQuery('.fancy-address-block .change-city-select option').each(function () {
-        if (jQuery.trim(city) == jQuery(this).html()) {
-            jQuery(this).attr('selected', 'selected');
-            var id = jQuery(this).html();
-            changeCityBlock(id);
-        }
     });
-    jQuery('.fancy-address-block .change-city-select :contains("' + city + '")').attr('selected', 'selected');
-}
-jQuery('.fancy-address-block .change-city-select').change(function () {
-    jQuery('.fancy-address-block .map-item').css('display', 'none');
-    var id = jQuery(this).children('option:selected').html();
-    changeCityBlock(id);
-});
-jQuery('.fancy-address-block .city-item').click(function () {
-    jQuery('.fancy-address-block .city-item').removeClass('active');
-    jQuery(this).addClass('active');
-    var id = jQuery(this).attr('rel');
-    jQuery('.fancy-address-block .map-item').css('display', 'none');
-    jQuery('.fancy-address-block .map-item.rel' + id).css('display', 'block');
-    jQuery.fancybox.update();
-});
+
+    var city = jQuery('.geocity').html();
+    if (city != '') {
+        jQuery('.fancy-address-block .change-city-select option').each(function () {
+            if (jQuery.trim(city) == jQuery(this).html()) {
+                jQuery(this).attr('selected', 'selected');
+                var id = jQuery(this).html();
+                changeCityBlock(id);
+            }
+        });
+        jQuery('.fancy-address-block .change-city-select :contains("' + city + '")').attr('selected', 'selected');
+    }
+    jQuery('.fancy-address-block .change-city-select').change(function () {
+        jQuery('.fancy-address-block .map-item').css('display', 'none');
+        var id = jQuery(this).children('option:selected').html();
+        changeCityBlock(id);
+    });
+    jQuery('.fancy-address-block .city-item').click(function () {
+        jQuery('.fancy-address-block .city-item').removeClass('active');
+        jQuery(this).addClass('active');
+        var id = jQuery(this).attr('rel');
+        jQuery('.fancy-address-block .map-item').css('display', 'none');
+        jQuery('.fancy-address-block .map-item.rel' + id).css('display', 'block');
+        jQuery.fancybox.update();
+    });
 })
 ;
 
@@ -553,22 +651,22 @@ function changeCityBlock(city) {
     jQuery('.maps').css('display', 'none');
     jQuery('.fancy-address-block .city-item').css('display', 'none');
     var city = jQuery.trim(city);
-    jQuery('.fancy-address-block .city-item span:contains("' + city + '")').parents().each(function () {
+    jQuery('.fancy-address-block .city-item span:contains("' + city + ',")').parents().each(function () {
         jQuery(this).css('display', 'block');
     });
     console.log(jQuery('.fancy-address-block span:contains("' + city + '")').html());
-    jQuery('.fancy-address-block .city-item span:contains("' + city + '")').parents().css('display', 'block');
+    jQuery('.fancy-address-block .city-item span:contains("' + city + ',")').parents().css('display', 'block');
 }
 
 function changeCity(city) {
     jQuery('.maps').css('display', 'none');
     jQuery('.city-item').css('display', 'none');
     var city = jQuery.trim(city);
-    jQuery('.city-item span:contains("' + city + '")').parents().each(function () {
+    jQuery('.city-item span:contains("' + city + ',")').parents().each(function () {
         jQuery(this).css('display', 'block');
     });
     console.log(jQuery('span:contains("' + city + '")').html());
-    jQuery('.city-item span:contains("' + city + '")').parents().css('display', 'block');
+    jQuery('.city-item span:contains("' + city + ',")').parents().css('display', 'block');
 }
 </script>
 </div>

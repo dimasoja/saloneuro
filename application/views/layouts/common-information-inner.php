@@ -34,7 +34,7 @@ function transliterate($string) {
                     <div class="cities">
                         <div class="cat-info">
                             <?php foreach ($categories as $value) { ?>
-                                <?php $current_url = strtolower(transliterate($value->name)); ?>
+                                <?php $current_url = strtolower(FrontHelper::transliterate($value->name)); ?>
                                 <a href="/information/<?php echo $current_url; ?>">
                                     <div class="address <?php if($current_url==$current) echo 'current'; ?>"><span><?php echo $value->name; ?></span></div>
                                 </a>
@@ -411,23 +411,22 @@ function validateEmail(email) {
                             var nameelem = jQuery('.fancybox-outer .link-name');
                             var emailelem = jQuery('.fancybox-outer .link-email');
                             var responseelem = jQuery('.fancybox-outer .link-response');
-                            nameelem.keypress(function () {
-                                if (nameelem.val() == '') {
+                            nameelem.keypress(function(){
+                                if(nameelem.val()=='') {
                                     jQuery(this).addClass('error');
                                 } else {
                                     jQuery(this).removeClass('error');
                                 }
                             });
-                            emailelem.keypress(function () {
-                                if (emailelem.val() == '') {
+                            emailelem.keypress(function(){
+                                if(nameelem.val()=='') {
                                     jQuery(this).addClass('error');
                                 } else {
-                                    if (validateEmail(emailelem.val()))
-                                        jQuery(this).removeClass('error');
+                                    jQuery(this).removeClass('error');
                                 }
                             });
-                            responseelem.keypress(function () {
-                                if (nameelem.val() == '') {
+                            responseelem.keypress(function(){
+                                if(nameelem.val()=='') {
                                     jQuery(this).addClass('error');
                                 } else {
                                     jQuery(this).removeClass('error');
@@ -437,20 +436,15 @@ function validateEmail(email) {
                                 var nameelem = jQuery('.fancybox-outer .link-name');
                                 var emailelem = jQuery('.fancybox-outer .link-email');
                                 var responseelem = jQuery('.fancybox-outer .link-response');
-                                var name = nameelem.val();
-                                var email = emailelem.val();
-                                var response = responseelem.val();
-
+                                var name = jQuery('.fancybox-outer .link-name').val();
+                                var email = jQuery('.fancybox-outer .link-email').val();
+                                var response = jQuery('.fancybox-outer .link-response').val();
                                 var send = '1';
                                 if (name == '') {
                                     send = 0;
                                     jQuery('.fancybox-outer .link-name').addClass('error');
                                 }
                                 if (email == '') {
-                                    send = 0;
-                                    jQuery('.fancybox-outer .link-email').addClass('error');
-                                }
-                                if (!validateEmail(email)) {
                                     send = 0;
                                     jQuery('.fancybox-outer .link-email').addClass('error');
                                 }
@@ -512,22 +506,22 @@ function validateEmail(email) {
         jQuery('.maps').css('display','none');
         jQuery('.fancy-address-block .city-item').css('display', 'none');
         var city = jQuery.trim(city);
-        jQuery('.fancy-address-block .city-item span:contains("' + city + '")').parents().each(function () {
+        jQuery('.fancy-address-block .city-item span:contains("' + city + ',")').parents().each(function () {
             jQuery(this).css('display', 'block');
         });
         console.log(jQuery('.fancy-address-block span:contains("' + city + '")').html());
-        jQuery('.fancy-address-block .city-item span:contains("' + city + '")').parents().css('display', 'block');
+        jQuery('.fancy-address-block .city-item span:contains("' + city + ',")').parents().css('display', 'block');
     }
 
     function changeCity(city) {
         jQuery('.maps').css('display','none');
         jQuery('.city-item').css('display', 'none');
         var city = jQuery.trim(city);
-        jQuery('.city-item span:contains("' + city + '")').parents().each(function () {
+        jQuery('.city-item span:contains("' + city + ',")').parents().each(function () {
             jQuery(this).css('display', 'block');
         });
         console.log(jQuery('span:contains("' + city + '")').html());
-        jQuery('.city-item span:contains("' + city + '")').parents().css('display', 'block');
+        jQuery('.city-item span:contains("' + city + ',")').parents().css('display', 'block');
     }
 
 </script>

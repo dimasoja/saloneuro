@@ -68,6 +68,9 @@ class Model_Information extends ORM_MPTT {
             $info->featured = 'off';
         }
         $info->time = time();
+        if(isset($data['delimage'])) {
+            $info->image = '0';
+        }
         $info->save();
         return true;
     }

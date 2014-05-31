@@ -12,10 +12,10 @@
             foreach ($images as $key => $image) {
                 $images[$key]->sort = ORM::factory('postmeta')->getValue($image->id_image, 'sort', 'image');
             }
+            uasort($images,array('Controller_Admin_Slider', 'cmp'));
             ?>
             <ul>
                 <?php foreach ($images as $image) { ?>
-
                     <li data-transition="premium-random" data-slotamount="3">
                         <?php echo FrontHelper::output($image->path, 700, 450, 700, 450, '/uploads/images/'); ?>
                     </li>
@@ -53,12 +53,99 @@
         <div class="span12">
             <div class="main-titles">
                 <div class="arrows">
-                    <a href="#" class="icon-chevron-left" id="featuredItemsLeft"></a>
-                    <a href="#" class="icon-chevron-right" id="featuredItemsRight"></a>
+                    <a class="clickable  icon-chevron-left" id="brandsLeft" style="display: inline-block;"></a>
+                    <a class="clickable  icon-chevron-right" id="brandsRight" style="display: inline-block;"></a>
                 </div>
             </div>
         </div>
-        <?php echo ORM::factory('settings')->getSetting('benefits'); ?>
+        <?php //echo ORM::factory('settings')->getSetting('benefits'); ?>
+        <div class="row">
+            <div class="span12">
+                <div class="brands  carouFredSel" data-nav="brands" data-autoplay="true">
+                    <div class="benefit">
+                        <div class="inner-benefit">
+                            <div class="inner-benefit-left">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><img class="benefit-image" src="/images/webmarket/ecology.png" style="width: 90px; height: 89px;" /> </a></div>
+                            <div class="inner-benefit-right">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><span class="inner-benefit-title">ЭКОЛОГИЧНОСТЬ </span><br />
+                                    <span class="inner-benefit-text">Полностью экологически чистое производство.</span></a>.&nbsp;</div>
+                        </div>
+                    </div>
+                    <div class="benefit">
+                        <div class="inner-benefit">
+                            <div class="inner-benefit-left">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><img class="benefit-image" src="/images/webmarket/zapah.png" style="width: 90px; height: 89px;" /> </a></div>
+                            <div class="inner-benefit-right">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><span class="inner-benefit-title">НЕ ИМЕЕТ ЗАПАХА</span><br />
+                                    <span class="inner-benefit-text">Наши ванны не содержат стирол, поэтому безопасны.</span></a>.</div>
+                        </div>
+                    </div>
+                    <div class="benefit">
+                        <div class="inner-benefit">
+                            <div class="inner-benefit-left">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><img class="benefit-image" src="/images/webmarket/proch.png" style="width: 90px; height: 89px;" /> </a></div>
+                            <div class="inner-benefit-right">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><span class="inner-benefit-title">ПРОЧНОСТЬ&nbsp;</span><br />
+                                    <span class="inner-benefit-text">Укрепление ванн высокопрочным полиуретановым композитом</span></a>..</div>
+                        </div>
+                    </div>
+                    <div class="benefit">
+                        <div class="inner-benefit">
+                            <div class="inner-benefit-left">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><img class="benefit-image" src="/images/webmarket/dolgovexhnost.png" style="width: 90px; height: 89px;" /> </a></div>
+                            <div class="inner-benefit-right">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><span class="inner-benefit-title">ДОЛГОВЕЧНОСТЬ </span><br />
+                                    <span class="inner-benefit-text">Наши ванны служат долго! Заявленный срок службы не мнее 25 лет</span></a>..</div>
+                        </div>
+                    </div>
+                    <div class="benefit">
+                        <div class="inner-benefit">
+                            <div class="inner-benefit-left">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><img class="benefit-image" src="/images/webmarket/skolsko.png" style="width: 90px; height: 89px;" /> </a></div>
+                            <div class="inner-benefit-right">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><span class="inner-benefit-title">БЕЗОПАСНАЯ ПОВЕРХНОСТЬ&nbsp;</span><br />
+                                    <span class="inner-benefit-text">Обладают антискользящей поверхностью, поэтому не опасны&nbsp;</span></a>..</div>
+                        </div>
+                    </div>
+                    <div class="benefit">
+                        <div class="inner-benefit">
+                            <div class="inner-benefit-left">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><img class="benefit-image" src="/images/webmarket/deti.png" style="width: 90px; height: 89px;" /> </a></div>
+                            <div class="inner-benefit-right">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><span class="inner-benefit-title">БЕЗОПАСНОСТЬ ДЛЯ ДЕТЕЙ&nbsp;</span><br />
+                                    <span class="inner-benefit-text">Формы ванн и нескользящие поверхности делают наши ванны безопасными для детей</span></a>..</div>
+                        </div>
+                    </div>
+                    <div class="benefit">
+                        <div class="inner-benefit">
+                            <div class="inner-benefit-left">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><img class="benefit-image" src="/images/webmarket/antiback.png" style="width: 90px; height: 89px;" /> </a></div>
+                            <div class="inner-benefit-right">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><span class="inner-benefit-title">ГИГИЕНИЧНОСТЬ&nbsp;</span><br />
+                                    <span class="inner-benefit-text">Антибактериальное покрытие на протяении всего срока службы ванны. Рекомендованы врачебной палатой.</span></a>.</div>
+                        </div>
+                    </div>
+                    <div class="benefit">
+                        <div class="inner-benefit">
+                            <div class="inner-benefit-left">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><img class="benefit-image" src="/images/webmarket/chisto.png" style="width: 90px; height: 89px;" /> </a></div>
+                            <div class="inner-benefit-right">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><span class="inner-benefit-title">ЭЛЕМЕНТАРНЫЙ УХОД&nbsp;</span><br />
+                                    <span class="inner-benefit-text">Просты и не требуют усилий в уходе</span></a>..</div>
+                        </div>
+                    </div>
+                    <div class="benefit">
+                        <div class="inner-benefit">
+                            <div class="inner-benefit-left">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><img class="benefit-image" src="/images/webmarket/restavracia-vann.png" style="width: 90px; height: 89px;" /> </a></div>
+                            <div class="inner-benefit-right">
+                                <a href="/information/stati/priemuschestva_akrilovykh_vann_thermolux"><span class="inner-benefit-title">ВОЗМОЖНОСТЬ РЕСТАВРАЦИИ </span><br />
+                                    <span class="inner-benefit-text">Возможность восстановления после механических повреждений в домашних условиях</span></a>..</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
@@ -106,8 +193,7 @@
                             </div>
                             <div class="city1">
                                 <select class="all_cities" style="width:186px">
-                                    <?php $limit = ORM::factory('settings')->getSetting('addr_num'); ?>
-                                    <?php $all_group_cities = ORM::factory('addresses')->group_by('city')->limit($limit)->find_all()->as_array(); ?>
+                                    <?php $all_group_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array(); ?>
                                     <?php foreach ($all_group_cities as $value) { ?>
                                         <option
                                             value="<?php echo $value->city; ?>" <?php if ($value->city == $session_city) {
@@ -504,11 +590,11 @@ function changeCity(city) {
     jQuery('.maps').css('display', 'none');
     jQuery('.city-item').css('display', 'none');
     var city = jQuery.trim(city);
-    jQuery('.city-item span:contains("' + city + '")').parents().each(function () {
+    jQuery('.city-item span:contains("' + city + ',")').parents().each(function () {
         jQuery(this).css('display', 'block');
     });
     console.log(jQuery('span:contains("' + city + '")').html());
-    jQuery('.city-item span:contains("' + city + '")').parents().css('display', 'block');
+    jQuery('.city-item span:contains("' + city + ',")').parents().css('display', 'block');
 }
 </script>
 

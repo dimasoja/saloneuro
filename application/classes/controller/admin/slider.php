@@ -86,7 +86,7 @@ class Controller_Admin_Slider extends Controller_AdminBase {
                         $ext = "." . $path_info['extension'];
                         $filename = str_replace($ext, '', $file_name);
                         $filename = str_replace('.', '', $filename);
-                        $filename = $this->transliterate($filename);
+                        $filename = FrontHelper::transliterate($filename);
                         $filename = str_replace(' ', '', $filename);                        
                        // $file = $uploaddir . $folder . '/' . $filename . $ext;
                         switch ($ext) {

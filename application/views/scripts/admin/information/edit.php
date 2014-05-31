@@ -56,12 +56,13 @@
                                     <input type="checkbox" name="technologies" class="uniform" <?php if(isset($page->technologies)) {if($page->technologies=='on') echo 'checked';}; ?>>
                                 </div>
                             </div>
-                            <div class="form-row">
+                            <div class="form-row mainimage">
                                 <label class="field-name" for="standard">Главное Изображение:</label>
                                 <div class="field">
-                                    <input type="file" class="input-large name-edit" name="image" style="float: left;width: 100%;">
+                                    <input type="file" class="input-large name-edit image-tut" name="image" style="float: left;width: 100%;">
                                     <?php if($page->image!='0') { ?>
-                                        <img src="<?php echo $page->image; ?>" width="200"/>
+                                        <img src="<?php echo $page->image; ?>" width="200" class="manimage"/>
+                                        <span class="removeimage button button-blue small-button ">Удалить</span>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -92,5 +93,10 @@
                     language: 'en'
                 });
             CKFinder.setupCKEditor( editor, '/js/ckeditor/ckfinder/' );
+            jQuery('.removeimage').click(function(){
+                jQuery('.manimage').remove();
+                jQuery('.mainimage').append('<input type="hidden" name="delimage" />');
+                jQuery(this).remove();
+            });
         });
     </script>

@@ -131,6 +131,13 @@
             });
         });
     </script>
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery('.fancyboximage').fancybox({
+
+            });
+        });
+    </script>
     <link rel="alternate" media="print" href="file.pdf">
 </head>
 

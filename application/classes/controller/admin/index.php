@@ -115,4 +115,9 @@ class Controller_Admin_Index extends Controller_AdminBase
         ORM::factory('settings')->saveSetting('footer', $_POST['production']);
         exit();
     }
+
+    function action_savecertificates() {
+        ORM::factory('settings')->saveSetting('certificates', $_POST['production']);
+        exit();
+    }
 }

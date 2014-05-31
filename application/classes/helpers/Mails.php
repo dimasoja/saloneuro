@@ -44,6 +44,14 @@ class Mails {
         self::sendLetter($template, $user->id);
         return true;
     }
+
+    static function sendTemplateWithParamsToEmail($email, $template, $param) {
+        $templates = ORM::factory('templates');
+        $template = $templates->getTemplate($template);
+        $template['template'] = str_replace('%s%', $param, $template['template']);
+        self::sendLetterToEmail($template, $email);
+        return true;
+    }
         
     /* $template : ORM Factory Array
      * $template = array(
@@ -59,6 +67,16 @@ class Mails {
         $mail->Subject = $template['description'];                
         $mail->Body = $template['template'];           
         $mail->IsHTML(true); 
+        return $mail->Send();
+    }
+
+    static function sendLetterToEmail($template, $email) {
+        $mail = new PHPMailer();
+        $mail->From = $email;
+        $mail->AddAddress($email);
+        $mail->Subject = $template['description'];
+        $mail->Body = $template['template'];
+        $mail->IsHTML(true);
         return $mail->Send();
     }
     

@@ -496,8 +496,8 @@
 
     <div class="field" style="text-align: left;">
         <select class="form-control uniform" name="published">
+            <option value="on" >Да</option>
             <option value="off">Нет</option>
-            <option value="on">Да</option>
         </select>
     </div>
 </div>

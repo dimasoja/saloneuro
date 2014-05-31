@@ -18,8 +18,10 @@
     </div>
     <form action="<?php echo URL::base(); ?>admin/slider" name="sortForm" method="POST" >
         <?php foreach ($images as $image): ?>
+
             <?php $postmeta = ORM::factory('postmeta'); ?>
             <div class="sws_img_block image-<?php echo $image->id_image; ?>">
+
                 <div class="success-message success-message-<?php echo $image->id_image; ?>" style="display:none">
 
                 </div>

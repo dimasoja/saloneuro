@@ -94,7 +94,12 @@ class Controller_Admin_News extends Controller_AdminBase {
             $content->content = $_POST['content'];
             $content->title = $_POST['title'];
             $content->updated_at = strtotime("now");
-
+            if(isset($_POST['delimage'])) {
+                $check = ORM::factory('images')->where('part', '=', 'news')->where('id_page', '=', $id)->find_all()->as_array();
+                foreach($check as $item) {
+                    $item->delete();
+                }
+            }
             if (isset($_FILES['image_file'])) {
 
                 $post = new Validate($_FILES);
@@ -164,7 +169,10 @@ class Controller_Admin_News extends Controller_AdminBase {
         $view->meta_title = $meta->meta_title;
         $view->id = $id;
         $view->types = ORM::factory('productsitems')->where('to','=',$page_id)->find_all()->as_array();
-        $view->image = ORM::factory('images')->where('id_page', '=', $id)->where('part', '=', 'news')->find()->as_array();
+        $check_image = ORM::factory('images')->where('id_page', '=', $id)->where('part', '=', 'news')->find()->as_array();
+        if($check_image['id_image']!='') {
+            $view->image = $check_image;
+        }
         $view->browser_name = $content_data['browser_name'];
         $view->type = $content_data['type'];
         $view->published = $content_data['published'];
@@ -336,7 +344,7 @@ class Controller_Admin_News extends Controller_AdminBase {
             $filetypes = array('.jpg', '.gif', '.bmp', '.png', '.JPG', '.BMP', '.GIF', '.PNG', '.jpeg', '.JPEG');
             $filename = str_replace($ext, '', $_FILES['uploadfile']['name']);
             $filename = str_replace('.', '', $filename);
-            $filename = $this->transliterate($filename);
+            $filename = FrontHelper::transliterate($filename);
             $filename = str_replace(' ', '', $filename);
             $file = $uploaddir . $filename . $ext;
             if (!in_array($ext, $filetypes)) {

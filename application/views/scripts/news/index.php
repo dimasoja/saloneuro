@@ -1,28 +1,31 @@
-<?php foreach($news as $new) { ?>
+<h2>Новости и акции</h2><br/>
+<?php foreach ($news as $new) { ?>
+    <?php $class_new = 'fullwidthnew'; ?>
     <div class="information-item">
-        <div class="information-image">
-            <?php $image = ORM::factory('images')->where('id_page', '=', $new->id_new)->where('part', '=', 'news')->find(); ?>
-
-            <?php if (file_exists('./uploads/images/' . $image->path)) { ?>
-                <?php $sizes = ImageWork::getImageSize('./uploads/images/' . $image->path, '200', '200', '200', '200'); ?>
-                <?php if ($image->path != '') { ?>
+        <?php $image = ORM::factory('images')->where('id_page', '=', $new->id_new)->where('part', '=', 'news')->find(); ?>
+        <?php if (file_exists('./uploads/images/' . $image->path)) { ?>
+            <?php if ($image->path != '') { ?>
+                <?php $class_new = ''; ?>
+                <div class="information-image">
+                    <?php $sizes = ImageWork::getImageSize('./uploads/images/' . $image->path, '200', '200', '200', '200'); ?>
                     <div class="category-image-wrapper-information">
                         <img src='/uploads/images/<?php echo $image->path; ?>' width='<?php echo $sizes['newwidth']; ?>'
                              height='<?php echo $sizes['newheight']; ?>'/>
-                          <!--   style="margin-top:<?php echo (202 - $sizes['newheight']) / 2; ?>px;margin-top:<?php echo (202 - $sizes['newheight']) / 2; ?>px;"-->
+                        <!--   style="margin-top:<?php echo (202 - $sizes['newheight']) / 2; ?>px;margin-top:<?php echo (202 - $sizes['newheight']) / 2; ?>px;"-->
                     </div>
-                <?php } ?>
+                </div>
             <?php } ?>
-        </div>
-        <div class="news-text">
+        <?php } ?>
+        <div class="news-text <?php echo $class_new; ?>">
             <div class="information-title">
-                <h4><a href="/news/<?php echo strtolower(transliterate($new->title)); ?>"><?php echo $new->title; ?></a></h4>
+                <h4><a href="/news/<?php echo strtolower(FrontHelper::transliterate($new->title)); ?>"><?php echo $new->title; ?></a>
+                </h4>
             </div>
             <div class="information-pretext">
                 <?php echo FrontHelper::maxsite_str_word($new->short, 50); ?>
             </div>
             <div class="more">
-                <a href="/news/<?php echo strtolower(transliterate($new->title)); ?>">Подробнее...</a>
+                <a href="/news/<?php echo strtolower(FrontHelper::transliterate($new->title)); ?>">Подробнее...</a>
             </div>
             <br>
 

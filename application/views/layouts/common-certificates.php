@@ -480,22 +480,22 @@ function validateEmail(email) {
         jQuery('.maps').css('display','none');
         jQuery('.fancy-address-block .city-item').css('display', 'none');
         var city = jQuery.trim(city);
-        jQuery('.fancy-address-block .city-item span:contains("' + city + '")').parents().each(function () {
+        jQuery('.fancy-address-block .city-item span:contains("' + city + ',")').parents().each(function () {
             jQuery(this).css('display', 'block');
         });
         console.log(jQuery('.fancy-address-block span:contains("' + city + '")').html());
-        jQuery('.fancy-address-block .city-item span:contains("' + city + '")').parents().css('display', 'block');
+        jQuery('.fancy-address-block .city-item span:contains("' + city + ',")').parents().css('display', 'block');
     }
 
     function changeCity(city) {
         jQuery('.maps').css('display','none');
         jQuery('.city-item').css('display', 'none');
         var city = jQuery.trim(city);
-        jQuery('.city-item span:contains("' + city + '")').parents().each(function () {
+        jQuery('.city-item span:contains("' + city + ',")').parents().each(function () {
             jQuery(this).css('display', 'block');
         });
         console.log(jQuery('span:contains("' + city + '")').html());
-        jQuery('.city-item span:contains("' + city + '")').parents().css('display', 'block');
+        jQuery('.city-item span:contains("' + city + ',")').parents().css('display', 'block');
     }
 </script>
 <?php require_once 'footer_catalog.php'; ?>

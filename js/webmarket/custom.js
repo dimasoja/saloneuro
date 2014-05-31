@@ -61,9 +61,11 @@ jQuery(document).ready(function($) {
             },
             width: "100%",
             height: "variable",
-            items: {
-                height: "variable"
-            },
+//            items: {
+//                height: "variable"
+//            },
+            items:4,
+            visible: 4,
             prev: {},
             next: {},
             pagination: {},
@@ -208,13 +210,13 @@ jQuery(document).ready(function($) {
                     if(jQuery('.order').length) {
                         jQuery('#toTheTop').css('margin-bottom','110px');
                         jQuery('.order-image').css('display','block');
-                        jQuery('.order-accessory').css('display','block');
+                        //jQuery('.order-accessory').css('display','block');
                     }
                 } else {
                     $(".order").removeClass('fixed');
                     jQuery('#toTheTop').css('margin-bottom','0px');
                     jQuery('.order-image').css('display','none');
-                    jQuery('.order-accessory').css('display','none');
+                    //jQuery('.order-accessory').css('display','none');
                 }
             });
         }

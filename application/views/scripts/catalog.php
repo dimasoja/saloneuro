@@ -70,7 +70,7 @@
         <div class="information-text">
             <?php $parent = ORM::factory('productscat')->where('id', '=', $item['id'])->find(); ?>
             <div class="information-title">
-                <a href="/catalog/<?php echo strtolower(transliterate($this_category->name)) . '/'; ?><?php echo strtolower(transliterate($item['name'])); ?>"><?php echo $item['name']; ?></a>
+                <a href="/catalog/<?php echo strtolower(FrontHelper::transliterate($this_category->name)) . '/'; ?><?php echo strtolower(FrontHelper::transliterate($item['name'])); ?>"><?php echo $item['name']; ?></a>
             </div>
             <?php $rating = ORM::factory('response')->where('to', '=', $item['id'])->find_all()->as_array(); ?>
             <?php $rat_finish = 0; ?>

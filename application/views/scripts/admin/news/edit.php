@@ -126,9 +126,10 @@
                 </div>
             </div>
 
-            <div class="form-row">
+            <div class="form-row mainimage">
                 <?php if(isset($image)) { ?>
-                    <img src="/uploads/images/<?php echo $image['path']; ?>" width="200"/><br/><br/>
+                    <img src="/uploads/images/<?php echo $image['path']; ?>" width="200" class="manimage"/>
+                    <span class="removeimage button button-blue small-button ">Удалить</span><br/>
                 <?php } ?>
 
                 <label class="field-name" for="standard">Загрузить изображение:</label>
@@ -191,7 +192,11 @@
 <br/>
 <script type="text/javascript">
     jQuery(document).ready(function() {
-
+        jQuery('.removeimage').click(function(){
+            jQuery('.manimage').remove();
+            jQuery('.mainimage').append('<input type="hidden" name="delimage" />');
+            jQuery(this).remove();
+        });
         var btnUpload = jQuery('#upload1');
         var status = jQuery('#status');
         var upload = new AjaxUpload(btnUpload, {
