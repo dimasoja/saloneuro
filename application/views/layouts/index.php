@@ -263,7 +263,7 @@
                             &#9679;  &nbsp;&nbsp;<span><?php echo $value->city . ', ' . $value->address; ?></span>
                         <?php } else { ?>
                             <span><img
-                                    src="/images/webmarket/savelocale.png"/>&nbsp;&nbsp;<?php echo $value->city . ' (все адреса)'; ?></span>
+                                    src="/images/webmarket/savelocale.png"/>&nbsp;&nbsp;<?php echo $value->city . ', (все адреса)'; ?></span>
                         <?php } ?>
                         <i><?php echo $value->phone; ?></i>
                     </div>

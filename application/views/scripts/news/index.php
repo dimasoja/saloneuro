@@ -8,7 +8,7 @@
                 <?php $class_new = ''; ?>
                 <div class="information-image">
                     <?php $sizes = ImageWork::getImageSize('./uploads/images/' . $image->path, '200', '200', '200', '200'); ?>
-                    <div class="category-image-wrapper-information">
+                    <div class="category-image-wrapper-information" style="height:125px;">
                         <img src='/uploads/images/<?php echo $image->path; ?>' width='<?php echo $sizes['newwidth']; ?>'
                              height='<?php echo $sizes['newheight']; ?>'/>
                         <!--   style="margin-top:<?php echo (202 - $sizes['newheight']) / 2; ?>px;margin-top:<?php echo (202 - $sizes['newheight']) / 2; ?>px;"-->

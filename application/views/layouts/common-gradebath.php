@@ -102,7 +102,7 @@ function transliterate($string) {
                         <?php if ($value->type == 'address') { ?>
                             <span><?php echo $value->city . ', ' . $value->address; ?></span><br/>
                         <?php } else { ?>
-                            <span><?php echo $value->city . ' (все адреса)'; ?></span><br/>
+                            <span><?php echo $value->city . ', (все адреса)'; ?></span><br/>
                         <?php } ?>
                         <i><?php echo $value->phone; ?></i>
                         <!--                        <div class="balloon"><img src="/images/webmarket/savelocale.png"/></div>-->
