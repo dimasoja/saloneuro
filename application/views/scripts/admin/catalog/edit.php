@@ -778,6 +778,17 @@
         <a href="/<?php echo $product->instruction; ?>">Инструкция</a>
     <?php } ?>
 </div>
+<div class="form-row" style="text-align: left">
+    <label class="field-name" for="standard">Паспорт:</label>
+
+    <div class="field" style="text-align: left;">
+        <input type="file" name="passport"/>
+    </div>
+    <?php if ($product->passport != "") { ?>
+        <a href="/<?php echo $product->passport; ?>">Паспорт</a>
+    <?php } ?>
+</div>
+
 <div class="form-row">
     <label class="field-name" for="standard">Ссылка на производителя:</label>
 
@@ -789,6 +800,8 @@
         } ?>">
     </div>
 </div>
+
+
 <div class="form-row">
     <label class="field-name" for="standard">Порядок вывода:</label>
 

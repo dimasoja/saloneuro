@@ -476,6 +476,13 @@
     </div>
 </div>
 <div class="form-row">
+    <label class="field-name" for="standard">Паспорт:</label>
+
+    <div class="field" style="text-align: left;">
+        <input type="file" name="passport"/>
+    </div>
+</div>
+<div class="form-row">
     <label class="field-name" for="standard">Ссылка на производителя:</label>
 
     <div class="field" style="text-align: left;">

@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44330ad9-ad8b-48c9-9f47-9a3f41145ec1" name="Default" comment="629">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/classes/helpers/ImageWork.php" afterPath="$PROJECT_DIR$/application/classes/helpers/ImageWork.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/classes/controller/admin/catalog.php" afterPath="$PROJECT_DIR$/application/classes/controller/admin/catalog.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/layouts/common-about.php" afterPath="$PROJECT_DIR$/application/views/layouts/common-about.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/layouts/common-catalog.php" afterPath="$PROJECT_DIR$/application/views/layouts/common-catalog.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/layouts/common-certificates.php" afterPath="$PROJECT_DIR$/application/views/layouts/common-certificates.php" />
@@ -12,9 +14,10 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/layouts/common-information.php" afterPath="$PROJECT_DIR$/application/views/layouts/common-information.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/layouts/common-news.php" afterPath="$PROJECT_DIR$/application/views/layouts/common-news.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/layouts/common.php" afterPath="$PROJECT_DIR$/application/views/layouts/common.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/news/custom.php" afterPath="$PROJECT_DIR$/application/views/scripts/news/custom.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/catalog/content.php" afterPath="$PROJECT_DIR$/application/views/scripts/catalog/content.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/admin/catalog/edit.php" afterPath="$PROJECT_DIR$/application/views/scripts/admin/catalog/edit.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/layouts/index.php" afterPath="$PROJECT_DIR$/application/views/layouts/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/news/index.php" afterPath="$PROJECT_DIR$/application/views/scripts/news/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/scripts/admin/catalog/pages.php" afterPath="$PROJECT_DIR$/application/views/scripts/admin/catalog/pages.php" />
     </list>
     <ignored path="saloneuro.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,14 +40,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="common-catalog.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/layouts/common-catalog.php">
+      <file leaf-file-name="content.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/views/scripts/catalog/content.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="251" column="116" selection-start="13023" selection-end="13023" vertical-scroll-proportion="-7.0416665" vertical-offset="3596" max-vertical-offset="11535">
+            <state line="1030" column="116" selection-start="51587" selection-end="51587" vertical-scroll-proportion="0.5" vertical-offset="15092" max-vertical-offset="16305">
               <folding>
-                <marker date="1401620152000" expanded="false" signature="18420:18431" placeholder="..." />
-                <marker date="1401620152000" expanded="false" signature="26622:26633" placeholder="..." />
-                <marker date="1401620152000" expanded="false" signature="30374:30385" placeholder="..." />
+                <element signature="n#style#0;n#input#0;n#a#0;n#div#0;n#div#6;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#span#0;n#div#0;n#div#6;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#a#1;n#div#0;n#div#6;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#a#0;n#a#1;n#div#0;n#div#6;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#div#4;n#div#0;n#form#0;n#div#0;n#div#9;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -53,10 +58,10 @@
       <file leaf-file-name="common-certificates.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/layouts/common-certificates.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="167" column="58" selection-start="8244" selection-end="8244" vertical-scroll-proportion="-6.7083335" vertical-offset="2344" max-vertical-offset="7605">
+            <state line="370" column="81" selection-start="17454" selection-end="17454" vertical-scroll-proportion="-6.42" vertical-offset="5229" max-vertical-offset="7650">
               <folding>
-                <marker date="1401620163000" expanded="false" signature="16594:16605" placeholder="..." />
-                <marker date="1401620163000" expanded="false" signature="20618:20629" placeholder="..." />
+                <marker date="1401631652000" expanded="true" signature="16746:16757" placeholder="..." />
+                <marker date="1401631652000" expanded="true" signature="20852:20863" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -65,10 +70,10 @@
       <file leaf-file-name="common-contacts.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/layouts/common-contacts.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="258" column="119" selection-start="11772" selection-end="11772" vertical-scroll-proportion="-6.7083335" vertical-offset="3709" max-vertical-offset="10050">
+            <state line="533" column="81" selection-start="24596" selection-end="24596" vertical-scroll-proportion="-7.32" vertical-offset="7629" max-vertical-offset="10095">
               <folding>
-                <marker date="1401620173000" expanded="false" signature="23736:23747" placeholder="..." />
-                <marker date="1401620173000" expanded="false" signature="27760:27771" placeholder="..." />
+                <marker date="1401631665000" expanded="true" signature="23888:23899" placeholder="..." />
+                <marker date="1401631665000" expanded="true" signature="27994:28005" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -77,11 +82,11 @@
       <file leaf-file-name="common-gradebath.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/layouts/common-gradebath.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="104" column="62" selection-start="5128" selection-end="5128" vertical-scroll-proportion="-7.0416665" vertical-offset="1391" max-vertical-offset="6780">
+            <state line="323" column="81" selection-start="15328" selection-end="15328" vertical-scroll-proportion="-4.02" vertical-offset="4644" max-vertical-offset="6825">
               <folding>
-                <marker date="1401620179000" expanded="false" signature="10670:10681" placeholder="..." />
-                <marker date="1401620179000" expanded="false" signature="14468:14479" placeholder="..." />
-                <marker date="1401620179000" expanded="false" signature="18492:18503" placeholder="..." />
+                <marker date="1401631679000" expanded="true" signature="10670:10681" placeholder="..." />
+                <marker date="1401631679000" expanded="true" signature="14620:14631" placeholder="..." />
+                <marker date="1401631679000" expanded="true" signature="18726:18737" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -90,23 +95,10 @@
       <file leaf-file-name="common-ind.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/layouts/common-ind.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="135" selection-start="2217" selection-end="2217" vertical-scroll-proportion="-7.0416665" vertical-offset="491" max-vertical-offset="7845">
+            <state line="382" column="81" selection-start="18434" selection-end="18434" vertical-scroll-proportion="-1.92" vertical-offset="5634" max-vertical-offset="7890">
               <folding>
-                <marker date="1401620185000" expanded="false" signature="17574:17585" placeholder="..." />
-                <marker date="1401620185000" expanded="false" signature="21598:21609" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="common-information-inner.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/layouts/common-information-inner.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="162" column="119" selection-start="8070" selection-end="8070" vertical-scroll-proportion="-6.7083335" vertical-offset="2269" max-vertical-offset="8025">
-              <folding>
-                <marker date="1401620191000" expanded="false" signature="13490:13501" placeholder="..." />
-                <marker date="1401620191000" expanded="false" signature="19471:19482" placeholder="..." />
-                <marker date="1401620191000" expanded="false" signature="23252:23263" placeholder="..." />
+                <marker date="1401631691000" expanded="true" signature="17726:17737" placeholder="..." />
+                <marker date="1401631691000" expanded="true" signature="21832:21843" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -115,11 +107,24 @@
       <file leaf-file-name="common-information.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/layouts/common-information.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="122" column="119" selection-start="6182" selection-end="6182" vertical-scroll-proportion="-6.7083335" vertical-offset="1669" max-vertical-offset="7515">
+            <state line="372" column="81" selection-start="18443" selection-end="18443" vertical-scroll-proportion="-7.16" vertical-offset="5222" max-vertical-offset="7560">
               <folding>
-                <marker date="1401620195000" expanded="false" signature="11602:11613" placeholder="..." />
-                <marker date="1401620195000" expanded="false" signature="17583:17594" placeholder="..." />
-                <marker date="1401620195000" expanded="false" signature="21607:21618" placeholder="..." />
+                <marker date="1401631703000" expanded="true" signature="11602:11613" placeholder="..." />
+                <marker date="1401631703000" expanded="true" signature="17735:17746" placeholder="..." />
+                <marker date="1401631703000" expanded="true" signature="21841:21852" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="common-information-inner.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/layouts/common-information-inner.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="412" column="81" selection-start="20331" selection-end="20331" vertical-scroll-proportion="-8.66" vertical-offset="5747" max-vertical-offset="8070">
+              <folding>
+                <marker date="1401631717000" expanded="true" signature="13490:13501" placeholder="..." />
+                <marker date="1401631717000" expanded="true" signature="19623:19634" placeholder="..." />
+                <marker date="1401631717000" expanded="true" signature="23486:23497" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -128,34 +133,31 @@
       <file leaf-file-name="common-news.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/layouts/common-news.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="157" column="119" selection-start="7656" selection-end="7656" vertical-scroll-proportion="-6.375" vertical-offset="2202" max-vertical-offset="8145">
+            <state line="405" column="48" selection-start="19547" selection-end="19547" vertical-scroll-proportion="-8.66" vertical-offset="5642" max-vertical-offset="8190">
               <folding>
-                <marker date="1401620207000" expanded="false" signature="18770:18781" placeholder="..." />
-                <marker date="1401620207000" expanded="false" signature="22794:22805" placeholder="..." />
+                <marker date="1401631731000" expanded="true" signature="18922:18933" placeholder="..." />
+                <marker date="1401631731000" expanded="true" signature="23028:23039" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/layouts/common.php">
+      <file leaf-file-name="common-page.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/layouts/common-page.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="135" selection-start="2217" selection-end="2217" vertical-scroll-proportion="-6.7083335" vertical-offset="499" max-vertical-offset="7995">
-              <folding>
-                <marker date="1401620213000" expanded="false" signature="17649:17660" placeholder="..." />
-                <marker date="1401620213000" expanded="false" signature="21673:21684" placeholder="..." />
-              </folding>
+            <state line="23" column="0" selection-start="918" selection-end="918" vertical-scroll-proportion="-14.375" vertical-offset="0" max-vertical-offset="630">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/layouts/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="265" column="116" selection-start="15939" selection-end="15939" vertical-scroll-proportion="0.34924078" vertical-offset="3814" max-vertical-offset="9210">
+            <state line="505" column="27" selection-start="26956" selection-end="26956" vertical-scroll-proportion="-5.66" vertical-offset="7292" max-vertical-offset="9255">
               <folding>
-                <marker date="1401620220000" expanded="false" signature="26564:26575" placeholder="..." />
-                <marker date="1401620220000" expanded="false" signature="30316:30327" placeholder="..." />
+                <marker date="1401631748000" expanded="true" signature="26708:26719" placeholder="..." />
+                <marker date="1401631748000" expanded="true" signature="30538:30549" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -174,8 +176,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/application/views/scripts/admin/catalog/pages.php" />
-        <option value="$PROJECT_DIR$/application/classes/controller/admin/information.php" />
         <option value="$PROJECT_DIR$/application/views/scripts/admin/information/edit.php" />
         <option value="$PROJECT_DIR$/application/classes/model/information.php" />
         <option value="$PROJECT_DIR$/application/classes/controller/news.php" />
@@ -193,8 +193,6 @@
         <option value="$PROJECT_DIR$/application/views/scripts/certificates/index.php" />
         <option value="$PROJECT_DIR$/application/views/layouts/header.php" />
         <option value="$PROJECT_DIR$/js/admin/datatable/jquery.dataTables.js" />
-        <option value="$PROJECT_DIR$/application/views/scripts/admin/catalog/edit.php" />
-        <option value="$PROJECT_DIR$/application/classes/controller/admin/catalog.php" />
         <option value="$PROJECT_DIR$/js/webmarket/custom.js" />
         <option value="$PROJECT_DIR$/css/webmarket/responsive.css" />
         <option value="$PROJECT_DIR$/application/classes/helpers/Mails.php" />
@@ -210,21 +208,25 @@
         <option value="$PROJECT_DIR$/application/classes/helpers/AdminHelper.php" />
         <option value="$PROJECT_DIR$/application/views/scripts/information.php" />
         <option value="$PROJECT_DIR$/application/classes/helpers/FrontHelper.php" />
-        <option value="$PROJECT_DIR$/application/views/scripts/catalog/content.php" />
         <option value="$PROJECT_DIR$/css/webmarket/main.css" />
         <option value="$PROJECT_DIR$/application/views/scripts/news/index.php" />
         <option value="$PROJECT_DIR$/application/views/scripts/news/custom.php" />
+        <option value="$PROJECT_DIR$/application/classes/helpers/ImageWork.php" />
+        <option value="$PROJECT_DIR$/application/classes/controller/admin/catalog.php" />
+        <option value="$PROJECT_DIR$/application/views/scripts/admin/catalog/pages.php" />
+        <option value="$PROJECT_DIR$/application/views/scripts/admin/catalog/edit.php" />
         <option value="$PROJECT_DIR$/application/views/layouts/common-about.php" />
+        <option value="$PROJECT_DIR$/application/views/layouts/common.php" />
         <option value="$PROJECT_DIR$/application/views/layouts/common-catalog.php" />
         <option value="$PROJECT_DIR$/application/views/layouts/common-certificates.php" />
         <option value="$PROJECT_DIR$/application/views/layouts/common-contacts.php" />
         <option value="$PROJECT_DIR$/application/views/layouts/common-gradebath.php" />
         <option value="$PROJECT_DIR$/application/views/layouts/common-ind.php" />
-        <option value="$PROJECT_DIR$/application/views/layouts/common-information-inner.php" />
         <option value="$PROJECT_DIR$/application/views/layouts/common-information.php" />
+        <option value="$PROJECT_DIR$/application/views/layouts/common-information-inner.php" />
         <option value="$PROJECT_DIR$/application/views/layouts/common-news.php" />
-        <option value="$PROJECT_DIR$/application/views/layouts/common.php" />
         <option value="$PROJECT_DIR$/application/views/layouts/index.php" />
+        <option value="$PROJECT_DIR$/application/views/scripts/catalog/content.php" />
       </list>
     </option>
   </component>
@@ -355,7 +357,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="news" />
+              <option name="myItemId" value="catalog" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -431,7 +433,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32942554" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942554" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18402778" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -497,23 +499,6 @@
     </PATH>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/admin/pages/slider.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="0" selection-start="1021" selection-end="1021" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="3210" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/classes/controller/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="296" column="28" selection-start="13922" selection-end="14009" vertical-scroll-proportion="0.0" vertical-offset="4440" max-vertical-offset="7140" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/admin/blocks/production.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="0" selection-end="2281" vertical-scroll-proportion="-18.041666" vertical-offset="197" max-vertical-offset="975">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/classes/controller/admin/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="119" column="80" selection-start="4354" selection-end="4364" vertical-scroll-proportion="-29.375" vertical-offset="1080" max-vertical-offset="1920" />
@@ -577,18 +562,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/admin/catalog/edit.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1040" column="27" selection-start="51844" selection-end="51844" vertical-scroll-proportion="-12.08" vertical-offset="14996" max-vertical-offset="16620">
-          <folding>
-            <marker date="1401543754000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1401543754000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1401543754000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1401543754000" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/admin/datatable/jquery.dataTables.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12116" column="1" selection-start="378127" selection-end="378127" vertical-scroll-proportion="0.0" vertical-offset="180981" max-vertical-offset="181845">
@@ -598,13 +571,6 @@
             <marker date="1401543514000" expanded="false" signature="-1:-1" placeholder="..." />
             <marker date="1401543514000" expanded="false" signature="-1:-1" placeholder="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/classes/controller/admin/catalog.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="46" selection-start="3033" selection-end="3033" vertical-scroll-proportion="-7.5" vertical-offset="930" max-vertical-offset="2520">
-          <folding />
         </state>
       </provider>
     </entry>
@@ -743,13 +709,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/scripts/catalog/content.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="448" column="24" selection-start="23461" selection-end="23461" vertical-scroll-proportion="-8.52" vertical-offset="6294" max-vertical-offset="16155">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="53355">
@@ -774,131 +733,220 @@
     <entry file="file://$PROJECT_DIR$/application/views/scripts/news/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="162" selection-start="716" selection-end="1050" vertical-scroll-proportion="-8.125" vertical-offset="0" max-vertical-offset="705">
-          <folding>
-            <element signature="e#669#690#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/scripts/news/custom.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="79" selection-start="478" selection-end="478" vertical-scroll-proportion="-4.375" vertical-offset="0" max-vertical-offset="420">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/classes/helpers/ImageWork.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="392" column="30" selection-start="15593" selection-end="15593" vertical-scroll-proportion="-7.92" vertical-offset="5484" max-vertical-offset="7485">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/classes/controller/admin/catalog.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="145" column="74" selection-start="6428" selection-end="6428" vertical-scroll-proportion="-27.5" vertical-offset="1515" max-vertical-offset="2550">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/scripts/admin/catalog/pages.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="481" column="41" selection-start="20142" selection-end="20142" vertical-scroll-proportion="-8.22" vertical-offset="6804" max-vertical-offset="12345">
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#3;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#6;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#9;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#10;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#17;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#18;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#19;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#div#19;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#21;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#23;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#24;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#25;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#25;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#27;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <marker date="1401627806000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1401627806000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1401627806000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1401627806000" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/scripts/admin/catalog/edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="789" column="6" selection-start="40172" selection-end="40172" vertical-scroll-proportion="-7.56" vertical-offset="11457" max-vertical-offset="16815">
+          <folding>
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#6;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#7;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#14;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#17;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#18;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#18;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#18;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#18;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#1;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#18;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#19;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#19;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#22;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#24;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#24;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#25;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#25;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#26;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#26;n#div#1;n#form#0;n#div#0;n#div#0;n#div#6;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <marker date="1401627855000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1401627855000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1401627855000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1401627855000" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/layouts/common-about.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="287" column="119" selection-start="13306" selection-end="13306" vertical-scroll-proportion="-6.7083335" vertical-offset="4144" max-vertical-offset="10545">
+        <state line="562" column="81" selection-start="26130" selection-end="26130" vertical-scroll-proportion="-17.041666" vertical-offset="8021" max-vertical-offset="10590">
           <folding>
-            <marker date="1401620140000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1401620140000" expanded="false" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-catalog.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="251" column="116" selection-start="13023" selection-end="13023" vertical-scroll-proportion="-7.0416665" vertical-offset="3596" max-vertical-offset="11535">
-          <folding>
-            <marker date="1401620152000" expanded="false" signature="18420:18431" placeholder="..." />
-            <marker date="1401620152000" expanded="false" signature="26622:26633" placeholder="..." />
-            <marker date="1401620152000" expanded="false" signature="30374:30385" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-certificates.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="167" column="58" selection-start="8244" selection-end="8244" vertical-scroll-proportion="-6.7083335" vertical-offset="2344" max-vertical-offset="7605">
-          <folding>
-            <marker date="1401620163000" expanded="false" signature="16594:16605" placeholder="..." />
-            <marker date="1401620163000" expanded="false" signature="20618:20629" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-contacts.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="258" column="119" selection-start="11772" selection-end="11772" vertical-scroll-proportion="-6.7083335" vertical-offset="3709" max-vertical-offset="10050">
-          <folding>
-            <marker date="1401620173000" expanded="false" signature="23736:23747" placeholder="..." />
-            <marker date="1401620173000" expanded="false" signature="27760:27771" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-gradebath.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="62" selection-start="5128" selection-end="5128" vertical-scroll-proportion="-7.0416665" vertical-offset="1391" max-vertical-offset="6780">
-          <folding>
-            <marker date="1401620179000" expanded="false" signature="10670:10681" placeholder="..." />
-            <marker date="1401620179000" expanded="false" signature="14468:14479" placeholder="..." />
-            <marker date="1401620179000" expanded="false" signature="18492:18503" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-ind.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="135" selection-start="2217" selection-end="2217" vertical-scroll-proportion="-7.0416665" vertical-offset="491" max-vertical-offset="7845">
-          <folding>
-            <marker date="1401620185000" expanded="false" signature="17574:17585" placeholder="..." />
-            <marker date="1401620185000" expanded="false" signature="21598:21609" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-information-inner.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="162" column="119" selection-start="8070" selection-end="8070" vertical-scroll-proportion="-6.7083335" vertical-offset="2269" max-vertical-offset="8025">
-          <folding>
-            <marker date="1401620191000" expanded="false" signature="13490:13501" placeholder="..." />
-            <marker date="1401620191000" expanded="false" signature="19471:19482" placeholder="..." />
-            <marker date="1401620191000" expanded="false" signature="23252:23263" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-information.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="122" column="119" selection-start="6182" selection-end="6182" vertical-scroll-proportion="-6.7083335" vertical-offset="1669" max-vertical-offset="7515">
-          <folding>
-            <marker date="1401620195000" expanded="false" signature="11602:11613" placeholder="..." />
-            <marker date="1401620195000" expanded="false" signature="17583:17594" placeholder="..." />
-            <marker date="1401620195000" expanded="false" signature="21607:21618" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-news.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="157" column="119" selection-start="7656" selection-end="7656" vertical-scroll-proportion="-6.375" vertical-offset="2202" max-vertical-offset="8145">
-          <folding>
-            <marker date="1401620207000" expanded="false" signature="18770:18781" placeholder="..." />
-            <marker date="1401620207000" expanded="false" signature="22794:22805" placeholder="..." />
+            <marker date="1401631587000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1401631587000" expanded="false" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/layouts/common.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="135" selection-start="2217" selection-end="2217" vertical-scroll-proportion="-6.7083335" vertical-offset="499" max-vertical-offset="7995">
+        <state line="392" column="81" selection-start="18509" selection-end="18509" vertical-scroll-proportion="-6.72" vertical-offset="5544" max-vertical-offset="8040">
           <folding>
-            <marker date="1401620213000" expanded="false" signature="17649:17660" placeholder="..." />
-            <marker date="1401620213000" expanded="false" signature="21673:21684" placeholder="..." />
+            <marker date="1401631621000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1401631621000" expanded="false" signature="-1:-1" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-catalog.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="557" column="77" selection-start="27418" selection-end="27418" vertical-scroll-proportion="-6.72" vertical-offset="8019" max-vertical-offset="11580">
+          <folding>
+            <marker date="1401631636000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1401631636000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1401631636000" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-certificates.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="370" column="81" selection-start="17454" selection-end="17454" vertical-scroll-proportion="-6.42" vertical-offset="5229" max-vertical-offset="7650">
+          <folding>
+            <marker date="1401631652000" expanded="true" signature="16746:16757" placeholder="..." />
+            <marker date="1401631652000" expanded="true" signature="20852:20863" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-contacts.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="533" column="81" selection-start="24596" selection-end="24596" vertical-scroll-proportion="-7.32" vertical-offset="7629" max-vertical-offset="10095">
+          <folding>
+            <marker date="1401631665000" expanded="true" signature="23888:23899" placeholder="..." />
+            <marker date="1401631665000" expanded="true" signature="27994:28005" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-gradebath.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="323" column="81" selection-start="15328" selection-end="15328" vertical-scroll-proportion="-4.02" vertical-offset="4644" max-vertical-offset="6825">
+          <folding>
+            <marker date="1401631679000" expanded="true" signature="10670:10681" placeholder="..." />
+            <marker date="1401631679000" expanded="true" signature="14620:14631" placeholder="..." />
+            <marker date="1401631679000" expanded="true" signature="18726:18737" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-ind.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="382" column="81" selection-start="18434" selection-end="18434" vertical-scroll-proportion="-1.92" vertical-offset="5634" max-vertical-offset="7890">
+          <folding>
+            <marker date="1401631691000" expanded="true" signature="17726:17737" placeholder="..." />
+            <marker date="1401631691000" expanded="true" signature="21832:21843" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-information.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="372" column="81" selection-start="18443" selection-end="18443" vertical-scroll-proportion="-7.16" vertical-offset="5222" max-vertical-offset="7560">
+          <folding>
+            <marker date="1401631703000" expanded="true" signature="11602:11613" placeholder="..." />
+            <marker date="1401631703000" expanded="true" signature="17735:17746" placeholder="..." />
+            <marker date="1401631703000" expanded="true" signature="21841:21852" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-information-inner.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="412" column="81" selection-start="20331" selection-end="20331" vertical-scroll-proportion="-8.66" vertical-offset="5747" max-vertical-offset="8070">
+          <folding>
+            <marker date="1401631717000" expanded="true" signature="13490:13501" placeholder="..." />
+            <marker date="1401631717000" expanded="true" signature="19623:19634" placeholder="..." />
+            <marker date="1401631717000" expanded="true" signature="23486:23497" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-news.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="405" column="48" selection-start="19547" selection-end="19547" vertical-scroll-proportion="-8.66" vertical-offset="5642" max-vertical-offset="8190">
+          <folding>
+            <marker date="1401631731000" expanded="true" signature="18922:18933" placeholder="..." />
+            <marker date="1401631731000" expanded="true" signature="23028:23039" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/layouts/common-page.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="918" selection-end="918" vertical-scroll-proportion="-14.375" vertical-offset="0" max-vertical-offset="630">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/layouts/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="265" column="116" selection-start="15939" selection-end="15939" vertical-scroll-proportion="0.34924078" vertical-offset="3814" max-vertical-offset="9210">
+        <state line="505" column="27" selection-start="26956" selection-end="26956" vertical-scroll-proportion="-5.66" vertical-offset="7292" max-vertical-offset="9255">
           <folding>
-            <marker date="1401620220000" expanded="false" signature="26564:26575" placeholder="..." />
-            <marker date="1401620220000" expanded="false" signature="30316:30327" placeholder="..." />
+            <marker date="1401631748000" expanded="true" signature="26708:26719" placeholder="..." />
+            <marker date="1401631748000" expanded="true" signature="30538:30549" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/scripts/catalog/content.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1030" column="116" selection-start="51587" selection-end="51587" vertical-scroll-proportion="0.5" vertical-offset="15092" max-vertical-offset="16305">
+          <folding>
+            <element signature="n#style#0;n#input#0;n#a#0;n#div#0;n#div#6;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#span#0;n#div#0;n#div#6;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#a#1;n#div#0;n#div#6;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#a#0;n#a#1;n#div#0;n#div#6;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#4;n#div#0;n#form#0;n#div#0;n#div#9;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

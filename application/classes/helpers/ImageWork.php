@@ -361,17 +361,36 @@ class ImageWork
             mkdir($directory, 0777);
         }
         if ($file = Upload::save($image, NULL, $directory)) {
-            //            $filename = strtolower(Text::random('alnum', 20)) . '.jpg';
-            //            Image::factory($file)
-            //                //->resize(484, 465, Image::INVERSE)->crop(484, 465, 0, 0)
-            //                ->save($directory . $filename);
-            //            unlink($file);
             $image = ORM::factory('images');
             $image->path = str_replace(DOCROOT, '', $file);
             $image->type = 'catalog';
             $saving = $image->save();
             $product = ORM::factory('catalog')->where('id', '=', $id_product)->find();
             $product->scheme = str_replace(DOCROOT, '', $file);
+            $product->save();
+            return true;
+
+        }
+        return FALSE;
+    }
+
+    static function saveNewPassportImage($image, $id_product) {
+        $image = $image['passport'];
+        if (!Upload::valid($image) OR !Upload::not_empty($image) OR !Upload::type($image, array('jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'txt'))) {
+            return FALSE;
+        }
+
+        $directory = DOCROOT . 'uploads/passport/';
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777);
+        }
+        if ($file = Upload::save($image, NULL, $directory)) {
+            $image = ORM::factory('images');
+            $image->path = str_replace(DOCROOT, '', $file);
+            $image->type = 'catalog';
+            $saving = $image->save();
+            $product = ORM::factory('catalog')->where('id', '=', $id_product)->find();
+            $product->passport = str_replace(DOCROOT, '', $file);
             $product->save();
             return true;
 

@@ -86,6 +86,7 @@ class Controller_Admin_Catalog extends Controller_AdminBase
             if ($_FILES) {
                 $instruction = ImageWork::saveNewInstructionImage($_FILES, $id_product);
                 $scheme = ImageWork::saveNewSchemeImage($_FILES, $id_product);
+                $passport = ImageWork::saveNewPassportImage($_FILES, $id_product);
             }
             AdminHelper::setParamRedirect('success', 'Товар отредактирован!', 'catalog', 'index');
         }
@@ -142,6 +143,7 @@ class Controller_Admin_Catalog extends Controller_AdminBase
         $customsave = $options->saveCustom($post, $id_product);
         $instruction = ImageWork::saveNewInstructionImage($_FILES, $id_product);
         $scheme = ImageWork::saveNewSchemeImage($_FILES, $id_product);
+        $passport = ImageWork::saveNewPassportImage($_FILES, $id_product);
         AdminHelper::setParamRedirect('success', 'Товар создан!', 'catalog', 'index');
     }
 

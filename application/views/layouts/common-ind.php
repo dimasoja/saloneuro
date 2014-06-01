@@ -329,6 +329,7 @@ function validateEmail(email) {
         });
         jQuery('.ways-call').fancybox({
             'beforeShow': function () {
+                jQuery('.fancybox-wrap').addClass('certif-fancybox');
                 jQuery('.consult').click(function () {
                     jQuery.fancybox.close();
                     jQuery('#sh_button').trigger('click');
@@ -338,6 +339,7 @@ function validateEmail(email) {
                     jQuery.fancybox(jQuery('.fancy-call').html(), {
                         //'content': jQuery(".fancy-call").html(),
                         beforeShow: function () {
+                            jQuery('.fancybox-wrap').addClass('certif-fancybox');
                             jQuery('.order-button.green.ways-call-submit').click(function () {
                                 var name = jQuery('.fancybox-outer #response-name1').val();
                                 var phone = jQuery('.fancybox-outer #response-phone1').val();
@@ -378,6 +380,7 @@ function validateEmail(email) {
                     jQuery.fancybox(jQuery('.fancy-link').html(), {
                         //'content': jQuery(".fancy-call").html(),
                         beforeShow: function () {
+                            jQuery('.fancybox-wrap').addClass('certif-fancybox');
                             var nameelem = jQuery('.fancybox-outer .link-name');
                             var emailelem = jQuery('.fancybox-outer .link-email');
                             var responseelem = jQuery('.fancybox-outer .link-response');

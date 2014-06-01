@@ -75,10 +75,11 @@
                 <?php foreach ($options as $option) {
                     $directory = ORM::factory('directory')->where('id', '=', $option->name)->find();
                     $directory_value = ORM::factory('directory')->where('id', '=', $option->value)->find();
-                    if($directory->type=='select')
+                    if ($directory->type == 'select') {
                         $dir_value = $directory_value->name;
-                    else
+                    } else {
                         $dir_value = $option->value;
+                    }
                     ?>
                     <b><?php echo $directory->name; ?></b> : <?php echo $dir_value; ?><br/>
                 <?php
@@ -437,15 +438,21 @@
                 <div class="product-downloads">
                     <!--                <a href="javascript:window.print()"><img src="/images/print.png"/></a>-->
                     <a href="/<?php echo $page->scheme; ?>" class="width32"><img src="/images/download.png"/>
-                    Схема монтажа
+                        Схема монтажа
                     </a>
                 </div>
             <?php } ?>
             <?php if ($page->instruction != '') { ?>
                 <div class="product-downloads">
-                    <!--                <a href="javascript:window.print()"><img src="/images/print.png"/></a>-->
                     <a href="/<?php echo $page->instruction; ?>" class="width32"><img src="/images/download.png"/>
-                    Инструкция по эксплуатации
+                        Инструкция по эксплуатации
+                    </a>
+                </div>
+            <?php } ?>
+            <?php if ($page->passport != '') { ?>
+                <div class="product-downloads">
+                    <a href="/<?php echo $page->passport; ?>" class="width32"><img src="/images/download.png"/>
+                        Паспорт
                     </a>
                 </div>
             <?php } ?>
@@ -802,7 +809,7 @@ $(document).ready(function () {
     });
     jQuery('.lookonthis a').fancybox();
     jQuery('.order-form').fancybox({
-        'beforeShow' : function() {
+        'beforeShow': function () {
             jQuery('.fancybox-wrap').addClass('certif-fancybox');
         },
         'afterShow': function () {
@@ -1012,13 +1019,16 @@ function redirect() {
         <!--        <a href="#manufacturer-form" class="fancy"><input type="button" class="green big-green manufacturer"-->
         <!--                                                          value="У производителя"></a><br/>-->
         <a href="#yourcity-form" class="fancy"><input type="button" class="green big-green manufacturer"
-                                                      value="У производителя"></a><br/>
-        <span onclick="redirect()"><input type="button" class="green big-green oficial"
-                                          value="В офиц. интернет-магазине"></span><br/>
+                                                      value="У производителя" style="width:300px"></a><br/>
+        <?php if ($page->manufacturer != '') { ?>
+            <span onclick="redirect()"><input type="button" class="green big-green oficial"
+                                              value="В офиц. интернет-магазине" style="width:300px"></span>
+        <?php } ?>
+        <br/>
         <a href="#yourcity-form" class="fancy"><input type="button" class="green big-green yourcity"
-                                                      value="В своем городе"><br/>
+                                                      value="В своем городе" style="width:300px"><br/>
             <a href="javascript:window.print()" class="fancyaa"><input type="button" class="green big-green yourcity"
-                                                                       value="Распечатать товар"><br/>
+                                                                       value="Распечатать товар" style="width:300px"><br/>
     </div>
 </div>
 <div class="dn">
