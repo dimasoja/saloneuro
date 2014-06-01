@@ -210,13 +210,16 @@ jQuery(document).ready(function($) {
                     if(jQuery('.order').length) {
                         jQuery('#toTheTop').css('margin-bottom','110px');
                         jQuery('.order-image').css('display','block');
-                        //jQuery('.order-accessory').css('display','block');
+                        jQuery('.order-accessory').css('display','block');
+                        //jQuery('.order-details-show').css('display','block');
                     }
                 } else {
                     $(".order").removeClass('fixed');
                     jQuery('#toTheTop').css('margin-bottom','0px');
                     jQuery('.order-image').css('display','none');
-                    //jQuery('.order-accessory').css('display','none');
+                    jQuery('.order-accessory').css('display','none');
+                    jQuery('.order-details').css('display','none');
+                    jQuery('order:not(.fixed) .order-details-show').css('display','none');
                 }
             });
         }

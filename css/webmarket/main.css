@@ -30,6 +30,37 @@ body.pattern-12 { background: url('/images/webmarket/backgrounds/pattern-12.gif?
 .geo-label, .city1 {
     overflow:hidden;
 }
+.fixed .block-price {
+    width: 300px;
+}
+.order:not(.fixed) .order-details-show {
+    display:none !important;
+}
+.pl img {
+    width: 30px;
+    padding: 3px;
+    margin-top: 0px !important;
+}
+.fixed .global-price {
+    float:right;
+}
+.order-details-show {
+    font-family: Helvetica, Arial, sans-serif !important;
+    background-color: #83BDCB;
+    border: 0px;
+    width: 91%;
+    color: white;
+    font-style: italic;
+    margin-top:5px;
+    font-size: 14px;
+    padding: 0px 11px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 1px;
+    border-radius: 2px;
+    webkit-box-shadow: none;
+    box-shadow: none;
+    cursor:pointer;
+}
 .all_cities {
     width: 179px !important;
 }
@@ -2918,10 +2949,19 @@ margin-top: 22px;
 }
 .order {
 	overflow:auto;
+    overflow:hidden;
 }
 .order .floatleft {
 	width:200px;
 	float:left;
+}
+.order .order-accessory, .order .order-grade, .order .order-massage {
+    width: 100%;
+    margin-left:15px;
+}
+.order-details-show {
+    width: 140px;
+    float:left;
 }
 .gidro .grade-item {
 	margin-left:10%;
