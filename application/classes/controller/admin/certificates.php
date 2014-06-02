@@ -11,7 +11,7 @@ class Controller_Admin_Certificates extends Controller_AdminBase {
 
     public function __construct($request) {
         parent::__construct($request);
-        $this->page_title = 'Сертификаты';
+        $this->page_title = 'Наши достижения';
         ViewHead::addScript('ckeditor/ckfinder/ckfinder.js');
         ViewHead::addStyle('admin/style-upload.css');
         ViewHead::addStyle('admin/jquery.fileupload-ui.css');

@@ -18,7 +18,7 @@ function transliterate($string) {
 <?php $city_geo = (array)$city; ?>
 <?php $city_geo = $city[0]; ?>
 <div class="geocity" style="display:none">
-    <?php echo $city_geo; ?>
+    <?php echo $session_city; ?>
 </div>
 <div class="darker-stripe blocks-spacer more-space latest-news with-shadows">
     <div class="bread-center">
@@ -651,6 +651,7 @@ jQuery(document).ready(function () {
 ;
 
 function changeCityBlock(city) {
+
     jQuery('.maps').css('display', 'none');
     jQuery('.fancy-address-block .city-item').css('display', 'none');
     var city = jQuery.trim(city);
@@ -662,6 +663,7 @@ function changeCityBlock(city) {
 }
 
 function changeCity(city) {
+
     jQuery('.maps').css('display', 'none');
     jQuery('.city-item').css('display', 'none');
     var city = jQuery.trim(city);

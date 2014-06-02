@@ -134,7 +134,9 @@
     <script type="text/javascript">
         jQuery(document).ready(function(){
             jQuery('.fancyboximage').fancybox({
-
+                'beforeShow': function() {
+                    jQuery('.fancybox-wrap').addClass('certif-fancybox');
+                }
             });
         });
     </script>

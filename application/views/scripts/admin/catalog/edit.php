@@ -817,8 +817,14 @@
 
     <div class="field" style="text-align: left;">
         <select class="form-control uniform" name="published">
-            <option value="off" <?php if($product->published=='off') echo 'selected'; ?>>Нет</option>
-            <option value="on" <?php if($product->published=='on') echo 'selected'; ?>>Да</option>
+            <option value="off" <?php if ($product->published == 'off') {
+                echo 'selected';
+            } ?>>Нет
+            </option>
+            <option value="on" <?php if ($product->published == 'on') {
+                echo 'selected';
+            } ?>>Да
+            </option>
         </select>
     </div>
 </div>
@@ -942,7 +948,7 @@
                     var image_html = '<div class="sws_img_block imagerel' + id_image + '">\n\
                                            <div class="img_block">\n\
                                                 <img src="' + path + '" style="height:136px !important;clear:both">\n\
-                                           </div><a id="upload'+id_image+'">Загрузить изображение пневмо</a>\n\
+                                           </div><a id="upload' + id_image + '">Загрузить изображение пневмо</a>\n\
                                            <div class="del_block">\n\
                                                 <a href="javascript:void:(0);" class="del_vid" onclick="deletePortfolio(' + id_image + ');">Удалить</a>\n\
                                            </div>' + select_html + forsun_html + price_for_massage + default_for_massage + required_for_massage + underoption_for_massage + '\n\
@@ -953,7 +959,7 @@
                     portfolio.append(image_html);
 
                     portfolio.append(hidden);
-                    var upload1 = new AjaxUpload(jQuery('#upload'+id_image), {
+                    var upload1 = new AjaxUpload(jQuery('#upload' + id_image), {
                         action: '/admin/catalog/uploadmassage',
                         name: 'uploadfile',
                         data: {id: '123'},
@@ -977,9 +983,9 @@
                             var underoption_for_massage = jQuery('.underoption_for_massage').html();
                             var portfolio = jQuery('.massage-options');
                             var image_html = '<img src="' + path + '" style="height: 136px !important;">';
-                            var hidden = '<input type="hidden" class="image' + id_image + '" name="pnevmo['+ids_image+']" value="' + id_image + '" rel="' + id_image + '"/> ';
+                            var hidden = '<input type="hidden" class="image' + id_image + '" name="pnevmo[' + ids_image + ']" value="' + id_image + '" rel="' + id_image + '"/> ';
                             console.log(image_html);
-                            jQuery('#upload'+ids_image).parent().find('.img_block').append(image_html).append(hidden).css('height','290px').parent().css('height','538px');
+                            jQuery('#upload' + ids_image).parent().find('.img_block').append(image_html).append(hidden).css('height', '290px').parent().css('height', '538px');
                         }
                     });
                 }
@@ -1007,53 +1013,63 @@
     }
 
     jQuery(document).ready(function () {
+        if (jQuery('#dynamic2').length)
+            var table2 = $('#dynamic2').dataTable({
+                "sPaginationType": "full_numbers",
+                "sDom": "<'tableHeader'<l><'clearfix'f>r>t<'tableFooter'<i><'clearfix'p>>",
+                "iDisplayLength": 10,
+                "bStateSave": true,
+                "aoColumnDefs": [
+                    {
+                        'bSortable': false,
+                        'aTargets': [0]
+                    }
+                ]
+            });
+        if (jQuery('#dynamic3').length)
+            var table3 = $('#dynamic3').dataTable({
+                "sPaginationType": "full_numbers",
+                "sDom": "<'tableHeader'<l><'clearfix'f>r>t<'tableFooter'<i><'clearfix'p>>",
+                "iDisplayLength": 10,
+                "bStateSave": true,
+                "aoColumnDefs": [
+                    {
+                        'bSortable': false,
+                        'aTargets': [0]
+                    }
+                ]
+            });
+        if (jQuery('#dynamic4').length)
+            var table4 = $('#dynamic4').dataTable({
+                "sPaginationType": "full_numbers",
+                "sDom": "<'tableHeader'<l><'clearfix'f>r>t<'tableFooter'<i><'clearfix'p>>",
+                "iDisplayLength": 10,
+                "bStateSave": true,
+                "aoColumnDefs": [
+                    {
+                        'bSortable': false,
+                        'aTargets': [0]
+                    }
+                ]
+            });
 
-        var table2 = $('#dynamic2').dataTable({
-            "sPaginationType": "full_numbers",
-            "sDom": "<'tableHeader'<l><'clearfix'f>r>t<'tableFooter'<i><'clearfix'p>>",
-            "iDisplayLength": 10,
-            "bStateSave": true,
-            "aoColumnDefs": [
-                {
-                    'bSortable': false,
-                    'aTargets': [0]
-                }
-            ]
-        });
-        var table3 = $('#dynamic3').dataTable({
-            "sPaginationType": "full_numbers",
-            "sDom": "<'tableHeader'<l><'clearfix'f>r>t<'tableFooter'<i><'clearfix'p>>",
-            "iDisplayLength": 10,
-            "bStateSave": true,
-            "aoColumnDefs": [
-                {
-                    'bSortable': false,
-                    'aTargets': [0]
-                }
-            ]
-        });
-        var table4 = $('#dynamic4').dataTable({
-            "sPaginationType": "full_numbers",
-            "sDom": "<'tableHeader'<l><'clearfix'f>r>t<'tableFooter'<i><'clearfix'p>>",
-            "iDisplayLength": 10,
-            "bStateSave": true,
-            "aoColumnDefs": [
-                {
-                    'bSortable': false,
-                    'aTargets': [0]
-                }
-            ]
-        });
-
-        $('.button-send-main').click(function(event){
-            var nHidden1 = table2.fnGetHiddenTrNodes( );
-            var nHidden2 = table3.fnGetHiddenTrNodes( );
-            var nHidden3 = table4.fnGetHiddenTrNodes( );
+        $('.button-send-main').click(function (event) {
             var $form = jQuery('.form-horizontal');
-            $form.append(nHidden1).append(nHidden2).append(nHidden3);
+            if (jQuery('#dynamic2').length) {
+                var nHidden1 = table2.fnGetHiddenTrNodes();
+                $form.append(nHidden1);
+            }
+            if (jQuery('#dynamic3').length) {
+                var nHidden2 = table3.fnGetHiddenTrNodes();
+                $form.append(nHidden2);
+            }
+            if (jQuery('#dynamic4').length) {
+                var nHidden3 = table4.fnGetHiddenTrNodes();
+                $form.append(nHidden3);
+            }
             $form.submit();
 
-        } );
+        });
 //        $('button').click( function() {
 //            var data = table.$('input, select').serialize();
 //            alert(

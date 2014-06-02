@@ -27,7 +27,7 @@ class Controller_Certificates extends Controller_Base
         $view->text = ORM::factory('settings')->getSetting('certificates');
         $view->certificates = ORM::factory('certificates')->find_all()->as_array();
         $view->news = ORM::factory('news')->where('published', '=', 'on')->find_all()->as_array();
-        $this->template->meta_title = 'Сертификаты';
+        $this->template->meta_title = 'Наши достижения';
         //$keywords = $view->page['keywords'];
         //$description = $view->page['description'];
         $this->template->page_title = '';

@@ -33,6 +33,9 @@ body.pattern-12 { background: url('/images/webmarket/backgrounds/pattern-12.gif?
 .fixed .block-price {
     width: 300px;
 }
+.inner-benefit {
+    overflow:hidden;
+}
 .order:not(.fixed) .order-details-show {
     display:none !important;
 }
@@ -1784,13 +1787,14 @@ label { font-weight: bold; color: #333333; }
     width: 87px;
 }
 .inner-benefit-right {
-    width: 170px;
+    width: 155px;
     float: left;
     padding-top: 28px;
 }
 .inner-benefit {
     overflow: auto;
     width: 282px;
+    overflow:hidden;
 }
 .inner-benefit-title {
     font-size:16px

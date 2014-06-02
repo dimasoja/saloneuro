@@ -61,7 +61,7 @@ class Model_Settings extends ORM
         $html = '';
         $html .= '<a href="/">Главная</a> > ';
         $html .= '<a href="/about">О компании</a> > ';
-        $html .= '<a href="/' . $link . '">Сертификаты</a>';
+        $html .= '<a href="/' . $link . '">Наши достижения</a>';
         return $html;
     }
 

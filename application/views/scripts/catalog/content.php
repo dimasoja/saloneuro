@@ -205,7 +205,7 @@
                 <div class="grade-second-col">
                     <div class="grade-price active padding415 required" style="padding: 15px 15px;">
                                         <span class="grade-price-value" data-grade="<?php echo $bath->id; ?>"
-                                              rel="<?php echo $bath->price; ?>"><?php echo number_format((double)$bath->price, 0, ' ', ' '); ?></span>
+                                              rel="<?php echo $bath->price; ?>"><?php echo number_format((double)$bath->price, 0, ' ', ' '); ?> руб.</span>
                         <br>
                     </div>
                 </div>
@@ -679,7 +679,6 @@ var order_place = {
         jQuery.each(this.order.massages, function (index, value) {
             var name = jQuery('[data-massage=' + index + ']').parents('.grade-item').find('.grade-name').html();
             var image = jQuery('[data-massage=' + index + ']').parents('.grade-item').find('.massage-image').html();
-            console.log(image);
             jQuery('.order .massage-details').append("<span class='order-massage floatleft' data-id='" + index + "'><span class='pl'>"+image+"</span>" + name + "</span>");
         });
     },
@@ -818,7 +817,7 @@ $(document).ready(function () {
         }
         order_place.buttonSwitch(order);
         order_place.switchHeaders(order);
-        priceproduct.html(number_format(globalprice, 0, ' ', ' '));
+        priceproduct.html(number_format(globalprice, 0, ' ', ' ')+' руб.');
         priceproduct.attr('data-value', globalprice);
     });
     jQuery('.product-related-add').click(function () {
@@ -845,7 +844,7 @@ $(document).ready(function () {
         }
         order_place.buttonSwitch(order);
         order_place.switchHeaders(order);
-        priceproduct.html(number_format(globalprice, 0, ' ', ' '));
+        priceproduct.html(number_format(globalprice, 0, ' ', ' ')+' руб.');
         priceproduct.attr('data-value', globalprice);
     });
 
@@ -923,7 +922,7 @@ $(document).ready(function () {
         }
         order_place.buttonSwitch(order);
         order_place.switchHeaders(order);
-        priceproduct.html(number_format(globalprice, 0, ' ', ' '));
+        priceproduct.html(number_format(globalprice, 0, ' ', ' ')+' руб.');
         priceproduct.attr('data-value', globalprice);
     });
     jQuery('.massage-container .grade-item').mouseenter(function () {
@@ -950,7 +949,9 @@ $(document).ready(function () {
         var checkgidrooption = jQuery(this).hasClass('gidrooption');
         var checkgidromassage = jQuery('.gidromassage .grade-price').hasClass('active');
         var gidromassage_price = jQuery('.gidromassage .grade-price');
-        var gidromassage = jQuery('.gidromassage .add-massage')
+        var gidromassage_name = jQuery('.gidromassage .grade-name').html();
+        var gidromassage_image = jQuery('.gidromassage .massage-image').html();
+        var gidromassage = jQuery('.gidromassage .add-massage');
         var gidroprice = gidromassage.attr('data-price');
         var gidromas = gidromassage.attr('data-massage');
         var massage = e.attr('data-massage');
@@ -963,6 +964,7 @@ $(document).ready(function () {
                 gidromassage_price.addClass('active');
                 gidromassage.html('Убрать опцию');
                 order['massages'][gidromas] = gidroprice;
+                jQuery('.order-massage[data-id=' + gidromas + ']').remove();
                 globalprice = parseInt(globalprice) + parseInt(gidroprice);
             }
         }
@@ -971,17 +973,19 @@ $(document).ready(function () {
             e.html('Добавить опцию');
             if (jQuery(this).hasClass('gidromassage') == true) {
                 if (jQuery('.gidro .gidrooption .grade-price').hasClass('active')) {
-                    jQuery('.gidro .gidrooption .grade-price').removeClass('active');
+                    //console.log(jQuery('.gidro .gidrooption .grade-price.active').length);
                     jQuery('.gidro .gidrooption .grade-price.active').each(function (index) {
                         var elem = jQuery(this).find('.add-massage');
                         var elemmassage = elem.attr('data-massage');
                         var elemprice = elem.attr('data-price');
+                        jQuery('.order-massage[data-id=' + elemmassage + ']').remove();
+
                         delete order['massages'][elemmassage];
                         globalprice = parseInt(globalprice) - parseInt(elemprice);
-                        priceproduct.html(number_format(globalprice, 0, ' ', ' '));
+                        priceproduct.html(number_format(globalprice, 0, ' ', ' ')+' руб.');
                         priceproduct.attr('data-value', globalprice);
                     });
-
+                    jQuery('.gidro .gidrooption .grade-price').removeClass('active');
                 }
             }
             delete order['massages'][massage];
@@ -993,6 +997,9 @@ $(document).ready(function () {
             e.parent().addClass('active');
             e.html('Убрать опцию');
             order['massages'][massage] = price;
+            if(jQuery('.order-massage[data-id='+gidromas+']').length==0) { alert();
+                jQuery('.order .massage-details').append("<span class='order-massage floatleft' data-id='" + gidromas + "'><span class='pl'>"+gidromassage_image+"</span>" + gidromassage_name + "</span>");
+            }
             jQuery('.order .massage-details').append("<span class='order-massage floatleft' data-id='" + massage + "'><span class='pl'>"+image_small+"</span>" + name + "</span>");
             globalprice = parseInt(globalprice) + parseInt(price);
 
@@ -1026,7 +1033,7 @@ $(document).ready(function () {
         }
         order_place.buttonSwitch(order);
         order_place.switchHeaders(order);
-        priceproduct.html(number_format(globalprice, 0, ' ', ' '));
+        priceproduct.html(number_format(globalprice, 0, ' ', ' ')+' руб.');
         priceproduct.attr('data-value', globalprice);
 
         var resp_order = JSON.stringify(order);

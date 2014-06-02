@@ -3,8 +3,8 @@
         <div class="span12">
             <div class="main-titles">
                 <div class="arrows">
-                    <a href="#" class="icon-chevron-left" id="featuredItemsLeft"></a>
-                    <a href="#" class="icon-chevron-right" id="featuredItemsRight"></a>
+                    <a class="clickable  icon-chevron-left" id="brandsLeft" style="display: inline-block;"></a>
+                    <a class="clickable  icon-chevron-right" id="brandsRight" style="display: inline-block;"></a>
                 </div>
             </div>
         </div>

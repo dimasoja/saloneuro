@@ -96,7 +96,7 @@
                     <br/>
                 </div>
                 <div class="wheretobuyblock">
-                    <div class="aqua-header">Сертификаты</div>
+                    <div class="aqua-header">Наши достижения</div>
                     <br/>
 
                     <div class="cities">
