@@ -749,6 +749,12 @@
                         echo 'checked';
                     }
                     ?>/>Обложка товара
+                    <input type="radio" name="base[]"
+                           value="<?php echo $image->id_image; ?>" <?php
+                    if ($product->base == $image->id_image) {
+                        echo 'checked';
+                    }
+                    ?>/>Базовое
                 </div>
                 <input type="hidden" class="image<?php echo $image->id_image; ?>"
                        name="image[<?php echo $image->id_image; ?>]"

@@ -36,6 +36,8 @@ class Model_Catalog extends ORM {
         $this->manufacturer = $data['manufacturer'];
         if(isset($data['featured']))
             $this->featured = $data['featured'][0];
+        if(isset($data['base']))
+            $this->featured = $data['base'][0];
         $this->length = $data['length'];
 //        $this->technologies = $data['technologies'];
         $this->time = time();
@@ -74,6 +76,8 @@ class Model_Catalog extends ORM {
         $product->manufacturer = $data['manufacturer'];
         if(isset($data['featured']))
             $product->featured = $data['featured'][0];
+        if(isset($data['base']))
+            $this->featured = $data['base'][0];
         $product->length = $data['length'];
 //        $this->technologies = $data['technologies'];
         $product->time = time();
