@@ -45,6 +45,7 @@ class Model_Catalog extends ORM {
     }
 
     public function editProduct($data, $id) {
+
         $product = $this->where('id','=',$id)->find();
         $product->name = $data['name'];
         $product->description = $data['description'];
@@ -77,7 +78,7 @@ class Model_Catalog extends ORM {
         if(isset($data['featured']))
             $product->featured = $data['featured'][0];
         if(isset($data['base']))
-            $this->featured = $data['base'][0];
+            $this->base = $data['base'][0];
         $product->length = $data['length'];
 //        $this->technologies = $data['technologies'];
         $product->time = time();

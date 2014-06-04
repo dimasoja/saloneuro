@@ -31,7 +31,7 @@ class Geoipthermo
      * get All Data by IP (Array)    
      */
 
-    public function getData() {
+    public static function getData() {
         $ip = Request::$client_ip;
         $ip = '178.76.234.123';
         try {

@@ -425,6 +425,19 @@ class FrontHelper
         return $html;
     }
 
+    static function outputBigImage($path, $width, $height, $in_width, $in_height) {
+        $html = '';
+        if (file_exists('.' . $path)) {
+            $sizes = ImageWork::getImageSize('.' . $path, $width, $height, $width, $height);
+            $margin_left = ($in_height - $sizes['newwidth'])/2;
+            $margin_top = ($in_width - $sizes['newheight'])/2;
+            if ($path != '') {
+
+            }
+        }
+        return $html;
+    }
+
     static function truncateHtml($text, $length = 100, $ending = '...', $exact = false, $considerHtml = true) {
         if ($considerHtml) {
             // if the plain text is shorter than the maximum length, return the whole text

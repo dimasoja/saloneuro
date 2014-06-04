@@ -196,11 +196,11 @@ class Controller_Catalog extends Controller_Base
                         if ($rectangular != 'on') {
                             if ($item->type == 'rectangular') {
                                 if ($angular == 'on') {
-                                    if(($item->additional_type!='angular')&&($item->additional_type2!='angular')) {
+                                    if (($item->additional_type != 'angular') && ($item->additional_type2 != 'angular')) {
                                         unset($items[$key]);
                                     }
                                 } elseif ($increased == 'on') {
-                                    if(($item->additional_type!='increased')&&($item->additional_type2!='increased')) {
+                                    if (($item->additional_type != 'increased') && ($item->additional_type2 != 'increased')) {
                                         unset($items[$key]);
                                     }
                                 } else {
@@ -211,11 +211,11 @@ class Controller_Catalog extends Controller_Base
                         if ($increased != 'on') {
                             if ($item->type == 'increased') {
                                 if ($angular == 'on') {
-                                    if(($item->additional_type!='angular')&&($item->additional_type2!='angular')) {
+                                    if (($item->additional_type != 'angular') && ($item->additional_type2 != 'angular')) {
                                         unset($items[$key]);
                                     }
                                 } elseif ($rectangular == 'on') {
-                                    if(($item->additional_type!='rectangular')&&($item->additional_type2!='rectangular')) {
+                                    if (($item->additional_type != 'rectangular') && ($item->additional_type2 != 'rectangular')) {
                                         unset($items[$key]);
                                     }
                                 } else {
@@ -703,9 +703,21 @@ class Controller_Catalog extends Controller_Base
                             }
                         }
                     }
+                    $view->baseimageid = '';
+                    $view->baseemptyimage = '';
                     if (isset($related_images[0])) {
-                        $image = $related_images[0];
-                        $image = '.' . $image->path;
+                        $baseimage = ORM::factory('catalog')->where('id', '=', $item->id)->find();
+                        if ($baseimage->base != '') {
+                            $view->baseimageid = $baseimage->base;
+                            $baseim = ORM::factory('images')->where('id_image', '=', $baseimage->base)->find();
+                            if (isset($baseim->path)) {
+                                $view->baseemptyimage = $baseim->path;
+                            }
+                        }
+                        $image = '';
+                        if (isset($baseim->path)) {
+                            $image = '.' . $baseim->path;
+                        }
                         $dest = ImageWork::createImage($image);
                         if ($dest) {
                             imageAlphaBlending($dest, false);
@@ -727,14 +739,31 @@ class Controller_Catalog extends Controller_Base
                             imageAlphaBlending($slate, false);
                             imageSaveAlpha($slate, true);
                             $mainimagename = '/uploads/mainimage' . time() . '.png';
-                            $view->mainimage = $mainimagename;
+                            $view->baseimage = $mainimagename;
                             imagepng($slate, '.' . $mainimagename);
                         } else {
-                            $view->mainimage = '';
+                            $view->baseimage = '';
                         }
                     } else {
-                        $view->mainimage = '';
+                        $view->baseimage = '';
                     }
+
+
+                    $mainimage = ORM::factory('catalog')->where('id', '=', $item->id)->find();
+                    $mainim = ORM::factory('images')->where('id_image', '=', $mainimage->featured)->find();
+                    if (isset($mainim->path)) {
+                        $view->mainimage = $mainim->path;
+                    }
+                    //                    $baseimage = ORM::factory('catalog')->where('id', '=', $item->id)->find();
+                    //                    $view->baseimage = '';
+                    //                    if ($baseimage->base != '') {
+                    //                        $baseim = ORM::factory('images')->where('id_image', '=', $baseimage->base)->find();
+                    //                        if (isset($baseim->path)) {
+                    //                            $view->baseimage = $baseim->path;
+                    //                        }
+                    //                    }
+
+
                     $grades = ORM::factory('options')->where('id_product', '=', $item->id)->where('type', '=', 'grade')->find_all()->as_array();
                     foreach ($grades as $grade) {
                         $grade_array = json_decode($grade->value);

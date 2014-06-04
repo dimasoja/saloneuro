@@ -456,15 +456,29 @@ class Controller_Index extends Controller_Base
         imageAlphaBlending($slate, false);
         imageSaveAlpha($slate, true);
         $fn = '/uploads/withopt'.time().'.png';
-        imagepng($slate, '.');
+        imagepng($slate, '.'.$fn);
+        $response = array();
+        $response['0'] = $fn;
+            //
+        $response['1'] = FrontHelper::outputRender($fn, 60, 60, 60, 60);
+        $response['2'] = FrontHelper::outputRender($fn, 420, 400, 420, 400);
+        echo json_encode($response);
         die();
-
-        //header('Content-Type: image/png');
-
-        $image = './uploads/123.png';
-        imagepng($dest, './uploads/123.png');
-        echo 'asdf';
-        die();
+        //$this->auto_render = false;
+        //$this->is_ajax = TRUE;
+//        header('content-type: application/json');
+//        $this->response->headers('Content-Type','application/json');
+//        $this->response->body(json_encode($response));
+        //$this->request->headers['Content-Type'] = 'application/json';
+        //$this->request->response = json_encode($response);
+        //
+//
+//        //header('Content-Type: image/png');
+//
+//        $image = './uploads/123.png';
+//        imagepng($dest, './uploads/123.png');
+//        echo 'asdf';
+//        die();
     }
 
 }

@@ -1186,6 +1186,7 @@ class Kohana_ORM {
 	 */
 	protected function _load_type($column, $value)
 	{
+        try{
 		$type = gettype($value);
 		if ($type == 'object' OR $type == 'array' OR ! isset($this->_table_columns[$column]))
 			return $value;
@@ -1232,6 +1233,7 @@ class Kohana_ORM {
 		}
 
 		return $value;
+        } Catch(Exception $e) {}
 	}
 
 	/**

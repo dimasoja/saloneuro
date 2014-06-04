@@ -7,10 +7,7 @@ class Controller_Base extends Controller_Template {
     public function __construct($request) {
         parent::__construct($request);
         ViewHead::addStyle('luba.css');
-
         $published = ORM::factory('pages')->where('browser_name', '=', $request->uri)->find()->published;
-
-
         if ((isset($published)) and ($published != 'on') and ($request->uri != '')) {
             $request = Request::factory('error/404')->execute();
             echo $request->send_headers()->response;
