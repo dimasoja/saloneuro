@@ -997,6 +997,7 @@
     function deletePortfolio(id) {
         jQuery('.image' + id).remove();
         jQuery('.imagerel' + id).remove();
+        jQuery('.massage' + id).remove();
     }
 </script>
 

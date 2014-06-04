@@ -997,10 +997,11 @@ $(document).ready(function () {
             e.parent().addClass('active');
             e.html('Убрать опцию');
             order['massages'][massage] = price;
-            if(jQuery('.order-massage[data-id='+gidromas+']').length==0) { alert();
+            if(jQuery('.order-massage[data-id='+gidromas+']').length==0) {
                 jQuery('.order .massage-details').append("<span class='order-massage floatleft' data-id='" + gidromas + "'><span class='pl'>"+gidromassage_image+"</span>" + gidromassage_name + "</span>");
             }
-            jQuery('.order .massage-details').append("<span class='order-massage floatleft' data-id='" + massage + "'><span class='pl'>"+image_small+"</span>" + name + "</span>");
+            if(massage!=gidromas)
+                jQuery('.order .massage-details').append("<span class='order-massage floatleft' data-id='" + massage + "'><span class='pl'>"+image_small+"</span>" + name + "</span>");
             globalprice = parseInt(globalprice) + parseInt(price);
 
             var check = jQuery('.changed-image-big').length;

@@ -92,6 +92,7 @@ function validateAndSubmitEdit() {
 }
 
 function addToParent(id, name) {
+    name = name.rel;
     jQuery('.parent').html(name);
     jQuery('#parent').val(id);
     parent.$.fancybox.close();

@@ -21,12 +21,12 @@ class Model_Menu extends ORM {
     function getMenuForEdit($found_id) {
         $menus = $this->where('parent', '=', '0')->where('published','=','on')->where('type','=','topmenu')->order_by('position', 'asc')->find_all()->as_array();
         $result_menu = '<div class="menu">
-            <div class="parent-menu"><span class="size13">&#10154;</span><a id="orange-white" onClick=\'addToParent("0", "Корень")\'>Корень</a></div><br/>';
+            <div class="parent-menu"><span class="size13">&#10154;</span><a id="orange-white" onClick=\'addToParent("0", this)\' rel="Корень">Корень</a></div><br/>';
         foreach ($menus as $menu) {
             if ($found_id == $menu->id)
                 $block = 'href="javascript:void(0);"'; else
-                $block = 'onClick=addToParent("' . $menu->id . '","' . $menu->title . '")';
-            $result_menu .= '<div class="parent-menu"><a id="orange-white" ' . $block . '>' . $menu->title . ' : ' . $menu->position . '</a></div>';
+                $block = 'onClick=addToParent("' . $menu->id . '",this)';
+            $result_menu .= '<div class="parent-menu"><a id="orange-white" ' . $block . ' rel="'. $menu->title .'">' . $menu->title . ' : ' . $menu->position . '</a></div>';
             $result_menu .= $this->getChildListForEdit($menu->id, $found_id);
         }
         $result_menu .= '</div>';
@@ -41,8 +41,8 @@ class Model_Menu extends ORM {
             foreach ($child_menu as $cm) {
                 if ($found_id == $cm->id)
                     $block = 'href="javascript:void(0);"'; else
-                    $block = 'onClick=addToParent("' . $cm->id . '","' . $cm->title . '")';
-                $result .= '<div class="third"><span class="size13">&#10154;</span><a id="orange-white" ' . $block . ' >' . $cm->title . ' : ' . $cm->position . '</a></div>';
+                    $block = 'onClick=addToParent("' . $cm->id . '",this)';
+                $result .= '<div class="third"><span class="size13">&#10154;</span><a id="orange-white" ' . $block . ' rel="'. $cm->title .'" >' . $cm->title . ' : ' . $cm->position . '</a></div>';
                 $result .= $this->getChildListThirdForEdit($cm->id, $found_id);
             }
             $result .= '</div>';
@@ -120,14 +120,14 @@ class Model_Menu extends ORM {
     }
 
     function getMainMenuForEdit($found_id) {
-        $result_menu = '<div class="parent-menu"><a id="orange-white" onClick=\'addToParent("0", "Корень")\'>Корень</a></div><br/>';
+        $result_menu = '<div class="parent-menu"><a id="orange-white" onClick=\'addToParent("0", this)\' rel="Корень" >Корень</a></div><br/>';
         $menus = $this->where('parent', '=', '0')->where('type', '=', 'mainmenu')->where('for', '=', 'for_home')->order_by('position', 'asc')->find_all()->as_array();
         $result_menu .= '<h3 style="color:white">Для дома</h3><div class="menu">';            
         foreach ($menus as $menu) {
             if ($found_id == $menu->id)
                 $block = 'href="javascript:void(0);"'; else
-                $block = 'onClick=\'addToParent("' . $menu->id . '" , "' . $menu->title . '")\'';
-            $result_menu .= '<div class="parent-menu"><span class="size13">&#10154;</span><a id="orange-white" ' . $block . '>' . $menu->title . ' : ' . $menu->position . '</a></div>';
+                $block = 'onClick=\'addToParent("' . $menu->id . '" , this)\'';
+            $result_menu .= '<div class="parent-menu"><span class="size13">&#10154;</span><a id="orange-white" ' . $block . ' rel="'. $menu->title .'" >' . $menu->title . ' : ' . $menu->position . '</a></div>';
             $result_menu .= $this->getMainChildListForEdit($menu->id, $found_id);
         }
         $result_menu .= '</div>';
@@ -136,8 +136,8 @@ class Model_Menu extends ORM {
         foreach ($menus as $menu) {
             if ($found_id == $menu->id)
                 $block = 'href="javascript:void(0);"'; else
-                $block = 'onClick=\'addToParent("' . $menu->id . '" , "' . $menu->title . '")\'';
-            $result_menu .= '<div class="parent-menu"><span class="size13">&#10154;</span><a id="orange-white" ' . $block . '>' . $menu->title . ' : ' . $menu->position . '</a></div>';
+                $block = 'onClick=\'addToParent("' . $menu->id . '" , this)\'';
+            $result_menu .= '<div class="parent-menu"><span class="size13">&#10154;</span><a id="orange-white" ' . $block . ' rel="'. $menu->title .'" >' . $menu->title . ' : ' . $menu->position . '</a></div>';
             $result_menu .= $this->getMainChildListForEdit($menu->id, $found_id);
         }
         $result_menu .= '</div>';
@@ -152,8 +152,8 @@ class Model_Menu extends ORM {
             foreach ($child_menu as $cm) {
                 if ($found_id == $cm->id)
                     $block = 'href="javascript:void(0);"'; else
-                    $block = 'onClick=addToParent("' . $cm->id . '","' . $cm->title . '")';
-                $result .= '<div class="third"><span class="size13">&#10154;</span><a id="orange-white" ' . $block . ' >' . $cm->title . ' : ' . $cm->position . '</a></div>';
+                    $block = 'onClick=addToParent("' . $cm->id . '",this)';
+                $result .= '<div class="third"><span class="size13">&#10154;</span><a id="orange-white" ' . $block . '  rel="'. $cm->title .'" >' . $cm->title . ' : ' . $cm->position . '</a></div>';
                 $result .= $this->getMainChildListThirdForEdit($cm->id, $found_id);
             }
             $result .= '</div>';
