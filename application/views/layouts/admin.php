@@ -200,13 +200,20 @@
         </ul>
     </li>
 <?php } ?>
-<?php if ((in_array('admin/blocks/benefits', $allowed)) || (in_array('admin/blocks/wheretoby', $allowed)) || (in_array('admin/blocks/production', $allowed)) || (in_array('admin/blocks/callus', $allowed)) || (in_array('admin/blocks/grade', $allowed)) || (in_array('admin/blocks/addresses', $allowed))) { ?>
+<?php if ((in_array('admin/blocks/benefits', $allowed)) || (in_array('admin/blocks/wheretoby', $allowed))  || (in_array('admin/blocks/trouble', $allowed)) || (in_array('admin/blocks/production', $allowed)) || (in_array('admin/blocks/callus', $allowed)) || (in_array('admin/blocks/grade', $allowed)) || (in_array('admin/blocks/addresses', $allowed))) { ?>
     <li class="dropdown"><a href="#" <?php if (isset($cname)) {
             if (($cname == 'benefits') || ($cname == 'callus') || ($cname == 'gradeblock') || ($cname == 'production') || ($cname == 'addresses')) {
                 echo 'class="active"';
             }
         } ?>><span><img src="/images/admin/icon/mainNav/ui.png"> Блоки</span></a>
         <ul>
+            <?php if (in_array('admin/blocks/trouble', $allowed)) { ?>
+                <li><a href="/admin/blocks/trouble" <?php if (isset($cname)) {
+                        if ($cname == 'trouble') {
+                            echo 'class="active"';
+                        }
+                    } ?>><span></span> Как не ошибиться...</a></li>
+            <?php } ?>
             <?php if (in_array('admin/blocks/benefits', $allowed)) { ?>
                 <li><a href="/admin/blocks/benefits" <?php if (isset($cname)) {
                         if ($cname == 'benefits') {
@@ -572,7 +579,7 @@
 
 
 
-        <?php if (($cname == 'benefits') || ($cname == 'callus') || ($cname == 'gradeblock') || ($cname == 'addresses')) {
+        <?php if (($cname == 'benefits') || ($cname == 'callus') || ($cname == 'gradeblock') || ($cname == 'addresses')|| ($cname == 'trouble')) {
             $echo_title = false;
             ?>
             <h5>Статические страницы ( </h5>
@@ -580,6 +587,11 @@
                 <h5> &nbsp;Преимущества | </h5>
             <?php } else { ?>
                 <h5><a href="/admin/blocks/benefits"> &nbsp;Преимущества</a> | </h5>
+            <?php } ?>
+            <?php if ($cname == 'trouble') { ?>
+                <h5> &nbsp;Как не ошибиться в выборе ванны | </h5>
+            <?php } else { ?>
+                <h5><a href="/admin/blocks/benefits"> &nbsp;Как не ошибиться в выборе ванны</a> | </h5>
             <?php } ?>
             <?php if ($cname == 'callus') { ?>
                 <h5> &nbsp;Позвоните нам | </h5>

@@ -352,7 +352,8 @@ class Controller_Catalog extends Controller_Base
                     exit();
                 }
             }
-            if ($this_category->type_filter == 'shower') {
+            //die(var_dump($this_category->type_filter));
+            if (($this_category->type_filter == 'shower')||($this_category->type_filter == 'accessory')) {
 
                 $this->template->widths = ORM::factory('catalog')->where('category', '=', $this_category->id)->group_by('width')->find_all()->as_array();
                 $this->template->meta_title = $view->this_category->title;

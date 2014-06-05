@@ -51,6 +51,17 @@ class Controller_Admin_Blocks extends Controller_AdminBase {
         $this->display($view);
     }
 
+    public function action_trouble() {
+        $view = new View('scripts/admin/blocks/trouble');
+        $view->success = FrontHelper::successNotif();
+        $view->content = ORM::factory('settings')->getSetting('trouble');
+        $view->error = FrontHelper::errorNotif();
+        $view->addresses = ORM::factory('addresses')->find_all()->as_array();
+        $this->page_title = 'Как не ошибиться выборе ванны';
+        $this->cname = "trouble";
+        $this->display($view);
+    }
+
     public function action_production() {
         $view = new View('scripts/admin/blocks/production');
         $view->success = FrontHelper::successNotif();

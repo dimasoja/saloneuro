@@ -110,18 +110,7 @@
                     <br/>
                 </div>
                 <div class="wheretobuyblock">
-                    <div class="aqua-header">Полезная информация</div>
-                    <div class="promo-block-welcome">
-                        <h2 class="biruz-title width286">КАК НЕ ОШИБИТЬСЯ В ВЫБОРЕ ВАННЫ?</h2>
-                        <br>
-                        <i>Вы когда-нибудь задумывались над тем, что
-                            придется поменять ванну? Если да, то вам не нужно
-                            объяснять, насколько сложно специалисту сделать правильный выбор. Почему?</i><br>
-                        <a href="/news"><br>
-                            <input type="button" class="green floatright enter-partner" value="Подробнее...">
-                        </a>
-                        <br><br><br>
-                    </div>
+                    <?php echo ORM::factory('settings')->getSetting('trouble'); ?>
                 </div>
 
                 <div class="wheretobuyblock">

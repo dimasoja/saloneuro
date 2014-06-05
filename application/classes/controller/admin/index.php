@@ -87,6 +87,12 @@ class Controller_Admin_Index extends Controller_AdminBase
         ORM::factory('settings')->saveSetting('benefits', $_POST['benefits']);
         exit();
     }
+
+    function action_savetrouble() {
+        ORM::factory('settings')->saveSetting('trouble', $_POST['trouble']);
+        exit();
+    }
+
     function action_savegrade() {
         ORM::factory('settings')->saveSetting('grade', $_POST['grade']);
         exit();

@@ -129,6 +129,47 @@
                     }
                 });
             });
+            jQuery('.order-call1').click(function () {
+                jQuery.fancybox.close();
+                jQuery.fancybox(jQuery('.fancy-call').html(), {
+                    //'content': jQuery(".fancy-call").html(),
+                    beforeShow: function () {
+                        jQuery('.fancybox-wrap').addClass('certif-fancybox');
+                        jQuery('.order-button.green.ways-call-submit').click(function () {
+                            var name = jQuery('.fancybox-outer #response-name1').val();
+                            var phone = jQuery('.fancybox-outer #response-phone1').val();
+                            var time_from = jQuery('#time_from').val();
+                            var time_to = jQuery('#time_to').val();
+                            var send = '1';
+                            if (name == '') {
+                                send = 0;
+                                jQuery('.fancybox-outer #response-name1').addClass('error');
+                            }
+                            if (phone == '') {
+                                send = 0;
+                                jQuery('.fancybox-outer #response-phone1').addClass('error');
+                            }
+                            if (time_from == '') {
+                                send = 0;
+                                jQuery('#time_from').addClass('error');
+                            }
+                            if (time_to == '') {
+                                send = 0;
+                                jQuery('#time_to').addClass('error');
+                            }
+                            if (send == '1') {
+                                jQuery.post('/callback/new', {name: name, phone: phone, time_from: time_from, time_to: time_to}, function (response) {
+                                    if (response == 'success') {
+                                        jQuery.fancybox.close();
+                                        jQuery.fancybox('<h3 style="width:315px">Ваш запрос успешно отправлен!</h3>');
+                                        jQuery.fancybox.update();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            });
         });
     </script>
     <script type="text/javascript">

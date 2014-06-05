@@ -23,6 +23,7 @@ class Model_Massage extends ORM {
         $this->clear();
         $this->content = $data['content'];
         $this->name = $data['title'];
+        $this->electronic = $data['electronic'];
         $this->time = time();
         $category = ORM::factory('information', $data['parent_id']);
         return $this->insert_as_first_child($category)->id;

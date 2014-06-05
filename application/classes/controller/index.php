@@ -45,8 +45,8 @@ class Controller_Index extends Controller_Base
         } else {
             $meta = ORM::factory('meta')->where('request', '=', $this->request->param('id'))->find_all()->as_array();
         }
-        if(!isset($this->template->front_name)) {
-            $this->template->front_name = '/'.$id_page;
+        if (!isset($this->template->front_name)) {
+            $this->template->front_name = '/' . $id_page;
         }
 
         if (isset($meta['0'])) {
@@ -259,12 +259,12 @@ class Controller_Index extends Controller_Base
             foreach ($items as $key => $item) {
                 if ($angular != 'true') {
                     if ($item->type == 'angular') {
-                        if($rectangular=='true') {
-                            if(($item->additional_type!='rectangular')&&($item->additional_type2!='rectangular')) {
+                        if ($rectangular == 'true') {
+                            if (($item->additional_type != 'rectangular') && ($item->additional_type2 != 'rectangular')) {
                                 unset($items[$key]);
                             }
-                        } elseif ($increased=='true') {
-                            if(($item->additional_type!='increased')&&($item->additional_type2!='increased')) {
+                        } elseif ($increased == 'true') {
+                            if (($item->additional_type != 'increased') && ($item->additional_type2 != 'increased')) {
                                 unset($items[$key]);
                             }
                         } else {
@@ -274,12 +274,12 @@ class Controller_Index extends Controller_Base
                 }
                 if ($rectangular != 'true') {
                     if ($item->type == 'rectangular') {
-                        if($angular=='true') {
-                            if(($item->additional_type!='angular')&&($item->additional_type2!='angular')) {
+                        if ($angular == 'true') {
+                            if (($item->additional_type != 'angular') && ($item->additional_type2 != 'angular')) {
                                 unset($items[$key]);
                             }
-                        } elseif ($increased=='true') {
-                            if(($item->additional_type!='increased')&&($item->additional_type2!='increased')) {
+                        } elseif ($increased == 'true') {
+                            if (($item->additional_type != 'increased') && ($item->additional_type2 != 'increased')) {
                                 unset($items[$key]);
                             }
                         } else {
@@ -289,12 +289,12 @@ class Controller_Index extends Controller_Base
                 }
                 if ($increased != 'true') {
                     if ($item->type == 'increased') {
-                        if($angular=='true') {
-                            if(($item->additional_type!='angular')&&($item->additional_type2!='angular')) {
+                        if ($angular == 'true') {
+                            if (($item->additional_type != 'angular') && ($item->additional_type2 != 'angular')) {
                                 unset($items[$key]);
                             }
-                        } elseif ($rectangular=='true') {
-                            if(($item->additional_type!='rectangular')&&($item->additional_type2!='rectangular')) {
+                        } elseif ($rectangular == 'true') {
+                            if (($item->additional_type != 'rectangular') && ($item->additional_type2 != 'rectangular')) {
                                 unset($items[$key]);
                             }
                         } else {
@@ -415,25 +415,50 @@ class Controller_Index extends Controller_Base
         $order_pre = (array)$order_pre['massages'];
         $order_pre = (array)$order_pre;
         $order = array();
-        foreach($order_pre as $key=>$item) {
+        foreach ($order_pre as $key => $item) {
             $order[$key] = $item;
         }
+        $is_electronic = false;
+        foreach ($order as $key => $item) {
+            $massage_check = ORM::factory('massage')->where('id', '=', $key)->find();
+            if (isset($massage_check->electronic)) {
+                if ($massage_check->electronic == 'on') {
+                    $is_electronic = true;
+                }
+            }
+        }
+
         $massages_images = array();
         $massage = ORM::factory('options')->where('id_product', '=', $post['id'])->where('type', '=', 'massage')->find_all()->as_array();
         foreach ($massage as $mas) {
             $massage_image = json_decode($mas->value, true);
-            if (isset($massage_image[1])) {
-                $id_image = $massage_image[0];
-                $key = $massage_image[1];
-                $massage_im = ORM::factory('images')->where('id_image', '=', $id_image)->find();
-                if (isset($massage_im)) {
-                    if (isset($order[$key])) {
-                        $massages_images[$key] = '.'.$massage_im->path;
+
+            if ($is_electronic) {
+                if (isset($massage_image[7])) {
+                    $id_image = $massage_image[7];
+                    $key = $massage_image[1];
+                    $massage_im = ORM::factory('images')->where('id_image', '=', $id_image)->find();
+                    if (isset($massage_im)) {
+                        if (isset($order[$key])) {
+                            $massages_images[$key] = '.' . $massage_im->path;
+                        }
+                    }
+                }
+            } else {
+                if (isset($massage_image[1])) {
+                    $id_image = $massage_image[0];
+                    $key = $massage_image[1];
+                    $massage_im = ORM::factory('images')->where('id_image', '=', $id_image)->find();
+                    if (isset($massage_im)) {
+                        if (isset($order[$key])) {
+                            $massages_images[$key] = '.' . $massage_im->path;
+                        }
                     }
                 }
             }
         }
-        $image = '.'.$post['image'];
+
+        $image = '.' . $post['image'];
         //$desting = ImageWork::createImage($image);
         //imagepng($desting, './uploads/1235.png');
         $dest = ImageWork::createImage($image);
@@ -442,43 +467,44 @@ class Controller_Index extends Controller_Base
         $x1 = imagesx($dest);
         $y1 = imagesy($dest);
         $slate = imagecreatetruecolor($x1, $y1);
-        $transparent = imagecolorallocatealpha($slate,0,255,0,127);
-        imagefill($slate,0,0,$transparent);
-        imagecopy($slate, $dest, 0, 0, 0, 0, imagesx($dest)-1, imagesy($dest)-1);
-        foreach($massages_images as $mi) {
+        $transparent = imagecolorallocatealpha($slate, 0, 255, 0, 127);
+        imagefill($slate, 0, 0, $transparent);
+        imagecopy($slate, $dest, 0, 0, 0, 0, imagesx($dest) - 1, imagesy($dest) - 1);
+        foreach ($massages_images as $mi) {
+
             $src = ImageWork::createImage($mi);
             imageAlphaBlending($src, false);
             imageSaveAlpha($src, true);
             $x2 = imagesx($src);
             $y2 = imagesy($src);
-            imagecopy($slate, $src, 0, 0, 0, 0, imagesx($src)-1, imagesy($src)-1);
+            imagecopy($slate, $src, 0, 0, 0, 0, imagesx($src) - 1, imagesy($src) - 1);
         }
         imageAlphaBlending($slate, false);
         imageSaveAlpha($slate, true);
-        $fn = '/uploads/withopt'.time().'.png';
-        imagepng($slate, '.'.$fn);
+        $fn = '/uploads/withopt' . time() . '.png';
+        imagepng($slate, '.' . $fn);
         $response = array();
         $response['0'] = $fn;
-            //
+        //
         $response['1'] = FrontHelper::outputRender($fn, 60, 60, 60, 60);
         $response['2'] = FrontHelper::outputRender($fn, 420, 400, 420, 400);
         echo json_encode($response);
         die();
         //$this->auto_render = false;
         //$this->is_ajax = TRUE;
-//        header('content-type: application/json');
-//        $this->response->headers('Content-Type','application/json');
-//        $this->response->body(json_encode($response));
+        //        header('content-type: application/json');
+        //        $this->response->headers('Content-Type','application/json');
+        //        $this->response->body(json_encode($response));
         //$this->request->headers['Content-Type'] = 'application/json';
         //$this->request->response = json_encode($response);
         //
-//
-//        //header('Content-Type: image/png');
-//
-//        $image = './uploads/123.png';
-//        imagepng($dest, './uploads/123.png');
-//        echo 'asdf';
-//        die();
+        //
+        //        //header('Content-Type: image/png');
+        //
+        //        $image = './uploads/123.png';
+        //        imagepng($dest, './uploads/123.png');
+        //        echo 'asdf';
+        //        die();
     }
 
 }

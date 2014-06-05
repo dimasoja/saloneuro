@@ -38,6 +38,15 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <label class="field-name" for="standard">Электронное управление?:</label>
+                                <div class="field" style="text-align:left;">
+                                     <select class="uniform electronic" name="electronic">
+                                         <option value="off">Нет</option>
+                                         <option value="on">Да</option>
+                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <label class="field-name" for="standard">Цена:</label>
                                 <div class="field">
                                     <input type="text" class="input-large name-edit" name="price" style="float: left;width: 100%;">

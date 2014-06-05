@@ -231,6 +231,7 @@ abstract class Kohana_Auth
             'Блоки -> Преимущества' => 'admin/blocks/benefits',
 //            'Блоки -> Где купить' => 'admin/blocks/wheretoby',
             'Блоки -> Позвоните нам' => 'admin/blocks/callus',
+            'Блоки -> Как не ошибиться в выборе ванны' => 'admin/blocks/trouble_choose',
             'Блоки -> Скомплектовать ванну' => 'admin/blocks/grade',
             'Блоки -> Адреса' => 'admin/addresses',
             'Блоки -> Продукция Thermolux' => 'admin/blocks/production',

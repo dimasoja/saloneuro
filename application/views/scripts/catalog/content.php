@@ -10,17 +10,19 @@
             <ul>
                 <li><a href="<?php echo $mainimage; ?>" class="carouselfancy "
                        rel="groupfancy"><?php echo FrontHelper::output($mainimage, 420, 400, 420, 400); ?></a>
+                <li><a href="<?php echo $baseemptyimage; ?>" class="carouselfancy"
+                       rel="groupfancy"><?php echo FrontHelper::output($baseemptyimage, 420, 400, 420, 400); ?></a></li>
                 <li><a href="" class="carouselfancy maincarousel"
-                       rel="groupfancy"></a>
-                    <?php foreach ($related_images as $rimage) { ?>
+                       rel="groupfancy"></a></li>
+                <?php foreach ($related_images as $rimage) { ?>
                     <?php if ($baseimageid != $rimage->id_image) { ?>
-                    <?php if ($page->featured != $rimage->id_image) { ?>
-                    <input type="hidden" class="mainimage" value="<?php echo $rimage->path; ?>"/>
-                <li><a href="<?php echo $rimage->path; ?>" class="carouselfancy"
-                       rel="groupfancy"><?php echo FrontHelper::output($rimage->path, 420, 400, 420, 400); ?></a>
-                </li>
-                <?php } ?>
-                <?php } ?>
+                        <?php if ($page->featured != $rimage->id_image) { ?>
+                            <input type="hidden" class="mainimage" value="<?php echo $rimage->path; ?>"/>
+                            <li><a href="<?php echo $rimage->path; ?>" class="carouselfancy"
+                                   rel="groupfancy"><?php echo FrontHelper::output($rimage->path, 420, 400, 420, 400); ?></a>
+                            </li>
+                        <?php } ?>
+                    <?php } ?>
                 <?php } ?>
             </ul>
         </div>
@@ -38,6 +40,7 @@
         <div class="carousel carousel-navigation">
             <ul>
                 <li class=""><?php echo FrontHelper::outputRender($mainimage, 50, 50, 50, 50); ?></li>
+                <li class=""><?php echo FrontHelper::outputRender($baseemptyimage, 50, 50, 50, 50); ?></li>
                 <li class="maincarouselsmall"></li>
                 <?php //$options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $page->id)->find_all()->as_array(); ?>
                 <?php //if (count($options) > 0) { ?>
@@ -413,7 +416,7 @@
                     $massage = ORM::factory('massage')->where('id', '=', $option['option_id'])->find();
                     $image = ORM::factory('images')->where('id_image', '=', $option['image'])->find();
                     ?>
-                    <div class="grade-item">
+                    <div class="grade-item <?php if($massage->electronic=='on') echo 'electronic'; ?>">
                         <div class="grade-first-col">
                             <div class="massage-image" data-image="<?php echo $image->path; ?>">
                                 <img src="<?php echo $massage->image; ?>"/>
@@ -434,7 +437,7 @@
                             </div>
                         </div>
                         <div class="grade-second-col">
-                            <div class="massage-price padding415">
+                            <div class="massage-price padding415" <?php if($massage->electronic=='on') echo 'electronic'; ?>">
                             <span class="massage-price-value"
                                   rel="<?php echo $option['price']; ?>"><?php echo number_format((double)$option['price'], 0, ' ', ' '); ?></span>
                                 руб.
@@ -541,7 +544,8 @@
 
                                     <div class="related-product">
                                         <div class="product-name">
-                                            <?php echo $related_product->name; ?>
+                                            <a target="_blank" href="/catalog/<?php echo strtolower(FrontHelper::transliterate($category_product->name)) . '/'; ?><?php echo strtolower(FrontHelper::transliterate($related_product->name)); ?>"><?php echo $related_product->name; ?></a>
+                                            <?php //echo $related_product->name; ?>
                                         </div>
                                         <div class="related-product-image">
                                             <?php if (file_exists('.' . $image->path)) { ?>
@@ -747,7 +751,9 @@ $(document).ready(function () {
             jQuery(this).html(' Посмотреть заказ');
         }
     });
-    jQuery('.carouselfancy').fancybox();
+    jQuery('.carouselfancy').fancybox({'beforeShow':function() {
+        jQuery('.fancybox-wrap').addClass('certif-fancybox');
+    }});
     jQuery('.order-image').fancybox();
     var order = {};
 
@@ -815,33 +821,7 @@ $(document).ready(function () {
             });
         }
     });
-//    jQuery('.add-grade').not('.required').click(function (e) {
-//        var priceproduct = jQuery('.global-price')
-//        var globalprice = priceproduct.attr('data-value');
-//        var e = jQuery(this);
-//        var name = jQuery.trim(e.parents('.grade-item').find('.grade-name').html());
-//        var grade = e.attr('data-grade');
-//        var image = jQuery('[data-grade=' + grade + ']').parents('.grade-item').find('.grade-image').html();
-//        var price = e.attr('data-price');
-//        var hasActive = e.parent().hasClass('active');
-//        if (hasActive) {
-//            e.parent().removeClass('active');
-//            e.html('Добавить комплектацию');
-//            delete order['grades'][grade];
-//            jQuery('.order-grade[data-id=' + grade + ']').remove();
-//            globalprice = parseInt(globalprice) - parseInt(price);
-//        } else {
-//            e.parent().addClass('active');
-//            e.html('Убрать комплектацию');
-//            order['grades'][grade] = price;
-//            jQuery('.order .grade-details').append("<span class='order-grade floatleft' data-id='" + grade + "'><span class='pl'>" + image + "</span>" + name + "</span>");
-//            globalprice = parseInt(globalprice) + parseInt(price);
-//        }
-//        order_place.buttonSwitch(order);
-//        order_place.switchHeaders(order);
-//        priceproduct.html(number_format(globalprice, 0, ' ', ' ') + ' руб.');
-//        priceproduct.attr('data-value', globalprice);
-//    });
+
     jQuery('.product-related-add').click(function () {
         var priceproduct = jQuery('.global-price')
         var globalprice = priceproduct.attr('data-value');
@@ -924,9 +904,6 @@ $(document).ready(function () {
         var className = e.target.className;
 
         if ((className !=='add-grade')&&(className!=='grade-price-value')&&(className!=='grade-price padding415 active')) {
-            console.log('tut');
-
-
             var priceproduct = jQuery('.global-price')
             var globalprice = priceproduct.attr('data-value');
             var e = jQuery(this).find('.add-grade');
@@ -1002,6 +979,7 @@ $(document).ready(function () {
     });
     jQuery('.massage-container .grade-item, .massage-container .massage-price').click(function () {
         var mainimage = jQuery('.baseimage').val();
+        var isElectronic = jQuery(this).hasClass('electronic');
         var product_id = jQuery('.product-id').val();
         var priceproduct = jQuery('.global-price')
         var globalprice = priceproduct.attr('data-value');
@@ -1038,13 +1016,11 @@ $(document).ready(function () {
             e.html('Добавить опцию');
             if (jQuery(this).hasClass('gidromassage') == true) {
                 if (jQuery('.gidro .gidrooption .grade-price').hasClass('active')) {
-                    //console.log(jQuery('.gidro .gidrooption .grade-price.active').length);
                     jQuery('.gidro .gidrooption .grade-price.active').each(function (index) {
                         var elem = jQuery(this).find('.add-massage');
                         var elemmassage = elem.attr('data-massage');
                         var elemprice = elem.attr('data-price');
                         jQuery('.order-massage[data-id=' + elemmassage + ']').remove();
-
                         delete order['massages'][elemmassage];
                         globalprice = parseInt(globalprice) - parseInt(elemprice);
                         priceproduct.html(number_format(globalprice, 0, ' ', ' ') + ' руб.');
@@ -1071,7 +1047,7 @@ $(document).ready(function () {
 
             var check = jQuery('.changed-image-big').length;
             if (check == 1) {
-                jQuery.post('/index/generateimages', {image: image}, function (response) {
+                jQuery.post('/index/generateimages', {image: image, electronic: isElectronic}, function (response) {
                     var images = JSON.parse(response);
                     if (images['small'].length) {
                         carousel_small.children('.changed-image-small').html('');
@@ -1085,7 +1061,7 @@ $(document).ready(function () {
                     jcarouselreload();
                 });
             } else {
-                jQuery.post('/index/generateimagesli', {image: image}, function (response) {
+                jQuery.post('/index/generateimagesli', {image: image, electronic: isElectronic}, function (response) {
                     var images = JSON.parse(response);
                     if (images['small'].length) {
                         carousel_small.append(images['small']);
@@ -1103,7 +1079,7 @@ $(document).ready(function () {
         priceproduct.attr('data-value', globalprice);
 
         var resp_order = JSON.stringify(order);
-        jQuery.post('/index/generatesimages', {id: product_id, image: mainimage, order: resp_order}, function (response) {
+        jQuery.post('/index/generatesimages', {id: product_id, image: mainimage, order: resp_order, electronic: isElectronic}, function (response) {
 
             var images = jQuery.parseJSON(response);
 
@@ -1125,7 +1101,7 @@ $(document).ready(function () {
         });
     });
     jQuery('.gidro .grade-item').click(function () {
-        alert('2');
+
         if (!jQuery('.gidromassage .grade-price').hasClass('active')) {
             jQuery(this).addClass('active');
             var priceproduct = jQuery('.global-price');

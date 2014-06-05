@@ -28,6 +28,15 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <label class="field-name" for="standard">Электронное управление?:</label>
+                                <div class="field " style="text-align:left;">
+                                    <select class="uniform electronic" name="electronic">
+                                        <option value="off" <?php if($massage->electronic=='off') echo 'selected'; ?>>Нет</option>
+                                        <option value="on" <?php if($massage->electronic=='on') echo 'selected'; ?>>Да</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <label class="field-name" for="standard">Цена:</label>
 
                                 <div class="field">

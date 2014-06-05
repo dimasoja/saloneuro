@@ -394,7 +394,7 @@
                                 <?php $image = ORM::factory('images')->where('id_image', '=', $id_image)->find(); ?>
                                 <div
                                     class="sws_img_block imagerel<?php echo $id_image; ?>" <?php if (count($massage_image) == 8) {
-                                    echo 'style="height:504px"';
+                                    echo 'style="height:504px !important;"';
                                 } ?>>
                                     <div class="img_block" <?php if (count($massage_image) == 8) {
                                         echo 'style="height:272px"';
