@@ -314,6 +314,190 @@ class Controller_Index extends Controller_Base
         die();
     }
 
+
+    public function action_getsizesshowerlength() {
+
+        $post = Safely::safelyGet($_POST);
+        $width = (int)$post['value'];
+        $angular = '';
+        $semicircular = '';
+        $pentagon = '';
+        $rectangular = '';
+
+        $where_angular = 'check';
+        $where_semicircular = 'check';
+        $where_rectangular = 'check';
+        $where_pentagon = 'check';
+
+        $angular_value = '';
+        $semicircular_value = '';
+        $rectangular_value = '';
+        $pentagon_value = '';
+
+        if (isset($post['angular'])) {
+            $angular = $post['angular'];
+        }
+        if (isset($post['semicircular'])) {
+            $semicircular = $post['semicircular'];
+        }
+        if (isset($post['rectangular'])) {
+            $rectangular = $post['rectangular'];
+        }
+        if (isset($post['pentagon'])) {
+            $pentagon = $post['pentagon'];
+        }
+        if ($angular == 'true') {
+            $where_angular = 'type';
+            $angular_value = 'angular';
+        }
+        if ($semicircular == 'true') {
+            $where_semicircular = 'type';
+            $semicircular_value = 'semicircular';
+        }
+        if ($rectangular == 'true') {
+            $where_rectangular = 'type';
+            $rectangular_value = 'rectangular';
+        }
+        if ($pentagon == 'true') {
+            $where_pentagon = 'type';
+            $pentagon_value = 'pentagon';
+        }
+        $categories = ORM::factory('productscat')->where('type_filter','=','shower')->group_by('id')->find_all()->as_array();
+
+        $ids = array();
+        foreach($categories as $category) {
+            $ids[] .= $category->id.',';
+        }
+
+        $items = ORM::factory('catalog')->where('width', '=', $width)->where('category','in',$ids)->group_by('length')->find_all()->as_array();
+
+        if (($angular == 'true') || ($semicircular == 'true') || ($rectangular == 'true') || ($pentagon == 'true')) {
+            foreach ($items as $key => $item) {
+                if ($angular != 'true') {
+                    if ($item->type == 'angular') {
+                        unset($items[$key]);
+                    }
+                }
+                if ($semicircular != 'true') {
+                    if ($item->type == 'semicircular') {
+                        unset($items[$key]);
+                    }
+                }
+                if ($rectangular != 'true') {
+                    if ($item->type == 'rectangular') {
+                        unset($items[$key]);
+                    }
+                }
+                if ($pentagon != 'true') {
+                    if ($item->type == 'pentagon') {
+                        unset($items[$key]);
+                    }
+                }
+            }
+        }
+        $h_array = array();
+        $i = 0;
+        foreach ($items as $height) {
+            $h_array[$i] = $height->length;
+            $i++;
+        }
+        echo json_encode($h_array);
+        die();
+    }
+
+    public function action_getsizesshowerheight() {
+
+        $post = Safely::safelyGet($_POST);
+        $width = (int)$post['width'];
+        $length = (int)$post['value'];
+        $angular = '';
+        $semicircular = '';
+        $pentagon = '';
+        $rectangular = '';
+
+        $where_angular = 'check';
+        $where_semicircular = 'check';
+        $where_rectangular = 'check';
+        $where_pentagon = 'check';
+
+        $angular_value = '';
+        $semicircular_value = '';
+        $rectangular_value = '';
+        $pentagon_value = '';
+
+        if (isset($post['angular'])) {
+            $angular = $post['angular'];
+        }
+        if (isset($post['semicircular'])) {
+            $semicircular = $post['semicircular'];
+        }
+        if (isset($post['rectangular'])) {
+            $rectangular = $post['rectangular'];
+        }
+        if (isset($post['pentagon'])) {
+            $pentagon = $post['pentagon'];
+        }
+        if ($angular == 'true') {
+            $where_angular = 'type';
+            $angular_value = 'angular';
+        }
+        if ($semicircular == 'true') {
+            $where_semicircular = 'type';
+            $semicircular_value = 'semicircular';
+        }
+        if ($rectangular == 'true') {
+            $where_rectangular = 'type';
+            $rectangular_value = 'rectangular';
+        }
+        if ($pentagon == 'true') {
+            $where_pentagon = 'type';
+            $pentagon_value = 'pentagon';
+        }
+
+        $categories = ORM::factory('productscat')->where('type_filter','=','shower')->group_by('id')->find_all()->as_array();
+
+        $ids = array();
+        foreach($categories as $category) {
+            $ids[] .= $category->id.',';
+        }
+
+        $items = ORM::factory('catalog')->where('width', '=', $width)->where('length', '=', $length)->where('category','in',$ids)->group_by('height')->find_all()->as_array();
+
+        if (($angular == 'true') || ($semicircular == 'true') || ($rectangular == 'true') || ($pentagon == 'true')) {
+            foreach ($items as $key => $item) {
+                if ($angular != 'true') {
+                    if ($item->type == 'angular') {
+                        unset($items[$key]);
+                    }
+                }
+                if ($semicircular != 'true') {
+                    if ($item->type == 'semicircular') {
+                        unset($items[$key]);
+                    }
+                }
+                if ($rectangular != 'true') {
+                    if ($item->type == 'rectangular') {
+                        unset($items[$key]);
+                    }
+                }
+                if ($pentagon != 'true') {
+                    if ($item->type == 'pentagon') {
+                        unset($items[$key]);
+                    }
+                }
+            }
+        }
+        $h_array = array();
+        $i = 0;
+        foreach ($items as $height) {
+            $h_array[$i] = $height->height;
+            $i++;
+        }
+        echo json_encode($h_array);
+        die();
+    }
+
+
     public function action_getwidths() {
         $post = Safely::safelyGet($_POST);
         if ($post['angular'] == 'true') {
@@ -342,6 +526,54 @@ class Controller_Index extends Controller_Base
         $h23 = ORM::factory('catalog')->where('additional_type2', '=', $rectangular)->group_by('width')->find_all()->as_array();
         $h33 = ORM::factory('catalog')->where('additional_type2', '=', $increased)->group_by('width')->find_all()->as_array();
         $heights = array_merge($h11, $h21, $h31, $h12, $h22, $h32, $h13, $h23, $h33);
+        $h_array = array();
+        $i = 0;
+        foreach ($heights as $height) {
+            $h_array[$i] = $height->width;
+            $i++;
+        }
+        $h_array = array_unique($h_array);
+        $h_array = array_filter($h_array);
+        echo json_encode($h_array);
+        die();
+    }
+
+    public function action_getwidthsshower() {
+        $post = Safely::safelyGet($_POST);
+        if ($post['angular'] == 'true') {
+            $angular = 'angular';
+        } else {
+            $angular = 'none';
+        }
+        if ($post['semicircular'] == 'true') {
+            $semicircular = 'semicircular';
+        } else {
+            $semicircular = 'none';
+        }
+        if ($post['rectangular'] == 'true') {
+            $rectangular = 'rectangular';
+        } else {
+            $rectangular = 'none';
+        }
+        if ($post['pentagon'] == 'true') {
+            $pentagon = 'pentagon';
+        } else {
+            $pentagon = 'none';
+        }
+        $categories = ORM::factory('productscat')->where('type_filter','=','shower')->group_by('id')->find_all()->as_array();
+
+        $ids = array();
+        foreach($categories as $category) {
+            $ids[] .= $category->id.',';
+        }
+        $h11 = ORM::factory('catalog')->where('form', '=', $angular)->where('category','IN',$ids)->group_by('width')->find_all()->as_array();
+        $h21 = ORM::factory('catalog')->where('form', '=', $semicircular)->where('category','IN',$ids)->group_by('width')->find_all()->as_array();
+        $h31 = ORM::factory('catalog')->where('form', '=', $rectangular)->where('category','IN',$ids)->group_by('width')->find_all()->as_array();
+        $h41 = ORM::factory('catalog')->where('form', '=', $pentagon)->where('category','IN',$ids)->group_by('width')->find_all()->as_array();
+        $heights = array_merge($h11, $h21, $h31, $h41);
+        if(($angular=='none')&&($semicircular=='none')&&($rectangular=='none')&&($pentagon=='none')) {
+            $heights = ORM::factory('catalog')->where('category','IN',$ids)->group_by('width')->find_all()->as_array();
+        }
         $h_array = array();
         $i = 0;
         foreach ($heights as $height) {

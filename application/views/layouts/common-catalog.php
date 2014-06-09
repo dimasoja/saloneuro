@@ -140,23 +140,23 @@ function transliterate($string) {
                                 } ?>> Угловая
                             </label>
                         </div>
-                        <div class="checkbox" rel="rectangular">
+                        <div class="checkbox" rel="semicircular">
                             <label style="text-align:left;">
-                                <input type="checkbox" class="rectangular" <?php if ($semicircular == 'on') {
+                                <input type="checkbox" class="semicircular" <?php if ($semicircular == 'on') {
                                     echo 'checked';
                                 } ?>> Полукруглая
                             </label>
                         </div>
-                        <div class="checkbox" rel="increased">
+                        <div class="checkbox" rel="rectangular">
                             <label style="text-align:left;">
-                                <input type="checkbox" class="increased " <?php if ($rectangular == 'on') {
+                                <input type="checkbox" class="rectangular " <?php if ($rectangular == 'on') {
                                     echo 'checked';
                                 } ?>> Прямоугольная
                             </label>
                         </div>
-                        <div class="checkbox" rel="increased">
+                        <div class="checkbox" rel="pentagon">
                             <label style="text-align:left;">
-                                <input type="checkbox" class="increased " <?php if ($rectangular == 'on') {
+                                <input type="checkbox" class="pentagon " <?php if ($pentagon == 'on') {
                                     echo 'checked';
                                 } ?>> Угловая пятиугольная
                             </label>
@@ -185,7 +185,7 @@ function transliterate($string) {
                                 Ширина
                                 <label style="text-align:left;">
 
-                                    <select class="height">
+                                    <select class="length">
                                         <option value=""></option>
                                         <?php if ($width != '') { ?>
                                             <?php foreach ($heights as $height_this) { ?>
@@ -202,7 +202,7 @@ function transliterate($string) {
                                 Высота
                                 <label style="text-align:left;">
 
-                                    <select class="high">
+                                    <select class="height">
                                         <option value=""></option>
                                         <?php if ($width != '') { ?>
                                             <?php foreach ($heights as $height_this) { ?>
@@ -216,6 +216,49 @@ function transliterate($string) {
                                 </label>
                             </div>
                         </div>
+                        <br/>
+                        <input type="button" class="green accept-filter" value="Применить"
+                               style="margin-bottom:10px;"><br/>
+                    </div>
+                <?php } ?>
+                <?php if ($this_category->type_filter == 'accessory') { ?>
+                    <div class="wheretobuyblock filter-shower">
+                        <div class="aqua-header">Фильтр раздела</div>
+                        <hr/>
+
+                        <div class="green-head">Тип</div>
+                        <br/>
+
+                        <div class="checkbox" rel="blinds">
+                            <label style="text-align:left;">
+                                <input type="checkbox" class="blinds" <?php if ($blinds == 'on') {
+                                    echo 'checked';
+                                } ?>> Шторки для ванн
+                            </label>
+                        </div>
+                        <div class="checkbox" rel="mixer">
+                            <label style="text-align:left;">
+                                <input type="checkbox" class="mixer" <?php if ($mixer == 'on') {
+                                    echo 'checked';
+                                } ?>> Смесители врезные в ванны
+                            </label>
+                        </div>
+                        <div class="checkbox" rel="sink">
+                            <label style="text-align:left;">
+                                <input type="checkbox" class="sink " <?php if ($sink == 'on') {
+                                    echo 'checked';
+                                } ?>> Слив переливы для ванн
+                            </label>
+                        </div>
+                        <div class="checkbox" rel="accessory">
+                            <label style="text-align:left;">
+                                <input type="checkbox" class="accessory " <?php if ($accessory == 'on') {
+                                    echo 'checked';
+                                } ?>> Аксессуары в ванную комнату
+                            </label>
+                        </div>
+                        <br/>
+
                         <br/>
                         <input type="button" class="green accept-filter" value="Применить"
                                style="margin-bottom:10px;"><br/>
@@ -383,6 +426,7 @@ jQuery(document).ready(function () {
         jQuery('.cat-info .address .right-cat').remove();
         jQuery(this).find('span').after('<span class="right-cat" style="float:right">      ></span>');
     });
+    <?php if ($this_category->type_filter == 'bath') { ?>
     jQuery('.accept-filter').click(function () {
         var angular = jQuery('.angular').prop('checked');
         var rectangular = jQuery('.rectangular').prop('checked');
@@ -440,6 +484,141 @@ jQuery(document).ready(function () {
 
         });
     });
+    <?php } ?>
+
+    <?php if ($this_category->type_filter == 'shower') { ?>
+    jQuery('.accept-filter').click(function () {
+        var angular = jQuery('.angular').prop('checked');
+        var semicircular = jQuery('.semicircular').prop('checked');
+        var rectangular = jQuery('.rectangular').prop('checked');
+        var pentagon = jQuery('.pentagon').prop('checked');
+        var width = jQuery('.width option:selected').val();
+        var length = jQuery('.length option:selected').val();
+        var height = jQuery('.height option:selected').val();
+        var resp = [];
+        if (angular) {
+            resp.push('angular=on');
+        }
+        if (semicircular) {
+            resp.push('semicircular=on');
+        }
+        if (rectangular) {
+            resp.push('rectangular=on');
+        }
+        if (pentagon) {
+            resp.push('pentagon=on');
+        }
+        if ((height != undefined) && (height != '')) {
+            resp.push('height=' + height);
+        }
+        if ((length != undefined) && (length != '')) {
+            resp.push('length=' + length);
+        }
+        if ((width != undefined) && (width != '')) {
+            resp.push('width=' + width);
+        }
+        var query = resp.join('&');
+        <?php if($currents_url_type=='?') { ?>
+        window.location = '/<?php echo $currents_url; ?>?<?php echo $order_by; ?>' + query;
+        <?php } else { ?>
+        window.location = '/<?php echo $currents_url; ?>&<?php echo $order_by; ?>' + query;
+        <?php } ?>
+
+    });
+    jQuery('.width').change(function () {
+        var angular = jQuery('.angular').prop('checked');
+        var semicircular = jQuery('.semicircular').prop('checked');
+        var rectangular = jQuery('.rectangular').prop('checked');
+        var pentagon = jQuery('.pentagon').prop('checked');
+        var value = jQuery(this).val();
+        jQuery.post('/index/getsizesshowerlength', {value: value, angular: angular, semicircular: semicircular, rectangular: rectangular, pentagon: pentagon}, function (response) {
+            var lengths = jQuery.parseJSON(response);
+            jQuery('.length').html('<option value=""></option>');
+            jQuery('.height').html('<option value=""></option>');
+            jQuery.each(lengths, function (index, key) {
+                jQuery('.length').append('<option value="' + key + '">' + key + '</option>');
+            });
+
+        });
+    });
+    jQuery('.length').change(function () {
+        var angular = jQuery('.angular').prop('checked');
+        var semicircular = jQuery('.semicircular').prop('checked');
+        var rectangular = jQuery('.rectangular').prop('checked');
+        var pentagon = jQuery('.pentagon').prop('checked');
+        var value = jQuery(this).val();
+        var width = jQuery('.width').val();
+        jQuery.post('/index/getsizesshowerheight', {value: value, width: width, angular: angular, semicircular: semicircular, rectangular: rectangular, pentagon: pentagon}, function (response) {
+            var heights = jQuery.parseJSON(response);
+            jQuery('.height').html('<option value=""></option>');
+            jQuery.each(heights, function (index, key) {
+                jQuery('.height').append('<option value="' + key + '">' + key + '</option>');
+            });
+
+        });
+    });
+    jQuery('.wheretobuyblock input[type=checkbox]').change(function () {
+        var angular = jQuery('.angular').prop('checked');
+        var semicircular = jQuery('.semicircular').prop('checked');
+        var rectangular = jQuery('.rectangular').prop('checked');
+        var pentagon = jQuery('.pentagon').prop('checked');
+        jQuery.post('/index/getwidthsshower', {angular: angular, semicircular:semicircular, rectangular: rectangular, pentagon: pentagon}, function (response) {
+            console.log(response);
+            var widths = jQuery.parseJSON(response);
+            jQuery('.width').html('<option value=""></option>');
+            jQuery('.length').html('<option value=""></option>');
+            jQuery('.height').html('<option value=""></option>');
+            jQuery.each(widths, function (index, key) {
+                jQuery('.width').append('<option value="' + key + '">' + key + '</option>');
+            });
+
+        });
+    });
+    <?php } ?>
+
+    <?php if ($this_category->type_filter == 'accessory') { ?>
+    jQuery('.accept-filter').click(function () {
+        var blinds = jQuery('.blinds').prop('checked');
+        var sink = jQuery('.sink').prop('checked');
+        var mixer = jQuery('.mixer').prop('checked');
+        var accessory = jQuery('.accessory').prop('checked');
+        var width = jQuery('.width option:selected').val();
+        var length = jQuery('.length option:selected').val();
+        var height = jQuery('.height option:selected').val();
+        var resp = [];
+        if (blinds) {
+            resp.push('blinds=on');
+        }
+        if (sink) {
+            resp.push('sink=on');
+        }
+        if (mixer) {
+            resp.push('mixer=on');
+        }
+        if (accessory) {
+            resp.push('accessory=on');
+        }
+        if ((height != undefined) && (height != '')) {
+            resp.push('height=' + height);
+        }
+        if ((length != undefined) && (length != '')) {
+            resp.push('length=' + length);
+        }
+        if ((width != undefined) && (width != '')) {
+            resp.push('width=' + width);
+        }
+        var query = resp.join('&');
+        <?php if($currents_url_type=='?') { ?>
+        window.location = '/<?php echo $currents_url; ?>?<?php echo $order_by; ?>' + query;
+        <?php } else { ?>
+        window.location = '/<?php echo $currents_url; ?>&<?php echo $order_by; ?>' + query;
+        <?php } ?>
+
+    });
+
+    <?php } ?>
+
+
     jQuery(".fancybox").fancybox({
         'beforeShow': function () {
             var city = jQuery('.geocity').html();

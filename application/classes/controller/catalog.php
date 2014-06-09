@@ -46,12 +46,17 @@ class Controller_Catalog extends Controller_Base
         $get = Safely::safelyGet($_GET);
         $order_by = '';
         $angular = '';
+        $blinds = '';
+        $mixer = '';
+        $sink = '';
+        $accessory = '';
         $semicircular = '';
         $pentagon = '';
         $rectangular = '';
         $increased = '';
         $width = '';
         $height = '';
+        $length = '';
         $high = '';
 
         if (isset($get['order_by'])) {
@@ -74,6 +79,19 @@ class Controller_Catalog extends Controller_Base
         if (isset($get['increased'])) {
             $increased = $get['increased'];
         }
+        if (isset($get['blinds'])) {
+            $blinds = $get['blinds'];
+        }
+        if (isset($get['mixer'])) {
+            $mixer = $get['mixer'];
+        }
+        if (isset($get['sink'])) {
+            $sink = $get['sink'];
+        }
+        if (isset($get['accessory'])) {
+            $accessory = $get['accessory'];
+        }
+
         if (isset($get['width'])) {
             $width = $get['width'];
         }
@@ -87,6 +105,10 @@ class Controller_Catalog extends Controller_Base
         $view->order_by = $order_by;
         $this->template->order_by = 'order_by=' . $order_by . '&';
         $this->template->angular = $angular;
+        $this->template->blinds = $blinds;
+        $this->template->sink = $sink;
+        $this->template->mixer = $mixer;
+        $this->template->accessory = $accessory;
         $this->template->semicircular = $semicircular;
         $this->template->pentagon = $pentagon;
         $this->template->rectangular = $rectangular;
@@ -353,8 +375,7 @@ class Controller_Catalog extends Controller_Base
                 }
             }
             //die(var_dump($this_category->type_filter));
-            if (($this_category->type_filter == 'shower')||($this_category->type_filter == 'accessory')) {
-
+            if ($this_category->type_filter == 'accessory') {
                 $this->template->widths = ORM::factory('catalog')->where('category', '=', $this_category->id)->group_by('width')->find_all()->as_array();
                 $this->template->meta_title = $view->this_category->title;
                 $keywords = $view->this_category->keywords;
@@ -377,36 +398,53 @@ class Controller_Catalog extends Controller_Base
                     }
                 }
                 $where_angular = 'check';
+                $where_semicircular = 'check';
                 $where_rectangular = 'check';
-                $where_increased = 'check';
+                $where_pentagon = 'check';
+
                 $where_width = 'check';
+                $where_length = 'check';
                 $where_height = 'check';
+
                 $angular_value = '';
+                $semicircular_value = '';
                 $rectangular_value = '';
-                $increased_value = '';
+                $pentagon_value = '';
                 $width_value = '';
+                $length_value = '';
                 $height_value = '';
+
 
                 if ($angular == 'on') {
                     $where_angular = 'type';
                     $angular_value = 'angular';
                 }
+                if ($semicircular == 'on') {
+                    $where_semicircular = 'type';
+                    $semicircular_value = 'semicircular';
+                }
                 if ($rectangular == 'on') {
                     $where_rectangular = 'type';
                     $rectangular_value = 'rectangular';
                 }
-                if ($increased == 'on') {
-                    $where_increased = 'type';
-                    $increased_value = 'increased';
+                if ($pentagon == 'on') {
+                    $where_pentagon = 'type';
+                    $pentagon_value = 'pentagon';
                 }
                 if ($width != '') {
                     $where_width = 'width';
                     $width_value = $width;
                 }
+                if ($length != '') {
+                    $where_length = 'length';
+                    $length_value = $length;
+                }
                 if ($height != '') {
-                    $where_height = 'length';
+                    $where_height = 'height
+                    ';
                     $height_value = $height;
                 }
+
 
                 $items = ORM::factory('catalog')->where('category', '=', $id_found)->where($where_width, '=', $width_value)->where($where_height, '=', $height_value)->order_by($order_item, $order_type)->find_all()->as_array();
 
@@ -458,6 +496,232 @@ class Controller_Catalog extends Controller_Base
                                 }
                             }
                         }
+                    }
+                }
+                $newitems = array();
+                $count_items = 0;
+                foreach ($items as $key => $item) {
+                    $massage = ORM::factory('options')->where('id_product', '=', $item->id)->where('type', '=', 'massage')->find_all()->as_array();
+                    $gidromassage = array();
+                    $underoptions = array();
+                    $othersoptions = array();
+                    foreach ($massage as $mas) {
+                        $massage_image = json_decode($mas->value, true);
+                        if (isset($massage_image[1])) {
+                            $key = $massage_image[1];
+                            $id_image = $massage_image[0];
+                            $forsun = $massage_image[2];
+                            if (isset($massage_image[4])) {
+                                $default_for_massage = $massage_image[4];
+                                // если гидромассаж
+                                if ($default_for_massage == '1') {
+                                    if (isset($massage_image[3])) {
+                                        $gidromassage['price'] = $massage_image[3];
+                                    }
+                                    if (isset($massage_image[5])) {
+                                        $gidromassage['required'] = $massage_image[5];
+                                    }
+                                    $gidromassage['image'] = $id_image;
+                                    $gidromassage['forsun'] = $forsun;
+                                    $gidromassage['option_id'] = $key;
+                                }
+                                //если массаж спины или ног
+                                if ($default_for_massage == '0') {
+                                    if (isset($massage_image[6])) {
+                                        if ($massage_image[6] == '1') {
+                                            $underoption = array();
+                                            if (isset($massage_image[3])) {
+                                                $underoption['price'] = $massage_image[3];
+                                            }
+                                            $underoption['image'] = $id_image;
+                                            $underoption['forsun'] = $forsun;
+                                            $underoption['option_id'] = $key;
+                                            $underoptions[] = $underoption;
+                                        } else {
+                                            $others = array();
+                                            if (isset($massage_image[3])) {
+                                                $others['price'] = $massage_image[3];
+                                            }
+                                            $others['image'] = $id_image;
+                                            $others['forsun'] = $forsun;
+                                            $others['option_id'] = $key;
+                                            $othersoptions[] = $others;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    $grades = ORM::factory('options')->where('id_product', '=', $item->id)->where('type', '=', 'grade')->find_all()->as_array();
+                    foreach ($grades as $grade) {
+                        $grade_array = json_decode($grade->value);
+                        if (isset($grade_array[1])) {
+                            if ($grade_array[1] == '1') {
+                                $bath = ORM::factory('grade')->where('id', '=', $grade_array[0])->find();
+                            }
+                        }
+                    }
+                    $massage_price = 0;
+                    if ($view->this_category->massage_on == 'on') {
+                        if (count($gidromassage) > 0) {
+                            if ($gidromassage['required'] == '1') {
+                                $massage_price = $gidromassage['price'];
+                            }
+                        }
+                    }
+                    if ($view->this_category->grade_on == 'on') {
+                        $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $item->id)->find_all()->as_array();
+                        $grade_price = 0;
+                        foreach ($options as $option) {
+                            $grade_opt = json_decode($option->value);
+                            $grades = ORM::factory('grade')->where('id', '=', $grade_opt[0])->find();
+                            if (isset($grade_opt[2])) {
+                                if (($grade_opt[2] == 1) || ($grade_opt[1] == 1)) {
+                                    $grade_price += $grades->price;
+                                }
+                            }
+                        }
+                    }
+                    if (isset($grade_price)) {
+                        if (count($options) > 0) {
+                            $priceglobal = $massage_price + $grade_price;
+                        } else {
+                            $priceglobal = $item->price;
+                        }
+                    } else {
+                        $priceglobal = $item->price;
+                    }
+                    //$items[$key]['priceglobal'] = $priceglobal;
+                    //$item = (array)$item;
+                    $item = $item->as_array();
+                    $item['priceglobal'] = $priceglobal;
+                    $newitems[] = $item;
+                }
+                $order_item = 'price';
+                $order_type = 'asc';
+                if ($order_by != '') {
+                    $order = explode('-', $order_by);
+                    if ((isset($order[0])) && (isset($order[1]))) {
+                        $order_item = $order[0];
+                        if ($order_item == 'price') {
+                            $order_type = $order[1];
+                            if ($order_type == 'asc') {
+                                usort($newitems, array("Controller_Catalog", "sortitemsup"));
+                            } else {
+                                usort($newitems, array("Controller_Catalog", "sortitemsdown"));
+                            }
+                        }
+                    }
+                } else {
+                    usort($newitems, array("Controller_Catalog", "sortitemsup"));
+                }
+
+                $view->items = $newitems;
+                //$view->items = ORM::factory('catalog')->where('category', '=', $id_found)->where($where_width, '=', $width_value)->where($where_height, '=', $height_value)->order_by($order_item, $order_type)->find_all()->as_array();
+
+                $this->template->current = $currents;
+                if (!$item_founded) {
+                    header('Location: /error/404');
+                    exit();
+                }
+            }
+            if ($this_category->type_filter == 'accessory') {
+                $this->template->widths = ORM::factory('catalog')->where('category', '=', $this_category->id)->group_by('width')->find_all()->as_array();
+                $this->template->meta_title = $view->this_category->title;
+                $keywords = $view->this_category->keywords;
+                $description = $view->this_category->description;
+                $view->id_cat = $id_found;
+                $view->images = $images;
+
+                $order_item = 'price';
+                $order_type = 'asc';
+                if ($order_by != '') {
+                    if ($order_by == 'default') {
+                        $order_item = 'order';
+                        $order_type = 'desc';
+                    } else {
+                        $order = explode('-', $order_by);
+                        if ((isset($order[0])) && (isset($order[1]))) {
+                            $order_item = $order[0];
+                            $order_type = $order[1];
+                        }
+                    }
+                }
+                $where_blinds = 'check';
+                $where_mixer = 'check';
+                $where_sink = 'check';
+                $where_accessory = 'check';
+
+                $where_width = 'check';
+                $where_length = 'check';
+                $where_height = 'check';
+
+                $blinds_value = '';
+                $mixer_value = '';
+                $sink_value = '';
+                $accessory_value = '';
+                $width_value = '';
+                $length_value = '';
+                $height_value = '';
+
+
+                if ($blinds == 'on') {
+                    $where_blinds = 'type';
+                    $blinds_value = 'blinds';
+                }
+                if ($mixer == 'on') {
+                    $where_mixer = 'type';
+                    $mixer_value = 'mixer';
+                }
+                if ($sink == 'on') {
+                    $where_sink = 'type';
+                    $sink_value = 'sink';
+                }
+                if ($accessory == 'on') {
+                    $where_accessory = 'type';
+                    $accessory_value = 'accessory';
+                }
+
+                if ($width != '') {
+                    $where_width = 'width';
+                    $width_value = $width;
+                }
+                if ($length != '') {
+                    $where_length = 'length';
+                    $length_value = $length;
+                }
+                if ($height != '') {
+                    $where_height = 'height';
+                    $height_value = $height;
+                }
+
+
+                $items = ORM::factory('catalog')->where('category', '=', $id_found)->where($where_width, '=', $width_value)->where($where_height, '=', $height_value)->order_by($order_item, $order_type)->find_all()->as_array();
+
+                $items_array = array();
+                if (($blinds == 'on') || ($mixer == 'on') || ($sink == 'on') || ($accessory == 'on')) {
+                    foreach ($items as $key => $item) {
+                        if ($blinds != 'on') {
+                            if ($item->type_accessory == 'blinds') {
+                                unset($items[$key]);
+                            }
+                        }
+                        if ($mixer != 'on') {
+                            if ($item->type_accessory == 'mixer') {
+                                unset($items[$key]);
+                            }
+                        }
+                        if ($sink != 'on') {
+                            if ($item->type_accessory == 'sink') {
+                                unset($items[$key]);
+                            }
+                        }
+                        if ($accessory != 'on') {
+                            if ($item->type_accessory == 'accessory') {
+                                unset($items[$key]);
+                            }
+                        }
+
                     }
                 }
                 $newitems = array();
