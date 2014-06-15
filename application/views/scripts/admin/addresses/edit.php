@@ -4,7 +4,8 @@
         <div class="category-toggle" style="overflow:auto">
             <div class="span4" style="float: none !important; width:100%; margin-left:0px ">
                 <div class="widget">
-                    <form class="form-horizontal" action="/admin/addresses/edit/<?php echo $addresses->id; ?>" method="POST">
+                    <form class="form-horizontal" action="/admin/addresses/edit/<?php echo $addresses->id; ?>"
+                          method="POST">
                         <div class="widget-header">
                             <h5>Редактировать:</h5>
                         </div>
@@ -14,7 +15,9 @@
 
                                 <div class="field">
                                     <input type="text" class="input-large name-edit" name="city"
-                                           style="float: left;width: 100%;" value="<?php if(isset($addresses->city)) echo $addresses->city; ?>"/>
+                                           style="float: left;width: 100%;" value="<?php if (isset($addresses->city)) {
+                                        echo $addresses->city;
+                                    } ?>"/>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -22,7 +25,25 @@
 
                                 <div class="field">
                                     <input type="text" class="input-large name-edit" name="address"
-                                           style="float: left;width: 100%;" value="<?php if(isset($addresses->address)) echo $addresses->address; ?>">
+                                           style="float: left;width: 100%;" value="<?php if (isset($addresses->address)) {
+                                        echo $addresses->address;
+                                    } ?>">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="field-name" for="standard">Основной?:</label>
+
+                                <div class="field" style="text-align:left;">
+                                    <select name="main" class="uniform">
+                                        <option
+                                            value="off" <?php if ($addresses->main=='off') echo 'selected'; ?>>
+                                            Нет
+                                        </option>
+                                        <option value="on" <?php if ($addresses->main=='on') echo 'selected'; ?>>
+                                            Да
+                                        </option>
+
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -30,13 +51,20 @@
 
                                 <div class="field">
                                     <input type="text" class="input-large name-edit" name="phone"
-                                           style="float: left;width: 100%;" value="<?php if(isset($addresses->phone)) echo $addresses->phone; ?>">
+                                           style="float: left;width: 100%;" value="<?php if (isset($addresses->phone)) {
+                                        echo $addresses->phone;
+                                    } ?>">
                                 </div>
                             </div>
                             <div class="form-row">
-                                <label class="field-name" for="standard">Яндекс карты (<a target="_blank" href="http://api.yandex.ru/maps/tools/constructor/">Generator</a>)</label>
+                                <label class="field-name" for="standard">Яндекс карты (<a target="_blank"
+                                                                                          href="http://api.yandex.ru/maps/tools/constructor/">Generator</a>)</label>
+
                                 <div class="field">
-                                    <input type="text" class="span12 map_code" name="map" id="standard" value='<?php if(isset($addresses->map)) echo $addresses->map; ?>'>
+                                    <input type="text" class="span12 map_code" name="map" id="standard"
+                                           value='<?php if (isset($addresses->map)) {
+                                               echo $addresses->map;
+                                           } ?>'>
                                 </div>
                             </div>
                             <br/>
@@ -50,4 +78,4 @@
             </div>
         </div>
     </div>
-    </div>
+</div>

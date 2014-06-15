@@ -42,7 +42,7 @@ function transliterate($string) {
                     </div>
                     <br/>
                 </div>
-                <div class="wheretobuyblock">
+                <div class="wheretobuyblock <?php if($session_city=='Санкт-Петербург') echo 'piter'; ?>">
                     <div class="aqua-header">Где купить?</div>
                     <i class="find-store">найти магазин дилера</i><br/>
 

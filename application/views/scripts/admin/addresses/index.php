@@ -131,6 +131,22 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <label class="field-name" for="standard">Основной?:</label>
+
+                                <div class="field" style="text-align:left;">
+                                    <select name="main" class="uniform">
+                                        <option
+                                            value="off">
+                                            Нет
+                                        </option>
+                                        <option value="on">
+                                            Да
+                                        </option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <label class="field-name" for="standard">Телефон:</label>
 
                                 <div class="field">

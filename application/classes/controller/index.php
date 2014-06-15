@@ -138,7 +138,7 @@ class Controller_Index extends Controller_Base
             $this->template->session_city = 'Ростов-на-Дону';
         }
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
-        $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
+        $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('main','=','on')->where('city', '=', $this->template->session_city)->find_all()->as_array();
         $this->template->order_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array();
         $this->template->all_cities = ORM::factory('addresses')->find_all()->as_array();
         $this->template->css = ORM::factory('settings')->getSetting('css');
@@ -253,7 +253,7 @@ class Controller_Index extends Controller_Base
         }
 
 
-        $items = ORM::factory('catalog')->where('width', '=', $width)->group_by('length')->find_all()->as_array();
+        $items = ORM::factory('catalog')->where('published','=','on')->where('width', '=', $width)->group_by('length')->find_all()->as_array();
 
         if (($angular == 'true') || ($rectangular == 'true') || ($increased == 'true')) {
             foreach ($items as $key => $item) {
@@ -362,24 +362,24 @@ class Controller_Index extends Controller_Base
             $where_pentagon = 'type';
             $pentagon_value = 'pentagon';
         }
-        $categories = ORM::factory('productscat')->where('type_filter','=','shower')->group_by('id')->find_all()->as_array();
+        $categories = ORM::factory('productscat')->where('type_filter', '=', 'shower')->group_by('id')->find_all()->as_array();
 
         $ids = array();
-        foreach($categories as $category) {
-            $ids[] .= $category->id.',';
+        foreach ($categories as $category) {
+            $ids[] .= $category->id . ',';
         }
 
-        $items = ORM::factory('catalog')->where('width', '=', $width)->where('category','in',$ids)->group_by('length')->find_all()->as_array();
+        $items = ORM::factory('catalog')->where('published','=','on')->where('width', '=', $width)->where('category', 'in', $ids)->group_by('length')->find_all()->as_array();
 
         if (($angular == 'true') || ($semicircular == 'true') || ($rectangular == 'true') || ($pentagon == 'true')) {
             foreach ($items as $key => $item) {
                 if ($angular != 'true') {
-                    if ($item->type == 'angular') {
+                    if ($item->form == 'angular') {
                         unset($items[$key]);
                     }
                 }
                 if ($semicircular != 'true') {
-                    if ($item->type == 'semicircular') {
+                    if ($item->form == 'semicircular') {
                         unset($items[$key]);
                     }
                 }
@@ -454,34 +454,35 @@ class Controller_Index extends Controller_Base
             $pentagon_value = 'pentagon';
         }
 
-        $categories = ORM::factory('productscat')->where('type_filter','=','shower')->group_by('id')->find_all()->as_array();
+        $categories = ORM::factory('productscat')->where('type_filter', '=', 'shower')->group_by('id')->find_all()->as_array();
 
         $ids = array();
-        foreach($categories as $category) {
-            $ids[] .= $category->id.',';
+        foreach ($categories as $category) {
+            $ids[] .= $category->id . ',';
         }
 
-        $items = ORM::factory('catalog')->where('width', '=', $width)->where('length', '=', $length)->where('category','in',$ids)->group_by('height')->find_all()->as_array();
+        $items = ORM::factory('catalog')->where('published','=','on')->where('width', '=', $width)->where('length', '=', $length)->where('category', 'in', $ids)->group_by('height')->find_all()->as_array();
+
 
         if (($angular == 'true') || ($semicircular == 'true') || ($rectangular == 'true') || ($pentagon == 'true')) {
             foreach ($items as $key => $item) {
                 if ($angular != 'true') {
-                    if ($item->type == 'angular') {
+                    if ($item->form == 'angular') {
                         unset($items[$key]);
                     }
                 }
                 if ($semicircular != 'true') {
-                    if ($item->type == 'semicircular') {
+                    if ($item->form == 'semicircular') {
                         unset($items[$key]);
                     }
                 }
                 if ($rectangular != 'true') {
-                    if ($item->type == 'rectangular') {
+                    if ($item->form == 'rectangular') {
                         unset($items[$key]);
                     }
                 }
                 if ($pentagon != 'true') {
-                    if ($item->type == 'pentagon') {
+                    if ($item->form == 'pentagon') {
                         unset($items[$key]);
                     }
                 }
@@ -516,15 +517,15 @@ class Controller_Index extends Controller_Base
             $rectangular = 'none';
         }
         //$width = (int)$post['value'];
-        $h11 = ORM::factory('catalog')->where('type', '=', $angular)->group_by('width')->find_all()->as_array();
-        $h21 = ORM::factory('catalog')->where('type', '=', $rectangular)->group_by('width')->find_all()->as_array();
-        $h31 = ORM::factory('catalog')->where('type', '=', $increased)->group_by('width')->find_all()->as_array();
-        $h12 = ORM::factory('catalog')->where('additional_type', '=', $angular)->group_by('width')->find_all()->as_array();
-        $h22 = ORM::factory('catalog')->where('additional_type', '=', $rectangular)->group_by('width')->find_all()->as_array();
-        $h32 = ORM::factory('catalog')->where('additional_type', '=', $increased)->group_by('width')->find_all()->as_array();
-        $h13 = ORM::factory('catalog')->where('additional_type2', '=', $angular)->group_by('width')->find_all()->as_array();
-        $h23 = ORM::factory('catalog')->where('additional_type2', '=', $rectangular)->group_by('width')->find_all()->as_array();
-        $h33 = ORM::factory('catalog')->where('additional_type2', '=', $increased)->group_by('width')->find_all()->as_array();
+        $h11 = ORM::factory('catalog')->where('published','=','on')->where('type', '=', $angular)->group_by('width')->find_all()->as_array();
+        $h21 = ORM::factory('catalog')->where('published','=','on')->where('type', '=', $rectangular)->group_by('width')->find_all()->as_array();
+        $h31 = ORM::factory('catalog')->where('published','=','on')->where('type', '=', $increased)->group_by('width')->find_all()->as_array();
+        $h12 = ORM::factory('catalog')->where('published','=','on')->where('additional_type', '=', $angular)->group_by('width')->find_all()->as_array();
+        $h22 = ORM::factory('catalog')->where('published','=','on')->where('additional_type', '=', $rectangular)->group_by('width')->find_all()->as_array();
+        $h32 = ORM::factory('catalog')->where('published','=','on')->where('additional_type', '=', $increased)->group_by('width')->find_all()->as_array();
+        $h13 = ORM::factory('catalog')->where('published','=','on')->where('additional_type2', '=', $angular)->group_by('width')->find_all()->as_array();
+        $h23 = ORM::factory('catalog')->where('published','=','on')->where('additional_type2', '=', $rectangular)->group_by('width')->find_all()->as_array();
+        $h33 = ORM::factory('catalog')->where('published','=','on')->where('additional_type2', '=', $increased)->group_by('width')->find_all()->as_array();
         $heights = array_merge($h11, $h21, $h31, $h12, $h22, $h32, $h13, $h23, $h33);
         $h_array = array();
         $i = 0;
@@ -540,39 +541,55 @@ class Controller_Index extends Controller_Base
 
     public function action_getwidthsshower() {
         $post = Safely::safelyGet($_POST);
-        if ($post['angular'] == 'true') {
-            $angular = 'angular';
+        if (isset($post['angular'])) {
+            if ($post['angular'] == 'true') {
+                $angular = 'angular';
+            } else {
+                $angular = 'none';
+            }
         } else {
             $angular = 'none';
         }
-        if ($post['semicircular'] == 'true') {
-            $semicircular = 'semicircular';
+        if (isset($post['semicircular'])) {
+            if ($post['semicircular'] == 'true') {
+                $semicircular = 'semicircular';
+            } else {
+                $semicircular = 'none';
+            }
         } else {
             $semicircular = 'none';
         }
-        if ($post['rectangular'] == 'true') {
-            $rectangular = 'rectangular';
+        if (isset($post['rectangular'])) {
+            if ($post['rectangular'] == 'true') {
+                $rectangular = 'rectangular';
+            } else {
+                $rectangular = 'none';
+            }
         } else {
             $rectangular = 'none';
         }
-        if ($post['pentagon'] == 'true') {
-            $pentagon = 'pentagon';
+        if (isset($post['pentagon'])) {
+            if ($post['pentagon'] == 'true') {
+                $pentagon = 'pentagon';
+            } else {
+                $pentagon = 'none';
+            }
         } else {
             $pentagon = 'none';
         }
-        $categories = ORM::factory('productscat')->where('type_filter','=','shower')->group_by('id')->find_all()->as_array();
+        $categories = ORM::factory('productscat')->where('type_filter', '=', 'shower')->group_by('id')->find_all()->as_array();
 
         $ids = array();
-        foreach($categories as $category) {
-            $ids[] .= $category->id.',';
+        foreach ($categories as $category) {
+            $ids[] .= $category->id . ',';
         }
-        $h11 = ORM::factory('catalog')->where('form', '=', $angular)->where('category','IN',$ids)->group_by('width')->find_all()->as_array();
-        $h21 = ORM::factory('catalog')->where('form', '=', $semicircular)->where('category','IN',$ids)->group_by('width')->find_all()->as_array();
-        $h31 = ORM::factory('catalog')->where('form', '=', $rectangular)->where('category','IN',$ids)->group_by('width')->find_all()->as_array();
-        $h41 = ORM::factory('catalog')->where('form', '=', $pentagon)->where('category','IN',$ids)->group_by('width')->find_all()->as_array();
+        $h11 = ORM::factory('catalog')->where('published','=','on')->where('form', '=', $angular)->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
+        $h21 = ORM::factory('catalog')->where('published','=','on')->where('form', '=', $semicircular)->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
+        $h31 = ORM::factory('catalog')->where('published','=','on')->where('form', '=', $rectangular)->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
+        $h41 = ORM::factory('catalog')->where('published','=','on')->where('form', '=', $pentagon)->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
         $heights = array_merge($h11, $h21, $h31, $h41);
-        if(($angular=='none')&&($semicircular=='none')&&($rectangular=='none')&&($pentagon=='none')) {
-            $heights = ORM::factory('catalog')->where('category','IN',$ids)->group_by('width')->find_all()->as_array();
+        if (($angular == 'none') && ($semicircular == 'none') && ($rectangular == 'none') && ($pentagon == 'none')) {
+            $heights = ORM::factory('catalog')->where('published','=','on')->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
         }
         $h_array = array();
         $i = 0;

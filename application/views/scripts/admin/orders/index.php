@@ -8,6 +8,7 @@
                 <th>E-mail</th>
                 <th>Время поступления</th>
                 <th>Товар</th>
+                <th>Товар наименование</th>
                 <th>Телефон</th>
             </tr>
             </thead>
@@ -18,6 +19,7 @@
                     <td><?php echo $contact->name; ?></td>
                     <td><?php echo $contact->email; ?></td>
                     <td><?php echo date('Y/m/d H:i:s', $contact->created); ?></td>
+                    <td>Товар <?php echo ORM::factory('catalog')->where('id','=', $contact->productid)->find()->name; ?></td>
                     <td>
 
 

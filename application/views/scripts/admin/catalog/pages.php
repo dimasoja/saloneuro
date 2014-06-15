@@ -114,8 +114,7 @@
 
             <div class="field" style="text-align: left;">
                 <select class="form-control uniform" name="form">
-                    <option value="angular">Угловая</option>
-                    <option value="semicircular">Полукруглая</option>
+                    <option value="angular">Угловая Полукруглая</option>
                     <option value="rectangular">Прямоугольная</option>
                     <option value="pentagon">Пятиугольная</option>
                 </select>

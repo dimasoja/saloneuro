@@ -137,14 +137,7 @@ function transliterate($string) {
                             <label style="text-align:left;">
                                 <input type="checkbox" class="angular" <?php if ($angular == 'on') {
                                     echo 'checked';
-                                } ?>> Угловая
-                            </label>
-                        </div>
-                        <div class="checkbox" rel="semicircular">
-                            <label style="text-align:left;">
-                                <input type="checkbox" class="semicircular" <?php if ($semicircular == 'on') {
-                                    echo 'checked';
-                                } ?>> Полукруглая
+                                } ?>> Угловая Полукруглая
                             </label>
                         </div>
                         <div class="checkbox" rel="rectangular">
@@ -190,7 +183,7 @@ function transliterate($string) {
                                         <?php if ($width != '') { ?>
                                             <?php foreach ($heights as $height_this) { ?>
                                                 <option
-                                                    value="<?php echo $height_this->length; ?>" <?php if ($height == $height_this->length) {
+                                                    value="<?php echo $height_this->length; ?>" <?php if ($length == $height_this->length) {
                                                     echo 'selected';
                                                 } ?>><?php echo $height_this->length; ?></option>
                                             <?php } ?>
@@ -203,14 +196,11 @@ function transliterate($string) {
                                 <label style="text-align:left;">
 
                                     <select class="height">
-                                        <option value=""></option>
+<!--                                        <option value=""></option>-->
                                         <?php if ($width != '') { ?>
-                                            <?php foreach ($heights as $height_this) { ?>
                                                 <option
-                                                    value="<?php echo $height_this->length; ?>" <?php if ($height == $height_this->length) {
-                                                    echo 'selected';
-                                                } ?>><?php echo $height_this->length; ?></option>
-                                            <?php } ?>
+                                                    value="<?php echo $height; ?>" selected><?php echo $height; ?></option>
+
                                         <?php } ?>
                                     </select>
                                 </label>
@@ -862,7 +852,7 @@ function changeCity(city) {
             </div>
         </div>
         <div class="category-right-wrapper">
-            <div class="wheretobuyblock">
+            <div class="wheretobuyblock <?php if($session_city=='Санкт-Петербург') echo 'piter'; ?>">
                 <div class="aqua-header">Где купить?</div>
                 <i class="find-store">найти магазин дилера</i><br/>
 

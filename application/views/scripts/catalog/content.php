@@ -10,16 +10,17 @@
             <ul>
                 <li><a href="<?php echo $mainimage; ?>" class="carouselfancy "
                        rel="groupfancy"><?php echo FrontHelper::output($mainimage, 420, 400, 420, 400); ?></a>
-                <li><a href="<?php echo $baseemptyimage; ?>" class="carouselfancy"
-                       rel="groupfancy"><?php echo FrontHelper::output($baseemptyimage, 420, 400, 420, 400); ?></a></li>
-                <li><a href="" class="carouselfancy maincarousel"
-                       rel="groupfancy"></a></li>
+<!--                <li><a href="--><?php //echo $baseemptyimage; ?><!--" class="carouselfancy"
+                       rel="groupfancy"><?php echo FrontHelper::output($baseemptyimage, 420, 400, 420, 400); ?></a></li>-->
+                <li><a href="<?php echo $baseimage; ?>" class="carouselfancy maincarousel"
+                       rel="groupfancy"><?php echo FrontHelper::output($baseimage, 420, 400, 420, 400); ?></a></li>
                 <?php foreach ($related_images as $rimage) { ?>
                     <?php if ($baseimageid != $rimage->id_image) { ?>
                         <?php if ($page->featured != $rimage->id_image) { ?>
-                            <input type="hidden" class="mainimage" value="<?php echo $rimage->path; ?>"/>
+
                             <li><a href="<?php echo $rimage->path; ?>" class="carouselfancy"
-                                   rel="groupfancy"><?php echo FrontHelper::output($rimage->path, 420, 400, 420, 400); ?></a>
+                                   rel="groupfancy"><?php echo FrontHelper::output($rimage->path, 420, 400, 420, 400); ?>
+                                    <input type="hidden" class="mainimage" value="<?php echo $rimage->path; ?>"/></a>
                             </li>
                         <?php } ?>
                     <?php } ?>
@@ -40,8 +41,8 @@
         <div class="carousel carousel-navigation">
             <ul>
                 <li class=""><?php echo FrontHelper::outputRender($mainimage, 50, 50, 50, 50); ?></li>
-                <li class=""><?php echo FrontHelper::outputRender($baseemptyimage, 50, 50, 50, 50); ?></li>
-                <li class="maincarouselsmall"></li>
+<!--                <li class="">--><?php //echo FrontHelper::outputRender($baseemptyimage, 50, 50, 50, 50); ?><!--</li>-->
+                <li class="maincarouselsmall"><?php echo FrontHelper::output($baseimage, 50, 50, 50, 50); ?></li>
                 <?php //$options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $page->id)->find_all()->as_array(); ?>
                 <?php //if (count($options) > 0) { ?>
                 <?php foreach ($related_images as $rimage) { ?>
@@ -741,6 +742,7 @@ var order_place = {
 
 
 $(document).ready(function () {
+
     jQuery('.order-details-show').click(function () {
         var vis = jQuery('.order-details').css('display');
         if (vis == 'none') {
@@ -754,7 +756,11 @@ $(document).ready(function () {
     jQuery('.carouselfancy').fancybox({'beforeShow':function() {
         jQuery('.fancybox-wrap').addClass('certif-fancybox');
     }});
-    jQuery('.order-image').fancybox();
+    jQuery('.order-image').fancybox({
+        'beforeShow' : function() {
+            jQuery('.fancybox-wrap').addClass('certif-fancybox');
+        }
+    });
     var order = {};
 
     order['grades'] = {};
@@ -1099,6 +1105,7 @@ $(document).ready(function () {
                 jQuery('.order-image').removeClass('buzz-out');
             }, 1000)
         });
+        $('.carousel-stage').jcarousel('scroll', 1, true);
     });
     jQuery('.gidro .grade-item').click(function () {
 

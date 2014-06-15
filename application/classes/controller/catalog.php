@@ -21,10 +21,10 @@ class Controller_Catalog extends Controller_Base
         $city_limit = ORM::factory('settings')->getSetting('addr_num');
         $this->template->front_name = "/catalog/akrilovye_vanny";
         $this->template->session_city = Session::instance()->get('city', '');
+        $city_s = Session::instance()->get('city', '');
 
-        $view->session_city = Session::instance()->get('city', '');
 
-        $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
+        $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('main','=','on')->where('city', '=', $this->template->session_city)->find_all()->as_array();
 
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
 
@@ -32,7 +32,8 @@ class Controller_Catalog extends Controller_Base
         $this->template->id_page = '';
 
         $view = new View('scripts/catalog');
-        $this->template->widths = ORM::factory('catalog')->group_by('width')->find_all()->as_array();
+        $view->session_city = $city_s;
+        $this->template->widths = ORM::factory('catalog')->where('published','=','on')->group_by('width')->find_all()->as_array();
         $this->template->categories = ORM::factory('productscat')->order_by('order', 'asc')->find_all()->as_array();
         $view->categories = ORM::factory('productscat')->order_by('order', 'desc')->find_all()->as_array();
         $this->template->id_page = '';
@@ -40,7 +41,7 @@ class Controller_Catalog extends Controller_Base
         $images = array();
         $this->template->current = '';
         $view->images = array();
-        $view->items = ORM::factory('catalog')->find_all()->as_array();
+        $view->items = ORM::factory('catalog')->where('published','=','on')->find_all()->as_array();
         $this->template->right_block = 'no';
         $view->portfolio = $images;
         $get = Safely::safelyGet($_GET);
@@ -98,6 +99,9 @@ class Controller_Catalog extends Controller_Base
         if (isset($get['height'])) {
             $height = $get['height'];
         }
+        if (isset($get['length'])) {
+            $length = $get['length'];
+        }
         if (isset($get['high'])) {
             $high = $get['high'];
         }
@@ -117,8 +121,8 @@ class Controller_Catalog extends Controller_Base
         $this->template->height = $height;
         $this->template->high = $high;
 
-        $this->template->heights = ORM::factory('catalog')->where('width', '=', $this->template->width)->group_by('length')->find_all()->as_array();
-        $this->template->highs = ORM::factory('catalog')->where('width', '=', $this->template->width)->where('length', '=', $this->template->height)->group_by('width')->group_by('length')->find_all()->as_array();
+        $this->template->heights = ORM::factory('catalog')->where('published','=','on')->where('width', '=', $this->template->width)->group_by('length')->find_all()->as_array();
+        $this->template->highs = ORM::factory('catalog')->where('published','=','on')->where('width', '=', $this->template->width)->where('length', '=', $this->template->height)->group_by('width')->group_by('length')->find_all()->as_array();
         $item_founded = false;
         if ($this->category == '') {
 
@@ -195,7 +199,7 @@ class Controller_Catalog extends Controller_Base
                     $height_value = $height;
                 }
 
-                $items = ORM::factory('catalog')->where('category', '=', $id_found)->where($where_width, '=', $width_value)->where($where_height, '=', $height_value)->order_by($order_item, $order_type)->find_all()->as_array();
+                $items = ORM::factory('catalog')->where('published','=','on')->where('category', '=', $id_found)->where($where_width, '=', $width_value)->where($where_height, '=', $height_value)->order_by($order_item, $order_type)->find_all()->as_array();
 
                 $items_array = array();
                 if (($angular == 'on') || ($rectangular == 'on') || ($increased == 'on')) {
@@ -375,8 +379,8 @@ class Controller_Catalog extends Controller_Base
                 }
             }
             //die(var_dump($this_category->type_filter));
-            if ($this_category->type_filter == 'accessory') {
-                $this->template->widths = ORM::factory('catalog')->where('category', '=', $this_category->id)->group_by('width')->find_all()->as_array();
+            if ($this_category->type_filter == 'shower') {
+                $this->template->widths = ORM::factory('catalog')->where('published','=','on')->where('category', '=', $this_category->id)->group_by('width')->find_all()->as_array();
                 $this->template->meta_title = $view->this_category->title;
                 $keywords = $view->this_category->keywords;
                 $description = $view->this_category->description;
@@ -440,60 +444,32 @@ class Controller_Catalog extends Controller_Base
                     $length_value = $length;
                 }
                 if ($height != '') {
-                    $where_height = 'height
-                    ';
+                    $where_height = 'height';
                     $height_value = $height;
                 }
+                $this->template->width = $width_value;
+                $this->template->height = $height_value;
+                $this->template->length = $length_value;
 
 
-                $items = ORM::factory('catalog')->where('category', '=', $id_found)->where($where_width, '=', $width_value)->where($where_height, '=', $height_value)->order_by($order_item, $order_type)->find_all()->as_array();
+                $items = ORM::factory('catalog')->where('published','=','on')->where('category', '=', $id_found)->where($where_width, '=', $width_value)->where($where_height, '=', $height_value)->order_by($order_item, $order_type)->find_all()->as_array();
 
                 $items_array = array();
-                if (($angular == 'on') || ($rectangular == 'on') || ($increased == 'on')) {
+                if (($angular == 'on') || ($rectangular == 'on') || ($pentagon == 'on')) {
                     foreach ($items as $key => $item) {
                         if ($angular != 'on') {
-                            if ($item->type == 'angular') {
-                                if ($rectangular == 'on') {
-                                    if ($item->additional_type != 'rectangular') {
-                                        unset($items[$key]);
-                                    }
-                                } elseif ($increased == 'on') {
-                                    if ($item->additional_type != 'increased') {
-                                        unset($items[$key]);
-                                    }
-                                } else {
-                                    unset($items[$key]);
-                                }
+                            if ($item->form == 'angular') {
+                                unset($items[$key]);
                             }
                         }
                         if ($rectangular != 'on') {
-                            if ($item->type == 'rectangular') {
-                                if ($angular == 'on') {
-                                    if ($item->additional_type != 'angular') {
-                                        unset($items[$key]);
-                                    }
-                                } elseif ($increased == 'on') {
-                                    if ($item->additional_type != 'increased') {
-                                        unset($items[$key]);
-                                    }
-                                } else {
-                                    unset($items[$key]);
-                                }
+                            if ($item->form == 'rectangular') {
+                                unset($items[$key]);
                             }
                         }
-                        if ($increased != 'on') {
-                            if ($item->type == 'increased') {
-                                if ($angular == 'on') {
-                                    if ($item->additional_type != 'angular') {
-                                        unset($items[$key]);
-                                    }
-                                } elseif ($rectangular == 'on') {
-                                    if ($item->additional_type != 'rectangular') {
-                                        unset($items[$key]);
-                                    }
-                                } else {
-                                    unset($items[$key]);
-                                }
+                        if ($pentagon != 'on') {
+                            if ($item->form == 'pentagon') {
+                                unset($items[$key]);
                             }
                         }
                     }
@@ -626,7 +602,7 @@ class Controller_Catalog extends Controller_Base
                 }
             }
             if ($this_category->type_filter == 'accessory') {
-                $this->template->widths = ORM::factory('catalog')->where('category', '=', $this_category->id)->group_by('width')->find_all()->as_array();
+                $this->template->widths = ORM::factory('catalog')->where('published','=','on')->where('category', '=', $this_category->id)->group_by('width')->find_all()->as_array();
                 $this->template->meta_title = $view->this_category->title;
                 $keywords = $view->this_category->keywords;
                 $description = $view->this_category->description;
@@ -696,7 +672,7 @@ class Controller_Catalog extends Controller_Base
                 }
 
 
-                $items = ORM::factory('catalog')->where('category', '=', $id_found)->where($where_width, '=', $width_value)->where($where_height, '=', $height_value)->order_by($order_item, $order_type)->find_all()->as_array();
+                $items = ORM::factory('catalog')->where('published','=','on')->where('category', '=', $id_found)->where($where_width, '=', $width_value)->where($where_height, '=', $height_value)->order_by($order_item, $order_type)->find_all()->as_array();
 
                 $items_array = array();
                 if (($blinds == 'on') || ($mixer == 'on') || ($sink == 'on') || ($accessory == 'on')) {
@@ -871,7 +847,7 @@ class Controller_Catalog extends Controller_Base
 
 
             $this->template->id_page = '';
-            $names = ORM::factory('catalog')->find_all()->as_array();
+            $names = ORM::factory('catalog')->where('published','=','on')->find_all()->as_array();
             $this->template->right_block = 'no';
             $view->portfolio = $images;
             $this->template->breadcrumbs = '';
@@ -884,7 +860,7 @@ class Controller_Catalog extends Controller_Base
                     $item_founded = true;
                     $view->page = $item;
                     $view->category_product = ORM::factory('productscat')->where('id', '=', $item->category)->find();
-                    $view->product = ORM::factory('catalog')->where('id', '=', $item->id)->find();
+                    $view->product = ORM::factory('catalog')->where('published','=','on')->where('id', '=', $item->id)->find();
                     $this->template->link_manufacturer = $view->product->manufacturer;
                     $this->template->meta_title = $view->product->title_meta;
                     $keywords = $view->product->keywords_meta;
@@ -971,7 +947,7 @@ class Controller_Catalog extends Controller_Base
                     $view->baseimageid = '';
                     $view->baseemptyimage = '';
                     if (isset($related_images[0])) {
-                        $baseimage = ORM::factory('catalog')->where('id', '=', $item->id)->find();
+                        $baseimage = ORM::factory('catalog')->where('published','=','on')->where('id', '=', $item->id)->find();
                         if ($baseimage->base != '') {
                             $view->baseimageid = $baseimage->base;
                             $baseim = ORM::factory('images')->where('id_image', '=', $baseimage->base)->find();
@@ -1014,7 +990,7 @@ class Controller_Catalog extends Controller_Base
                     }
 
 
-                    $mainimage = ORM::factory('catalog')->where('id', '=', $item->id)->find();
+                    $mainimage = ORM::factory('catalog')->where('published','=','on')->where('id', '=', $item->id)->find();
                     $mainim = ORM::factory('images')->where('id_image', '=', $mainimage->featured)->find();
                     if (isset($mainim->path)) {
                         $view->mainimage = $mainim->path;

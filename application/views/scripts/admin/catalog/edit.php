@@ -128,11 +128,7 @@
             <select class="form-control uniform" name="form">
                 <option value="angular" <?php if ($product->form == 'angular') {
                     echo 'selected';
-                } ?>>Угловая
-                </option>
-                <option value="semicircular" <?php if ($product->form == 'semicircular') {
-                    echo 'selected';
-                } ?>>Полукруглая
+                } ?>>Угловая Полукруглая
                 </option>
                 <option value="rectangular" <?php if ($product->form == 'rectangular') {
                     echo 'selected';
@@ -785,13 +781,13 @@
     <?php } ?>
 </div>
 <div class="form-row" style="text-align: left">
-    <label class="field-name" for="standard">Паспорт:</label>
+    <label class="field-name" for="standard">Инструкция по сборке рамы:</label>
 
     <div class="field" style="text-align: left;">
         <input type="file" name="passport"/>
     </div>
     <?php if ($product->passport != "") { ?>
-        <a href="/<?php echo $product->passport; ?>">Паспорт</a>
+        <a href="/<?php echo $product->passport; ?>">Инструкция по сборке рамы</a>
     <?php } ?>
 </div>
 
