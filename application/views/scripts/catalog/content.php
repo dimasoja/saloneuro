@@ -10,7 +10,7 @@
             <ul>
                 <li><a href="<?php echo $mainimage; ?>" class="carouselfancy "
                        rel="groupfancy"><?php echo FrontHelper::output($mainimage, 420, 400, 420, 400); ?></a>
-<!--                <li><a href="--><?php //echo $baseemptyimage; ?><!--" class="carouselfancy"
+                    <!--                <li><a href="--><?php //echo $baseemptyimage; ?><!--" class="carouselfancy"
                        rel="groupfancy"><?php echo FrontHelper::output($baseemptyimage, 420, 400, 420, 400); ?></a></li>-->
                 <li><a href="<?php echo $baseimage; ?>" class="carouselfancy maincarousel"
                        rel="groupfancy"><?php echo FrontHelper::output($baseimage, 420, 400, 420, 400); ?></a></li>
@@ -41,7 +41,8 @@
         <div class="carousel carousel-navigation">
             <ul>
                 <li class=""><?php echo FrontHelper::outputRender($mainimage, 50, 50, 50, 50); ?></li>
-<!--                <li class="">--><?php //echo FrontHelper::outputRender($baseemptyimage, 50, 50, 50, 50); ?><!--</li>-->
+                <!--                <li class="">-->
+                <?php //echo FrontHelper::outputRender($baseemptyimage, 50, 50, 50, 50); ?><!--</li>-->
                 <li class="maincarouselsmall"><?php echo FrontHelper::output($baseimage, 50, 50, 50, 50); ?></li>
                 <?php //$options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $page->id)->find_all()->as_array(); ?>
                 <?php //if (count($options) > 0) { ?>
@@ -76,12 +77,11 @@
     <?php } ?>
     <div class="product-text">
         <div class="technical">Технические характеристики</div>
-        <br/>
         <?php if ($page->leftright == 'on') { ?>
             <span class="leftchoise lrchoise"><img src="/images/left.png"/></span>
             <span class="rightchoise lrchoise active"><img src="/images/right.png"/></span>
         <?php } ?>
-        <br/><br/>
+        <br/>
 
         <div class="information-title">
         </div>
@@ -413,45 +413,49 @@
                     </div>
                 <?php } ?>
                 <?php foreach ($othersoptions as $option) {
-                    //$option = json_decode($option->value);
-                    $massage = ORM::factory('massage')->where('id', '=', $option['option_id'])->find();
-                    $image = ORM::factory('images')->where('id_image', '=', $option['image'])->find();
-                    ?>
-                    <div class="grade-item <?php if($massage->electronic=='on') echo 'electronic'; ?>">
-                        <div class="grade-first-col">
-                            <div class="massage-image" data-image="<?php echo $image->path; ?>">
-                                <img src="<?php echo $massage->image; ?>"/>
+                //$option = json_decode($option->value);
+                $massage = ORM::factory('massage')->where('id', '=', $option['option_id'])->find();
+                $image = ORM::factory('images')->where('id_image', '=', $option['image'])->find();
+                ?>
+                <div class="grade-item <?php if ($massage->electronic == 'on') {
+                    echo 'electronic';
+                } ?>">
+                    <div class="grade-first-col">
+                        <div class="massage-image" data-image="<?php echo $image->path; ?>">
+                            <img src="<?php echo $massage->image; ?>"/>
 
-                                <div class="lookonthis"><a href="<?php echo $image->path; ?>">Посмотреть</a></div>
-                            </div>
-                            <div class="massage-info">
-                                <div class="grade-name">
-                                    <?php echo $massage->name; ?>
-                                </div>
-                                <div class="massage-descr">
-                                    <?php echo FrontHelper::maxsite_str_word($massage->description, 40); ?>...
-                                    <?php if ($option['forsun'] != '') { ?>
-                                        <br/>
-                                        <div><b>Форсунок</b>: <?php echo $option['forsun']; ?></div>
-                                    <?php } ?>
-                                </div>
-                            </div>
+                            <div class="lookonthis"><a href="<?php echo $image->path; ?>">Посмотреть</a></div>
                         </div>
-                        <div class="grade-second-col">
-                            <div class="massage-price padding415" <?php if($massage->electronic=='on') echo 'electronic'; ?>">
-                            <span class="massage-price-value"
-                                  rel="<?php echo $option['price']; ?>"><?php echo number_format((double)$option['price'], 0, ' ', ' '); ?></span>
-                                руб.
-                                <br/>
-                                <span class="add-massage" data-massage="<?php echo $option['option_id']; ?>"
-                                      data-price="<?php echo $option['price']; ?>"
-                                      data-image="<?php echo $option['image']; ?>">Добавить опцию</span>
+                        <div class="massage-info">
+                            <div class="grade-name">
+                                <?php echo $massage->name; ?>
+                            </div>
+                            <div class="massage-descr">
+                                <?php echo FrontHelper::maxsite_str_word($massage->description, 40); ?>...
+                                <?php if ($option['forsun'] != '') { ?>
+                                    <br/>
+                                    <div><b>Форсунок</b>: <?php echo $option['forsun']; ?></div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
-                <?php } ?>
+                    <div class="grade-second-col">
+                        <div class="massage-price padding415" <?php if ($massage->electronic == 'on') {
+                            echo 'electronic';
+                        } ?>">
+                            <span class="massage-price-value"
+                                  rel="<?php echo $option['price']; ?>"><?php echo number_format((double)$option['price'], 0, ' ', ' '); ?></span>
+                        руб.
+                        <br/>
+                                <span class="add-massage" data-massage="<?php echo $option['option_id']; ?>"
+                                      data-price="<?php echo $option['price']; ?>"
+                                      data-image="<?php echo $option['image']; ?>">Добавить опцию</span>
+                    </div>
+                </div>
             </div>
+        <?php } ?>
         </div>
+    </div>
     </div>
     </div>
 <?php } ?>
@@ -538,14 +542,15 @@
                         ?>
                         <li>
                             <?php for ($j = 0; $j < count($access[$i]); $j++) { ?>
-                                <?php $image_related = ORM::factory('options')->where('type', '=', 'image')->where('id_product', '=', $access[$i][$j]->value)->find(); ?>
-                                <?php $image = ORM::factory('images')->where('id_image', '=', $image_related->value)->find(); ?>
+                                <?php $image_related = ORM::factory('catalog')->where('id', '=', $access[$i][$j]->value)->find(); ?>
+                                <?php $image = ORM::factory('images')->where('id_image', '=', $image_related->featured)->find(); ?>
                                 <?php $related_product = ORM::factory('catalog')->where('id', '=', $access[$i][$j]->value)->find(); ?>
                                 <?php if (isset($image->id_image)) { ?>
 
                                     <div class="related-product">
                                         <div class="product-name">
-                                            <a target="_blank" href="/catalog/<?php echo strtolower(FrontHelper::transliterate($category_product->name)) . '/'; ?><?php echo strtolower(FrontHelper::transliterate($related_product->name)); ?>"><?php echo $related_product->name; ?></a>
+                                            <a target="_blank"
+                                               href="/catalog/<?php echo strtolower(FrontHelper::transliterate($category_product->name)) . '/'; ?><?php echo strtolower(FrontHelper::transliterate($related_product->name)); ?>"><?php echo $related_product->name; ?></a>
                                             <?php //echo $related_product->name; ?>
                                         </div>
                                         <div class="related-product-image">
@@ -753,12 +758,15 @@ $(document).ready(function () {
             jQuery(this).html(' Посмотреть заказ');
         }
     });
-    jQuery('.carouselfancy').fancybox({'beforeShow':function() {
+    jQuery('.carouselfancy').fancybox({'beforeShow': function () {
         jQuery('.fancybox-wrap').addClass('certif-fancybox');
     }});
     jQuery('.order-image').fancybox({
-        'beforeShow' : function() {
+        'beforeShow': function () {
             jQuery('.fancybox-wrap').addClass('certif-fancybox');
+            if(jQuery('.lrchoise.leftchoise').hasClass('active')) {
+                jQuery('.fancybox-image').addClass('reflection');
+            }
         }
     });
     var order = {};
@@ -909,7 +917,7 @@ $(document).ready(function () {
     jQuery('.grade-product .grade-item').not('.required').not('.grade-price').not('.first').click(function (e) {
         var className = e.target.className;
 
-        if ((className !=='add-grade')&&(className!=='grade-price-value')&&(className!=='grade-price padding415 active')) {
+        if ((className !== 'add-grade') && (className !== 'grade-price-value') && (className !== 'grade-price padding415 active')) {
             var priceproduct = jQuery('.global-price')
             var globalprice = priceproduct.attr('data-value');
             var e = jQuery(this).find('.add-grade');
@@ -983,7 +991,8 @@ $(document).ready(function () {
         jQuery(this).find('.add-massage').css('text-decoration', 'none');
         jQuery(this).find('.add-massage').css('color', 'rgb(189,189,189)');
     });
-    jQuery('.massage-container .grade-item, .massage-container .massage-price').click(function () {
+    jQuery('.massage-container .grade-item').click(function (e) {
+        var className = e.target.className;
         var mainimage = jQuery('.baseimage').val();
         var isElectronic = jQuery(this).hasClass('electronic');
         var product_id = jQuery('.product-id').val();
@@ -1128,10 +1137,16 @@ $(document).ready(function () {
         jQuery('.lrchoise').removeClass('active');
         if (jQuery(this).hasClass('leftchoise')) {
             var type_lr = 'left';
+            jQuery('.order img').addClass('reflection');
+            jQuery('.order-image').addClass('reflection');
+            jQuery('.connected-carousels img').addClass('reflection');
             var mes = '(L)';
         } else {
             var type_lr = 'right';
             var mes = '(R)';
+            jQuery('.order img').removeClass('reflection');
+            jQuery('.order-image').removeClass('reflection');
+            jQuery('.connected-carousels img').removeClass('reflection');
         }
         jQuery('.leftright').html(mes);
         order['lr'] = type_lr;

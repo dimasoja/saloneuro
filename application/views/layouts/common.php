@@ -76,67 +76,68 @@
                 </div>
             <?php } ?>
         </div>
-        <div class="rightblock">
-            <div class="category-right-wrapper">
-                <div class="wheretobuyblock">
-                    <div class="aqua-header">Вход для партнеров</div>
-                    <h4>Личный кабинет</h4>
 
-                    <div class="input-name">
-                        <input type="text" id="response-name1" class="name_call" name="name" placeholder="Логин">
-                    </div>
-                    <div class="input-name">
-                        <input type="text" id="response-name1" class="name_call" name="name" placeholder="Пароль">
-                    </div>
-                    <input type="button" class="green floatright enter-partner" value="Войти">
-                    <br/><br/>
-                    <a href="/partner" class="requestcoop">Заполнить заявку на сотрудничество</a>
+
+    </div>
+    <div class="rightblock">
+        <div class="category-right-wrapper">
+            <div class="wheretobuyblock">
+                <div class="aqua-header">Вход для партнеров</div>
+                <h4>Личный кабинет</h4>
+
+                <div class="input-name">
+                    <input type="text" id="response-name1" class="name_call" name="name" placeholder="Логин">
+                </div>
+                <div class="input-name">
+                    <input type="text" id="response-name1" class="name_call" name="name" placeholder="Пароль">
+                </div>
+                <input type="button" class="green floatright enter-partner" value="Войти">
+                <br/><br/>
+                <a href="/partner" class="requestcoop">Заполнить заявку на сотрудничество</a>
+                <br/>
+                <br/>
+            </div>
+            <div class="wheretobuyblock">
+                <div class="aqua-header">Наши достижения</div>
+                <br/>
+
+                <div class="cities">
+                    <?php $i = 0;
+                    foreach ($certificates as $value) {
+                        if ($i % 2 == 0) {
+                            ?>
+                            <div class="cert-title address">
+                                <a class="address fancyboxcert" rel="group" href="<?php echo $value->image; ?>"
+                                   title="<?php echo $value->description; ?>"><?php echo $value->description; ?></a>
+                            </div>
+                        <?php } else { ?>
+                            <div class="cert-title blue-address">
+                                <a class="blue-address fancyboxcert" rel="group" href="<?php echo $value->image; ?>"
+                                   title="<?php echo $value->description; ?>"><?php echo $value->description; ?></a>
+                            </div>
+                        <?php
+                        }
+                        $i++;
+                    } ?>
+                </div>
+                <div class="all-certy">
                     <br/>
+                    <a href="/certificates" class="green floatright enter-partner">Все сертификаты</a>
                     <br/>
                 </div>
-                <div class="wheretobuyblock">
-                    <div class="aqua-header">Наши достижения</div>
-                    <br/>
+                <br/>
+            </div>
 
-                    <div class="cities">
-                        <?php $i = 0;
-                        foreach ($certificates as $value) {
-                            if ($i % 2 == 0) {
-                                ?>
-                                <div class="cert-title address">
-                                    <a class="address fancyboxcert" rel="group" href="<?php echo $value->image; ?>"
-                                       title="<?php echo $value->description; ?>"><?php echo $value->description; ?></a>
-                                </div>
-                            <?php } else { ?>
-                                <div class="cert-title blue-address">
-                                    <a class="blue-address fancyboxcert" rel="group" href="<?php echo $value->image; ?>"
-                                       title="<?php echo $value->description; ?>"><?php echo $value->description; ?></a>
-                                </div>
-                            <?php
-                            }
-                            $i++;
-                        } ?>
-                    </div>
-                    <div class="all-certy">
-                        <br/>
-                        <a href="/certificates" class="green floatright enter-partner">Все сертификаты</a>
-                        <br/>
-                    </div>
+            <?php echo ORM::factory('settings')->getSetting('callus'); ?>
+            <div class="wheretobuyblock">
+                <div class="aqua-header">Скомплектовать свою ванну</div>
+                <div class="cities">
                     <br/>
+                    <a href="/gradebath"><img src="/images/grade.jpg"/></a>
                 </div>
-
-                <?php echo ORM::factory('settings')->getSetting('callus'); ?>
-                <div class="wheretobuyblock">
-                    <div class="aqua-header">Скомплектовать свою ванну</div>
-                    <div class="cities">
-                        <br/>
-                        <a href="/gradebath"><img src="/images/grade.jpg"/></a>
-                    </div>
-                    <br/>
-                </div>
+                <br/>
             </div>
         </div>
-
     </div>
 </div>
 

@@ -55,8 +55,8 @@ class FrontHelper
     }
 
     static function transliterate($string) {
-        $roman = array("Sch", "sch", 'Yo', 'Zh', 'Kh', 'Ts', 'Ch', 'Sh', 'Yu', 'ya', 'yo', 'zh', 'kh', 'ts', 'ch', 'sh', 'yu', 'ya', 'A', 'B', 'V', 'G', 'D', 'E', 'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'F', '', 'Y', '', 'E', 'a', 'b', 'v', 'g', 'd', 'e', 'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', '', 'y', '', 'e', '_', '','');
-        $cyrillic = array("Щ", "щ", 'Ё', 'Ж', 'Х', 'Ц', 'Ч', 'Ш', 'Ю', 'я', 'ё', 'ж', 'х', 'ц', 'ч', 'ш', 'ю', 'я', 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Ь', 'Ы', 'Ъ', 'Э', 'а', 'б', 'в', 'г', 'д', 'е', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'ь', 'ы', 'ъ', 'э', ' ',',','?');
+        $roman = array("Sch", "sch", 'Yo', 'Zh', 'Kh', 'Ts', 'Ch', 'Sh', 'Yu', 'ya', 'yo', 'zh', 'kh', 'ts', 'ch', 'sh', 'yu', 'ya', 'A', 'B', 'V', 'G', 'D', 'E', 'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'F', '', 'Y', '', 'E', 'a', 'b', 'v', 'g', 'd', 'e', 'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', '', 'y', '', 'e', '_', '', '');
+        $cyrillic = array("Щ", "щ", 'Ё', 'Ж', 'Х', 'Ц', 'Ч', 'Ш', 'Ю', 'я', 'ё', 'ж', 'х', 'ц', 'ч', 'ш', 'ю', 'я', 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Ь', 'Ы', 'Ъ', 'Э', 'а', 'б', 'в', 'г', 'д', 'е', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'ь', 'ы', 'ъ', 'э', ' ', ',', '?');
         return str_replace($cyrillic, $roman, $string);
     }
 
@@ -73,7 +73,7 @@ class FrontHelper
     }
 
     static function setHardRedirect($route) {
-        header('Location: '.$route);
+        header('Location: ' . $route);
         exit();
     }
 
@@ -399,14 +399,14 @@ class FrontHelper
         return $text;
     }
 
-    static function output($path, $width, $height, $in_width, $in_height, $additional_path='') {
+    static function output($path, $width, $height, $in_width, $in_height, $additional_path = '') {
         $html = '';
-        if (file_exists('.' .$additional_path. $path)) {
-            $sizes = ImageWork::getImageSize('.' .$additional_path. $path, $width, $height, $width, $height);
-            $margin_left = ($in_height - $sizes['newwidth'])/2;
-            $margin_top = ($in_width - $sizes['newheight'])/2;
+        if (file_exists('.' . $additional_path . $path)) {
+            $sizes = ImageWork::getImageSize('.' . $additional_path . $path, $width, $height, $width, $height);
+            $margin_left = ($in_height - $sizes['newwidth']) / 2;
+            $margin_top = ($in_width - $sizes['newheight']) / 2;
             if ($path != '') {
-                $html = "<img src = '".$additional_path.$path."' width = '".$sizes['newwidth']."' height = '".$sizes['newheight']."' style = 'margin-top:".$margin_top."px;margin-left:".$margin_left."px;'/>";
+                $html = "<img src = '" . $additional_path . $path . "' width = '" . $sizes['newwidth'] . "' height = '" . $sizes['newheight'] . "' style = 'margin-top:" . $margin_top . "px;margin-left:" . $margin_left . "px;'/>";
             }
         }
         return $html;
@@ -416,10 +416,10 @@ class FrontHelper
         $html = '';
         if (file_exists('.' . $path)) {
             $sizes = ImageWork::getImageSize('.' . $path, $width, $height, $width, $height);
-            $margin_left = ($in_height - $sizes['newwidth'])/2;
-            $margin_top = ($in_width - $sizes['newheight'])/2;
+            $margin_left = ($in_height - $sizes['newwidth']) / 2;
+            $margin_top = ($in_width - $sizes['newheight']) / 2;
             if ($path != '') {
-                $html = "<img src = '".$path."' width = '".$sizes['newwidth']."' height = '".$sizes['newheight']."' style = 'margin-top:".$margin_top."px;margin-left:".$margin_left."px;'/>";
+                $html = "<img src = '" . $path . "' width = '" . $sizes['newwidth'] . "' height = '" . $sizes['newheight'] . "' style = 'margin-top:" . $margin_top . "px;margin-left:" . $margin_left . "px;'/>";
             }
         }
         return $html;
@@ -429,8 +429,8 @@ class FrontHelper
         $html = '';
         if (file_exists('.' . $path)) {
             $sizes = ImageWork::getImageSize('.' . $path, $width, $height, $width, $height);
-            $margin_left = ($in_height - $sizes['newwidth'])/2;
-            $margin_top = ($in_width - $sizes['newheight'])/2;
+            $margin_left = ($in_height - $sizes['newwidth']) / 2;
+            $margin_top = ($in_width - $sizes['newheight']) / 2;
             if ($path != '') {
 
             }
@@ -456,23 +456,27 @@ class FrontHelper
                     if (preg_match('/^<(\s*.+?\/\s*|\s*(img|br|input|hr|area|base|basefont|col|frame|isindex|link|meta|param)(\s.+?)?)>$/is', $line_matchings[1])) {
                         // do nothing
                         // if tag is a closing tag
-                    } else if (preg_match('/^<\s*\/([^\s]+?)\s*>$/s', $line_matchings[1], $tag_matchings)) {
-                        // delete tag from $open_tags list
-                        $pos = array_search($tag_matchings[1], $open_tags);
-                        if ($pos !== false) {
-                            unset($open_tags[$pos]);
+                    } else {
+                        if (preg_match('/^<\s*\/([^\s]+?)\s*>$/s', $line_matchings[1], $tag_matchings)) {
+                            // delete tag from $open_tags list
+                            $pos = array_search($tag_matchings[1], $open_tags);
+                            if ($pos !== false) {
+                                unset($open_tags[$pos]);
+                            }
+                            // if tag is an opening tag
+                        } else {
+                            if (preg_match('/^<\s*([^\s>!]+).*?>$/s', $line_matchings[1], $tag_matchings)) {
+                                // add tag to the beginning of $open_tags list
+                                array_unshift($open_tags, strtolower($tag_matchings[1]));
+                            }
                         }
-                        // if tag is an opening tag
-                    } else if (preg_match('/^<\s*([^\s>!]+).*?>$/s', $line_matchings[1], $tag_matchings)) {
-                        // add tag to the beginning of $open_tags list
-                        array_unshift($open_tags, strtolower($tag_matchings[1]));
                     }
                     // add html-tag to $truncate'd text
                     $truncate .= $line_matchings[1];
                 }
                 // calculate the length of the plain text part of the line; handle entities as one character
                 $content_length = strlen(preg_replace('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', ' ', $line_matchings[2]));
-                if ($total_length+$content_length> $length) {
+                if ($total_length + $content_length > $length) {
                     // the number of characters which are left
                     $left = $length - $total_length;
                     $entities_length = 0;
@@ -480,7 +484,7 @@ class FrontHelper
                     if (preg_match_all('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', $line_matchings[2], $entities, PREG_OFFSET_CAPTURE)) {
                         // calculate the real length of all entities in the legal range
                         foreach ($entities[0] as $entity) {
-                            if ($entity[1]+1-$entities_length <= $left) {
+                            if ($entity[1] + 1 - $entities_length <= $left) {
                                 $left--;
                                 $entities_length += strlen($entity[0]);
                             } else {
@@ -489,7 +493,7 @@ class FrontHelper
                             }
                         }
                     }
-                    $truncate .= substr($line_matchings[2], 0, $left+$entities_length);
+                    $truncate .= substr($line_matchings[2], 0, $left + $entities_length);
                     // maximum lenght is reached, so get off the loop
                     break;
                 } else {
@@ -497,7 +501,7 @@ class FrontHelper
                     $total_length += $content_length;
                 }
                 // if the maximum length is reached, get off the loop
-                if($total_length>= $length) {
+                if ($total_length >= $length) {
                     break;
                 }
             }
@@ -519,7 +523,7 @@ class FrontHelper
         }
         // add the defined ending to the text
         $truncate .= $ending;
-        if($considerHtml) {
+        if ($considerHtml) {
             // close all unclosed html-tags
             foreach ($open_tags as $tag) {
                 $truncate .= '</' . $tag . '>';
@@ -528,4 +532,307 @@ class FrontHelper
         return $truncate;
     }
 
+    static function getFirstProduct() {
+        $catalog = ORM::factory('catalog')->where('published', '=', 'on')->find_all()->as_array();
+        if (isset($catalog[0])) {
+            return $catalog[0]->id;
+        }
+    }
+
+    static function getProductForBackbone($id_product) {
+        $product = ORM::factory('catalog')->where('id', '=', $id_product)->find();
+        $result = array();
+        $result['id'] = $product->id;
+        $result['name'] = $product->name;
+        $image = ORM::factory('images')->where('id_image', '=', $product->featured)->find();
+        if (isset($image->id_image)) {
+            $result['image'] = $image->path;
+        } else {
+            $result['image'] = '';
+        }
+
+        $product = ORM::factory('catalog')->where('id', '=', $id_product)->find();
+        $resulting = array();
+        $related_images = array();
+        if ($product->featured != '') {
+            $related_images[] = ORM::factory('images')->where('id_image', '=', $product->featured)->find();
+            $options_images = ORM::factory('options')->where('type', '=', 'image')->where('value', '!=', $product->featured)->where('id_product', '=', $product->id)->find_all()->as_array();
+        } else {
+            $options_images = ORM::factory('options')->where('type', '=', 'image')->where('id_product', '=', $product->id)->find_all()->as_array();
+        }
+        foreach ($options_images as $option_image) {
+            $related_images[] = ORM::factory('images')->where('id_image', '=', $option_image->value)->find();
+        }
+
+        $resulting['related_images'] = $related_images;
+        //        $resulting['images'] = $images;
+        $massage = ORM::factory('options')->where('id_product', '=', $product->id)->where('type', '=', 'massage')->find_all()->as_array();
+        $resulting['gidromassage'] = array();
+        $resulting['feetmassage'] = array();
+        $resulting['backmassage'] = array();
+        $resulting['underoptions'] = array();
+        $resulting['othersoptions'] = array();
+        $massages_images = array();
+
+        foreach ($massage as $mas) {
+            $massage_image = json_decode($mas->value, true);
+            if (isset($massage_image[1])) {
+                $key = $massage_image[1];
+                $id_image = $massage_image[0];
+                $forsun = $massage_image[2];
+                if (isset($massage_image[4])) {
+                    if ($massage_image[5] == '1') {
+                        $massage_im = ORM::factory('images')->where('id_image', '=', $id_image)->find();
+                        if (isset($massage_im)) {
+                            $massages_images[$key] = '.' . $massage_im->path;
+                        }
+                    }
+                    $default_for_massage = $massage_image[4];
+                    // если гидромассаж
+                    if ($default_for_massage == '1') {
+                        if (isset($massage_image[3])) {
+                            $resulting['gidromassage']['price'] = $massage_image[3];
+                        }
+                        if (isset($massage_image[5])) {
+                            $resulting['gidromassage']['required'] = $massage_image[5];
+                        }
+                        $resulting['gidromassage']['image'] = $id_image;
+                        $resulting['gidromassage']['forsun'] = $forsun;
+                        $resulting['gidromassage']['option_id'] = $key;
+                    }
+                    //если массаж спины или ног
+                    if ($default_for_massage == '0') {
+                        if (isset($massage_image[6])) {
+                            if ($massage_image[6] == '1') {
+                                $underoption = array();
+                                if (isset($massage_image[3])) {
+                                    $underoption['price'] = $massage_image[3];
+                                }
+                                $underoption['image'] = $id_image;
+                                $underoption['forsun'] = $forsun;
+                                $underoption['option_id'] = $key;
+                                $resulting['underoptions'][] = $underoption;
+                            } else {
+                                $others = array();
+                                if (isset($massage_image[3])) {
+                                    $others['price'] = $massage_image[3];
+                                }
+                                if (isset($massage_image[5])) {
+                                    $others['required'] = $massage_image[5];
+                                }
+                                $others['image'] = $id_image;
+                                $others['forsun'] = $forsun;
+                                $others['option_id'] = $key;
+                                $resulting['othersoptions'][] = $others;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $resulting['baseimageid'] = '';
+        $resulting['baseemptyimage'] = '';
+        if (isset($related_images[0])) {
+            $baseimage = ORM::factory('catalog')->where('published', '=', 'on')->where('id', '=', $product->id)->find();
+            if ($baseimage->base != '') {
+                $resulting['baseimageid'] = $baseimage->base;
+                $baseim = ORM::factory('images')->where('id_image', '=', $baseimage->base)->find();
+                if (isset($baseim->path)) {
+                    $resulting['baseemptyimage'] = $baseim->path;
+                }
+            }
+            $image = '';
+            if (isset($baseim->path)) {
+                $image = '.' . $baseim->path;
+            }
+            $dest = ImageWork::createImage($image);
+            if ($dest) {
+                imageAlphaBlending($dest, false);
+                imageSaveAlpha($dest, true);
+                $x1 = imagesx($dest);
+                $y1 = imagesy($dest);
+                $slate = imagecreatetruecolor($x1, $y1);
+                $transparent = imagecolorallocatealpha($slate, 0, 255, 0, 127);
+                imagefill($slate, 0, 0, $transparent);
+                imagecopy($slate, $dest, 0, 0, 0, 0, imagesx($dest) - 1, imagesy($dest) - 1);
+                foreach ($massages_images as $mi) {
+                    $src = ImageWork::createImage($mi);
+                    imageAlphaBlending($src, false);
+                    imageSaveAlpha($src, true);
+                    $x2 = imagesx($src);
+                    $y2 = imagesy($src);
+                    imagecopy($slate, $src, 0, 0, 0, 0, imagesx($src) - 1, imagesy($src) - 1);
+                }
+                imageAlphaBlending($slate, false);
+                imageSaveAlpha($slate, true);
+                $mainimagename = '/uploads/mainimage' . time() . '.png';
+                $resulting['baseimage'] = $mainimagename;
+                imagepng($slate, '.' . $mainimagename);
+            } else {
+                $resulting['baseimage'] = '';
+            }
+        } else {
+            $resulting['baseimage'] = '';
+        }
+
+        $mainimage = ORM::factory('catalog')->where('published', '=', 'on')->where('id', '=', $product->id)->find();
+        $mainim = ORM::factory('images')->where('id_image', '=', $mainimage->featured)->find();
+        if (isset($mainim->path)) {
+            $resulting['mainimage'] = $mainim->path;
+        }
+
+        $grades = ORM::factory('options')->where('id_product', '=', $product->id)->where('type', '=', 'grade')->find_all()->as_array();
+        foreach ($grades as $grade) {
+            $grade_array = json_decode($grade->value);
+            if (isset($grade_array[1])) {
+                if ($grade_array[1] == '1') {
+                    $resulting['bath'] = ORM::factory('grade')->where('id', '=', $grade_array[0])->where('name', 'LIKE', '%Ванна%')->find();
+                }
+            }
+        }
+        $massage_price = 0;
+        $category_product = ORM::factory('productscat')->where('id', '=', $product->category)->find();
+        if ($category_product->massage_on == 'on') {
+            if (count($resulting['gidromassage']) > 0) {
+                if ($resulting['gidromassage']['required'] == '1') {
+                    $massage_price = $resulting['gidromassage']['price'];
+                }
+            }
+        }
+        if ($category_product->grade_on == 'on') {
+            $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $product->id)->find_all()->as_array();
+            $grade_price = 0;
+
+            foreach ($options as $option) {
+                $grade_opt = json_decode($option->value);
+                $grades = ORM::factory('grade')->where('id', '=', $grade_opt[0])->find();
+                if (isset($grade_opt[2])) {
+                    if (($grade_opt[2] == 1) || ($grade_opt[1] == 1)) {
+                        $grade_price += $grades->price;
+                    }
+                }
+            }
+
+            if (isset($grade_price)) {
+                if (count($options) > 0) {
+                    $priceglobal = $massage_price + $grade_price;
+                } else {
+                    $priceglobal = $product->price;
+                }
+            } else {
+                $priceglobal = $product->price;
+            }
+        } else {
+            $priceglobal = $product->price;
+        }
+        $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $product->id)->find_all()->as_array();
+        $othergrades = array();
+        $i = 0;
+        if ((count($options) > 0) || (isset($resulting['bath']->name))) {
+            foreach ($options as $option) {
+                $grade_opt = json_decode($option->value);
+                if ($grade_opt[0] != $resulting['bath']->id) {
+                    $grades = ORM::factory('grade')->where('id', '=', $grade_opt[0])->find();
+                    $othergrades[$i]['name'] = $grades->name;
+                    $othergrades[$i]['price'] = $grades->price;
+                    $i++;
+                }
+            }
+        }
+
+        $result['pricehtml'] = number_format((double)$priceglobal, 0, ' ', ' ');
+        $result['price'] = $priceglobal;
+        $result['scheme'] = $product->scheme;
+        $result['instruction'] = $product->instruction;
+        $result['width'] = $product->width;
+        $result['length'] = $product->length;
+        if (!isset($resulting['bath']->name)) {
+            $result['bathname'] = '';
+        } else {
+            $result['bathname'] = $resulting['bath']->name;
+        }
+        $result['othergrades'] = $othergrades;
+
+        return $result;
+    }
+
+    static function getFirstAndLastProductForBackbone($id_product, $result) {
+        $categories = self::getBathCategories();
+
+        $leftProduct = Model::factory('catalog')->where('id', '<', $id_product)->where('category','in',$categories)->where('published', '=', 'on')->order_by('id', 'desc')->find();
+        if (!isset($leftProduct->id)) {
+            $leftProduct = Model::factory('catalog')->order_by('id', 'desc')->where('published', '=', 'on')->where('category','in',$categories)->find_all()->as_array();
+            if (isset($leftProduct[0])) {
+                $leftProduct = $leftProduct[0]->id;
+            } else {
+                $leftProduct = '';
+            }
+        } else {
+            $leftProduct = $leftProduct->id;
+        }
+
+        $rightProduct = Model::factory('catalog')->where('id', '>', $id_product)->where('category','in',$categories)->where('published', '=', 'on')->find();
+        if (!isset($rightProduct->id)) {
+            $rightProduct = Model::factory('catalog')->order_by('id', 'asc')->where('category','in',$categories)->where('published', '=', 'on')->find_all()->as_array();
+            if (isset($rightProduct[0])) {
+                $rightProduct = $rightProduct[0]->id;
+            } else {
+                $rightProduct = '';
+            }
+        } else {
+            $rightProduct = $rightProduct->id;
+        }
+        $result['leftProduct'] = $leftProduct;
+        $result['rightProduct'] = $rightProduct;
+        return $result;
+    }
+
+    static function getBathCategories() {
+        $categories = ORM::factory('productscat')->where('type_filter','=','bath')->find_all()->as_array();
+        $ids = array();
+        foreach($categories as $category) {
+            $ids[] = $category->id;
+        }
+        return $ids;
+    }
+
+    static function setStep($id) {
+        Session::instance()->set('step',$id);
+        return true;
+    }
+
+    static function getStep() {
+        return Session::instance()->get('step','');
+    }
+
+    static function getAvailableSteps() {
+        $current_step = self::getStep();
+        if($current_step=='') return false; else {
+            switch($current_step) {
+                case '1':
+                    return array('1','2');
+                    break;
+                case '2':
+                    return array('1','2','3');
+                    break;
+                default:
+                    return array('1','2','3','4');
+                    break;
+            }
+        }
+    }
+
+    static function getStepsForBackbone($steps) {
+        if(count($steps)==2) {
+            return array('step1'=>'#!/step1', 'step2'=>'', 'step3'=>'','step4'=>'');
+        }
+        if(count($steps)==3) {
+            return array('step1'=>'#!/step1', 'step2'=>'#!/step2', 'step3'=>'','step4'=>'');
+        }
+        if(count($steps)==4) {
+            return array('step1'=>'#!/step1', 'step2'=>'#!/step2', 'step3'=>'#!/step3', 'step4'=>'');
+        }
+        return array();
+    }
 }

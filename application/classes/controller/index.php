@@ -8,6 +8,7 @@ class Controller_Index extends Controller_Base
     public $template = 'layouts/common';
 
     public function __construct($request) {
+
         $id_page = Request::instance()->param('id', '');
         if ($id_page == '') {
             $this->template = 'layouts/index';
@@ -133,12 +134,12 @@ class Controller_Index extends Controller_Base
 
         if (isset($geo_data->city)) {
             //            $this->template->city = $geo_data->city;
-            $this->template->session_city = Session::instance()->get('city');
+            $this->template->session_city = Session::instance()->get('city','');
         } else {
             $this->template->session_city = 'Ростов-на-Дону';
         }
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
-        $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('main','=','on')->where('city', '=', $this->template->session_city)->find_all()->as_array();
+        $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('main', '=', 'on')->where('city', '=', $this->template->session_city)->find_all()->as_array();
         $this->template->order_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array();
         $this->template->all_cities = ORM::factory('addresses')->find_all()->as_array();
         $this->template->css = ORM::factory('settings')->getSetting('css');
@@ -253,7 +254,7 @@ class Controller_Index extends Controller_Base
         }
 
 
-        $items = ORM::factory('catalog')->where('published','=','on')->where('width', '=', $width)->group_by('length')->find_all()->as_array();
+        $items = ORM::factory('catalog')->where('published', '=', 'on')->where('width', '=', $width)->group_by('length')->find_all()->as_array();
 
         if (($angular == 'true') || ($rectangular == 'true') || ($increased == 'true')) {
             foreach ($items as $key => $item) {
@@ -369,7 +370,7 @@ class Controller_Index extends Controller_Base
             $ids[] .= $category->id . ',';
         }
 
-        $items = ORM::factory('catalog')->where('published','=','on')->where('width', '=', $width)->where('category', 'in', $ids)->group_by('length')->find_all()->as_array();
+        $items = ORM::factory('catalog')->where('published', '=', 'on')->where('width', '=', $width)->where('category', 'in', $ids)->group_by('length')->find_all()->as_array();
 
         if (($angular == 'true') || ($semicircular == 'true') || ($rectangular == 'true') || ($pentagon == 'true')) {
             foreach ($items as $key => $item) {
@@ -461,7 +462,7 @@ class Controller_Index extends Controller_Base
             $ids[] .= $category->id . ',';
         }
 
-        $items = ORM::factory('catalog')->where('published','=','on')->where('width', '=', $width)->where('length', '=', $length)->where('category', 'in', $ids)->group_by('height')->find_all()->as_array();
+        $items = ORM::factory('catalog')->where('published', '=', 'on')->where('width', '=', $width)->where('length', '=', $length)->where('category', 'in', $ids)->group_by('height')->find_all()->as_array();
 
 
         if (($angular == 'true') || ($semicircular == 'true') || ($rectangular == 'true') || ($pentagon == 'true')) {
@@ -517,15 +518,15 @@ class Controller_Index extends Controller_Base
             $rectangular = 'none';
         }
         //$width = (int)$post['value'];
-        $h11 = ORM::factory('catalog')->where('published','=','on')->where('type', '=', $angular)->group_by('width')->find_all()->as_array();
-        $h21 = ORM::factory('catalog')->where('published','=','on')->where('type', '=', $rectangular)->group_by('width')->find_all()->as_array();
-        $h31 = ORM::factory('catalog')->where('published','=','on')->where('type', '=', $increased)->group_by('width')->find_all()->as_array();
-        $h12 = ORM::factory('catalog')->where('published','=','on')->where('additional_type', '=', $angular)->group_by('width')->find_all()->as_array();
-        $h22 = ORM::factory('catalog')->where('published','=','on')->where('additional_type', '=', $rectangular)->group_by('width')->find_all()->as_array();
-        $h32 = ORM::factory('catalog')->where('published','=','on')->where('additional_type', '=', $increased)->group_by('width')->find_all()->as_array();
-        $h13 = ORM::factory('catalog')->where('published','=','on')->where('additional_type2', '=', $angular)->group_by('width')->find_all()->as_array();
-        $h23 = ORM::factory('catalog')->where('published','=','on')->where('additional_type2', '=', $rectangular)->group_by('width')->find_all()->as_array();
-        $h33 = ORM::factory('catalog')->where('published','=','on')->where('additional_type2', '=', $increased)->group_by('width')->find_all()->as_array();
+        $h11 = ORM::factory('catalog')->where('published', '=', 'on')->where('type', '=', $angular)->group_by('width')->find_all()->as_array();
+        $h21 = ORM::factory('catalog')->where('published', '=', 'on')->where('type', '=', $rectangular)->group_by('width')->find_all()->as_array();
+        $h31 = ORM::factory('catalog')->where('published', '=', 'on')->where('type', '=', $increased)->group_by('width')->find_all()->as_array();
+        $h12 = ORM::factory('catalog')->where('published', '=', 'on')->where('additional_type', '=', $angular)->group_by('width')->find_all()->as_array();
+        $h22 = ORM::factory('catalog')->where('published', '=', 'on')->where('additional_type', '=', $rectangular)->group_by('width')->find_all()->as_array();
+        $h32 = ORM::factory('catalog')->where('published', '=', 'on')->where('additional_type', '=', $increased)->group_by('width')->find_all()->as_array();
+        $h13 = ORM::factory('catalog')->where('published', '=', 'on')->where('additional_type2', '=', $angular)->group_by('width')->find_all()->as_array();
+        $h23 = ORM::factory('catalog')->where('published', '=', 'on')->where('additional_type2', '=', $rectangular)->group_by('width')->find_all()->as_array();
+        $h33 = ORM::factory('catalog')->where('published', '=', 'on')->where('additional_type2', '=', $increased)->group_by('width')->find_all()->as_array();
         $heights = array_merge($h11, $h21, $h31, $h12, $h22, $h32, $h13, $h23, $h33);
         $h_array = array();
         $i = 0;
@@ -583,13 +584,13 @@ class Controller_Index extends Controller_Base
         foreach ($categories as $category) {
             $ids[] .= $category->id . ',';
         }
-        $h11 = ORM::factory('catalog')->where('published','=','on')->where('form', '=', $angular)->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
-        $h21 = ORM::factory('catalog')->where('published','=','on')->where('form', '=', $semicircular)->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
-        $h31 = ORM::factory('catalog')->where('published','=','on')->where('form', '=', $rectangular)->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
-        $h41 = ORM::factory('catalog')->where('published','=','on')->where('form', '=', $pentagon)->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
+        $h11 = ORM::factory('catalog')->where('published', '=', 'on')->where('form', '=', $angular)->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
+        $h21 = ORM::factory('catalog')->where('published', '=', 'on')->where('form', '=', $semicircular)->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
+        $h31 = ORM::factory('catalog')->where('published', '=', 'on')->where('form', '=', $rectangular)->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
+        $h41 = ORM::factory('catalog')->where('published', '=', 'on')->where('form', '=', $pentagon)->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
         $heights = array_merge($h11, $h21, $h31, $h41);
         if (($angular == 'none') && ($semicircular == 'none') && ($rectangular == 'none') && ($pentagon == 'none')) {
-            $heights = ORM::factory('catalog')->where('published','=','on')->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
+            $heights = ORM::factory('catalog')->where('published', '=', 'on')->where('category', 'IN', $ids)->group_by('width')->find_all()->as_array();
         }
         $h_array = array();
         $i = 0;
@@ -739,21 +740,37 @@ class Controller_Index extends Controller_Base
         $response['2'] = FrontHelper::outputRender($fn, 420, 400, 420, 400);
         echo json_encode($response);
         die();
-        //$this->auto_render = false;
-        //$this->is_ajax = TRUE;
-        //        header('content-type: application/json');
-        //        $this->response->headers('Content-Type','application/json');
-        //        $this->response->body(json_encode($response));
-        //$this->request->headers['Content-Type'] = 'application/json';
-        //$this->request->response = json_encode($response);
-        //
-        //
-        //        //header('Content-Type: image/png');
-        //
-        //        $image = './uploads/123.png';
-        //        imagepng($dest, './uploads/123.png');
-        //        echo 'asdf';
-        //        die();
+    }
+
+    public function action_getproduct() {
+        if (Request::$is_ajax OR $this->request !== Request::instance()) {
+            $this->auto_render = FALSE;
+            header('content-type: application/json');
+        }
+        $id_product = (int)Request::instance()->param('id', '');
+        if ($id_product == 0) {
+            $id_product = FrontHelper::getFirstProduct();
+        }
+        $result = FrontHelper::getProductForBackbone($id_product);
+        $result = FrontHelper::getFirstAndLastProductForBackbone($id_product, $result);
+        echo json_encode($result);
+    }
+
+    public function action_getsteps() {
+        if (Request::$is_ajax OR $this->request !== Request::instance()) {
+            $this->auto_render = FALSE;
+            header('content-type: application/json');
+        }
+        $current_step = (int)Request::instance()->param('id', '');
+        $av_steps = FrontHelper::getAvailableSteps();
+
+        if (in_array($current_step, $av_steps)) {
+            FrontHelper::setStep($current_step);
+            $av_steps = FrontHelper::getStepsForBackbone($av_steps);
+            echo json_encode(array('result' => 'success', 'steps' => $av_steps));
+        } else {
+            echo json_encode(array('result' => 'error'));
+        }
     }
 
 }

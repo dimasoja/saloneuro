@@ -140,7 +140,7 @@ class Controller_Catalog extends Controller_Base
                     $item_founded = true;
                     $currents = $check;
                     $id_found = $cat->id;
-                    $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbCatalog('category', $cat->name, 'information/' . $check);
+                    $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbCatalog('category', $cat->name, 'catalog/' . $check);
                 }
             }
             $view->this_category = ORM::factory('productscat')->where('id', '=', $id_found)->find();
@@ -841,7 +841,7 @@ class Controller_Catalog extends Controller_Base
                     $currents = $check;
                     $id_found = $cat->id;
                     $category_name = ORM::factory('productscat')->where('id', '=', $id_found)->find();
-                    $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbCatalog('category', $cat->name, 'information/' . $check);
+                    $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbCatalog('category', $cat->name, 'catalog/' . $check);
                 }
             }
 
@@ -865,7 +865,7 @@ class Controller_Catalog extends Controller_Base
                     $this->template->meta_title = $view->product->title_meta;
                     $keywords = $view->product->keywords_meta;
                     $description = $view->product->description_meta;
-                    $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbCatalog('inner', $category_name->name, 'catalog/' . $found_url, $item->name, 'catalog/' . $check . '/' . $checks);
+                    $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbCatalog('inner', $category_name->name, 'catalog/' . strtolower(FrontHelper::transliterate($category_name->name)), $item->name, 'catalog/' . strtolower(FrontHelper::transliterate($category_name->name)) . '/' . $checks);
                     $view->technologies = ORM::factory('options')->where('id_product', '=', $item->id)->where('type', '=', 'technologies')->find_all()->as_array();
                     $related_images = array();
                     if ($view->page->featured != '') {

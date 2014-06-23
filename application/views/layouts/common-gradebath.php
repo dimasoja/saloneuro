@@ -127,11 +127,11 @@ function transliterate($string) {
             </script>
         </div>
         <div class="maps">
-            <?php foreach ($all_cities as $value) { ?>
-                <div class="map-item rel<?php echo $value->id; ?>" style="display:none">
-                    <?php echo $value->map; ?>
+            <?php //foreach ($all_cities as $value) { ?>
+                <div class="map-item rel<?php //echo $value->id; ?>" style="display:none">
+                    <?php //echo $value->map; ?>
                 </div>
-            <?php } ?>
+            <?php //} ?>
         </div>
     </div>
 </div>

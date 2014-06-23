@@ -81,12 +81,13 @@ class Model_Settings extends ORM
         }
         if ($type == 'category') {
             $html .= '<a href="/">Главная</a> > ';
-            $html .= '<a href="#">Продукция</a> > ';
+            $html .= '<a href="/catalog/akrilovye_vanny">Продукция</a> > ';
             $html .= '<a href="/' . $link1 . '">' . $title1 . '</a>';
         }
         if ($type == 'inner') {
+
             $html .= '<a href="/">Главная</a> > ';
-            $html .= '<a href="#">Продукция</a> > ';
+            $html .= '<a href="/catalog/akrilovye_vanny">Продукция</a> > ';
             $html .= '<a href="/' . $link1 . '">' . $title1 . '</a> > ';
             $html .= '<a href="/' . $link2 . '">' . $title2 . '</a>';
         }
