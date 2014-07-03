@@ -75,19 +75,19 @@ class Model_Settings extends ORM
 
     public function generateBreadcrumbCatalog($type, $title1 = '', $link1 = '', $title2 = '', $link2 = '') {
         $html = '';
+        $current_url =  URL::site(Request::instance()->uri(), TRUE);
         if ($type == 'index') {
             $html .= '<a href="/">Главная</a> > ';
             $html .= '<a href="#">Продукция</a> ';
         }
         if ($type == 'category') {
             $html .= '<a href="/">Главная</a> > ';
-            $html .= '<a href="/catalog/akrilovye_vanny">Продукция</a> > ';
+            $html .= '<a href="'.$current_url.'#">Продукция</a> > ';
             $html .= '<a href="/' . $link1 . '">' . $title1 . '</a>';
         }
         if ($type == 'inner') {
-
             $html .= '<a href="/">Главная</a> > ';
-            $html .= '<a href="/catalog/akrilovye_vanny">Продукция</a> > ';
+            $html .= '<a href="'.$current_url.'#">Продукция</a> > ';
             $html .= '<a href="/' . $link1 . '">' . $title1 . '</a> > ';
             $html .= '<a href="/' . $link2 . '">' . $title2 . '</a>';
         }

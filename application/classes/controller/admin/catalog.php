@@ -57,6 +57,10 @@ class Controller_Admin_Catalog extends Controller_AdminBase
 
     public function action_delete() {
         $id = trim(htmlspecialchars($this->request->param('id')));
+        $search = ORM::factory('searchindex')->where('post_id','=', $id)->find_all();
+        foreach($search as $value) {
+            $value->delete();
+        }
         $cat = ORM::factory('catalog')->where('id','=',$id)->find();
         $cat->delete();
         ORM::factory('options')->deleteAll($id);
@@ -74,7 +78,7 @@ class Controller_Admin_Catalog extends Controller_AdminBase
             ORM::factory('options')->deleteAll($id);
             $post = Safely::safelyGet($_POST);
             $id_product = ORM::factory('catalog')->editProduct($post, $id);
-            //ORM::factory('settings')->reindexProduct($id_product);
+            ORM::factory('settings')->reindexProduct($id_product);
             $options = ORM::factory('options');
             $directorysave = $options->saveOptions($post, 'directory', $id_product);
             $gradesave = $options->saveGrade($post, $id_product);

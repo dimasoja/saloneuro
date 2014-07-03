@@ -539,7 +539,8 @@ class FrontHelper
         }
     }
 
-    static function getProductForBackbone($id_product) {
+    static function getProductForBackbone($id_product, $data) {
+
         $product = ORM::factory('catalog')->where('id', '=', $id_product)->find();
         $result = array();
         $result['id'] = $product->id;
@@ -550,6 +551,12 @@ class FrontHelper
         } else {
             $result['image'] = '';
         }
+        $new_mas = array();
+        foreach($data['massages'] as $key=>$value) {
+            $new_mas[$key] = $value;
+        }
+        $data['massages'] = $new_mas;
+        $result['massages'] = $new_mas;
 
         $product = ORM::factory('catalog')->where('id', '=', $id_product)->find();
         $resulting = array();
@@ -598,7 +605,15 @@ class FrontHelper
                         }
                         $resulting['gidromassage']['image'] = $id_image;
                         $resulting['gidromassage']['forsun'] = $forsun;
+                        $gidromassage = ORM::factory('massage')->where('id', '=', $key)->find();
+                        if (isset($gidromassage->name)) {
+                            $namegidro = $gidromassage->name;
+                        } else {
+                            $namegidro = '';
+                        }
                         $resulting['gidromassage']['option_id'] = $key;
+                        $resulting['gidromassage']['name'] = $namegidro;
+
                     }
                     //если массаж спины или ног
                     if ($default_for_massage == '0') {
@@ -610,8 +625,17 @@ class FrontHelper
                                 }
                                 $underoption['image'] = $id_image;
                                 $underoption['forsun'] = $forsun;
+                                $gidromassage = ORM::factory('massage')->where('id', '=', $key)->find();
+                                if (isset($gidromassage->name)) {
+                                    $namegidro = $gidromassage->name;
+                                } else {
+                                    $namegidro = '';
+                                }
                                 $underoption['option_id'] = $key;
+                                $underoption['pnevmo'] = $gidromassage->electronic;
+                                $underoption['name'] = $namegidro;
                                 $resulting['underoptions'][] = $underoption;
+
                             } else {
                                 $others = array();
                                 if (isset($massage_image[3])) {
@@ -622,7 +646,16 @@ class FrontHelper
                                 }
                                 $others['image'] = $id_image;
                                 $others['forsun'] = $forsun;
+                                $gidromassage = ORM::factory('massage')->where('id', '=', $key)->find();
+                                if (isset($gidromassage->name)) {
+                                    $namegidro = $gidromassage->name;
+                                } else {
+                                    $namegidro = '';
+                                }
+
+                                $others['pnevmo'] = $gidromassage->electronic;
                                 $others['option_id'] = $key;
+                                $others['name'] = $namegidro;
                                 $resulting['othersoptions'][] = $others;
                             }
                         }
@@ -727,20 +760,38 @@ class FrontHelper
             $priceglobal = $product->price;
         }
         $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $product->id)->find_all()->as_array();
-        $othergrades = array();
+        $maingrades = array();
+        $gradestep2 = array();
         $i = 0;
+        $data_sel_grade = array();
+        foreach($data['grades'] as $key_grade=>$item_grade) {
+            $data_sel_grade[] = $key_grade;
+        }
+
         if ((count($options) > 0) || (isset($resulting['bath']->name))) {
             foreach ($options as $option) {
                 $grade_opt = json_decode($option->value);
-                if ($grade_opt[0] != $resulting['bath']->id) {
-                    $grades = ORM::factory('grade')->where('id', '=', $grade_opt[0])->find();
-                    $othergrades[$i]['name'] = $grades->name;
-                    $othergrades[$i]['price'] = $grades->price;
+                $grades = ORM::factory('grade')->where('id', '=', $grade_opt[0])->find();
+                if (isset($grade_opt[2])) {
+                    $gradestep2[$i]['price'] = $grades->price;
+                    $gradestep2[$i]['name'] = $grades->name;
+                    $gradestep2[$i]['id'] = $grades->id;
+                    if ($grade_opt[2] == '1') {
+                        $maingrades[$i]['name'] = $grades->name;
+                        $maingrades[$i]['price'] = $grades->price;
+                        $gradestep2[$i]['disabled'] = '1';
+                    } else {
+                        $gradestep2[$i]['disabled'] = '0';
+                    }
+                    $gradestep2[$i]['checked'] = '0';
+                    if(in_array($grade_opt[0], $data_sel_grade)) {
+                        $gradestep2[$i]['checked'] = '1';
+                    }
                     $i++;
                 }
             }
         }
-
+        $result['image'] = $resulting['baseimage'];
         $result['pricehtml'] = number_format((double)$priceglobal, 0, ' ', ' ');
         $result['price'] = $priceglobal;
         $result['scheme'] = $product->scheme;
@@ -752,7 +803,99 @@ class FrontHelper
         } else {
             $result['bathname'] = $resulting['bath']->name;
         }
-        $result['othergrades'] = $othergrades;
+        $result['gidromassage'] = $resulting['gidromassage'];
+        $result['underoptions'] = $resulting['underoptions'];
+        $result['othersoptions'] = $resulting['othersoptions'];
+        $result['othergrades'] = $maingrades;
+        $result['gradestep2'] = $gradestep2;
+
+        if (isset($data['massages'])) {
+            $data['massages'] = (array)$data['massages'];
+
+            $order_pre = $post = $data;
+            $order = array();
+
+            $post['image'] = FrontHelper::getProductImageForBackbone($post['id']);
+
+            $is_electronic = false;
+            foreach ($data as $key => $item) {
+                $massage_check = ORM::factory('massage')->where('id', '=', $key)->find();
+                if (isset($massage_check->electronic)) {
+                    if ($massage_check->electronic == 'on') {
+                        $is_electronic = true;
+                    }
+                }
+            }
+            if(isset($data['electronic']))
+                $is_electronic = $data['electronic'];
+            $massages_images = array();
+            $massage = ORM::factory('options')->where('id_product', '=', $post['id'])->where('type', '=', 'massage')->find_all()->as_array();
+            foreach ($massage as $mas) {
+
+                $massage_image = json_decode($mas->value, true);
+
+                if ($is_electronic) {
+                    if (isset($massage_image[7])) {
+                        $id_image = $massage_image[7];
+                        $key = $massage_image[1];
+                        $massage_im = ORM::factory('images')->where('id_image', '=', $id_image)->find();
+                        if (isset($massage_im)) {
+                            if (isset($data['massages'][$key])) {
+                                $massages_images[$key] = '.' . $massage_im->path;
+                            }
+                        }
+                    }
+                } else {
+                    if (isset($massage_image[1])) {
+                        $id_image = $massage_image[0];
+                        $key = $massage_image[1];
+                        $massage_im = ORM::factory('images')->where('id_image', '=', $id_image)->find();
+
+                        if (isset($massage_im)) {
+                            if (isset($data['massages'][$key])) {
+                                $massages_images[$key] = '.' . $massage_im->path;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            $image = '.' . $post['image'];
+            //$desting = ImageWork::createImage($image);
+            //imagepng($desting, './uploads/1235.png');
+            $dest = ImageWork::createImage($image);
+            imageAlphaBlending($dest, false);
+            imageSaveAlpha($dest, true);
+            $x1 = imagesx($dest);
+            $y1 = imagesy($dest);
+            $slate = imagecreatetruecolor($x1, $y1);
+            $transparent = imagecolorallocatealpha($slate, 0, 255, 0, 127);
+            imagefill($slate, 0, 0, $transparent);
+            imagecopy($slate, $dest, 0, 0, 0, 0, imagesx($dest) - 1, imagesy($dest) - 1);
+
+            foreach ($massages_images as $mi) {
+
+                $src = ImageWork::createImage($mi);
+                imageAlphaBlending($src, false);
+                imageSaveAlpha($src, true);
+                $x2 = imagesx($src);
+                $y2 = imagesy($src);
+                imagecopy($slate, $src, 0, 0, 0, 0, imagesx($src) - 1, imagesy($src) - 1);
+            }
+            imageAlphaBlending($slate, false);
+            imageSaveAlpha($slate, true);
+            $fn = '/uploads/withopt' . time() . '.png';
+            imagepng($slate, '.' . $fn);
+            $response = array();
+            $response['image'] = $fn;
+            $result['image'] = $fn;
+            //
+            $response['1'] = FrontHelper::outputRender($fn, 60, 60, 60, 60);
+            $response['2'] = FrontHelper::outputRender($fn, 420, 400, 420, 400);
+
+        }
+
 
         return $result;
     }
@@ -760,9 +903,9 @@ class FrontHelper
     static function getFirstAndLastProductForBackbone($id_product, $result) {
         $categories = self::getBathCategories();
 
-        $leftProduct = Model::factory('catalog')->where('id', '<', $id_product)->where('category','in',$categories)->where('published', '=', 'on')->order_by('id', 'desc')->find();
+        $leftProduct = Model::factory('catalog')->where('id', '<', $id_product)->where('category', 'in', $categories)->where('published', '=', 'on')->order_by('id', 'desc')->find();
         if (!isset($leftProduct->id)) {
-            $leftProduct = Model::factory('catalog')->order_by('id', 'desc')->where('published', '=', 'on')->where('category','in',$categories)->find_all()->as_array();
+            $leftProduct = Model::factory('catalog')->order_by('id', 'desc')->where('published', '=', 'on')->where('category', 'in', $categories)->find_all()->as_array();
             if (isset($leftProduct[0])) {
                 $leftProduct = $leftProduct[0]->id;
             } else {
@@ -772,9 +915,9 @@ class FrontHelper
             $leftProduct = $leftProduct->id;
         }
 
-        $rightProduct = Model::factory('catalog')->where('id', '>', $id_product)->where('category','in',$categories)->where('published', '=', 'on')->find();
+        $rightProduct = Model::factory('catalog')->where('id', '>', $id_product)->where('category', 'in', $categories)->where('published', '=', 'on')->find();
         if (!isset($rightProduct->id)) {
-            $rightProduct = Model::factory('catalog')->order_by('id', 'asc')->where('category','in',$categories)->where('published', '=', 'on')->find_all()->as_array();
+            $rightProduct = Model::factory('catalog')->order_by('id', 'asc')->where('category', 'in', $categories)->where('published', '=', 'on')->find_all()->as_array();
             if (isset($rightProduct[0])) {
                 $rightProduct = $rightProduct[0]->id;
             } else {
@@ -789,50 +932,163 @@ class FrontHelper
     }
 
     static function getBathCategories() {
-        $categories = ORM::factory('productscat')->where('type_filter','=','bath')->find_all()->as_array();
+        $categories = ORM::factory('productscat')->where('type_filter', '=', 'bath')->find_all()->as_array();
         $ids = array();
-        foreach($categories as $category) {
+        foreach ($categories as $category) {
             $ids[] = $category->id;
         }
         return $ids;
     }
 
     static function setStep($id) {
-        Session::instance()->set('step',$id);
+        Session::instance()->set('step', $id);
         return true;
     }
 
     static function getStep() {
-        return Session::instance()->get('step','');
+        return Session::instance()->get('step', '');
     }
 
     static function getAvailableSteps() {
         $current_step = self::getStep();
-        if($current_step=='') return false; else {
-            switch($current_step) {
+        if ($current_step == '') {
+            return false;
+        } else {
+            switch ($current_step) {
                 case '1':
-                    return array('1','2');
+                    return array('1', '2');
                     break;
                 case '2':
-                    return array('1','2','3');
+                    return array('1', '2', '3');
                     break;
                 default:
-                    return array('1','2','3','4');
+                    return array('1', '2', '3', '4');
                     break;
             }
         }
     }
 
     static function getStepsForBackbone($steps) {
-        if(count($steps)==2) {
-            return array('step1'=>'#!/step1', 'step2'=>'', 'step3'=>'','step4'=>'');
+        if (count($steps) == 2) {
+            return array('step1' => '#!/step1', 'step2' => '', 'step3' => '', 'step4' => '');
         }
-        if(count($steps)==3) {
-            return array('step1'=>'#!/step1', 'step2'=>'#!/step2', 'step3'=>'','step4'=>'');
+        if (count($steps) == 3) {
+            return array('step1' => '#!/step1', 'step2' => '#!/step2', 'step3' => '', 'step4' => '');
         }
-        if(count($steps)==4) {
-            return array('step1'=>'#!/step1', 'step2'=>'#!/step2', 'step3'=>'#!/step3', 'step4'=>'');
+        if (count($steps) == 4) {
+            return array('step1' => '#!/step1', 'step2' => '#!/step2', 'step3' => '#!/step3', 'step4' => '');
         }
         return array();
+    }
+
+    static function getProductImageForBackbone($id_product) {
+        $product = ORM::factory('catalog')->where('id', '=', $id_product)->find();
+        $related_images = array();
+        if ($product->featured != '') {
+            $related_images[] = ORM::factory('images')->where('id_image', '=', $product->featured)->find();
+            $options_images = ORM::factory('options')->where('type', '=', 'image')->where('value', '!=', $product->featured)->where('id_product', '=', $product->id)->find_all()->as_array();
+        } else {
+            $options_images = ORM::factory('options')->where('type', '=', 'image')->where('id_product', '=', $product->id)->find_all()->as_array();
+        }
+        foreach ($options_images as $option_image) {
+            $related_images[] = ORM::factory('images')->where('id_image', '=', $option_image->value)->find();
+        }
+
+        $resulting['related_images'] = $related_images;
+        $resulting['baseemptyimage'] = '';
+        if (isset($related_images[0])) {
+            $baseimage = ORM::factory('catalog')->where('published', '=', 'on')->where('id', '=', $product->id)->find();
+            if ($baseimage->base != '') {
+                $resulting['baseimageid'] = $baseimage->base;
+                $baseim = ORM::factory('images')->where('id_image', '=', $baseimage->base)->find();
+                if (isset($baseim->path)) {
+                    $resulting['baseemptyimage'] = $baseim->path;
+                }
+            }
+        }
+
+        return $resulting['baseemptyimage'];
+
+        $post = Safely::safelyGet($_POST);
+        $order_pre = json_decode($post['order']);
+        $order_pre = (array)$order_pre;
+        $order_pre = (array)$order_pre['massages'];
+        $order_pre = (array)$order_pre;
+        $order = array();
+        foreach ($order_pre as $key => $item) {
+            $order[$key] = $item;
+        }
+        $is_electronic = false;
+        foreach ($order as $key => $item) {
+            $massage_check = ORM::factory('massage')->where('id', '=', $key)->find();
+            if (isset($massage_check->electronic)) {
+                if ($massage_check->electronic == 'on') {
+                    $is_electronic = true;
+                }
+            }
+        }
+
+        $massages_images = array();
+        $massage = ORM::factory('options')->where('id_product', '=', $post['id'])->where('type', '=', 'massage')->find_all()->as_array();
+        foreach ($massage as $mas) {
+            $massage_image = json_decode($mas->value, true);
+
+            if ($is_electronic) {
+                if (isset($massage_image[7])) {
+                    $id_image = $massage_image[7];
+                    $key = $massage_image[1];
+                    $massage_im = ORM::factory('images')->where('id_image', '=', $id_image)->find();
+                    if (isset($massage_im)) {
+                        if (isset($order[$key])) {
+                            $massages_images[$key] = '.' . $massage_im->path;
+                        }
+                    }
+                }
+            } else {
+                if (isset($massage_image[1])) {
+                    $id_image = $massage_image[0];
+                    $key = $massage_image[1];
+                    $massage_im = ORM::factory('images')->where('id_image', '=', $id_image)->find();
+                    if (isset($massage_im)) {
+                        if (isset($order[$key])) {
+                            $massages_images[$key] = '.' . $massage_im->path;
+                        }
+                    }
+                }
+            }
+        }
+
+        $image = '.' . $post['image'];
+        //$desting = ImageWork::createImage($image);
+        //imagepng($desting, './uploads/1235.png');
+        $dest = ImageWork::createImage($image);
+        imageAlphaBlending($dest, false);
+        imageSaveAlpha($dest, true);
+        $x1 = imagesx($dest);
+        $y1 = imagesy($dest);
+        $slate = imagecreatetruecolor($x1, $y1);
+        $transparent = imagecolorallocatealpha($slate, 0, 255, 0, 127);
+        imagefill($slate, 0, 0, $transparent);
+        imagecopy($slate, $dest, 0, 0, 0, 0, imagesx($dest) - 1, imagesy($dest) - 1);
+        foreach ($massages_images as $mi) {
+
+            $src = ImageWork::createImage($mi);
+            imageAlphaBlending($src, false);
+            imageSaveAlpha($src, true);
+            $x2 = imagesx($src);
+            $y2 = imagesy($src);
+            imagecopy($slate, $src, 0, 0, 0, 0, imagesx($src) - 1, imagesy($src) - 1);
+        }
+        imageAlphaBlending($slate, false);
+        imageSaveAlpha($slate, true);
+        $fn = '/uploads/withopt' . time() . '.png';
+        imagepng($slate, '.' . $fn);
+        $response = array();
+        $response['0'] = $fn;
+        //
+        $response['1'] = FrontHelper::outputRender($fn, 60, 60, 60, 60);
+        $response['2'] = FrontHelper::outputRender($fn, 420, 400, 420, 400);
+        echo json_encode($response);
+        die();
     }
 }

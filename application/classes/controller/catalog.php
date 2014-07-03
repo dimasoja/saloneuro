@@ -24,7 +24,7 @@ class Controller_Catalog extends Controller_Base
         $city_s = Session::instance()->get('city', '');
 
 
-        $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('main','=','on')->where('city', '=', $this->template->session_city)->find_all()->as_array();
+        $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('main','=','on')->where('city', '=', $city_s)->find_all()->as_array();
 
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
 
@@ -140,6 +140,7 @@ class Controller_Catalog extends Controller_Base
                     $item_founded = true;
                     $currents = $check;
                     $id_found = $cat->id;
+
                     $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbCatalog('category', $cat->name, 'catalog/' . $check);
                 }
             }

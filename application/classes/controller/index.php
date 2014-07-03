@@ -5,6 +5,8 @@ defined('SYSPATH') or die('No direct script access.');
 class Controller_Index extends Controller_Base
 {
 
+    $php_url = $_GLOBAL['REQUEST_URI'];
+
     public $template = 'layouts/common';
 
     public function __construct($request) {
@@ -138,6 +140,7 @@ class Controller_Index extends Controller_Base
         } else {
             $this->template->session_city = 'Ростов-на-Дону';
         }
+
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
         $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('main', '=', 'on')->where('city', '=', $this->template->session_city)->find_all()->as_array();
         $this->template->order_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array();
@@ -370,7 +373,7 @@ class Controller_Index extends Controller_Base
             $ids[] .= $category->id . ',';
         }
 
-        $items = ORM::factory('catalog')->where('published', '=', 'on')->where('width', '=', $width)->where('category', 'in', $ids)->group_by('length')->find_all()->as_array();
+        $items = ORM::factory('catalog')->where('published', '=', 'on')->where('width', '=', $width)->where('category', 'in', $ids)->find_all()->as_array();
 
         if (($angular == 'true') || ($semicircular == 'true') || ($rectangular == 'true') || ($pentagon == 'true')) {
             foreach ($items as $key => $item) {
@@ -658,6 +661,52 @@ class Controller_Index extends Controller_Base
         exit();
     }
 
+    public function action_getproduct() {
+        if (Request::$is_ajax OR $this->request !== Request::instance()) {
+            $this->auto_render = FALSE;
+            header('content-type: application/json');
+        }
+        $id_product = (int)Request::instance()->param('id', '');
+        $post = Safely::safelyGet($_POST);
+        $value = array();
+
+        foreach($post as $key=>$value) {
+            $value = (array)json_decode(str_replace('\\','',$key));
+        }
+
+        $post = $value;
+        if ($id_product == 0) {
+            $id_product = FrontHelper::getFirstProduct();
+        }
+
+        $result = FrontHelper::getProductForBackbone($id_product, $post);
+        $result = FrontHelper::getFirstAndLastProductForBackbone($id_product, $result);
+        echo json_encode($result);
+    }
+
+    public function action_getsteps() {
+        if (Request::$is_ajax OR $this->request !== Request::instance()) {
+            $this->auto_render = FALSE;
+            header('content-type: application/json');
+        }
+        $current_step = (int)Request::instance()->param('id', '');
+        $av_steps = FrontHelper::getAvailableSteps();
+
+        if (in_array($current_step, $av_steps)) {
+            FrontHelper::setStep($current_step);
+            $av_steps = FrontHelper::getStepsForBackbone($av_steps);
+            echo json_encode(array('result' => 'success', 'steps' => $av_steps));
+        } else {
+            echo json_encode(array('result' => 'error'));
+        }
+    }
+
+    public function action_generateimage() {
+        $post = Safely::safelyGet($_POST);
+        FrontHelper::getProductImageForBackbone($post['id']);
+        die();
+    }
+
     function action_generatesimages() {
         $post = Safely::safelyGet($_POST);
         $order_pre = json_decode($post['order']);
@@ -740,37 +789,21 @@ class Controller_Index extends Controller_Base
         $response['2'] = FrontHelper::outputRender($fn, 420, 400, 420, 400);
         echo json_encode($response);
         die();
-    }
-
-    public function action_getproduct() {
-        if (Request::$is_ajax OR $this->request !== Request::instance()) {
-            $this->auto_render = FALSE;
-            header('content-type: application/json');
-        }
-        $id_product = (int)Request::instance()->param('id', '');
-        if ($id_product == 0) {
-            $id_product = FrontHelper::getFirstProduct();
-        }
-        $result = FrontHelper::getProductForBackbone($id_product);
-        $result = FrontHelper::getFirstAndLastProductForBackbone($id_product, $result);
-        echo json_encode($result);
-    }
-
-    public function action_getsteps() {
-        if (Request::$is_ajax OR $this->request !== Request::instance()) {
-            $this->auto_render = FALSE;
-            header('content-type: application/json');
-        }
-        $current_step = (int)Request::instance()->param('id', '');
-        $av_steps = FrontHelper::getAvailableSteps();
-
-        if (in_array($current_step, $av_steps)) {
-            FrontHelper::setStep($current_step);
-            $av_steps = FrontHelper::getStepsForBackbone($av_steps);
-            echo json_encode(array('result' => 'success', 'steps' => $av_steps));
-        } else {
-            echo json_encode(array('result' => 'error'));
-        }
+        //$this->auto_render = false;
+        //$this->is_ajax = TRUE;
+        //        header('content-type: application/json');
+        //        $this->response->headers('Content-Type','application/json');
+        //        $this->response->body(json_encode($response));
+        //$this->request->headers['Content-Type'] = 'application/json';
+        //$this->request->response = json_encode($response);
+        //
+        //
+        //        //header('Content-Type: image/png');
+        //
+        //        $image = './uploads/123.png';
+        //        imagepng($dest, './uploads/123.png');
+        //        echo 'asdf';
+        //        die();
     }
 
 }

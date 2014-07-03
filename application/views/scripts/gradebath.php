@@ -5,22 +5,22 @@
 <script type="text/template" id="steps">
     <div class="main-steps">
         <div class="steps">
-            <a href="<%= steps.step1 %>" <% if(steps.step1=='') { %> onclick="return false;" <% } %>>
+            <a href="<%= steps.step1 %>" <% if(steps.step1=='') { %>           onclick="return false;" <% } %>>
                 <div class="step1 <% if(hash=='1') { %> active <% } %> step" rel="1">
                     Шаг 1
                 </div>
             </a>
-            <a href="<%= steps.step2 %>" <% if(steps.step2=='') { %> onclick="return false;" <% } %>>
+            <a href="<%= steps.step2 %>" <% if(steps.step2=='') { %>           onclick="return false;" <% } %>>
                 <div class="step2 <% if(hash=='2') { %> active <% } %> step" rel="2">
                     Шаг 2
                 </div>
             </a>
-            <a href="<%= steps.step3 %>" <% if(steps.step3=='') { %> onclick="return false;" <% } %>>
+            <a href="<%= steps.step3 %>" <% if(steps.step3=='') { %>           onclick="return false;" <% } %>>
                 <div class="step3 <% if(hash=='3') { %> active <% } %> step" rel="3">
                     Шаг 3
                 </div>
             </a>
-            <a href="<%= steps.step4 %>" <% if(steps.step4=='') { %> onclick="return false;" <% } %>>
+            <a href="<%= steps.step4 %>" <% if(steps.step4=='') { %>           onclick="return false;" <% } %>>
                 <div class="step4 <% if(hash=='4') { %> active <% } %> step" rel="4">
                     Шаг 4
                 </div>
@@ -40,7 +40,8 @@
         <div class="progres">
             <div class="progres-col2">
                 <div class="progres-summ">
-                    Сумма <span class="summ" data-price="<%= product.price %>"><%= product.pricehtml %></span> рублей
+                    Сумма <span class="summ" data-price="<%= product.price %>"><%= product.pricehtml %></span>
+                    рублей
                 </div>
                 <input type="button" class="green floatright" value="Заказать">
             </div>
@@ -106,6 +107,26 @@
                     <% _.each(product.othergrades, function (grade) { %>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" checked disabled/> <%= grade.name %>
@@ -114,10 +135,21 @@
                 </div>
 
 
-                                                    <% }); %>
 
 
-                            </div>
+
+
+
+
+
+
+
+
+                                                                                                                                                                                                                        <% }); %>
+
+
+
+                                                            </div>
             <div class="nextstep">
                 <a href="#!/step2">
                     <input class="big-button step1-button1 step-button" rel="1" value="Далее"/>
@@ -128,84 +160,135 @@
 </div>
 
 
-<div class="step2-body bodystep" style="display:none">
-    <h4>Шаг 2. Выберите комплектацию к ней</h4>
-    <hr/>
-    <div class="bath-image">
-        <img src="/images/step2.jpg"/>
+<div class="step2-body bodystep">
+    <div id="step2-container">
+
     </div>
-    <div class="bath-step1-info">
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"/> Фронтальная
-            </label>
-            <span class="price-grade">6 000</span> руб.
+    <script type="text/template" id="step2">
+        <div class="progres">
+            <div class="progres-col2">
+                <div class="progres-summ">
+                    Сумма <span class="summ" data-price="<%= product.price %>"><%= product.pricehtml %></span>
+                    рублей
+                </div>
+                <input type="button" class="green floatright" value="Заказать">
+            </div>
         </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"/> Боковая правая панель
-            </label>
-            <span class="price-grade">6 000</span> руб.
+        <h2>Комплектация ванны</h2>
+        <hr/>
+        <h4>Шаг 2. Выберите комплектацию к ней <br/>(<%= product.name %>)</h4>
+        <hr/>
+        <div class="bath-image">
+            <img src="<%= product.image %>"/>
         </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"/> Боковая левая панель
-            </label>
-            <span class="price-grade">6 000</span> руб.
+        <div class="bath-step1-info">
+            <% _.each(product.gradestep2, function (grade) { %>
+
+
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="grade-check" <% if(grade.disabled=='1') { %>    checked
+                           disabled <% } else { if(grade.checked=='1') { %> checked <% } } %>    rel="<%= grade.id %>"/> <%= grade.name %>
+                    </label>
+                <span class="price-grade"><%= grade.price %></span> руб.
+            </div>
+
+
+
+                                                <% }); %>
+
+                                                <a href="#!/step3">
+                <input class="big-button step2-button step-button" rel="2" value="Далее"/>
+            </a>
         </div>
-        <a href="#!/step3">
-            <input class="big-button step2-button step-button" rel="2" value="Далее"/>
-        </a>
-    </div>
+        </div>
+    </script>
 </div>
-<div class="step3-body bodystep" style="display:none">
-    <h4>Шаг 3. Массажные опции</h4>
-    <hr/>
-    <div class="bath-image">
-        <img src="/images/step3.jpg"/>
+
+
+<div class="step3-body bodystep">
+    <div id="step3-container">
+
     </div>
-    <div class="bath-step1-info">
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"/> Гидромассаж
-            </label>
-            <span class="price-grade">2 000</span> руб.
+    <script type="text/template" id="step3">
+        <div class="progres">
+            <div class="progres-col2">
+                <div class="progres-summ">
+                    Сумма <span class="summ" data-price="<%= product.price %>"><%= product.pricehtml %></span>
+                    рублей
+                </div>
+                <input type="button" class="green floatright" value="Заказать">
+            </div>
         </div>
-        <div class="checkbox inner-option">
-            <label>
-                <input type="checkbox"/> Массаж спины
-            </label>
-            <span class="price-grade">2 000</span> руб.
+        <h2>Комплектация ванны</h2>
+        <hr/>
+        <h4>Шаг 3. Массажные опции<br/>(<%= product.name %>) </h4>
+        <hr/>
+
+        <div class="bath-image">
+            <img src="<%= product.image %>"/>
         </div>
-        <div class="checkbox inner-option">
-            <label>
-                <input type="checkbox"/> Массаж ног
-            </label>
-            <span class="price-grade">2 000</span> руб.
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"/> Аэромассаж
-            </label>
-            <span class="price-grade">2 000</span> руб.
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"/> Хомотерапия
-            </label>
-            <span class="price-grade">2 000</span> руб.
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"/> Электронное управление
-            </label>
-            <span class="price-grade">2 000</span> руб.
-        </div>
-        <a href="#!/step4">
+        <div class="bath-step1-info">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"
+                           class="massage-check gidro" <% if(product.gidromassage.required=='1') { %>  checked <% } %><% if(product.massages.length != 0) { _.each(product.massages, function (massage, index) { if(index == product.gidromassage.option_id) { %>
+                            checked
+                        <% } }) %> <% } %>    rel="<%= product.gidromassage.option_id %>"/> <%= product.gidromassage.name %>
+                    </label>
+                <span class="price-grade"><%= product.gidromassage.price %></span> руб.
+            </div>
+
+
+                                    <% _.each(product.underoptions, function (massage) {  %>
+
+
+
+
+
+            <div class="checkbox inner-option">
+                <label>
+                    <input type="checkbox" class="massage-check under"
+                           rel="<%= massage.option_id %>" <% if(massage.required=='1') { %>  checked <% } %> <% if(product.massages.length != 0) { _.each(product.massages, function (key, index) {  if(index == massage.option_id) { %>
+                            checked
+                        <% } }) %> <% } %> /> <%= massage.name %>
+                    </label>
+                <span class="price-grade"><%= massage.price %></span> руб.
+            </div>
+
+
+
+                                    <% }); %>
+
+                                    <% _.each(product.othersoptions, function (massage) { %>
+
+
+
+
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="massage-check <% if(massage.pnevmo=='on') { %>pnevmo<% } %>"
+                           rel="<%= massage.option_id %>" <% if(massage.required=='1') { %>  checked <% } %> <% if(product.massages.length != 0) { _.each(product.massages, function (key, index) { if(index == massage.option_id) { %>
+                            checked
+                        <% } }) %> <% } %>/> <%= massage.name %>
+                    </label>
+                <span class="price-grade"><%= massage.price %></span> руб.
+            </div>
+
+
+
+                                    <% }); %>
+
+                                    <a href="#!/step4">
             <input class="big-button step3-button step-button" rel="3" value="Далее"/>
         </a>
-    </div>
+        </div>
+        </div>
+    </script>
 </div>
+
 <div class="step4-body bodystep" style="display:none">
     <h4>Шаг 4. Аксессуары к ванне</h4>
     <hr/>
@@ -242,101 +325,243 @@
 </div>
 </div>
 <script type="text/javascript">
-    var Controller = Backbone.Router.extend({
-        routes: {
-            "": "start",
-            "!/step:hash/:productid": "switchProduct",
-            "!/step:hash": "stepRoute"
-        },
-        start: function () {
-            if (Steps != null) {
-                Steps.render('1');
-            }
-            if (Step1 != null) {
-                Step1.render();
-            }
 
-        },
-        switchProduct: function (hash, productid) {
-            Step1.reRender(productid);
-        },
-        stepRoute: function (hash) {
-            if (Steps != null) {
-                Steps.render(hash);
-            }
+var animateSwitch = {
+    switch: function (id) {
+        $('.bodystep').fadeOut();
+        $('.step' + id + '-body').fadeIn();
+    }
+}
+
+var Controller = Backbone.Router.extend({
+    routes: {
+        "": "start",
+        "!/step:hash/:productid": "switchProduct",
+        "!/step:hash": "stepRoute"
+    },
+    start: function () {
+        if (Steps != null) {
+            Steps.render('1');
+        }
+        if (Step1 != null) {
+            Step1.render();
+        }
+
+    },
+    switchProduct: function (hash, productid) {
+        if (Steps != null) {
+            Steps.render(hash);
+        }
+        Step1.reRender(productid);
+    },
+    stepRoute: function (hash) {
+        if (Steps != null) {
+            Steps.render(hash);
+        }
+        if (hash == '1') {
             if (Step1 != null) {
                 Step1.render();
             }
         }
-    });
+        if (hash == '2') {
+            if (Step2 != null) {
+                Step2.render();
+            }
+        }
+        if (hash == '3') {
+            if (Step3 != null) {
+                Step3.render();
+            }
+        }
+        if (hash == '4') {
+            if (Step4 != null) {
+                Step4.render();
+            }
+        }
 
-    var Product = Backbone.Model.extend({urlRoot: "/index/getproduct"});
-    var getSteps = Backbone.Model.extend({urlRoot: "/index/getsteps"});
+    }
+});
 
-    var Steps = Backbone.View.extend({
-        el: $("#steps-container"),
-        template: _.template($('#steps').html()),
-        render: function (hash) {
-            var model = new getSteps({id: hash});
-            var that = this;
-            model.fetch({
-                success: function (response) {
-                    if(response.attributes.result=='success') {
-                        $(that.el).html(that.template({ steps: response.attributes.steps, hash: hash}));
-                        var prev = $('.step.active').attr('rel');
-                        $('.bodystep').fadeOut();
-                        $('.step' + hash + '-body').fadeIn();
-                    } else {
-                        $('.bodystep').fadeOut();
-                    }
+var Product = Backbone.Model.extend({
+    defaults: {
+        name: '',
+        param: ''
+    },
+    urlRoot: "/index/getproduct"
+});
+var getSteps = Backbone.Model.extend({urlRoot: "/index/getsteps"});
+var Checkout = Backbone.Model.extend({
+    defaults: {
+        id: '',
+        corner: '',
+        grades: {},
+        massages: {},
+        electronic: false
+    }
+});
+
+var Steps = Backbone.View.extend({
+    el: $("#steps-container"),
+    template: _.template($('#steps').html()),
+    render: function (hash) {
+        var model = new getSteps({id: hash});
+        var that = this;
+        model.fetch({
+            success: function (response) {
+                if (response.attributes.result == 'success') {
+                    $(that.el).html(that.template({ steps: response.attributes.steps, hash: hash}));
+                } else {
+                    $('.bodystep').fadeOut();
                 }
-            });
+            }
+        });
 
-        }
-    });
+    }
+});
 
-    var Step1 = Backbone.View.extend({
-        el: $("#step1-container"),
-        current_id: $('#current_product'),
-        events: {
-            "change select.corner-select": "changeCorner"
-        },
-        template: _.template($('#step1').html()),
-        render: function () {
+var Step1 = Backbone.View.extend({
+    el: $("#step1-container"),
+    current_id: $('#current_product'),
+    events: {
+        "change select.corner-select": "changeCorner"
+    },
+    template: _.template($('#step1').html()),
+    render: function () {
+        var that = this;
+        if (checkout.get('id') != '') {
+            var current_id = checkout.get('id');
+        } else {
             var current_id = $(this.current_id).val();
-            var model = new Product({id: current_id});
-            var that = this;
-            model.fetch({
-                success: function (response) {
-                    $(that.el).html(that.template({ product: response.attributes}));
-                }
-            });
-
-        },
-        changeCorner: function (e) {
-            var elem = $(e.target);
-            var image = $(this.el).find('.bath-image img');
-            var value = elem.val();
-            if (value == 'left') {
-                image.addClass('reflection');
-            } else {
-                image.removeClass('reflection');
-            }
-        },
-        reRender: function (param) {
-            var model = new Product({id: param});
-            var that = this;
-            model.fetch({
-                success: function (response) {
-                    $(that.el).html(that.template({ product: response.attributes}));
-                }
-            });
         }
-    });
-    var Steps = new Steps();
-    var Step1 = new Step1();
+        checkout.set('id', current_id);
+        var model = new Product();
+        model.save(checkout.toJSON(), {
+            success: function (response) {
+                $(that.el).html(that.template({ product: response.attributes}));
+            }
+        });
+        animateSwitch.switch(1)
+    },
+    changeCorner: function (e) {
+        var elem = $(e.target);
+        var image = $(this.el).find('.bath-image img');
+        var value = elem.val();
+        if (value == 'left') {
+            image.addClass('reflection');
+        } else {
+            image.removeClass('reflection');
+        }
+        checkout.set('corner', value);
+    },
+    reRender: function (param) {
+        var that = this;
+        checkout.set('corner', 'right');
+        checkout.set('id', param);
+        var model = new Product();
+        model.save(checkout.toJSON(), {
+            success: function (response) {
+                $(that.el).html(that.template({ product: response.attributes}));
+            }
+        });
+        animateSwitch.switch(1);
+    }
+});
 
-    var controller = new Controller(); // Создаём контроллер
-    Backbone.history.start();
+var Step2 = Backbone.View.extend({
+        el: $('#step2-container'),
+        events: {
+            "click .grade-check": "selectGrades"
+        },
+        template: _.template($('#step2').html()),
+        render: function () {
+            that = this;
+            var model = new Product();
+            model.save(checkout.toJSON(), {
+                success: function (response) {
+                    $(that.el).html(that.template({ product: response.attributes}));
+                }
+            });
+            animateSwitch.switch(2);
+        },
+        selectGrades: function (e) {
+            var elem = $(e.target);
+            var selectedGrades = checkout.get('grades');
+            selectedGrades[elem.attr('rel')] = '';
+            checkout.set('grades', selectedGrades);
+        }
+    })
+    ;
+var Step3 = Backbone.View.extend({
+    el: $('#step3-container'),
+    events: {
+        "click .massage-check": "selectMassages"
+    },
+    template: _.template($('#step3').html()),
+    render: function () {
+        that = this;
+        var model = new Product();
+        model.save(checkout.toJSON(), {
+            success: function (response) {
+                $(that.el).html(that.template({ product: response.attributes}));
+            }
+        });
+        animateSwitch.switch(3);
+    },
+    selectMassages: function (e) {
+        var elem = $(e.target);
+        var selectedMassages = checkout.get('massages');
+        selectedMassages = this.switchGidro(elem, selectedMassages);
+        this.setElectronic();
+        $('.massage-check').each(function () {
+            if ($(this).prop('checked')) {
+                selectedMassages[$(this).attr('rel')] = '';
+            } else {
+                delete selectedMassages[$(this).attr('rel')];
+            }
+        });
+        checkout.set('massages', selectedMassages);
+
+        that = this;
+        var model = new Product();
+        model.save(checkout.toJSON(), {
+            success: function (response) {
+                $(that.el).html(that.template({ product: response.attributes}));
+            }
+        });
+    },
+    switchGidro: function (elem, selectedMassages) {
+        if (elem.hasClass('gidro')) {
+            if (!elem.prop('checked')) {
+                $('.massage-check.under').each(function () {
+                    $(this).prop('checked', false);
+                    delete selectedMassages[$(this).attr('rel')];
+                });
+            }
+        }
+        if (elem.hasClass('under')) {
+            if (elem.prop('checked')) {
+                $('.massage-check.gidro').prop('checked', true);
+                selectedMassages[$(this).attr('rel')] = '';
+            }
+        }
+        return selectedMassages;
+    },
+    setElectronic: function () {
+        if ($('.massage-check.pnevmo').prop('checked'))
+            checkout.set('electronic', true);
+        else
+            checkout.set('electronic', false);
+    }
+});
+var Step4 = Backbone.View.extend({});
+var checkout = new Checkout();
+var Steps = new Steps();
+var Step1 = new Step1();
+var Step2 = new Step2();
+var Step3 = new Step3();
+var Step4 = new Step4();
+
+var controller = new Controller();
+Backbone.history.start();
 </script>
 

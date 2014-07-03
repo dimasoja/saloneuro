@@ -39,6 +39,7 @@
                 $news = $main_new->short;
                 $link_news = $main_new->title;
             } ?>
+            <br/><br/><h3 style="font-size: 15px; text-align:center;"><?php echo $main_new->title; ?></h3>
             <i style="font-size:15px"><?php echo $news; ?></i><br/>
             <br/>
             <a href="/news/<?php echo strtolower(FrontHelper::transliterate($link_news)) . '/'; ?>">
@@ -119,7 +120,6 @@
                         </div>
                         <div class="cities">
                             <?php $i = 0;
-
                             foreach ($session_cities as $value) {
                                 if ($value->type == 'address') {
                                     if ($i % 2 == 0) {

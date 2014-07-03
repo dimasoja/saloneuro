@@ -17,7 +17,7 @@
                 <br/>
                 <div class="search-name">
                     <h2>
-                        <a href="/catalog/<?php echo strtolower(FrontHelper::transliterate($parent->name)) . '/'; ?><?php echo strtolower(FrontHelper::transliterate($page->name)); ?>"><?php echo $page->name; ?></a>'
+                        <a href="/catalog/<?php echo strtolower(FrontHelper::transliterate($parent->name)) . '/'; ?><?php echo strtolower(FrontHelper::transliterate($page->name)); ?>"><?php echo $page->name; ?></a>
                     </h2>
                 </div>
                 <?php echo FrontHelper::truncateHtml($page->description, 700, '...'); ?><br/>

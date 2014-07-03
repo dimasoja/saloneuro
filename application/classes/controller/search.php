@@ -14,6 +14,7 @@ class Controller_Search extends Controller_Base {
 
     public function action_find() {
         $view = new View('scripts/search');
+        $data_products = array();
         $this->page_title = __("");          
         $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbPage('Поиск',substr($_SERVER['REQUEST_URI'],1));
         $get = Safely::safelyGet($_GET);
@@ -91,6 +92,7 @@ class Controller_Search extends Controller_Base {
             }
             }
         }
+
         $view->search = $data;
         $view->search_product = $data_products;
         $view->word = $word;

@@ -11,6 +11,7 @@ class Model_Directory extends ORM
         $root->name = $data['0'];
         $root->categories = $categories;
         $root->save();
+
         $childrens = $this->where('parent_id', '=', $id)->find_all()->as_array();
         foreach ($childrens as $children) {
             $children->delete();

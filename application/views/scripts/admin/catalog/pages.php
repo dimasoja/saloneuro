@@ -701,9 +701,10 @@
                 <th style="text-align: left;"><?php echo $category; ?></th>
 
                 <td><?php echo date("Y-m-d H:i:s", $item->time); ?></td>
-                <td style="padding-left: 0px !important;padding-right: 0px !important;"><input
-                        class="button-turquoise button" value="Редактировать"
-                        onclick="edit(<?php echo $item->id; ?>)"/></td>
+                <td style="padding-left: 0px !important;padding-right: 0px !important;"><a href="/admin/catalog/editpage/<?php echo $item->id; ?>"><input
+                            class="button-turquoise button" value="Редактировать"
+                            /></a>
+                </td>
                 <td style="padding-left: 0px !important;padding-right: 0px !important;"><input
                         class="button-turquoise button" value="Удалить"
                         onclick="deletecat(<?php echo $item->id; ?>)"/></td>
