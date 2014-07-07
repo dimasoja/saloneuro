@@ -21,7 +21,7 @@ class Controller_Base extends Controller_Template {
         if (isset($this->page_title)) {
          //   $this->template->page_title = $this->page_title;
             $this->template->page_title_split = ' :: ';
-        }        
+        }
        $this->template->content = $view;
         $this->template->keywords = $keywords;
         $this->template->description = $description;
@@ -56,9 +56,9 @@ class Controller_Base extends Controller_Template {
         $this->template->order_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array();
         $this->template->all_cities = ORM::factory('addresses')->find_all()->as_array();
         $this->template->sliderdata_home = ORM::factory('postmeta')->get_for_home($postdata);
-        $this->template->sliderdata_business = ORM::factory('postmeta')->get_for_business($postdata);    
+        $this->template->sliderdata_business = ORM::factory('postmeta')->get_for_business($postdata);
         $this->template->products_home = ORM::factory('products')->where('published','=','on')->where('type','=','for_home')->find_all();
-        $this->template->products_business = ORM::factory('products')->where('published','=','on')->where('type','=','for_business')->find_all();       
+        $this->template->products_business = ORM::factory('products')->where('published','=','on')->where('type','=','for_business')->find_all();
     }
 
     public function display_ajax($view) {

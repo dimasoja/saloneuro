@@ -5,7 +5,7 @@ defined('SYSPATH') or die('No direct script access.');
 class Controller_Index extends Controller_Base
 {
 
-    $php_url = $_GLOBAL['REQUEST_URI'];
+//    $php_url = $_GLOBAL['REQUEST_URI'];
 
     public $template = 'layouts/common';
 

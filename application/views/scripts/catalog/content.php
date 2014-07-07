@@ -3,7 +3,7 @@
 <h2><?php echo $page->name; ?></h2>
 <?php $prodid = $page->id; ?>
 <hr/>
-
+<?php $count = 0; ?>
 <div class="connected-carousels">
     <div class="stage">
         <div class="carousel carousel-stage">
@@ -17,7 +17,7 @@
                 <?php foreach ($related_images as $rimage) { ?>
                     <?php if ($baseimageid != $rimage->id_image) { ?>
                         <?php if ($page->featured != $rimage->id_image) { ?>
-
+                            <?php $count++; ?>
                             <li><a href="<?php echo $rimage->path; ?>" class="carouselfancy"
                                    rel="groupfancy"><?php echo FrontHelper::output($rimage->path, 420, 400, 420, 400); ?>
                                     <input type="hidden" class="mainimage" value="<?php echo $rimage->path; ?>"/></a>
@@ -35,8 +35,10 @@
     </div>
 
     <div class="navigation">
-        <a href="#" class="prev prev-navigation">&lsaquo;</a>
-        <a href="#" class="next next-navigation">&rsaquo;</a>
+        <?php if($count>3) { ?>
+            <a href="#" class="prev prev-navigation">&lsaquo;</a>
+            <a href="#" class="next next-navigation">&rsaquo;</a>
+        <?php } ?>
 
         <div class="carousel carousel-navigation">
             <ul>
