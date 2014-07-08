@@ -612,6 +612,15 @@ jQuery(document).ready(function () {
     jQuery(".fancybox").fancybox({
         'beforeShow': function () {
             var city = jQuery('.geocity').html();
+            jQuery('.city-item').each(function(index, value){
+                var e = $(this);
+                if(e.find('img').length>0) {
+                    var id = e.prop('rel');
+                    var html = e.clone();
+                    e.remove();
+                    $('.cities-all').prepend(html);
+                }
+            });
             if (city != '') {
                 jQuery('.change-city-select option').each(function () {
                     if (jQuery.trim(city) == jQuery(this).html()) {
@@ -847,7 +856,7 @@ function changeCity(city) {
 <div class="boxed-area blocks-spacer grey-catalog1">
     <div class="container">
         <div class="category-right-wrapper">
-            <div class="wheretobuyblock">
+            <div class="wheretobuyblock <?php if($session_city=='Санкт-Петербург') echo 'piter'; ?>">
                 <?php echo ORM::factory('settings')->getSetting('trouble'); ?>
             </div>
         </div>
@@ -907,7 +916,7 @@ function changeCity(city) {
                 </div>
             </div>
         </div>
-        <div class="category-right-wrapper">
+        <div class="category-right-wrapper <?php if($session_city=='Санкт-Петербург') echo 'piter'; ?>">
             <?php echo ORM::factory('settings')->getSetting('callus'); ?>
         </div>
 

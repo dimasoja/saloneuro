@@ -539,7 +539,7 @@ class FrontHelper
         }
     }
 
-    static function getProductForBackbone($id_product, $data) {
+        static function getProductForBackbone($id_product, $data) {
 
         $product = ORM::factory('catalog')->where('id', '=', $id_product)->find();
         $result = array();
@@ -768,6 +768,7 @@ class FrontHelper
             $data_sel_grade[] = $key_grade;
         }
 
+
         if ((count($options) > 0) || (isset($resulting['bath']->name))) {
             foreach ($options as $option) {
                 $grade_opt = json_decode($option->value);
@@ -791,6 +792,7 @@ class FrontHelper
                 }
             }
         }
+
         $result['image'] = $resulting['baseimage'];
         $result['pricehtml'] = number_format((double)$priceglobal, 0, ' ', ' ');
         $result['price'] = $priceglobal;
@@ -803,7 +805,7 @@ class FrontHelper
         } else {
             $result['bathname'] = $resulting['bath']->name;
         }
-        $result['gidromassage'] = $resulting['gidromassage'];
+                $result['gidromassage'] = $resulting['gidromassage'];
         $result['underoptions'] = $resulting['underoptions'];
         $result['othersoptions'] = $resulting['othersoptions'];
         $result['othergrades'] = $maingrades;
@@ -897,6 +899,8 @@ class FrontHelper
         }
 
 
+
+
         return $result;
     }
 
@@ -981,7 +985,7 @@ class FrontHelper
         return array();
     }
 
-    static function getProductImageForBackbone($id_product) {
+        static function getProductImageForBackbone($id_product) {
         $product = ORM::factory('catalog')->where('id', '=', $id_product)->find();
         $related_images = array();
         if ($product->featured != '') {
@@ -1091,4 +1095,5 @@ class FrontHelper
         echo json_encode($response);
         die();
     }
+
 }

@@ -58,9 +58,9 @@ class Model_Catalog extends ORM {
         if(isset($data['height']))
             $this->height = $data['height'];
         if(isset($data['form']))
-            $this->form = $data['form'];
+            $this->form = $data['form'];        
         if(isset($data['type_accessory']))
-            $this->type_accessory = $data['type_accessory'];
+            $this->type_accessory = $data['type_accessory'];        
         if(isset($data['type_shower']))
             $this->type_shower = $data['type_shower'];
         if(isset($data['type']))

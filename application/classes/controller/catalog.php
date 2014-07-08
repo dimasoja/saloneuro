@@ -22,15 +22,10 @@ class Controller_Catalog extends Controller_Base
         $this->template->front_name = "/catalog/akrilovye_vanny";
         $this->template->session_city = Session::instance()->get('city', '');
         $city_s = Session::instance()->get('city', '');
-
-
         $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('main','=','on')->where('city', '=', $city_s)->find_all()->as_array();
-
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
-
         $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbPage('Новости', 'news');
         $this->template->id_page = '';
-
         $view = new View('scripts/catalog');
         $view->session_city = $city_s;
         $this->template->widths = ORM::factory('catalog')->where('published','=','on')->group_by('width')->find_all()->as_array();
@@ -140,7 +135,6 @@ class Controller_Catalog extends Controller_Base
                     $item_founded = true;
                     $currents = $check;
                     $id_found = $cat->id;
-
                     $this->template->breadcrumbs = ORM::factory('settings')->generateBreadcrumbCatalog('category', $cat->name, 'catalog/' . $check);
                 }
             }

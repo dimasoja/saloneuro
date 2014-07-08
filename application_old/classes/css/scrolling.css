@@ -1,0 +1,23 @@
+
+DIV#hold {Z-INDEX: 2; OVERFLOW: hidden; WIDTH: 870px; POSITION: relative; HEIGHT: 216px; LEFT: 0px; top:0px;}
+
+DIV#wn {Z-INDEX: 1; LEFT: -4px; OVERFLOW: hidden; WIDTH: 870px; POSITION: absolute; TOP: 0px; HEIGHT: 216px}
+
+DIV#lyr1 {Z-INDEX: 1; LEFT: 0px; VISIBILITY: hidden; POSITION: absolute; TOP: 0px;  LEFT: 0px; }
+
+.arrow{
+	padding:70px 0 0 0;
+}
+.left_arrow{
+	position:absolute;
+	z-index:999;
+	margin-left:-30px;
+}
+.right_arrow{
+	position:absolute;
+	z-index:999;
+	margin-left:8px;
+}
+#thumbs td img{
+	margin-right:18px;
+}

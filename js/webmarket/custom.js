@@ -87,9 +87,9 @@ jQuery(document).ready(function($) {
                 configuration.responsive = false;
             }
             // autoplay param
-            if (true === $this.data("autoplay")) {
-                configuration.auto.play = true;
-            }
+            // if (true === $this.data("autoplay")) {
+            //     configuration.auto.play = true;
+            // }
             // onCreate the slides should not be wider than the container, no matter what
             configuration.onCreate = function() {
                 $this.find(".slide").css({
@@ -205,22 +205,22 @@ jQuery(document).ready(function($) {
                         marginBottom: 0
                     });
                 }
-                if(scrollX>400) {
-                    $(".order").addClass('fixed');
-                    if(jQuery('.order').length) {
-                        jQuery('#toTheTop').css('margin-bottom','110px');
-                        jQuery('.order-image').css('display','block');
-                        jQuery('.order-accessory').css('display','block');
-                        //jQuery('.order-details-show').css('display','block');
-                    }
-                } else {
-                    $(".order").removeClass('fixed');
-                    jQuery('#toTheTop').css('margin-bottom','0px');
-                    jQuery('.order-image').css('display','none');
-                    jQuery('.order-accessory').css('display','none');
-                    jQuery('.order-details').css('display','none');
-                    jQuery('order:not(.fixed) .order-details-show').css('display','none');
-                }
+//                if(scrollX>400) {
+//                    $(".order").addClass('fixed');
+//                    if(jQuery('.order').length) {
+//                        jQuery('#toTheTop').css('margin-bottom','110px');
+//                        jQuery('.order-image').css('display','block');
+//                        jQuery('.order-accessory').css('display','block');
+//                        //jQuery('.order-details-show').css('display','block');
+//                    }
+//                } else {
+//                    $(".order").removeClass('fixed');
+//                    jQuery('#toTheTop').css('margin-bottom','0px');
+//                    jQuery('.order-image').css('display','none');
+//                    jQuery('.order-accessory').css('display','none');
+//                    jQuery('.order-details').css('display','none');
+//                    jQuery('order:not(.fixed) .order-details-show').css('display','none');
+//                }
             });
         }
     };

@@ -185,7 +185,9 @@
     <link rel="stylesheet/less" type="text/css" href="/css/less.less">
     <script src="/js/less.js" type="text/javascript"></script>
     <script src="/js/webmarket/backbone.js" type="text/javascript"></script>
-    <script src="/js/webmarket/underscore.js" type="text/javascript"></script>
+    <script src="/js/webmarket/underscore.js" type="text/javascript"></script>    
+     <script src="/js/respond.js" type="text/javascript"></script>
+    
 </head>
 
 <body class="">

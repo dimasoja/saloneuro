@@ -3,7 +3,7 @@
 <h2><?php echo $page->name; ?></h2>
 <?php $prodid = $page->id; ?>
 <hr/>
-<?php $count = 0; ?>
+<?php $count = count($related_images); ?>
 <div class="connected-carousels">
     <div class="stage">
         <div class="carousel carousel-stage">
@@ -17,7 +17,7 @@
                 <?php foreach ($related_images as $rimage) { ?>
                     <?php if ($baseimageid != $rimage->id_image) { ?>
                         <?php if ($page->featured != $rimage->id_image) { ?>
-                            <?php $count++; ?>
+
                             <li><a href="<?php echo $rimage->path; ?>" class="carouselfancy"
                                    rel="groupfancy"><?php echo FrontHelper::output($rimage->path, 420, 400, 420, 400); ?>
                                     <input type="hidden" class="mainimage" value="<?php echo $rimage->path; ?>"/></a>
@@ -39,7 +39,6 @@
             <a href="#" class="prev prev-navigation">&lsaquo;</a>
             <a href="#" class="next next-navigation">&rsaquo;</a>
         <?php } ?>
-
         <div class="carousel carousel-navigation">
             <ul>
                 <li class=""><?php if(isset($mainimage)) echo FrontHelper::outputRender($mainimage, 50, 50, 50, 50); else echo ""; ?></li>
@@ -130,7 +129,7 @@
                     <?php $count++; ?>
                 <?php } ?>
             </div>
-            <div class="order">
+            <div class="order fixed">
                 <a href="<?php echo $baseimage; ?>" class="order-image button buzz-out"
                    rel="groupfancy"><?php echo FrontHelper::output($baseimage, 50, 50, 50, 50); ?></a>
                 <span class="your-order">Ваш заказ:</span><br/>
@@ -494,7 +493,7 @@
             <?php if ($page->passport != '') { ?>
                 <div class="product-downloads">
                     <a href="/<?php echo $page->passport; ?>" class="width32"><img src="/images/download.png"/>
-                        Инструкция по сборке рамы
+                                                Инструкция по сборке рамы
                     </a>
                 </div>
             <?php } ?>
@@ -567,7 +566,6 @@
                                             <?php } ?>
                                         </div>
                                         <div class="product-price">
-                                            <?php echo $related_product->price; ?>
                                             <?php echo number_format((int)$related_product->price, 0, ' ', ' '); ?> руб.
                                         </div>
                                         <div class="product-related-add"

@@ -61,6 +61,7 @@ class Controller_Admin_Catalog extends Controller_AdminBase
         foreach($search as $value) {
             $value->delete();
         }
+
         $cat = ORM::factory('catalog')->where('id','=',$id)->find();
         $cat->delete();
         ORM::factory('options')->deleteAll($id);
@@ -102,7 +103,7 @@ class Controller_Admin_Catalog extends Controller_AdminBase
             $view->category = ORM::factory('productscat', $category->id);
         }
         $view->catalog = ORM::factory('catalog')->find_all()->as_array();
-        $view->products = ORM::factory('catalog')->find_all()->as_array();
+        $view->products = ORM::factory('catalog')->where('published','=','on')->where('category', 'NOT IN', FrontHelper::getBathCategories())->find_all()->as_array();
         $view->directory = ORM::factory('directory')->getAll($view->product->category);
         $view->grades = ORM::factory('grade')->find_all()->as_array();
         $view->massages = ORM::factory('massage')->find_all()->as_array();

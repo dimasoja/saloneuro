@@ -289,6 +289,15 @@ function validateEmail(email) {
         jQuery(".fancybox").fancybox({
             'beforeShow': function () {
                 var city = jQuery('.geocity').html();
+                jQuery('.city-item').each(function(index, value){
+                    var e = $(this);
+                    if(e.find('img').length>0) {
+                        var id = e.prop('rel');
+                        var html = e.clone();
+                        e.remove();
+                        $('.cities-all').prepend(html);
+                    }
+                });
                 if (city != '') {
                     jQuery('.change-city-select option').each(function () {
                         if (jQuery.trim(city) == jQuery(this).html()) {

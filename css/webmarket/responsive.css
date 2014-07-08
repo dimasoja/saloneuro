@@ -7,6 +7,9 @@
  *
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
+ .logo {
+    width: 175px !important;
+ }
 @-ms-viewport {
     width: device-width;
 }
@@ -54,7 +57,27 @@
     .hidden-desktop {
         display: inherit !important;
     }
-
+    .logotext {
+        width: 100% !important;
+        margin-top:43px !important;
+    }
+    .caroufredsel_wrapper {
+        display:none;
+    }
+    .biruz-title.width286 {
+        width: 89% !important;
+        text-align: center;
+    }
+    header .span5 {
+        clear:both;
+    }
+    header .brand {
+        padding-bottom:0px !important;
+    }
+    .span7.logo {
+        width:100% !important;
+        text-align: center;
+    }
     .visible-desktop {
         display: none !important;
     }
@@ -658,13 +681,45 @@
         width: 266px !important;
     }
 }
-
+@media (min-width: 319px) and (max-width: 321px) {
+.category-image-wrapper {
+    width:88% !important;
+}
+.other {
+    width:100% !important;
+}
+.call-text {
+    width:100% !important;
+}
+.category-right-wrapper {
+    width: 88% !important;
+}
+.button-preimush {
+    width:88% !important;
+}
+.category-right-wrapper { 
+    width:88% !important;
+}
+}
 @media (min-width: 768px) and (max-width: 979px) {
     .row {
         margin-left: -20px;
         *zoom: 1;
     }
-
+    .biruz-title.width286 {
+        width:96% !important;
+    }
+    .caroufredsel_wrapper .brands {
+        left:0px !important;
+    }
+    .benefit {
+        background: url(/images/webmarket/benefits.png);
+        width: 298px !important;
+        float:left;
+        height: 95px !important;
+        background-size: 300px !important;
+        background-repeat: no-repeat;
+    }
     .slide .row {
         margin-left:0px !important;
     }
@@ -1085,7 +1140,7 @@
     .inner-benefit {
         overflow: auto;
         width: 261px;
-        margin-left: 59px;
+        /*margin-left: 59px;*/
     }
     .inner-benefit-title {
         font-size:14px !important
@@ -1101,7 +1156,7 @@
         width: 330px !important;
     }
     .wheretobuyblock {
-        width: 345px !important;
+        width: 341px !important;
         float:left;
     }
     .tobuyonline {
@@ -1275,10 +1330,10 @@
         font-size: 9px
     }
     .category-image-wrapper {
-        width:93% !important
+        width:93%;
     }
     .category-right-wrapper {
-        width: 93% !important;
+        width: 93%;
     }
     .promo-block-welcome {
         overflow: auto;
@@ -1571,12 +1626,24 @@ nav-collapse.collapse {
         height: 54px;
     }
 
-    .benefit {
+    /*.benefit {
         background: url(/images/webmarket/benefits.png);
         width: 330px;
         height: 106px;
         background-size: 236px;
         background-repeat: no-repeat;
+    }*/
+
+    .benefit {
+        background: url(/images/webmarket/benefits.png);
+        width: 299px !important;
+        float:left;
+        height: 106px !important;
+        background-size: 300px !important;
+        background-repeat: no-repeat;
+    }
+    .caroufredsel_wrapper .brands {
+        left:0px !important;
     }
 
 }
@@ -1617,7 +1684,7 @@ nav-collapse.collapse {
         padding-left: 79px;
     }
     .wheretobuyblock {
-        width: 358px !important;
+        width: 354px !important;
         float:left;
     }
     .tobuyonline {
@@ -1630,5 +1697,13 @@ nav-collapse.collapse {
     .promo-block-welcome {
         overflow: auto;
         padding-left: 79px;
+    }
+    header .span5 {
+        width: 280px;
+    }
+    .navbar .nav > li > a {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        font-size:12px;
     }
 }

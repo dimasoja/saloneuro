@@ -33,7 +33,7 @@
         <br/><br/>
         <?php $news = ''; ?>
         <?php $link_news = ''; ?>
-        <?php $mains_new = ORM::factory('news')->where('main', '=', 'on')->find_all()->as_array(); ?>
+        <?php $mains_new = ORM::factory('news')->where('main', '=', 'on')->where('published','=','on')->find_all()->as_array(); ?>
         <?php foreach ($mains_new as $main_new) { ?>
             <?php if (isset($main_new)) {
                 $news = $main_new->short;
@@ -120,6 +120,7 @@
                         </div>
                         <div class="cities">
                             <?php $i = 0;
+
                             foreach ($session_cities as $value) {
                                 if ($value->type == 'address') {
                                     if ($i % 2 == 0) {
@@ -311,9 +312,28 @@ function validateEmail(email) {
     return re.test(email);
 }
 jQuery(document).ready(function () {
+
     jQuery(".fancybox").fancybox({
         'beforeShow': function () {
             var city = jQuery('.geocity').html();
+            jQuery('.city-item').each(function(index, value){
+                var e = $(this);
+                if(e.find('img').length>0) {
+                    var id = e.prop('rel');
+                    var html = e.clone();
+                    e.remove();
+                    $('.cities-all').prepend(html);
+                }
+            });
+            jQuery('.city-item').each(function(index, value){
+                var e = $(this);
+                if(e.find('img').length>0) {
+                    var id = e.prop('rel');
+                    var html = e.clone();
+                    e.remove();
+                    $('.cities-all').prepend(html);
+                }
+            });
             if (city != '') {
                 jQuery('.change-city-select option').each(function () {
                     if (jQuery.trim(city) == jQuery(this).html()) {

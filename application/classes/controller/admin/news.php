@@ -75,6 +75,7 @@ class Controller_Admin_News extends Controller_AdminBase {
             }
             $meta = ORM::factory('meta')->where('id_new', '=', $page_id)->find();
             $meta->keywords = $_POST['keywords'];
+
             $meta->request = $_POST['browser_name'];
             $meta->description = $_POST['description'];
             $meta->meta_title = $_POST['meta_title'];
@@ -93,6 +94,7 @@ class Controller_Admin_News extends Controller_AdminBase {
             $content->short = $_POST['short'];
             $content->content = $_POST['content'];
             $content->title = $_POST['title'];
+            $content->published = $published;
             $content->updated_at = strtotime("now");
             if(isset($_POST['delimage'])) {
                 $check = ORM::factory('images')->where('part', '=', 'news')->where('id_page', '=', $id)->find_all()->as_array();

@@ -705,6 +705,7 @@
                             class="button-turquoise button" value="Редактировать"
                             /></a>
                 </td>
+
                 <td style="padding-left: 0px !important;padding-right: 0px !important;"><input
                         class="button-turquoise button" value="Удалить"
                         onclick="deletecat(<?php echo $item->id; ?>)"/></td>

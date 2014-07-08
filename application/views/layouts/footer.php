@@ -189,6 +189,9 @@
 
 
 <!--  = _ =  -->
+
+<?php echo ORM::factory('settings')->getSetting('yandex_metrika'); ?>
+<?php echo ORM::factory('settings')->getSetting('goole_analytics'); ?>
 <script>
     (function () {
         var widget_id = 699344;

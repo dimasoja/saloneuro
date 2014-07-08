@@ -1,3 +1,11 @@
+.lt-ie9 .container {
+    display:block;
+}
+
+
+
+
+
 /* ========== */
 /* = Custom styles, W Balls HTML Template = */
 /* ========== */
@@ -1656,6 +1664,26 @@ label { font-weight: bold; color: #333333; }
   .dropdown-menu [class*="span"] { width: auto; float: none; }
   .sm-no-pull { float: none; } }
 @media (max-width: 767px) { .darker-stripe, .boxed-area, footer, .fullwidthbanner-container { margin-left: -20px; margin-right: -20px; }
+.benefit {
+        background: url(/images/webmarket/benefits.png);
+        width: 299px !important;
+        float:left;
+        height: 106px !important;
+        background-size: 300px !important;
+        background-repeat: no-repeat;
+    }
+    .caroufredsel_wrapper {
+        display:none;
+    }
+    .category-image-wrapper {
+        
+    }
+    .button-preimush {
+        width:93%;
+    }
+    .production-block-main {
+        width: 100% !important;
+    }
     .fullwidthbanner-container {margin-left: 0px !important; }
   .darker-stripe, .boxed-area { padding-left: 20px; padding-right: 20px; }
   body.boxed { background: none !important; }
@@ -2626,8 +2654,8 @@ margin-left: 8px;
     visibility:hidden !important;
 }
 .production-block-main {
-    width:795px;
-    float:left;
+    width:100%;
+    /*float:left;*/
 }
 .width755 {
     margin-bottom:50px;

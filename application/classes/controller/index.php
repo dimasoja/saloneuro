@@ -5,9 +5,8 @@ defined('SYSPATH') or die('No direct script access.');
 class Controller_Index extends Controller_Base
 {
 
-//    $php_url = $_GLOBAL['REQUEST_URI'];
-
     public $template = 'layouts/common';
+    // $php_url = $_GLOBAL['REQUEST_URI'];
 
     public function __construct($request) {
 
@@ -140,7 +139,6 @@ class Controller_Index extends Controller_Base
         } else {
             $this->template->session_city = 'Ростов-на-Дону';
         }
-
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
         $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('main', '=', 'on')->where('city', '=', $this->template->session_city)->find_all()->as_array();
         $this->template->order_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array();
@@ -661,7 +659,7 @@ class Controller_Index extends Controller_Base
         exit();
     }
 
-    public function action_getproduct() {
+        public function action_getproduct() {
         if (Request::$is_ajax OR $this->request !== Request::instance()) {
             $this->auto_render = FALSE;
             header('content-type: application/json');
@@ -706,6 +704,8 @@ class Controller_Index extends Controller_Base
         FrontHelper::getProductImageForBackbone($post['id']);
         die();
     }
+
+
 
     function action_generatesimages() {
         $post = Safely::safelyGet($_POST);
