@@ -26,6 +26,9 @@
                         <?php //echo $contact->order; ?>
                     <?php $arr = json_decode($contact->order); ?>
                         <?php foreach($arr as $key=>$item) {
+                            if($key=='lr') {
+                                if($item=='right') echo "Правая ванна"; else echo "Левая ванна";
+                             }
                              if($key=='grades') {
                                  echo "<h1>Комплектация</h1>";
                                  foreach($arr->grades as $key_grade=>$item_grade) {

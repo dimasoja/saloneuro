@@ -58,6 +58,7 @@
 <form class="form-horizontal" action="/admin/catalog/editpage/<?php echo $product->id; ?>"
       method="POST"
       enctype="multipart/form-data">
+
 <div class="widget-header">
     <div style="display:none"><?php echo $category->name; ?></div>
     <h5>Товар <?php if (isset($category->name)) { ?>(<?php echo $category->name; ?>) <?php } ?>
@@ -393,7 +394,7 @@
                                     echo 'style="height:504px !important;"';
                                 } ?>>
                                     <div class="img_block" <?php if (count($massage_image) == 8) {
-                                        echo 'style="height:272px"';
+                                        echo 'style="height:137px"';
                                     } ?>>
                                         <img src="<?php echo $image->path; ?>"
                                              style="height:136px !important; clear:both">
@@ -409,41 +410,55 @@
                                         <?php } ?>
 
                                     </div>
-                                    <?php if (count($massage_image) != 8) { ?>
-                                        <a id="upload<?php echo $id_image; ?>">Загрузить изображение пневмо</a>
-                                        <script type="text/javascript">
-                                            jQuery(document).ready(function () {
-                                                var upload1 = new AjaxUpload(jQuery('#upload<?php echo $id_image; ?>'), {
-                                                    action: '/admin/catalog/uploadmassage',
-                                                    name: 'uploadfile',
-                                                    data: {id: '123'},
-                                                    onSubmit: function (file, ext) {
-                                                        if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) {
-                                                            status.text('Поддерживаемые форматы JPG, PNG или GIF');
-                                                            return false;
-                                                        }
-                                                        //status.text('Загрузка...');
-                                                    },
-                                                    onComplete: function (file, response) {
-                                                        var response_image = response.split("~");
-                                                        var id_image = response_image[0];
-                                                        var path = response_image[1];
-                                                        var select_html = jQuery('.select_for_massage').html();
-                                                        var forsun_html = jQuery('.forsun_for_massage').html();
-                                                        var price_for_massage = jQuery('.price_for_massage').html();
-                                                        var default_for_massage = jQuery('.default_for_massage').html();
-                                                        var required_for_massage = jQuery('.required_for_massage').html();
-                                                        var underoption_for_massage = jQuery('.underoption_for_massage').html();
-                                                        var portfolio = jQuery('.massage-options');
-                                                        var image_html = '<img src="' + path + '" style="height: 136px !important;">';
-                                                        var hidden = '<input type="hidden" class="image' + id_image + '" name="pnevmo[<?php echo $id_image; ?>]" value="' + id_image + '" rel="' + id_image + '"/> ';
-                                                        jQuery('#upload<?php echo $id_image; ?>').parent().find('.img_block').append(image_html).append(hidden).css('height', '290px').parent().css('height', '538px');
+
+
+                                    <a id="upload<?php echo $id_image; ?>" <?php if (count($massage_image) == 8) {
+                                        echo 'style="display:none"';
+                                    } ?>>Загрузить изображение пневмо</a>
+                                    <script type="text/javascript">
+                                        jQuery(document).ready(function () {
+                                            var upload1 = new AjaxUpload(jQuery('#upload<?php echo $id_image; ?>'), {
+                                                action: '/admin/catalog/uploadmassage',
+                                                name: 'uploadfile',
+                                                data: {id: '123'},
+                                                onSubmit: function (file, ext) {
+                                                    if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) {
+                                                        status.text('Поддерживаемые форматы JPG, PNG или GIF');
+                                                        return false;
                                                     }
-                                                });
+                                                    //status.text('Загрузка...');
+                                                },
+                                                onComplete: function (file, response) {
+                                                    var response_image = response.split("~");
+                                                    var id_image = response_image[0];
+                                                    var path = response_image[1];
+                                                    var select_html = jQuery('.select_for_massage').html();
+                                                    var forsun_html = jQuery('.forsun_for_massage').html();
+                                                    var price_for_massage = jQuery('.price_for_massage').html();
+                                                    var default_for_massage = jQuery('.default_for_massage').html();
+                                                    var required_for_massage = jQuery('.required_for_massage').html();
+                                                    var underoption_for_massage = jQuery('.underoption_for_massage').html();
+                                                    var portfolio = jQuery('.massage-options');
+
+                                                        jQuery('.imagerel<?php echo $id_image; ?> .del_block').append('<a href="javascript:void:(0);" class="del_vid del_vid' + id_image + '" onclick="deletePnevmo('+id_image+', <?php echo $id_image; ?>);">Удалить Пневмо</a>');
+
+                                                    var image_html = '<img src="' + path + '" style="height: 136px !important;">';
+                                                    jQuery('#upload<?php echo $id_image; ?>').css('display', 'none');
+                                                    var hidden = '<input type="hidden" class="image' + id_image + '" name="pnevmo[<?php echo $id_image; ?>]" value="' + id_image + '" rel="' + id_image + '"/> ';
+                                                    jQuery('#upload<?php echo $id_image; ?>').parent().find('.img_block').append(image_html).append(hidden).css('height', '137px').parent().css('height', '538px');
+                                                    jQuery('#upload<?php echo $id_image; ?>').parent().find('.img_block')
+                                                }
                                             });
-                                        </script>
-                                    <?php } ?>
+                                        });
+                                    </script>
+
                                     <div class="del_block">
+                                        <?php if(isset($id_im_pnevmo)) { ?>
+                                            <a href="javascript:void:(0);"
+                                               class="del_vid pnevmo del_vid<?php echo $id_image; ?>"
+                                               onclick="deletePnevmo(<?php echo $id_im_pnevmo; ?>, <?php echo $id_image; ?>);">Удалить
+                                                Пневмо</a>
+                                        <?php } ?>
                                         <a href="javascript:void:(0);" class="del_vid"
                                            onclick="deletePortfolio(<?php echo $id_image; ?>);">Удалить</a>
                                     </div>
@@ -867,6 +882,7 @@
         <?php } ?>
     <?php } ?>
 </div>
+<div class="hidden-block" style="display:none"></div>
 <input type="hidden" class="num_options" value="<?php echo $count; ?>"/>
 <input type="hidden" name="category" value="<?php if (isset($category->id)) {
     echo $category->id;
@@ -884,6 +900,14 @@
 
 <br/>
 <script type="text/javascript">
+    function deletePnevmo(id, ids) {
+        jQuery('.image' + id).remove();
+//        jQuery('.imagerel' + id).remove();
+        jQuery('.imagerel'+ids+' .img_block img:eq(1)').remove();
+        jQuery('.del_vid'+ids).remove();
+        jQuery('.del_vid'+id).remove();
+        jQuery('#upload'+ids).css('display','block');
+    }
     jQuery(document).ready(function () {
         var btnUpload = jQuery('#upload3');
         if (btnUpload.length) {
@@ -987,7 +1011,9 @@
                             var image_html = '<img src="' + path + '" style="height: 136px !important;">';
                             var hidden = '<input type="hidden" class="image' + id_image + '" name="pnevmo[' + ids_image + ']" value="' + id_image + '" rel="' + id_image + '"/> ';
                             console.log(image_html);
-                            jQuery('#upload' + ids_image).parent().find('.img_block').append(image_html).append(hidden).css('height', '290px').parent().css('height', '538px');
+                            jQuery('.imagerel'+ids_image+' .del_block').append('<a href="javascript:void:(0);" class="del_vid del_vid' + id_image + '" onclick="deletePnevmo(' + id_image + ', ' + ids_image + ');">Удалить Пневмо</a>');
+                            jQuery('#upload' + ids_image).css('display', 'none');
+                            jQuery('#upload' + ids_image).parent().find('.img_block').append(image_html).append(hidden).css('height', '137px').parent().css('height', '538px');
                         }
                     });
                 }
@@ -1058,17 +1084,18 @@
 
         $('.button-send-main').click(function (event) {
             var $form = jQuery('.form-horizontal');
+            var $formhidden =  jQuery('.hidden-block');
             if (jQuery('#dynamic2').length) {
                 var nHidden1 = table2.fnGetHiddenTrNodes();
-                $form.append(nHidden1);
+                $formhidden.append(nHidden1);
             }
             if (jQuery('#dynamic3').length) {
                 var nHidden2 = table3.fnGetHiddenTrNodes();
-                $form.append(nHidden2);
+                $formhidden.append(nHidden2);
             }
             if (jQuery('#dynamic4').length) {
                 var nHidden3 = table4.fnGetHiddenTrNodes();
-                $form.append(nHidden3);
+                $formhidden.append(nHidden3);
             }
             $form.submit();
 

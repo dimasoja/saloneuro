@@ -294,12 +294,6 @@
 
 
 <br>
-<!--my $brand_search = "";-->
-<!--if($search_text) {-->
-<!--if ($catalog_group_id == 1) {-->
-<!--$brand_search = " AND c.name LIKE CONCAT('%', '".$search_text."', '%')";-->
-<!--}-->
-<!--}-->
 
 <div class="clearboth">&nbsp;</div>
 </form>

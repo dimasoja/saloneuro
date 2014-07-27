@@ -974,14 +974,16 @@ pre { border-radius: 0; background-color: #f3f3f3; }
 
 .boxed .checkout-container { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
 
-.checkout-steps { position: relative; padding: 30px 40px; margin: 20px -20px 30px; }
+.checkout-steps { position: relative; padding: 30px 40px;
+    /*margin: 20px -20px 30px; */
+}
 .checkout-steps:after, .checkout-steps:before { content: ""; position: absolute; left: 0; right: 0; height: 8px; }
 .checkout-steps:before { background: -webkit-gradient(radial, 50% 100%, 0, 50% 100%, 100, color-stop(0%, rgba(0, 0, 0, 0.1)), color-stop(100%, rgba(0, 0, 0, 0))); background: -webkit-radial-gradient(center bottom, ellipse farthest-side, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)); background: -moz-radial-gradient(center bottom, ellipse farthest-side, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)); background: -o-radial-gradient(center bottom, ellipse farthest-side, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)); background: radial-gradient(center bottom, ellipse farthest-side, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)); top: 0; }
 .checkout-steps:after { background: -webkit-gradient(radial, 50% 0%, 0, 50% 0%, 100, color-stop(0%, rgba(0, 0, 0, 0.1)), color-stop(100%, rgba(0, 0, 0, 0))); background: -webkit-radial-gradient(center top, ellipse farthest-side, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)); background: -moz-radial-gradient(center top, ellipse farthest-side, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)); background: -o-radial-gradient(center top, ellipse farthest-side, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)); background: radial-gradient(center top, ellipse farthest-side, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)); bottom: 0; }
 .checkout-steps .step { width: 25%; float: left; position: relative; }
 .checkout-steps .step:before { content: ""; position: absolute; top: 10px; left: 0; right: 0; height: 2px; background: #e6e6e6; z-index: 0; }
-.checkout-steps .step:first-of-type:before { left: 50%; }
-.checkout-steps .step:last-of-type:before { right: 50%; }
+/*.checkout-steps .step:first-of-type:before { left: 50%; }*/
+/*.checkout-steps .step:last-of-type:before { right: 50%; }*/
 .checkout-steps .step.active:last-of-type:before, .checkout-steps .step.done:last-of-type:before { background: #00becc; }
 .checkout-steps .step.active .step-badge, .checkout-steps .step.done .step-badge { background-color: #00becc; color: #fff; }
 .checkout-steps .step.active { color: #34353e; }
@@ -2668,30 +2670,33 @@ margin-left: 8px;
     width:100%;
     text-align:center;
 }
-.step {
-    font-family: Helvetica, Arial, sans-serif !important;
-    opacity: 0.5;
-    filter:alpha(opacity=50);
-    background-color: #99CD99;
-    border: 0px;
-    color: white;
-    font-style: italic;
-    font-size: 14px;
-    padding: 17px 9px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-    width: 162px;
-    float: left;
-    margin-right:6px;
-    text-align: center;
-    margin-top: 4px;
-    cursor: pointer;
-}
-.step.active {
-    background-color: #99CD99;
-    opacity:1;
-    filter:alpha(opacity=100);
+/*.step {*/
+    /*font-family: Helvetica, Arial, sans-serif !important;*/
+    /*opacity: 0.5;*/
+    /*filter:alpha(opacity=50);*/
+    /*background-color: #99CD99;*/
+    /*border: 0px;*/
+    /*color: white;*/
+    /*font-style: italic;*/
+    /*font-size: 14px;*/
+    /*padding: 17px 9px;*/
+    /*-webkit-border-radius: 6px;*/
+    /*-moz-border-radius: 6px;*/
+    /*border-radius: 6px;*/
+    /*width: 162px;*/
+    /*float: left;*/
+    /*margin-right:6px;*/
+    /*text-align: center;*/
+    /*margin-top: 4px;*/
+    /*cursor: pointer;*/
+/*}*/
+/*.step.active {*/
+    /*background-color: #99CD99;*/
+    /*opacity:1;*/
+    /*filter:alpha(opacity=100);*/
+/*}*/
+.checkout-steps a {
+    color: #727272 !important;
 }
 .steps, .progres {
     overflow:auto;
@@ -3147,6 +3152,18 @@ margin-top: 22px;
 }
 .lookonthis {
     display:none !important;
+}
+.accessory-check {
+    margin-left:20px !important;
+    margin-right: 6px !important;
+}
+.bath-step4-info label {
+    text-align:left;
+    font-size: 13px !important;
+}
+.bath-step4-info {
+    width: 50%;
+    float: left;
 }
 .fancybox-nav {
     background-color: none !important;

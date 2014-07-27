@@ -116,7 +116,7 @@ class phpMorphy_Storage_File extends phpMorphy_Storage {
     
     function open($fileName) {
 
-        $fileName = str_replace('new.thermolux-euro.ruapplication', 'new.thermolux-euro.ru/application', $fileName);        
+        $fileName = str_replace('saloneuroapplication', 'saloneuro/application', $fileName);
         if(false === ($fh = fopen($fileName, 'rb'))) {
             die(var_dump($fileName));
             throw new phpMorphy_Exception("Can`t open $this->file_name file");

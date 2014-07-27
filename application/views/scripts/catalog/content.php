@@ -8,12 +8,18 @@
     <div class="stage">
         <div class="carousel carousel-stage">
             <ul>
-                <li><a href="<?php if(isset($mainimage)) echo $mainimage; else echo ''; ?>" class="carouselfancy "
+                <li><a href="<?php if (isset($mainimage)) {
+                        echo $mainimage;
+                    } else {
+                        echo '';
+                    } ?>" class="carouselfancy "
                        rel="groupfancy"><?php echo FrontHelper::output($mainimage, 420, 400, 420, 400); ?></a>
                     <!--                <li><a href="--><?php //echo $baseemptyimage; ?><!--" class="carouselfancy"
                        rel="groupfancy"><?php echo FrontHelper::output($baseemptyimage, 420, 400, 420, 400); ?></a></li>-->
+                    <?php if (in_array($product->category, FrontHelper::getBathCategories())) { ?>
                 <li><a href="<?php echo $baseimage; ?>" class="carouselfancy maincarousel"
-                       rel="groupfancy"><?php echo FrontHelper::output($baseimage, 420, 400, 420, 400); ?></a></li>
+                       rel="groupfancy"><?php echo FrontHelper::output($baseimage, 420, 400, 420, 400); ?></a>
+                </li><?php } ?>
                 <?php foreach ($related_images as $rimage) { ?>
                     <?php if ($baseimageid != $rimage->id_image) { ?>
                         <?php if ($page->featured != $rimage->id_image) { ?>
@@ -35,16 +41,22 @@
     </div>
 
     <div class="navigation">
-        <?php if($count>3) { ?>
+        <?php if ($count > 3) { ?>
             <a href="#" class="prev prev-navigation">&lsaquo;</a>
             <a href="#" class="next next-navigation">&rsaquo;</a>
         <?php } ?>
         <div class="carousel carousel-navigation">
             <ul>
-                <li class=""><?php if(isset($mainimage)) echo FrontHelper::outputRender($mainimage, 50, 50, 50, 50); else echo ""; ?></li>
+                <li class=""><?php if (isset($mainimage)) {
+                        echo FrontHelper::outputRender($mainimage, 50, 50, 50, 50);
+                    } else {
+                        echo "";
+                    } ?></li>
                 <!--                <li class="">-->
                 <?php //echo FrontHelper::outputRender($baseemptyimage, 50, 50, 50, 50); ?><!--</li>-->
-                <li class="maincarouselsmall"><?php echo FrontHelper::output($baseimage, 50, 50, 50, 50); ?></li>
+                <?php if (in_array($product->category, FrontHelper::getBathCategories())) { ?>
+                    <li class="maincarouselsmall"><?php echo FrontHelper::output($baseimage, 50, 50, 50, 50); ?></li>
+                <?php } ?>
                 <?php //$options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $page->id)->find_all()->as_array(); ?>
                 <?php //if (count($options) > 0) { ?>
                 <?php foreach ($related_images as $rimage) { ?>
@@ -493,7 +505,7 @@
             <?php if ($page->passport != '') { ?>
                 <div class="product-downloads">
                     <a href="/<?php echo $page->passport; ?>" class="width32"><img src="/images/download.png"/>
-                                                Инструкция по сборке рамы
+                        Инструкция по сборке рамы
                     </a>
                 </div>
             <?php } ?>
@@ -545,7 +557,7 @@
                             <?php for ($j = 0; $j < count($access[$i]); $j++) { ?>
                                 <?php $image_related = ORM::factory('catalog')->where('id', '=', $access[$i][$j]->value)->find(); ?>
                                 <?php $image = ORM::factory('images')->where('id_image', '=', $image_related->featured)->find(); ?>
-                                <?php $related_product = ORM::factory('catalog')->where('id', '=', $access[$i][$j]->value)->find(); ?>
+                                <?php $related_product = ORM::factory('catalog')->where('id', '=', $access[$i][$j]->value)->where('published', '=', 'on')->find(); ?>
                                 <?php if (isset($image->id_image)) { ?>
 
                                     <div class="related-product">
@@ -765,7 +777,7 @@ $(document).ready(function () {
     jQuery('.order-image').fancybox({
         'beforeShow': function () {
             jQuery('.fancybox-wrap').addClass('certif-fancybox');
-            if(jQuery('.lrchoise.leftchoise').hasClass('active')) {
+            if (jQuery('.lrchoise.leftchoise').hasClass('active')) {
                 jQuery('.fancybox-image').addClass('reflection');
             }
         }

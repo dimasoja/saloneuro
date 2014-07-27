@@ -659,7 +659,7 @@ class Controller_Index extends Controller_Base
         exit();
     }
 
-        public function action_getproduct() {
+    public function action_getproduct() {
         if (Request::$is_ajax OR $this->request !== Request::instance()) {
             $this->auto_render = FALSE;
             header('content-type: application/json');

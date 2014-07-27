@@ -30,7 +30,7 @@
         <a href="/news">
             <input type="button" class="biruz" value="НОВОСТИ И/ИЛИ АКЦИИ КОМПАНИИ"/>
         </a>
-        <br/><br/>
+
         <?php $news = ''; ?>
         <?php $link_news = ''; ?>
         <?php $mains_new = ORM::factory('news')->where('main', '=', 'on')->where('published','=','on')->find_all()->as_array(); ?>

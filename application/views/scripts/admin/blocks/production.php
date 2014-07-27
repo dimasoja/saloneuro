@@ -46,6 +46,7 @@
             jQuery('.tutu').click(function () {
                 CKEDITOR.instances['production'].updateElement();
                 var production = jQuery('#production').val();
+
                 jQuery.post('/admin/index/saveproduction', {production: production}, function (data) {
                     console.log(data);
                     jQuery('.alert.alert-info.noMargin font').html('Сохранено.');

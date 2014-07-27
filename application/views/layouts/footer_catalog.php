@@ -18,7 +18,7 @@
         <div class="container">
             <div class="row">
                 <div class="span6">
-                    &copy; Все права защищены. Thermolux
+                    <?php echo ORM::factory('settings')->getSetting('copyright'); ?>
                 </div>
                 <div class="span6">
                     <!--                    <div class="pull-right">Webmarket HTML Template by <a href="http://www.proteusthemes.com">ProteusThemes</a>-->
@@ -198,6 +198,9 @@
         s.parentNode.insertBefore(hcc, s.nextSibling);
     })();
 </script>
-
+<?php echo ORM::factory('settings')->getSetting('vk'); ?>
+<?php echo ORM::factory('settings')->getSetting('twitter'); ?>
+<?php echo ORM::factory('settings')->getSetting('facebook'); ?>
+<?php echo ORM::factory('settings')->getSetting('odnoklassniki'); ?>
 </body>
 </html>

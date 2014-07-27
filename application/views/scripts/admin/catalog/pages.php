@@ -12,7 +12,7 @@
         <?php echo $error; ?>
     </div>
 <?php } ?>
-<div class="inner-content">
+<div class="inner-content producttable" style="margin: 30px 0px 0px 0px !important;">
 <div class="widget-content" align="center">
 <?php if (!isset($add_product)) { ?>
     <a href="#" class="button button-blue marginbottom30"><img src="/images/admin/icon/14x14/white/download4.png"
@@ -653,7 +653,9 @@
                             var image_html = '<img src="' + path + '" style="height: 136px !important;">';
                             var hidden = '<input type="hidden" class="image' + id_image + '" name="pnevmo['+ids_image+']" value="' + id_image + '" rel="' + id_image + '"/> ';
                             console.log(image_html);
-                            jQuery('#upload'+ids_image).parent().find('.img_block').append(image_html).append(hidden).css('height','290px').parent().css('height','538px');
+                            jQuery('.del_block').append('<a href="javascript:void:(0);" class="del_vid del_vid'+id_image+'" onclick="deletePnevmo('+id_image+', '+ids_image+');">Удалить Пневмо</a>');
+                            jQuery('#upload'+ids_image).css('display','none');
+                            jQuery('#upload'+ids_image).parent().find('.img_block').append(image_html).append(hidden).css('height','137px').parent().css('height','538px');
                         }
                     });
                 }
@@ -669,6 +671,13 @@
         jQuery('.image' + id).remove();
         jQuery('.imagerel' + id).remove();
     }
+    function deletePnevmo(id, ids) {
+        jQuery('.image' + id).remove();
+        jQuery('.imagerel' + id).remove();
+        jQuery('.img_block img:eq(1)').remove();
+        jQuery('.del_vid'+id).remove();
+        jQuery('#upload'+ids).css('display','block');
+    }
 </script>
 
 <div class="table-container">
@@ -679,6 +688,7 @@
             <th>Наименование</th>
             <th>Цена</th>
             <th>Категория</th>
+            <th>Вкл?</th>
             <th>Дата изменения</th>
             <th></th>
             <th></th>
@@ -698,20 +708,25 @@
                 } else {
                     $category = '';
                 } ?>
-                <th style="text-align: left;"><?php echo $category; ?></th>
 
+                <td style="text-align: left;"><i><?php echo $category; ?></i></td>
+                <td><?php if($item->published) {
+                        echo 'Да';
+                    } else {
+                        echo 'Нет';
+                    } ?></td>
                 <td><?php echo date("Y-m-d H:i:s", $item->time); ?></td>
                 <td style="padding-left: 0px !important;padding-right: 0px !important;"><a href="/admin/catalog/editpage/<?php echo $item->id; ?>"><input
-                            class="button-turquoise button" value="Редактировать"
+                            class="button-turquoise button" style="width:120px;" value="Редактировать"
                             /></a>
                 </td>
 
                 <td style="padding-left: 0px !important;padding-right: 0px !important;"><input
                         class="button-turquoise button" value="Удалить"
-                        onclick="deletecat(<?php echo $item->id; ?>)"/></td>
+                        onclick="deletecat(<?php echo $item->id; ?>)" style="width:82px;" /></td>
                 <td style="padding-left: 0px !important;padding-right: 0px !important;"><input
                         class="button-turquoise button" value="Копировать"
-                        onclick="copy(<?php echo $item->id; ?>)"/></td>
+                        onclick="copy(<?php echo $item->id; ?>)" style="width:102px;" /></td>
             </tr>
         <?php } ?>
         </tbody>

@@ -5450,3 +5450,7 @@ ul.profile-options li a img {
     box-shadow: 5px 4px 24px lightgrey;
     width: 315px !important;
 }
+.producttable .default-table td, .default-table th {
+    padding-left: 2px !important;
+    padding-right: 11px !important;
+}
