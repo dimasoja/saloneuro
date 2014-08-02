@@ -3175,7 +3175,19 @@ margin-top: 22px;
 }
 .lrchoise.active img {
     border: 1px solid rgb(106, 171, 187);
-
+}
+.tp-loader-bath {
+    background: url(../webmarket/loader.gif) no-repeat 390px 180px;
+    background-color: #fff;
+    margin-left: -27px;
+    margin-top: 142px;
+    z-index: 100;
+    position: absolute;
+    width: 772px;
+    height: 407px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }
 .cities {
     overflow:hidden !important;

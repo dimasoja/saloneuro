@@ -430,7 +430,7 @@
                 $massage = ORM::factory('massage')->where('id', '=', $option['option_id'])->find();
                 $image = ORM::factory('images')->where('id_image', '=', $option['image'])->find();
                 ?>
-                <div class="grade-item <?php if ($massage->electronic == 'on') {
+                <div class="grade-item others <?php if ($massage->electronic == 'on') {
                     echo 'electronic';
                 } ?>">
                     <div class="grade-first-col">
@@ -934,6 +934,7 @@ $(document).ready(function () {
             var priceproduct = jQuery('.global-price')
             var globalprice = priceproduct.attr('data-value');
             var e = jQuery(this).find('.add-grade');
+            var rama_elem = $(this).find(".grade-name:contains('Рама')").parents().eq(1);
             var name = jQuery.trim(e.parents('.grade-item').find('.grade-name').html());
             var grade = e.attr('data-grade');
             var image = jQuery('[data-grade=' + grade + ']').parents('.grade-item').find('.grade-image').html();
@@ -941,12 +942,21 @@ $(document).ready(function () {
             var hasActive = e.parent().hasClass('active');
 
             if (hasActive) {
+                if(rama_elem.length==1) {
+                    if($('.gidromassage .grade-price').hasClass('active')) {
+                        $('.gidromassage .grade-price').trigger('click');
+                    }
+                    if($('.others .massage-price').hasClass('active')) {
+                        $('.others .massage-price').trigger('click');
+                    }
+                }
                 e.parent().removeClass('active');
                 e.html('Добавить комплектацию');
                 delete order['grades'][grade];
                 jQuery('.order-grade[data-id=' + grade + ']').remove();
                 globalprice = parseInt(globalprice) - parseInt(price);
             } else {
+
                 e.parent().addClass('active');
                 e.html('Убрать комплектацию');
                 order['grades'][grade] = price;
@@ -960,12 +970,11 @@ $(document).ready(function () {
         }
     });
     jQuery('.grade-price').not('.required').not('.first').click(function (e) {
-        console.log('------');
-        console.log(e.target.className);
-        console.log('------');
+
         var priceproduct = jQuery('.global-price')
         var globalprice = priceproduct.attr('data-value');
         var e = jQuery(this).find('.add-grade');
+        var rama_elem = $(this).parents().eq(3).find(".grade-name:contains('Рама')").parents().eq(1);
         var name = jQuery.trim(e.parents('.grade-item').find('.grade-name').html());
         var grade = e.attr('data-grade');
         var image = jQuery('[data-grade=' + grade + ']').parents('.grade-item').find('.grade-image').html();
@@ -973,13 +982,20 @@ $(document).ready(function () {
         var hasActive = e.parent().hasClass('active');
 
         if (hasActive) {
+            if(rama_elem.length==1) {
+                if($('.gidromassage .grade-price').hasClass('active')) {
+                    $('.gidromassage .grade-price').trigger('click');
+                }
+                if($('.others .massage-price').hasClass('active')) {
+                    $('.others .massage-price').trigger('click');
+                }
+            }
             e.parent().removeClass('active');
             e.html('Добавить комплектацию');
             delete order['grades'][grade];
             jQuery('.order-grade[data-id=' + grade + ']').remove();
             globalprice = parseInt(globalprice) - parseInt(price);
         } else {
-
             e.parent().addClass('active');
             e.html('Убрать комплектацию');
             order['grades'][grade] = price;
@@ -1009,8 +1025,6 @@ $(document).ready(function () {
         var mainimage = jQuery('.baseimage').val();
         var isElectronic = jQuery(this).hasClass('electronic');
         var product_id = jQuery('.product-id').val();
-        var priceproduct = jQuery('.global-price')
-        var globalprice = priceproduct.attr('data-value');
         var image_carousel = jQuery('.hidden-carousel-image').html();
         var big_image = jQuery('.hidden-carousel-image img');
         var carousel_big = jQuery('.carousel.carousel-stage ul');
@@ -1030,6 +1044,18 @@ $(document).ready(function () {
         var hasActive = e.parent().hasClass('active');
         var image_small = jQuery('[data-massage=' + massage + ']').parents('.grade-item').find('.massage-image').html();
         var image = e.attr('data-image');
+        <?php if (in_array($product->category, FrontHelper::getAcrylicCategories())) { ?>
+            if(!hasActive) {
+                var rama_elem = $(".grade-product .grade-name:contains('Рама')").parents().eq(1);
+                var grade_rama = rama_elem.find('.add-grade');
+                var rama_isActive = rama_elem.find('.grade-price').hasClass('active');
+                if(!rama_isActive) {
+                    grade_rama.trigger('click');
+                }
+            }
+        <?php } ?>
+        var priceproduct = jQuery('.global-price')
+        var globalprice = priceproduct.attr('data-value');
         if (checkgidrooption == true) {
             if (checkgidromassage != true) {
                 gidromassage_price.addClass('active');

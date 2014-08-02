@@ -1,133 +1,70 @@
 <input type="hidden" value="<?php echo $this_product_id; ?>" id="current_product"/>
+<div class="tp-loader-bath" style="display: none;"></div>
 <div id="steps-container">
 
 </div>
 <div class="order-fixed-bottom order fixed">
 
 </div>
-
+<div class="hidden-container dn"></div>
 <script type="text/template" id="order">
 <div class="order fixed">
-    <a href="/uploads/withopt1406488667.png" class="order-image button" rel="groupfancy" style="display: block;"><img
-            src="/uploads/withopt1406488667.png" width="41" height="60" style="margin-top:0px;margin-left:9.5px;"></a>
+    <a href="<%= product.image %>" class="order-image button" rel="groupfancy" style="display: block;"><%= product.smallimage %></a>
     <span class="your-order">Ваш заказ:</span><br>
-    <span class="floatleft">Акриловая ванна Thermolux LEDA 170x75                                    </span>
-
-                <span class="floatright block-price">
-
-                                                                        <span class="global-price" data-value="240650">240 650 руб.</span>
-                        <br>
-                                        <span class="order-details-show"
-                                              style="display: block;"> Просмотреть заказ</span>
-                    <a href="#order-ways" class="order-form">
-                        <span class="order-button"> Заказать</span>
-                    </a>
-                </span>
-
+    <span class="floatleft"><%= product.name %></span>
+    <span class="floatright block-price">
+    <span class="global-price" data-value="<%= product.price %>"><%= product.pricehtml %> руб.</span>
+    <br>
+    <span class="order-details-show" style="display: block;"> Просмотреть заказ</span>
+        <a href="#order-ways" class="order-form">
+            <span class="order-button"> Заказать</span>
+        </a>
+    </span>
     <div class="clearboth order-details" style="display:none">
-        <span class="floatleft accessory"></span>
-
+    <span class="floatleft accessory"></span>
+    <% if(product.fororder_grades.length != 0) { %>
         <div class="grade-details-header" style="display: block;"><b>Комплектация</b></div>
-        <div class="grade-details"><span class="order-grade floatleft" data-id="34"><span class="pl">
-                        <img src="/uploads/grades/ptfxrs15mxyhcg3gepso.jpg">
+        <div class="grade-details">
+            <% _.each(product.fororder_grades, function (grade) { %>
+                <span class="order-grade floatleft" data-id="<%= grade.id %>">
+                    <span class="pl">
+                        <%= grade.image %>
                     </span>
-                        Ванна (LEDA 170 x 75)                    </span><span class="order-grade floatleft"
-                                                                              data-id="37"><span class="pl">
-                                <img src="/uploads/grades/9djrkpgquqbis8opeyyo.jpg">
-                            </span>Панель торцевая (LEDA 170 x 75)</span><span class="order-grade floatleft"
-                                                                               data-id="35"><span class="pl">
-                                <img src="/uploads/grades/nhizjei7ixgjqdlw7pao.jpg">
-                            </span>Рама к ванне (LEDA 170 x 75)</span><span class="order-grade floatleft"
-                                                                            data-id="36"><span class="pl">
-                                <img src="/uploads/grades/xywsnc37lp5kugiwi6yz.jpg">
-                            </span>Панель фронтальная (LEDA 170 x 75)</span></div>
-        <div class="massage-details-header" style="display: block;"><b>Массажные опции</b></div>
-        <div class="massage-details"><span class="order-massage floatleft" data-id="9"><span class="pl">
-                                <img src="/uploads/massages/olh8bfvvgvmmmlkeklzb.jpg">
-
-                                <div class="lookonthis"><a href="/uploads/massageimages/w8izllixnlhwtnprnr97.png">Посмотреть</a>
-                                </div>
-                            </span>
-                                    Гидромассаж                                </span><span
-                class="order-massage floatleft" data-id="10"><span class="pl">
-                                        <img src="/uploads/massages/2cf5ywqaiwyvqz4z1xcu.jpg">
-
-                                        <div class="lookonthis"><a href="">Посмотреть</a>
-                                        </div>
-                                    </span>Гидромассаж спины                                            <!--(<span class="switch-gidro">Раскрыть</span>)--></span><span
-                class="order-massage floatleft" data-id="14"><span class="pl">
-                            <img src="/uploads/massages/ylrpdtmvogkf9w8xhllf.jpg">
-
-                            <div class="lookonthis"><a
-                                    href="/uploads/massageimages/lny6xbvpfg4kpkfxtaba.png">Посмотреть</a></div>
-                        </span>Аэромассажная система</span><span class="order-massage floatleft" data-id="15"><span
-                    class="pl">
-                            <img src="/uploads/massages/nf3jqzthvlsetceszcc2.jpg">
-
-                            <div class="lookonthis"><a
-                                    href="/uploads/massageimages/f5mgapaiuafuh8ypf01r.png">Посмотреть</a></div>
-                        </span>Хромотерапия</span><span class="order-massage floatleft" data-id="19"><span class="pl">
-                            <img src="/uploads/massages/sdbl74wutaconkscs4nu.jpg">
-
-                            <div class="lookonthis"><a
-                                    href="/uploads/massageimages/fv58108n7vgwvk470qhr.png">Посмотреть</a></div>
-                        </span>Электронное управление</span></div>
+                    <%= grade.name %>
+                </span>
+            <% }); %>
+        </div>
+    <% } %>
+    <% if(product.fororder_massages.length != 0) { %>
+    <div class="massage-details-header" style="display: block;"><b>Массажные опции</b></div>
+        <% _.each(product.fororder_massages, function (massage, index) { %>
+            <span class="order-massage floatleft" data-id="<%= product.option_id %>">
+                <span class="pl">
+                    <%= massage.image %>
+                        <div class="lookonthis">
+                            <a href="<%= massage.path %>">Посмотреть</a>
+                        </div>
+                    </span>
+                <%= massage.name %>
+            </span>
+        <% }); %>
+    <% } %>
+    <% if(product.fororder_accessories.length != 0) { %>
         <div class="accessory-details-header" style="display: block;"><b>Аксессуары</b></div>
-        <div class="accessory-details"><span class="order-accessory floatleft" data-id="183"><span class="pl">
-                                                                                                                                                                                                <img
-                                                                                                                                                                                                    src="/uploads/catalogimages/tyyl1me3dhh72i2ubusz.jpg"
-                                                                                                                                                                                                    width="240"
-                                                                                                                                                                                                    height="180"
-                                                                                                                                                                                                    style="margin-top:30px;margin-left:0px;">
-                                                                                                                                    </span><a
-                    target="_blank" href="/catalog/akrilovye_vanny/kaskadnyy_smesitel_gnt_ontario_-_72">Каскадный
-                    смеситель GNT Ontario - 72</a></span><span class="order-accessory floatleft" data-id="184"><span
-                    class="pl">
-                                                                                                                                                                                                <img
-                                                                                                                                                                                                    src="/uploads/catalogimages/avkviclud113smtcdftn.jpg"
-                                                                                                                                                                                                    width="240"
-                                                                                                                                                                                                    height="180"
-                                                                                                                                                                                                    style="margin-top:30px;margin-left:0px;">
-                                                                                                                                    </span><a
-                    target="_blank" href="/catalog/akrilovye_vanny/kaskadnyy_smesitel_gnt_ontario_-_73">Каскадный
-                    смеситель GNT Ontario - 73</a></span><span class="order-accessory floatleft" data-id="185"><span
-                    class="pl">
-                                                                                                                                                                                                <img
-                                                                                                                                                                                                    src="/uploads/catalogimages/ognitterl84otglztu74.jpg"
-                                                                                                                                                                                                    width="240"
-                                                                                                                                                                                                    height="180"
-                                                                                                                                                                                                    style="margin-top:30px;margin-left:0px;">
-                                                                                                                                    </span><a
-                    target="_blank" href="/catalog/akrilovye_vanny/kaskadnyy_smesitel_gnt_ontario_-_74">Каскадный
-                    смеситель GNT Ontario - 74</a></span><span class="order-accessory floatleft" data-id="190"><span
-                    class="pl">
-                                                                                                                                                                                                <img
-                                                                                                                                                                                                    src="/uploads/catalogimages/jixkrxv3q9xwk5svrdc5.jpg"
-                                                                                                                                                                                                    width="240"
-                                                                                                                                                                                                    height="180"
-                                                                                                                                                                                                    style="margin-top:30px;margin-left:0px;">
-                                                                                                                                    </span><a
-                    target="_blank" href="/catalog/akrilovye_vanny/kaskadnyy_smesitel_gnt_torrens_-_71">Каскадный
-                    смеситель GNT Torrens - 71</a></span><span class="order-accessory floatleft" data-id="189"><span
-                    class="pl">
-                                                                                                                                                                                                <img
-                                                                                                                                                                                                    src="/uploads/catalogimages/cm5ancvdsbkirhmfzwwg.jpg"
-                                                                                                                                                                                                    width="240"
-                                                                                                                                                                                                    height="180"
-                                                                                                                                                                                                    style="margin-top:30px;margin-left:0px;">
-                                                                                                                                    </span><a
-                    target="_blank" href="/catalog/akrilovye_vanny/kaskadnyy_smesitel_gnt_athabasca_-_78">Каскадный
-                    смеситель GNT Athabasca - 78</a></span><span class="order-accessory floatleft" data-id="191"><span
-                    class="pl">
-                                                                                                                                                                                                <img
-                                                                                                                                                                                                    src="/uploads/catalogimages/gjtoowr36l3gvlnghow0.jpg"
-                                                                                                                                                                                                    width="240"
-                                                                                                                                                                                                    height="180"
-                                                                                                                                                                                                    style="margin-top:30px;margin-left:0px;">
-                                                                                                                                    </span><a
-                    target="_blank" href="/catalog/akrilovye_vanny/kaskadnyy_smesitel_gnt_torrens_-_72">Каскадный
-                    смеситель GNT Torrens - 72</a></span></div>
-    </div>
+            <% _.each(product.fororder_accessories, function (accessory, index) { %>
+                <div class="accessory-details">
+                    <span class="order-accessory floatleft" data-id="<%= accessory.id %>">
+                        <span class="pl">
+                            <%= accessory.image %>
+                        </span>
+                        <a target="_blank" href="<%= accessory.href %>">
+                            <%= accessory.name %>
+                        </a>
+                    </span>
+                </div>
+            <% }); %>
+        </div>
+    <% } %>
 </div>
 </script>
 
@@ -186,8 +123,8 @@
         <hr/>
         <input type="hidden" id="current_product" value="<%= product.id %>"/>
         <div class="bath-image">
-            <img src="<%= product.image %>"/>
 
+            <img src="<%= product.image %>"/>
             <a href="/gradebath#!/step1/<%= product.leftProduct %>">
                 <div id="sliderRevLeft"><i class="icon-chevron-left"></i></div>
             </a>
@@ -330,6 +267,7 @@
                            disabled <% } else { if(grade.checked=='1') { %>  checked <% } } %>     rel="<%= grade.id %>"
                            data-price="<%= grade.price %>"/> <%= grade.name %>
                     </label>
+                    <%= grade.image %>
                 <span class="price-grade"><%= grade.price %></span> руб.
             </div>
 
@@ -515,21 +453,29 @@ var Controller = Backbone.Router.extend({
         "!/step:hash": "stepRoute"
     },
     start: function () {
+        $('.tp-loader-bath').show();
         if (Steps != null) {
             Steps.render('1');
         }
         if (Step1 != null) {
             Step1.render();
         }
-
+        if(Order != null) {
+            Order.render();
+        }
+        $('.tp-loader-bath').hide();
     },
     switchProduct: function (hash, productid) {
+        $('.bodystep').fadeOut().promise().done(function(){
+            $('.tp-loader-bath').show();
+        });
         if (Steps != null) {
             Steps.render(hash);
         }
         Step1.reRender(productid);
     },
     stepRoute: function (hash) {
+        $('.bodystep').fadeOut();
         if (Steps != null) {
             Steps.render(hash);
         }
@@ -552,9 +498,6 @@ var Controller = Backbone.Router.extend({
             if (Step4 != null) {
                 Step4.render();
             }
-        }
-        if(Order != null) {
-            Order.render();
         }
     }
 });
@@ -600,20 +543,23 @@ var Steps = Backbone.View.extend({
 var Order = Backbone.View.extend({
     el: $(".order-fixed-bottom"),
     template: _.template($('#order').html()),
-    render: function (hash) {
-        $(this.el).html(this.template());
-//        var model = new getSteps({id: hash});
-//        var that = this;
-//        model.fetch({
-//            success: function (response) {
-//                if (response.attributes.result == 'success') {
-//                    $(that.el).html(that.template({ steps: response.attributes.steps, hash: hash}));
-//                } else {
-//                    $('.bodystep').fadeOut();
-//                }
-//            }
-//        });
-
+    render: function (product) {
+        $(this.el).html(this.template({product: product}));
+        this.hangEvents();
+    },
+    hangEvents: function() {
+        var order_button = $('.order-details-show');
+        var order_details = jQuery('.order-details');
+        order_button.click(function () {
+            var vis = order_details.css('display');
+            if (vis == 'none') {
+                order_details.slideDown();
+                jQuery(this).html(' Скрыть заказ');
+            } else {
+                order_details.slideUp();
+                jQuery(this).html(' Посмотреть заказ');
+            }
+        });
     }
 });
 
@@ -639,11 +585,26 @@ var Step1 = Backbone.View.extend({
         var model = new Product();
         model.save(checkout.toJSON(), {
             success: function (response) {
-                $(that.el).html(that.template({ product: response.attributes}));
+                var product = response.attributes;
+                if(Order != null) {
+                    Order.render(product);
+                }
+                var template = that.template({ product: product});
+                var hc = $('.hidden-container');
+                hc.html(template).promise().done(function(){
+                    var imagesCount = hc.find('img').length;
+                    var imagesLoaded = 0;
+                    hc.find('img').load(function() {
+                        ++imagesLoaded;
+                        if (imagesLoaded >= imagesCount) {
+                            $(that.el).html($('.hidden-container').html());
+                            $('.tp-loader-bath').hide();
+                            $('.step1-body').fadeIn();
+                        }
+                    });
+                });
             }
         });
-        checkout.evalSumm();
-        animateSwitch.switch(1)
     },
     changeCorner: function (e) {
         var elem = $(e.target);
@@ -663,10 +624,26 @@ var Step1 = Backbone.View.extend({
         var model = new Product();
         model.save(checkout.toJSON(), {
             success: function (response) {
-                $(that.el).html(that.template({ product: response.attributes}));
+                var product = response.attributes;
+                if(Order != null) {
+                    Order.render(product);
+                }
+                var template = that.template({ product: product});
+                var hc = $('.hidden-container');
+                hc.html(template).promise().done(function(){
+                    var imagesCount = hc.find('img').length;
+                    var imagesLoaded = 0;
+                    hc.find('img').load(function() {
+                        ++imagesLoaded;
+                        if (imagesLoaded >= imagesCount) {
+                            $(that.el).html($('.hidden-container').html());
+                            $('.tp-loader-bath').hide();
+                            $('.step1-body').fadeIn();
+                        }
+                    });
+                });
             }
         });
-        animateSwitch.switch(1);
     }
 });
 
@@ -681,12 +658,18 @@ var Step2 = Backbone.View.extend({
             var model = new Product();
             model.save(checkout.toJSON(), {
                 success: function (response) {
-                    $(that.el).html(that.template({ product: response.attributes}));
+                    console.log(response.attributes);
+                    var product = response.attributes;
+                    if(Order != null) {
+                        Order.render(product);
+                    }
+                    $(that.el).html(that.template({ product: product}));
                 }
             });
             animateSwitch.switch(2);
         },
         selectGrades: function (e) {
+            var model = new Product();
             var elem = $(e.target);
             var current_summ = $(this.el).find('.summ');
             var new_price = current_summ.data('price');
@@ -706,6 +689,14 @@ var Step2 = Backbone.View.extend({
                 }
             });
             checkout.set('grades', selectedGrades);
+            model.save(checkout.toJSON(), {
+                success: function (response) {
+                    var product = response.attributes;
+                    if(Order != null) {
+                        Order.render(product);
+                    }
+                }
+            });
         }
     })
     ;
@@ -716,6 +707,7 @@ var Step3 = Backbone.View.extend({
     },
     template: _.template($('#step3').html()),
     render: function () {
+        this.updateMassages();
         that = this;
         var model = new Product();
         model.save(checkout.toJSON(), {
@@ -738,14 +730,41 @@ var Step3 = Backbone.View.extend({
             }
         });
         checkout.set('massages', selectedMassages);
-
+        this.updateGradeRama(selectedMassages);
         that = this;
         var model = new Product();
         model.save(checkout.toJSON(), {
             success: function (response) {
-                $(that.el).html(that.template({ product: response.attributes}));
+                var product = response.attributes;
+                if(Order != null) {
+                    Order.render(product);
+                }
+                $(that.el).html(that.template({ product: product}));
             }
         });
+    },
+    updateGradeRama: function(selectedMassages) {
+        var selMasLength = Object.keys(selectedMassages).length;
+        if(selMasLength>0) {
+            var rama_elem = $('#step2-container label:contains("Рама") input');
+            var rama_id = rama_elem.attr('rel');
+            var rama_checked = rama_elem.attr('checked');
+            if(rama_checked!='checked') {
+                var selectedGrades = checkout.get('grades');
+                selectedGrades[rama_elem.attr('rel')] = rama_elem.data('price');
+                checkout.set('grades', selectedGrades);
+            }
+        }
+    },
+    updateMassages: function() {
+        var rama_elem = $('#step2-container label:contains("Рама") input');
+        console.log(rama_elem);
+        var rama_id = rama_elem.attr('rel');
+        var rama_checked = rama_elem.prop('checked');
+        if(!rama_checked) {
+            checkout.set('massages', {});
+            console.log(checkout.get('massages'));
+        }
     },
     switchGidro: function (elem, selectedMassages) {
         if (elem.hasClass('gidro')) {
@@ -783,12 +802,17 @@ var Step4 = Backbone.View.extend({
         var model = new Product();
         model.save(checkout.toJSON(), {
             success: function (response) {
-                $(that.el).html(that.template({ product: response.attributes}));
+                var product = response.attributes;
+                if(Order != null) {
+                    Order.render(product);
+                }
+                $(that.el).html(that.template({ product: product}));
             }
         });
         animateSwitch.switch(4);
     },
     selectAccessory: function (e) {
+        var model = new Product();
         var elem = $(e.target);
         var current_summ = $(this.el).find('.summ');
         var new_price = current_summ.data('price');
@@ -808,6 +832,14 @@ var Step4 = Backbone.View.extend({
             }
         });
         checkout.set('accessories', selectedAccessories);
+        model.save(checkout.toJSON(), {
+            success: function (response) {
+                var product = response.attributes;
+                if(Order != null) {
+                    Order.render(product);
+                }
+            }
+        });
     }
 });
 var checkout = new Checkout();

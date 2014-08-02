@@ -542,6 +542,8 @@ class FrontHelper
     static function getProductForBackbone($id_product, $data) {
         $additional_price = 0;
         $product = ORM::factory('catalog')->where('id', '=', $id_product)->find();
+        $result['fororder'] = array();
+        $fororder = array();
         $result = array();
         $result['id'] = $product->id;
         $result['name'] = $product->name;
@@ -551,6 +553,7 @@ class FrontHelper
         } else {
             $result['image'] = '';
         }
+
         $new_mas = array();
         foreach ($data['massages'] as $key => $value) {
             $new_mas[$key] = $value;
@@ -605,9 +608,11 @@ class FrontHelper
                         if (isset($massage_image[5])) {
                             $resulting['gidromassage']['required'] = $massage_image[5];
                         }
-                        $resulting['gidromassage']['image'] = $id_image;
-                        $resulting['gidromassage']['forsun'] = $forsun;
                         $gidromassage = ORM::factory('massage')->where('id', '=', $key)->find();
+                        $resulting['gidromassage']['path'] = $gidromassage->image;
+                        $resulting['gidromassage']['image'] = FrontHelper::outputRender($gidromassage->image, 50, 50, 50, 50);
+                        $resulting['gidromassage']['forsun'] = $forsun;
+
                         if (isset($gidromassage->name)) {
                             $namegidro = $gidromassage->name;
                         } else {
@@ -615,7 +620,19 @@ class FrontHelper
                         }
                         $resulting['gidromassage']['option_id'] = $key;
                         $resulting['gidromassage']['name'] = $namegidro;
-
+                        if(isset($resulting['gidromassage']['required'])) {
+                            if($resulting['gidromassage']['required']=='1') {
+                                $fororder[$key] = $resulting['gidromassage'];
+                            } else {
+                                foreach($new_mas as $keys=>$value) {
+                                    if(isset($new_mas[$keys])) {
+                                        if($key==$keys) {
+                                            $fororder[$keys] = $resulting['gidromassage'];
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     //если массаж спины или ног
                     if ($default_for_massage == '0') {
@@ -625,9 +642,10 @@ class FrontHelper
                                 if (isset($massage_image[3])) {
                                     $underoption['price'] = $massage_image[3];
                                 }
-                                $underoption['image'] = $id_image;
-                                $underoption['forsun'] = $forsun;
                                 $gidromassage = ORM::factory('massage')->where('id', '=', $key)->find();
+                                $underoption['path'] = $gidromassage->image;
+                                $underoption['image'] = FrontHelper::outputRender($gidromassage->image, 50, 50, 50, 50);
+                                $underoption['forsun'] = $forsun;
                                 if (isset($gidromassage->name)) {
                                     $namegidro = $gidromassage->name;
                                 } else {
@@ -637,6 +655,13 @@ class FrontHelper
                                 $underoption['pnevmo'] = $gidromassage->electronic;
                                 $underoption['name'] = $namegidro;
                                 $resulting['underoptions'][] = $underoption;
+                                foreach($new_mas as $keys=>$value) {
+                                    if(isset($new_mas[$keys])) {
+                                        if($key==$keys) {
+                                            $fororder[$keys] = $underoption;
+                                        }
+                                    }
+                                }
 
                             } else {
                                 $others = array();
@@ -646,9 +671,11 @@ class FrontHelper
                                 if (isset($massage_image[5])) {
                                     $others['required'] = $massage_image[5];
                                 }
-                                $others['image'] = $id_image;
-                                $others['forsun'] = $forsun;
                                 $gidromassage = ORM::factory('massage')->where('id', '=', $key)->find();
+                                $others['path'] = $gidromassage->image;
+                                $others['image'] = FrontHelper::outputRender($gidromassage->image, 50, 50, 50, 50);
+                                $others['forsun'] = $forsun;
+
                                 if (isset($gidromassage->name)) {
                                     $namegidro = $gidromassage->name;
                                 } else {
@@ -659,12 +686,20 @@ class FrontHelper
                                 $others['option_id'] = $key;
                                 $others['name'] = $namegidro;
                                 $resulting['othersoptions'][] = $others;
+                                foreach($new_mas as $keys=>$value) {
+                                    if($key==$keys) {
+                                        if(isset($new_mas[$keys])) {
+                                            $fororder[$keys] = $others;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
 
         $resulting['baseimageid'] = '';
         $resulting['baseemptyimage'] = '';
@@ -767,11 +802,11 @@ class FrontHelper
         $i = 0;
         $data_sel_grade = array();
         foreach ($data['grades'] as $key_grade => $item_grade) {
-            $data_sel_grade[] = $key_grade;
+            $data_sel_grade[$key_grade] = $key_grade;
             $additional_price += $item_grade;
         }
 
-
+        $fororder_grades = array();
         if ((count($options) > 0) || (isset($resulting['bath']->name))) {
             foreach ($options as $option) {
                 $grade_opt = json_decode($option->value);
@@ -780,16 +815,20 @@ class FrontHelper
                     $gradestep2[$i]['price'] = $grades->price;
                     $gradestep2[$i]['name'] = $grades->name;
                     $gradestep2[$i]['id'] = $grades->id;
+                    $gradestep2[$i]['image'] = FrontHelper::outputRender($grades->image, 40, 40, 40, 40);
                     if ($grade_opt[2] == '1') {
                         $maingrades[$i]['name'] = $grades->name;
                         $maingrades[$i]['price'] = $grades->price;
+                        $maingrades[$i]['image'] = $gradestep2[$i]['image'];
                         $gradestep2[$i]['disabled'] = '1';
+                        $fororder_grades[] = $maingrades[$i];
                     } else {
                         $gradestep2[$i]['disabled'] = '0';
                     }
                     $gradestep2[$i]['checked'] = '0';
                     if (in_array($grade_opt[0], $data_sel_grade)) {
                         $gradestep2[$i]['checked'] = '1';
+                        $fororder_grades[] = $gradestep2[$i];
                     }
                     $i++;
                 }
@@ -894,11 +933,13 @@ class FrontHelper
             $response = array();
             $response['image'] = $fn;
             $result['image'] = $fn;
+            $result['smallimage'] = FrontHelper::outputRender($fn, 50, 50, 50, 50);
             //
             $response['1'] = FrontHelper::outputRender($fn, 60, 60, 60, 60);
             $response['2'] = FrontHelper::outputRender($fn, 420, 400, 420, 400);
         }
         $accessories = array();
+        $fororder_accessories = array();
         $new_acc = array();
         foreach ($data['accessories'] as $key => $value) {
             $new_acc[$key] = $value;
@@ -919,15 +960,12 @@ class FrontHelper
                     $accessories[$counter]['name'] = $related_product->name;
                     $accessories[$counter]['price'] = $related_product->price;
                     if (file_exists('.' . $image->path)) {
-                        $sizes = ImageWork::getImageSize('.' . $image->path, '40', '40', '41', '41');
-                        if ($image->path != '') {
-//                            $image_accessory = "<img src='".$image->path."' width='".$sizes['newwidth']."' height='".$sizes['newheight']."' style='margin-top:".((240 - $sizes['newheight']) / 2)."px;margin-left:".((240 - $sizes['newwidth']) / 2)."px;'/>";
-                            $image_accessory = "<img src='".$image->path."' width='".$sizes['newwidth']."' height='".$sizes['newheight']."' style='margin-right:10px'/>";
-                        }
+                        $image_accessory = FrontHelper::outputRender($image->path, '40', '40', '41', '41');
                     }
                     $accessories[$counter]['image'] = $image_accessory;
                     if(isset($data['accessories'][$related_product->id])) {
                         $accessories[$counter]['checked'] = '1';
+                        $fororder_accessories[] = $accessories[$counter];
                     }
                     $counter++;
                 }
@@ -937,6 +975,10 @@ class FrontHelper
         $priceglobal += $additional_price;
         $result['pricehtml'] = number_format((double)$priceglobal, 0, ' ', ' ');
         $result['price'] = $priceglobal;
+        $result['fororder_massages'] = $fororder;
+        $result['fororder_grades'] = $fororder_grades;
+        $result['fororder_accessories'] = $fororder_accessories;
+
         return $result;
     }
 
@@ -973,6 +1015,15 @@ class FrontHelper
 
     static function getBathCategories() {
         $categories = ORM::factory('productscat')->where('type_filter', '=', 'bath')->find_all()->as_array();
+        $ids = array();
+        foreach ($categories as $category) {
+            $ids[] = $category->id;
+        }
+        return $ids;
+    }
+
+    static function getAcrylicCategories() {
+        $categories = ORM::factory('productscat')->where('type', '=', 'acrylic')->find_all()->as_array();
         $ids = array();
         foreach ($categories as $category) {
             $ids[] = $category->id;
