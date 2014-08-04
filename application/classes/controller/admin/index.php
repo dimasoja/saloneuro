@@ -108,6 +108,13 @@ class Controller_Admin_Index extends Controller_AdminBase
         exit();
     }
 
+    function action_saveacctypes() {
+        foreach($_POST as $key=>$value) {
+            ORM::factory('settings')->saveSetting($key, $_POST[$key]);
+        }
+        exit();
+    }
+
     function action_saveserttags() {
         $post = Safely::safelyGet($_POST);
         ORM::factory('settings')->saveSetting('cert_title', $post['cert_title']);

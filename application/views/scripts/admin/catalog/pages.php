@@ -138,10 +138,11 @@
 
             <div class="field" style="text-align: left;">
                 <select class="form-control uniform" name="type_accessory">
-                    <option value="blinds">Шторки для ванн</option>
-                    <option value="mixer">Смесители врезные в ванны</option>
-                    <option value="sink">Слив переливы для ванн</option>
-                    <option value="acessory">Аксессуары в ванную комнату</option>
+                    <option value="blinds"><?php echo ORM::factory('settings')->getSetting('blinds'); ?></option>
+                    <option value="mixer"><?php echo ORM::factory('settings')->getSetting('mixer'); ?></option>
+                    <option value="accessory"><?php echo ORM::factory('settings')->getSetting('accessory'); ?></option>
+                    <option value="rod"><?php echo ORM::factory('settings')->getSetting('rod'); ?></option>
+                    <option value="bede"><?php echo ORM::factory('settings')->getSetting('bede'); ?></option>
                 </select>
             </div>
         </div>

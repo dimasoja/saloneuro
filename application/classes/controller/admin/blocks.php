@@ -84,5 +84,21 @@ class Controller_Admin_Blocks extends Controller_AdminBase {
         $this->display($view);
     }
 
+    public function action_acctypes() {
+        $view = new View('scripts/admin/blocks/acctypes');
+        $view->success = FrontHelper::successNotif();
+        $view->blinds = ORM::factory('settings')->getSetting('blinds');
+        $view->mixer = ORM::factory('settings')->getSetting('mixer');
+        $view->sink = ORM::factory('settings')->getSetting('sink');
+        $view->accessory = ORM::factory('settings')->getSetting('accessory');
+        $view->rod = ORM::factory('settings')->getSetting('rod');
+        $view->bede = ORM::factory('settings')->getSetting('bede');
+        $view->error = FrontHelper::errorNotif();
+        $view->addresses = ORM::factory('addresses')->find_all()->as_array();
+        $this->page_title = 'Редактировать типы аксессуаров';
+        $this->cname = "acctypes";
+        $this->display($view);
+    }
+
 
 }

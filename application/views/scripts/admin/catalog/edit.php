@@ -168,19 +168,27 @@
             <select class="form-control uniform" name="type_accessory">
                 <option value="blinds" <?php if ($product->type_accessory == 'blinds') {
                     echo 'selected';
-                } ?>>Шторки для ванн
+                } ?>><?php echo ORM::factory('settings')->getSetting('blinds'); ?>
                 </option>
                 <option value="mixer" <?php if ($product->type_accessory == 'mixer') {
                     echo 'selected';
-                } ?>>Смесители врезные в ванны
+                } ?>><?php echo ORM::factory('settings')->getSetting('mixer'); ?>
                 </option>
                 <option value="sink" <?php if ($product->type_accessory == 'sink') {
                     echo 'selected';
-                } ?>>Слив переливы для ванн
+                } ?>><?php echo ORM::factory('settings')->getSetting('sink'); ?>
                 </option>
-                <option value="acessory" <?php if ($product->type_accessory == 'acessory') {
+                <option value="accessory" <?php if ($product->type_accessory == 'accessory') {
                     echo 'selected';
-                } ?>>Аксессуары в ванную комнату
+                } ?>><?php echo ORM::factory('settings')->getSetting('accessory'); ?>
+                </option>
+                <option value="rod" <?php if ($product->type_accessory == 'rod') {
+                    echo 'selected';
+                } ?>><?php echo ORM::factory('settings')->getSetting('rod'); ?>
+                </option>
+                <option value="bede" <?php if ($product->type_accessory == 'bede') {
+                    echo 'selected';
+                } ?>><?php echo ORM::factory('settings')->getSetting('bede'); ?>
                 </option>
             </select>
         </div>

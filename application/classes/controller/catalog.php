@@ -46,6 +46,8 @@ class Controller_Catalog extends Controller_Base
         $mixer = '';
         $sink = '';
         $accessory = '';
+        $rod = '';
+        $bede = '';
         $semicircular = '';
         $pentagon = '';
         $rectangular = '';
@@ -78,6 +80,12 @@ class Controller_Catalog extends Controller_Base
         if (isset($get['blinds'])) {
             $blinds = $get['blinds'];
         }
+        if (isset($get['rod'])) {
+            $rod = $get['rod'];
+        }
+        if (isset($get['bede'])) {
+            $bede = $get['bede'];
+        }
         if (isset($get['mixer'])) {
             $mixer = $get['mixer'];
         }
@@ -108,6 +116,8 @@ class Controller_Catalog extends Controller_Base
         $this->template->sink = $sink;
         $this->template->mixer = $mixer;
         $this->template->accessory = $accessory;
+        $this->template->rod = $rod;
+        $this->template->bede = $bede;
         $this->template->semicircular = $semicircular;
         $this->template->pentagon = $pentagon;
         $this->template->rectangular = $rectangular;
@@ -622,6 +632,8 @@ class Controller_Catalog extends Controller_Base
                 $where_mixer = 'check';
                 $where_sink = 'check';
                 $where_accessory = 'check';
+                $where_rod = 'check';
+                $where_bede = 'check';
 
                 $where_width = 'check';
                 $where_length = 'check';
@@ -631,6 +643,8 @@ class Controller_Catalog extends Controller_Base
                 $mixer_value = '';
                 $sink_value = '';
                 $accessory_value = '';
+                $rod_value = '';
+                $bede_balue = '';
                 $width_value = '';
                 $length_value = '';
                 $height_value = '';
@@ -652,6 +666,14 @@ class Controller_Catalog extends Controller_Base
                     $where_accessory = 'type';
                     $accessory_value = 'accessory';
                 }
+                if ($rod == 'on') {
+                    $where_rod = 'type';
+                    $rod_value = 'rod';
+                }
+                if ($bede == 'on') {
+                    $where_bede = 'type';
+                    $bede_value = 'bede';
+                }
 
                 if ($width != '') {
                     $where_width = 'width';
@@ -670,7 +692,7 @@ class Controller_Catalog extends Controller_Base
                 $items = ORM::factory('catalog')->where('published','=','on')->where('category', '=', $id_found)->where($where_width, '=', $width_value)->where($where_height, '=', $height_value)->order_by($order_item, $order_type)->find_all()->as_array();
 
                 $items_array = array();
-                if (($blinds == 'on') || ($mixer == 'on') || ($sink == 'on') || ($accessory == 'on')) {
+                if (($blinds == 'on') || ($mixer == 'on') || ($sink == 'on') || ($accessory == 'on') || ($rod == 'on') || ($bede == 'on')) {
                     foreach ($items as $key => $item) {
                         if ($blinds != 'on') {
                             if ($item->type_accessory == 'blinds') {
@@ -689,6 +711,16 @@ class Controller_Catalog extends Controller_Base
                         }
                         if ($accessory != 'on') {
                             if ($item->type_accessory == 'accessory') {
+                                unset($items[$key]);
+                            }
+                        }
+                        if ($rod != 'on') {
+                            if ($item->type_accessory == 'rod') {
+                                unset($items[$key]);
+                            }
+                        }
+                        if ($bede != 'on') {
+                            if ($item->type_accessory == 'bede') {
                                 unset($items[$key]);
                             }
                         }

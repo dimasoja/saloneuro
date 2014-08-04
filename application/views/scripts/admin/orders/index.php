@@ -14,38 +14,51 @@
             </thead>
             <tbody>
             <?php foreach ($contacts as $contact) { ?>
+                <?php $arr = (array)json_decode($contact->order); ?>
+
+                <?php if($contact->type=='gradebath') {
+                    $productid = $arr['id'];
+                } else {
+                    $productid = $contact->productid;
+                } ?>
                 <tr>
                     <td><?php echo $contact->id; ?></td>
                     <td><?php echo $contact->name; ?></td>
                     <td><?php echo $contact->email; ?></td>
                     <td><?php echo date('Y/m/d H:i:s', $contact->created); ?></td>
-                    <td>Товар <?php echo ORM::factory('catalog')->where('id','=', $contact->productid)->find()->name; ?></td>
+                    <td>Товар <?php echo ORM::factory('catalog')->where('id','=', $productid)->find()->name; ?></td>
                     <td>
 
 
                         <?php //echo $contact->order; ?>
-                    <?php $arr = json_decode($contact->order); ?>
+
                         <?php foreach($arr as $key=>$item) {
+
                             if($key=='lr') {
                                 if($item=='right') echo "Правая ванна"; else echo "Левая ванна";
                              }
+                            if($key=='corner') {
+                                if($arr['corner']=='right') echo "Правая ванна"; else echo "Левая ванна";
+                            } else {
+
+                            }
                              if($key=='grades') {
                                  echo "<h1>Комплектация</h1>";
-                                 foreach($arr->grades as $key_grade=>$item_grade) {
+                                 foreach((array)$arr['grades'] as $key_grade=>$item_grade) {
                                      $grade_item = ORM::factory('grade')->where('id','=', $key_grade)->find();
                                      echo $grade_item->name; echo "<br/>";
                                  }
                              }
                             if($key=='massages') {
                                 echo "<h1>Массаж</h1>";
-                                 foreach($arr->massages as $key_massage=>$item_massage) {
+                                 foreach((array)$arr['massages'] as $key_massage=>$item_massage) {
                                      $massage_item = ORM::factory('massage')->where('id','=', $key_massage)->find();
                                      echo $massage_item->name; echo "<br/>";
                                  }
                              }
                             if($key=='accessories') {
                                 echo "<h1>Аксессуары</h1>";
-                                 foreach($arr->accessories as $key_accessories=>$item_accessories) {
+                                 foreach((array)$arr['accessories'] as $key_accessories=>$item_accessories) {
                                      $accessories_item = ORM::factory('catalog')->where('id','=', $key_accessories)->find();
                                      echo $accessories_item->name; echo "<br/>";
                                  }

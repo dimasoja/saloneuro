@@ -296,6 +296,13 @@
                         }
                     } ?>><span></span>Справочник</a></li>
             <?php } ?>
+            <?php if (in_array('admin/blocks/acctypes', $allowed)) { ?>
+                <li><a href="/admin/blocks/acctypes" <?php if (isset($cname)) {
+                        if ($cname == 'acctypes') {
+                            echo 'class="active"';
+                        }
+                    } ?>><span></span>Типы аксессуаров</a></li>
+            <?php } ?>
             <?php if (in_array('admin/massage', $allowed)) { ?>
                 <li><a href="/admin/massage" <?php if (isset($cname)) {
                         if ($cname == 'massage') {

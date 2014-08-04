@@ -239,6 +239,7 @@ abstract class Kohana_Auth
             'Слайдер' => 'admin/slider',
             'Товары -> Категории товаров' => 'admin/productscat',
             'Товары -> Справочник' => 'admin/directory',
+            'Товары -> Типы аксессуаров' => 'admin/blocks/acctypes',
             'Товары -> Массажные опции' => 'admin/massage',
             'Товары -> Комплектация' => 'admin/grade',
             'Товары -> Товары' => 'admin/catalog',

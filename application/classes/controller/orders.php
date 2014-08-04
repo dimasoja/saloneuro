@@ -12,26 +12,19 @@ class Controller_Orders extends Controller_Base {
 
     public function action_index() {
         $post = Safely::safelyGet($_POST);
-//        $item = ORM::factory('catalog')->where('id', '=', (int)$post['productid'])->find();
-//        $parent = ORM::factory('productscat')->where('id', '=', $item->category)->find();
-//        $url = '/catalog/'.strtolower(FrontHelper::transliterate($parent->name)).'/'.strtolower(FrontHelper::transliterate($item->name));
-        $url = '/gradebath#!/success';
+        if(isset($post['type'])) {
+            $url = '/gradebath#!/success';
+        } else {
+            $item = ORM::factory('catalog')->where('id', '=', (int)$post['productid'])->find();
+            $parent = ORM::factory('productscat')->where('id', '=', $item->category)->find();
+            $url = '/catalog/'.strtolower(FrontHelper::transliterate($parent->name)).'/'.strtolower(FrontHelper::transliterate($item->name));
+        }
         $post['created'] = time();
         $saved = ORM::factory('orders')->values($post)->save();
         $system_email = ORM::factory('settings')->getSetting('admin_email');
-        Mails::sendTemplateWithParamsToEmail($system_email, 'order', $saved->id);
+        Mails::sendTemplateWithParamsToEmail($system_email, 'order', $saved->id, $post['order']);
+        Mails::sendTemplateWithParamsToEmail($post['email'], 'order', $saved->id, $post['order']);
         header('Location: '.$url);
         exit();
     }
-
-    public function action_new() {
-        die('asdf');
-        $post = Safely::safelyGet($_POST);
-        die(print_r($post));
-        $post['created'] = time();
-        ORM::factory('orders')->values($post)->save();
-        header('Location: '.$post['url']);
-        exit();
-    }
-   
 }

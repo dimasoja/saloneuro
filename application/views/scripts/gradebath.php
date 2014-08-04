@@ -4,7 +4,7 @@
 <div id="steps-container">
 
 </div>
-
+<input type="hidden" class="hidden-manufacturer"/>
 <div class="order-fixed-bottom order fixed">
 
 </div>
@@ -20,9 +20,9 @@
     <span class="global-price" data-value="<%= product.price %>"><%= product.pricehtml %> руб.</span>
     <br>
     <span class="order-details-show" style="display: block;"> Просмотреть заказ</span>
-        <a href="#order-ways" class="order-form">
+        <span class="order-form">
             <span class="order-button"> Заказать</span>
-        </a>
+        </span>
     </span>
     <div class="clearboth order-details" style="display:none">
     <span class="floatleft accessory"></span>
@@ -568,9 +568,9 @@
 
                                                             <% }); %>
 
-                                                            <a href="#!/step4">
+
                 <input class="big-button step2-button step-button" rel="4" value="Заказать"/>
-            </a>
+
         </div>
     </script>
 </div>
@@ -588,6 +588,7 @@
 _.extend(Backbone.View.prototype, {
     hc             : $('.hidden-container'),
     loader         : $('.tp-loader-bath'),
+    manufacturer   : $('.hidden-manufacturer'),
     imageLoader    : $('.tp-loader-step3-image'),
     initTabs : function(num) {
         $('.step'+num+'-body .nav-tabs li a').click(function() {
@@ -602,15 +603,20 @@ _.extend(Backbone.View.prototype, {
             Order.render(product);
         }
         var template = that.template({ product: product});
+        that.manufacturer.val(product.manufacturer);
         this.hc.html(template).promise().done(function(){
+
             var imagesCount = that.hc.find('img').length;
             var imagesLoaded = 0;
             that.hc.find('img').load(function() {
                 ++imagesLoaded;
                 if (imagesLoaded >= imagesCount) {
-                    $(that.el).html(that.hc.html());
+                    $(that.el).html(that.hc.html()).promise().done(function(){
+                        that.writeSelectedGradesToCheckout();
+                        that.clickOrderEvent();
+                    });
+
                     that.initTabs(num);
-                    that.clickOrderEvent();
                     that.loader.hide();
                     that.imageLoader.hide();
                     if(type==undefined) {
@@ -660,7 +666,7 @@ _.extend(Backbone.View.prototype, {
 
         $('.step2-body .grade-check').each(function () {
             if ($(this).prop('checked')) {
-                selectedGrades[elem.attr('rel')] = elem.data('price');
+                selectedGrades[$(this).attr('rel')] = $(this).data('price');
             } else {
                 delete selectedGrades[$(this).attr('rel')];
             }
@@ -768,6 +774,9 @@ _.extend(Backbone.View.prototype, {
         });
     },
     clickOrderEvent: function() {
+        console.log($('.progres input'));
+        console.log($('.order-button'));
+        console.log($('.step4-body .big-button'));
         $('.progres input, .order-button, .step4-body .big-button').click(function(){
             $('.our-overlay').show();
             var model = new Product();
@@ -801,13 +810,18 @@ _.extend(Backbone.View.prototype, {
 });
 var Controller = Backbone.Router.extend({
     routes: {
-        "": "start",
-        "!/success": "success",
-        "!/step:hash/:productid": "switchProduct",
-        "!/step:hash": "stepRoute"
+        ""                       : "start",
+        "!/success"              : "success",
+        "!/step:hash/:productid" : "switchProduct",
+        "!/step:hash"            : "stepRoute",
+        "order-ways"             : "",
+        "*actions"               : "redirect"
     },
     loader: $('.tp-loader-bath'),
     body: $('.bodystep'),
+    redirect: function() {
+        window.location.hash = '!/step1';
+    },
     success: function() {
         if (Success != null) {
             Success.render();
@@ -898,7 +912,7 @@ var Steps = Backbone.View.extend({
                 if (response.attributes.result == 'success') {
                     $(that.el).html(that.template({ steps: response.attributes.steps, hash: hash}));
                 } else {
-                    $('.bodystep').fadeOut();
+                    window.location.hash = '!/step1';
                 }
             }
         });
@@ -1077,6 +1091,11 @@ var Success = new Success();
 
 var controller = new Controller();
 Backbone.history.start();
+
+function redirect() {
+    window.location = $('.hidden-manufacturer').val();
+}
+
 </script>
 </div>
 <div class="dn">
@@ -1085,7 +1104,7 @@ Backbone.history.start();
             <h3>Выберите способ:</h3>
             <a href="#yourcity-form" class="fancy">
                 <input type="button" class="green big-green manufacturer" value="У производителя" style="width:300px"></a><br/>
-                <span onclick="redirect()" class="manu-order">
+                <span onclick="redirectManufacturer()" class="manu-order">
                     <input type="button" class="green big-green oficial" value="В офиц. интернет-магазине" style="width:300px">
                 </span>
             <br/>
@@ -1129,7 +1148,7 @@ Backbone.history.start();
                 </div>
                 <input type="hidden" name="order" class="order-finish" value=""/>
                 <input type="hidden" name="url" value="<?php //echo $_SERVER['HTTP_REFERER']; ?>"/>
-
+                <input type="hidden" name="type" value="gradebath"/>
                 <div class="order-submit">
                     <input type="submit" class="order-button green ways-call-submit" value="Заказать"
                            style="margin-left:0px">

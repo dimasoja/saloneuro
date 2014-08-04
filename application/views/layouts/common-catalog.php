@@ -223,28 +223,42 @@ function transliterate($string) {
                             <label style="text-align:left;">
                                 <input type="checkbox" class="blinds" <?php if ($blinds == 'on') {
                                     echo 'checked';
-                                } ?>> Шторки для ванн
+                                } ?>> <?php echo ORM::factory('settings')->getSetting('blinds'); ?>
                             </label>
                         </div>
                         <div class="checkbox" rel="mixer">
                             <label style="text-align:left;">
                                 <input type="checkbox" class="mixer" <?php if ($mixer == 'on') {
                                     echo 'checked';
-                                } ?>> Смесители врезные в ванны
+                                } ?>> <?php echo ORM::factory('settings')->getSetting('mixer'); ?>
                             </label>
                         </div>
                         <div class="checkbox" rel="sink">
                             <label style="text-align:left;">
                                 <input type="checkbox" class="sink " <?php if ($sink == 'on') {
                                     echo 'checked';
-                                } ?>> Слив переливы для ванн
+                                } ?>> <?php echo ORM::factory('settings')->getSetting('sink'); ?>
                             </label>
                         </div>
                         <div class="checkbox" rel="accessory">
                             <label style="text-align:left;">
                                 <input type="checkbox" class="accessory " <?php if ($accessory == 'on') {
                                     echo 'checked';
-                                } ?>> Аксессуары в ванную комнату
+                                } ?>> <?php echo ORM::factory('settings')->getSetting('accessory'); ?>
+                            </label>
+                        </div>
+                        <div class="checkbox" rel="rod">
+                            <label style="text-align:left;">
+                                <input type="checkbox" class="rod " <?php if ($rod == 'on') {
+                                    echo 'checked';
+                                } ?>> <?php echo ORM::factory('settings')->getSetting('rod'); ?>
+                            </label>
+                        </div>
+                        <div class="checkbox" rel="bede">
+                            <label style="text-align:left;">
+                                <input type="checkbox" class="bede " <?php if ($bede == 'on') {
+                                    echo 'checked';
+                                } ?>> <?php echo ORM::factory('settings')->getSetting('bede'); ?>
                             </label>
                         </div>
                         <br/>
@@ -572,6 +586,8 @@ jQuery(document).ready(function () {
         var sink = jQuery('.sink').prop('checked');
         var mixer = jQuery('.mixer').prop('checked');
         var accessory = jQuery('.accessory').prop('checked');
+        var rod = jQuery('.rod').prop('checked');
+        var bede = jQuery('.bede').prop('checked');
         var width = jQuery('.width option:selected').val();
         var length = jQuery('.length option:selected').val();
         var height = jQuery('.height option:selected').val();
@@ -587,6 +603,12 @@ jQuery(document).ready(function () {
         }
         if (accessory) {
             resp.push('accessory=on');
+        }
+        if (rod) {
+            resp.push('rod=on');
+        }
+        if (bede) {
+            resp.push('bede=on');
         }
         if ((height != undefined) && (height != '')) {
             resp.push('height=' + height);
