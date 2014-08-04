@@ -3189,6 +3189,45 @@ margin-top: 22px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
 }
+.tp-loader-step3-image {
+    background: url(../webmarket/loader.gif) no-repeat 198px 111px;
+    background-color: #fff;
+    margin-left: -27px;
+    margin-top: -1px;
+    z-index: 100;
+    position: absolute;
+    width: 422px;
+    height: 282px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+.gradebath-main .span12 {
+    width: 374px !important;
+}
+.floatright {
+    float:right;
+}
+.our-overlay {
+    width: auto;
+    height: auto;
+    display: block;
+    overflow: auto;
+    overflow-y: scroll;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    display: none;
+    z-index: 8010;
+    background: url('fancybox_overlay.png');
+}
+
+
+
 .cities {
     overflow:hidden !important;
 }

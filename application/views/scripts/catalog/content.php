@@ -1258,7 +1258,7 @@ function redirect() {
                            email>
                 </div>
                 <div class="input-name">
-                    <input type="text" id="response-phone11" class="name_phone" name="city" placeholder="Город"
+                    <input type="text" id="response-phone11" class="name_phone" name="city" placeholder="Город" value="<?php echo $session_city; ?>"
                            required>
                 </div>
                 <input type="hidden" name="order" class="order-finish" value=""/>

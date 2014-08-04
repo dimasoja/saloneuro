@@ -1024,7 +1024,7 @@ class Controller_Catalog extends Controller_Base
             $this->template->current = $currents;
         }
 
-
+        $view->session_city = $city_s;
         $this->template->css = ORM::factory('settings')->getSetting('css');
         $this->display($view, $keywords, $description);
     }
