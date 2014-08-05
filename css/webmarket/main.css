@@ -3165,6 +3165,15 @@ margin-top: 22px;
     width: 50%;
     float: left;
 }
+.sizes .width h4, .sizes .height h4 {
+    padding-left: 19px;
+    background-color: #f3f3f3;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+}
+.sizes label {
+    cursor:default;
+}
 .fancybox-nav {
     background-color: none !important;
 }

@@ -183,17 +183,17 @@
                 <div class="sizes">
                     Ширина
                     <label style="text-align:left;">
-                        <select class="width" disabled>
-                            <option value="<%= product.width %>"><%= product.width %></option>
-                        </select>
+                        <span class="width" disabled>
+                            <h4><%= product.width %></h4>
+                        </span>
                     </label>
                 </div>
                 <div class="sizes">
                     Длина
                     <label style="text-align:left;">
-                        <select class="height" disabled>
-                            <option value="<%= product.length %>"><%= product.length %></option>
-                        </select>
+                        <span class="height" disabled>
+                            <h4><%= product.length %></h4>
+                        </span>
                     </label>
                 </div>
             </div>
