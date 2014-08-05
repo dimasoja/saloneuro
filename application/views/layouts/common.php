@@ -78,7 +78,7 @@
         </div>
 
 
-    </div>
+
     <div class="rightblock">
         <div class="category-right-wrapper">
             <div class="wheretobuyblock">
@@ -138,6 +138,7 @@
                 <br/>
             </div>
         </div>
+    </div>
     </div>
 </div>
 

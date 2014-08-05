@@ -4,11 +4,14 @@ defined('SYSPATH') or die('No direct script access.');
 
 class FrontHelper
 {
+    private static $spam_filter = array(
+        'http',
+        'www'
+    );
 
     public function __construct() {
-
+        self::$instances[] = $this;
     }
-
     static function setParamRedirect($param, $value, $controller, $action = 'index', $id = '') {
         Session::instance()->set($param, $value);
         if ($id == '') {
@@ -1225,5 +1228,16 @@ class FrontHelper
         $current_price = $priceglobal;
         //        return $data['price'];
         return 0;
+    }
+
+    static function isSpam($strings) {
+        foreach($strings as $string) {
+            foreach(self::$spam_filter as $spam_filter_value) {
+                if(strpos($string, $spam_filter_value)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

@@ -820,6 +820,9 @@ $(document).ready(function () {
         starOn: '/images/star-full.png'
     });
     jQuery('.fancybox-review').fancybox({
+        'beforeShow': function() {
+            $('.fancybox-wrap').addClass('certif-fancybox');
+        },
         'afterShow': function () {
             jQuery('.send-review').click(function () {
                 var name = jQuery('.name-review').val();

@@ -609,7 +609,28 @@ class Controller_Index extends Controller_Base
     public function action_reviewsave() {
         $post = Safely::safelyGet($_POST);
         $post['created'] = time();
-        $saved = ORM::factory('response')->saveReview($post);
+
+        $subject = 'Отзыв';
+        $body_params = array(
+            'Имя'      =>$post['name'],
+            'e-mail'   =>$post['email'],
+            'Рейтинг'  =>$post['rating'],
+            'Текст'    =>$post['response'],
+            'К Товару' =>ORM::factory('catalog')->where('id','=',$post['to'])->find()->name,
+            'Открыта'   =>date('Y-m-d H:i:s', $post['created'])
+        );
+
+        $settings = ORM::factory('settings');
+        $is_spam = FrontHelper::isSpam(
+            array(
+                $post['name'],
+                $post['response']
+            )
+        );
+        if(!$is_spam) {
+            $saved = ORM::factory('response')->saveReview($post);
+            $sendLetter = $settings->sendLetter($admin_email = $settings->getSetting('admin_email'), $subject, $settings->paramsToHtml($body_params));
+        }
         if ($saved) {
             echo 'saved';
         }

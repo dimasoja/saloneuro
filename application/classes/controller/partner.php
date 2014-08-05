@@ -32,8 +32,45 @@ class Controller_Partner extends Controller_Base {
     public function action_new() {
         $post = Safely::safelyGet($_POST);
         $post['time'] = time();
-        $post['sphere'] = json_encode($post['sphere']);
-        ORM::factory('partners')->values($post)->save();
+        $fields = array(
+            1 => 'Продажа сантехники',
+            2 => 'Дизайнер',
+            3 => 'Строительная компания',
+            4 => 'Другое'
+        );
+        $fields_html = '';
+        foreach($post['sphere'] as $sphere_value) {
+            $fields_html .= $fields[$sphere_value].'; ';
+        }
+        $subject = 'Заявка на сотрудничество';
+        $body_params = array(
+            'Имя'                   =>$post['contact'],
+            'Телефон'               =>$post['phone'],
+            'e-mail'                =>$post['email'],
+            'Компания'              =>$post['company'],
+            'Город'                 =>$post['city'],
+            'Сфера деятельности'    =>$fields_html,
+            'Другое'                =>$post['another'],
+            'Комментарий'           =>$post['comment'],
+            'Открыта'               =>date('Y-m-d H:i:s', $post['time'])
+        );
+
+        $settings = ORM::factory('settings');
+        $is_spam = FrontHelper::isSpam(
+            array(
+                $post['contact'],
+                $post['phone'],
+                $post['company'],
+                $post['city'],
+                $post['another'],
+                $post['comment']
+            )
+        );
+        if(!$is_spam) {
+            $post['sphere'] = json_encode($post['sphere']);
+            ORM::factory('partners')->values($post)->save();
+            $sendLetter = $settings->sendLetter($admin_email = $settings->getSetting('admin_email'), $subject, $settings->paramsToHtml($body_params));
+        }
         FrontHelper::setHardRedirect('/partner/success');
     }
 

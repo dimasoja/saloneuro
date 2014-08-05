@@ -23,8 +23,14 @@ class Controller_Consult extends Controller_Base {
         $consult->name = trim(htmlspecialchars($post['name']));
         $consult->email = trim(htmlspecialchars($post['email']));
         $consult->response = trim(htmlspecialchars($post['response']));
+        $is_spam = FrontHelper::isSpam(
+            array(
+                $consult->name,
+                $consult->response
+            )
+        );
         $consult->created = strtotime('now');
-        $consult->save();
+
         $subject = 'Консультация';
         $body_params = array(
                              'Имя'      =>$consult->name, 
@@ -32,8 +38,11 @@ class Controller_Consult extends Controller_Base {
                              'Вопрос'    =>$consult->response,                             
                              'Открыта'   =>date('Y-m-d H:i:s', $consult->created)
                        );
-        $settings = ORM::factory('settings');        
-        $sendLetter = $settings->sendLetter($admin_email = $settings->getSetting('admin_email'), $subject, $settings->paramsToHtml($body_params));
+        $settings = ORM::factory('settings');
+        if(!$is_spam) {
+            $consult->save();
+            $sendLetter = $settings->sendLetter($admin_email = $settings->getSetting('admin_email'), $subject, $settings->paramsToHtml($body_params));
+        }
         die('success');
 //        Request::instance()->redirect(Route::get('consult')->uri(array('controller' => 'consult', 'action' => 'success')));
     }
