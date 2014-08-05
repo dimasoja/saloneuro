@@ -35,7 +35,12 @@ class Geoipthermo
         $ip = Request::$client_ip;
         $ip = '178.76.234.123';
         try {
-            $data = file_get_contents('http://ipgeobase.ru:7020/geo?ip=' . $ip);
+            $ctx = stream_context_create(array('http'=>
+                array(
+                    'timeout' => 3,
+                )
+            ));
+            $data = file_get_contents('http://ipgeobase.ru:7020/geo?ip=' . $ip, false, $ctx);
         } Catch (Exception $e) {
             $data = '<?xml version="1.0" encoding="windows-1251"?><ip-answer><ip value="178.76.234.123"><inetnum>178.76.216.0 - 178.76.234.255</inetnum><country>RU</country><city>Ростов-на-Дону</city><region>Ростовская область</region><district>����� ����������� �����</district><lat>47.233189</lat><lng>39.715000</lng></ip></ip-answer>';
         }

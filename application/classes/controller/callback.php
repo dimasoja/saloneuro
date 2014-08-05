@@ -22,22 +22,23 @@ class Controller_Callback extends Controller_Base {
         $post = Safely::safelyGet($_POST);
         $response->name = trim(htmlspecialchars($post['name']));
         $response->phone = trim(htmlspecialchars($post['phone']));
-        $response->time_from = trim(htmlspecialchars($post['time_from']));
-        $response->time_to = trim(htmlspecialchars($post['time_to']));        
-       // $response->response = trim(htmlspecialchars($post['response']));
-        $response->created = strtotime('now');
-        $subject = 'На сайте заказали звонок';
-        $body_params = array(
-                             'Имя'      =>$response->name, 
-                             'e-mail'   =>$response->phone, 
-                             'Сообщение'    =>$response->response, 
-                             'Позвонить...'=>$response->time_from.'-'.$response->time_to,
-                             'Открыт'   =>date('Y-m-d H:i:s', $response->created)
-                       );
-        $settings = ORM::factory('settings');     
-        $admin_email = $settings->getSetting('admin_email');        
-        $sendLetter = $settings->sendLetter($admin_email, $subject, $settings->paramsToHtml($body_params)); 
-        $response->save();
+        if(($response->name!='')&&($response->phone!='')) {
+            $response->time_from = trim(htmlspecialchars($post['time_from']));
+            $response->time_to = trim(htmlspecialchars($post['time_to']));
+            $response->created = strtotime('now');
+            $subject = 'На сайте заказали звонок';
+            $body_params = array(
+                                 'Имя'      =>$response->name,
+                                 'e-mail'   =>$response->phone,
+                                 'Сообщение'    =>$response->response,
+                                 'Позвонить...'=>$response->time_from.'-'.$response->time_to,
+                                 'Открыт'   =>date('Y-m-d H:i:s', $response->created)
+                           );
+            $settings = ORM::factory('settings');
+            $admin_email = $settings->getSetting('admin_email');
+            $sendLetter = $settings->sendLetter($admin_email, $subject, $settings->paramsToHtml($body_params));
+            $response->save();
+        }
         die('success');
         //FrontHelper::setRedirect('index');
     }

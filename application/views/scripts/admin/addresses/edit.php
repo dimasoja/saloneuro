@@ -26,7 +26,7 @@
                                 <div class="field">
                                     <input type="text" class="input-large name-edit" name="address"
                                            style="float: left;width: 100%;" value="<?php if (isset($addresses->address)) {
-                                        echo $addresses->address;
+                                        echo str_replace("& amp ;", "&", (htmlentities(stripslashes($addresses->address), ENT_QUOTES, 'UTF-8')));
                                     } ?>">
                                 </div>
                             </div>

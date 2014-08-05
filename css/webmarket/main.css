@@ -3227,7 +3227,10 @@ margin-top: 22px;
 }
 
 
-
+.bath-step4-info {
+    height: 600px;
+    overflow: scroll;
+}
 .cities {
     overflow:hidden !important;
 }

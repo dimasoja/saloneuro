@@ -128,7 +128,9 @@
         <input type="hidden" id="current_product" value="<%= product.id %>"/>
         <div class="bath-image">
             <a href="<%= product.image %>" class="fancybox">
-                <img src="<%= product.image %>"  class="<% if(product.corner=='left') { %> reflection <% } %>"/>
+                <% if(product.image!='') { %>
+                    <img src="<%= product.image %>"  class="<% if(product.corner=='left') { %> reflection <% } %>"/>
+                <% } %>
             </a>
             <a href="/gradebath#!/step1/<%= product.leftProduct %>">
                 <div id="sliderRevLeft"><i class="icon-chevron-left"></i></div>
@@ -610,12 +612,11 @@ _.extend(Backbone.View.prototype, {
             var imagesLoaded = 0;
             that.hc.find('img').load(function() {
                 ++imagesLoaded;
-                if (imagesLoaded >= imagesCount) {
+                if (imagesLoaded >= imagesCount-2) {
                     $(that.el).html(that.hc.html()).promise().done(function(){
                         that.writeSelectedGradesToCheckout();
                         that.clickOrderEvent();
                     });
-
                     that.initTabs(num);
                     that.loader.hide();
                     that.imageLoader.hide();

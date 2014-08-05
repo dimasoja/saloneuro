@@ -793,7 +793,7 @@ class FrontHelper
                 }
             }
         }
-        $result['link'] = '/catalog/'.strtolower(FrontHelper::transliterate($category_product->name)) . '/'.strtolower(FrontHelper::transliterate($product->name));
+        $result['link'] = '/catalog/' . strtolower(FrontHelper::transliterate($category_product->name)) . '/' . strtolower(FrontHelper::transliterate($product->name));
         if ($category_product->grade_on == 'on') {
             $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $product->id)->find_all()->as_array();
             $grade_price = 0;
@@ -884,7 +884,7 @@ class FrontHelper
             $post['image'] = FrontHelper::getProductImageForBackbone($post['id']);
 
             $is_electronic = false;
-            foreach ($data as $key => $item) {
+            foreach ($data['massages'] as $key => $item) {
                 $massage_check = ORM::factory('massage')->where('id', '=', $key)->find();
                 if (isset($massage_check->electronic)) {
                     if ($massage_check->electronic == 'on') {
@@ -892,15 +892,16 @@ class FrontHelper
                     }
                 }
             }
+
             if (isset($data['electronic'])) {
-                $is_electronic = $data['electronic'];
+                //$is_electronic = $data['electronic'];
             }
             $massages_images = array();
             $massage = ORM::factory('options')->where('id_product', '=', $post['id'])->where('type', '=', 'massage')->find_all()->as_array();
             foreach ($massage as $mas) {
 
                 $massage_image = json_decode($mas->value, true);
-
+//                die(var_dump($is_electronic));
                 if ($is_electronic) {
                     if (isset($massage_image[7])) {
                         $id_image = $massage_image[7];
@@ -932,7 +933,7 @@ class FrontHelper
             //$desting = ImageWork::createImage($image);
             //imagepng($desting, './uploads/1235.png');
             $dest = ImageWork::createImage($image);
-            if($dest) {
+            if ($dest) {
                 imageAlphaBlending($dest, false);
                 imageSaveAlpha($dest, true);
                 $x1 = imagesx($dest);
@@ -988,19 +989,21 @@ class FrontHelper
                 $image = ORM::factory('images')->where('id_image', '=', $image_related->featured)->find();
                 $related_product = ORM::factory('catalog')->where('id', '=', $option->value)->where('published', '=', 'on')->find();
                 if (isset($image->id_image)) {
-                    $accessories[$counter]['id'] = $related_product->id;
-                    $accessories[$counter]['href'] = "/catalog/" . strtolower(FrontHelper::transliterate($category_product->name)) . '/' . strtolower(FrontHelper::transliterate($related_product->name));
-                    $accessories[$counter]['name'] = $related_product->name;
-                    $accessories[$counter]['price'] = $related_product->price;
-                    if (file_exists('.' . $image->path)) {
-                        $image_accessory = FrontHelper::outputRender($image->path, '40', '40', '41', '41');
+                    if ($related_product->name != '') {
+                        $accessories[$counter]['id'] = $related_product->id;
+                        $accessories[$counter]['href'] = "/catalog/" . strtolower(FrontHelper::transliterate($category_product->name)) . '/' . strtolower(FrontHelper::transliterate($related_product->name));
+                        $accessories[$counter]['name'] = $related_product->name;
+                        $accessories[$counter]['price'] = $related_product->price;
+                        if (file_exists('.' . $image->path)) {
+                            $image_accessory = FrontHelper::outputRender($image->path, '120', '90', '121', '91');
+                        }
+                        $accessories[$counter]['image'] = $image_accessory;
+                        if (isset($data['accessories'][$related_product->id])) {
+                            $accessories[$counter]['checked'] = '1';
+                            $fororder_accessories[] = $accessories[$counter];
+                        }
+                        $counter++;
                     }
-                    $accessories[$counter]['image'] = $image_accessory;
-                    if (isset($data['accessories'][$related_product->id])) {
-                        $accessories[$counter]['checked'] = '1';
-                        $fororder_accessories[] = $accessories[$counter];
-                    }
-                    $counter++;
                 }
             }
         }
