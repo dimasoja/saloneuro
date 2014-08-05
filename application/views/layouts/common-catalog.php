@@ -348,6 +348,12 @@ function transliterate($string) {
         <div class="ways-text">
             Задать вопрос нам <br/> на адрес электронной почты
         </div>
+        <div class="ways-header" style="cursor:pointer;">
+            <a onclick="window.open('http://lk.mango-office.ru/widget/MTIwNDM0', '_blank', 'width=238,height=350,resizable=no,toolbar=no,menubar=no,location=no,status=no'); return false;">Звонок с сайта</a>
+        </div>
+        <div class="ways-text">
+            Воспользуйтесь бесплатной услугой
+        </div>
     </div>
 </div>
 <div class="fancy-call" style="display:none">
@@ -381,6 +387,12 @@ function transliterate($string) {
             <div class="order-submit">
                 <input type="button" class="order-button green ways-call-submit" value="Заказать звонок"
                        style="margin-left:0px">
+            </div><br/><br/>
+            <div class="ways-header" style="cursor:pointer;text-align:center">
+                <a onclick="window.open('http://lk.mango-office.ru/widget/MTIwNDM0', '_blank', 'width=238,height=350,resizable=no,toolbar=no,menubar=no,location=no,status=no'); return false;">Звонок с сайта</a>
+            </div>
+            <div class="ways-text" style="text-align:center">
+                Воспользуйтесь бесплатной услугой
             </div>
         </div>
     </form>
