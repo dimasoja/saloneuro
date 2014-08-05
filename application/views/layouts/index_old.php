@@ -277,7 +277,6 @@
     <form action="/consult/new" id="response-form" method="POST">
         <div class="resp">
             <h3>Консультация</h3>
-
             <div class="input-name">
                 <input type="text" id="response-name" class="link-name" name="name" placeholder="Имя">
 
@@ -291,7 +290,6 @@
             <div class="input-question">
                 <textarea id="response-question" class="link-response" name="response"
                           placeholder="Ваш вопрос..."></textarea>
-
                 <div class="response-err-question error"></div>
             </div>
         </div>

@@ -110,7 +110,7 @@ class Controller_Index extends Controller_Base
         }
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
         $this->template->session_cities = ORM::factory('addresses')->limit($city_limit)->where('city', '=', $this->template->session_city)->find_all()->as_array();
-        $this->template->order_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array();
+        $this->template->order_cities = ORM::factory('addresses')->group_by('city')->order_by('city','desc')->find_all()->as_array();
         $this->template->all_cities = ORM::factory('addresses')->find_all()->as_array();
         $this->template->css = ORM::factory('settings')->getSetting('css');
         $this->display($view, $keywords, $description);

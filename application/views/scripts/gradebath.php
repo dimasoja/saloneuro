@@ -571,9 +571,10 @@
                                                             <% }); %>
 
 
-                <input class="big-button step2-button step-button" rel="4" value="Заказать"/>
+
 
         </div>
+        <input class="big-button step2-button step-button" rel="4" value="Заказать"/>
     </script>
 </div>
 
@@ -607,7 +608,7 @@ _.extend(Backbone.View.prototype, {
         var template = that.template({ product: product});
         that.manufacturer.val(product.manufacturer);
         this.hc.html(template).promise().done(function(){
-
+            $('.bodystep').fadeOut();
             var imagesCount = that.hc.find('img').length;
             var imagesLoaded = 0;
             that.hc.find('img').load(function() {
@@ -775,9 +776,6 @@ _.extend(Backbone.View.prototype, {
         });
     },
     clickOrderEvent: function() {
-        console.log($('.progres input'));
-        console.log($('.order-button'));
-        console.log($('.step4-body .big-button'));
         $('.progres input, .order-button, .step4-body .big-button').click(function(){
             $('.our-overlay').show();
             var model = new Product();
@@ -817,6 +815,9 @@ var Controller = Backbone.Router.extend({
         "!/step:hash"            : "stepRoute",
         "order-ways"             : "",
         "*actions"               : "redirect"
+    },
+    initialize: function() {
+        if(window.location.hash!='#!/step1') window.location.hash = '#!/step1';
     },
     loader: $('.tp-loader-bath'),
     body: $('.bodystep'),

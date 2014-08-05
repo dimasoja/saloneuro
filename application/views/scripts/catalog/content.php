@@ -219,7 +219,7 @@
     <div class="grade-product">
         <?php $options = ORM::factory('options')->where('type', '=', 'grade')->where('id_product', '=', $page->id)->find_all()->as_array(); ?>
         <?php if ((count($options) > 0) || (isset($bath->name))) { ?>
-        <div class="grade-title">В комплектацию входит</div>
+        <div class="grade-title">Выберите комплектацию</div>
 
         <?php if (isset($bath->name)) { ?>
             <?php $bath_id = $bath->id; ?>

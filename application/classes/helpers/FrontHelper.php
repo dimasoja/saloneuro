@@ -852,7 +852,9 @@ class FrontHelper
                     $gradestep2[$i]['checked'] = '0';
                     if (in_array($grade_opt[0], $data_sel_grade)) {
                         $gradestep2[$i]['checked'] = '1';
-                        $fororder_grades[] = $gradestep2[$i];
+                        if(!isset($maingrades[$i])) {
+                            $fororder_grades[] = $gradestep2[$i];
+                        }
                     }
                     $i++;
                 }

@@ -53,7 +53,7 @@ class Controller_Base extends Controller_Template {
         else
             $this->template->city = '';
         $this->template->cities = ORM::factory('addresses')->limit($city_limit)->where('city','=', $geo_data->city)->find_all()->as_array();
-        $this->template->order_cities = ORM::factory('addresses')->group_by('city')->find_all()->as_array();
+        $this->template->order_cities = ORM::factory('addresses')->group_by('city')->order_by('city','desc')->find_all()->as_array();
         $this->template->all_cities = ORM::factory('addresses')->find_all()->as_array();
         $this->template->sliderdata_home = ORM::factory('postmeta')->get_for_home($postdata);
         $this->template->sliderdata_business = ORM::factory('postmeta')->get_for_business($postdata);    
