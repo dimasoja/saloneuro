@@ -198,12 +198,12 @@
                 </div>
             </div>
             <div class="corner">
-                <h5>Угол размещения</h5>
+                <h5>Ванна</h5>
 
                 <div class="corner-change">
                     <select class="corner-select">
-                        <option value="right" <% if(product.corner=='right') { %> selected <% } %>>Правый угол</option>
-                        <option value="left" <% if(product.corner=='left') { %> selected <% } %>>Левый угол</option>
+                        <option value="right" <% if(product.corner=='right') { %> selected <% } %>>Правая</option>
+                        <option value="left" <% if(product.corner=='left') { %> selected <% } %>>Левая</option>
                     </select>
                 </div>
             </div>
