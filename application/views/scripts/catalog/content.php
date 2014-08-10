@@ -41,7 +41,7 @@
     </div>
 
     <div class="navigation">
-        <?php if ($count > 3) { ?>
+        <?php if ($count > 6) { ?>
             <a href="#" class="prev prev-navigation">&lsaquo;</a>
             <a href="#" class="next next-navigation">&rsaquo;</a>
         <?php } ?>

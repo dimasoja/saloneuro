@@ -341,6 +341,7 @@ jQuery(document).ready(function () {
                 jQuery('.map-item.rel' + id).css('display', 'block');
                 jQuery.fancybox.update();
             });
+            jQuery('.fancyaa').css('display','none');
         }
     });
     jQuery('.ways-call').fancybox({

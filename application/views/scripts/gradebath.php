@@ -1005,6 +1005,7 @@ var Step2 = Backbone.View.extend({
             this.writeNewGradePrice(elem, current_summ);
             var that = this;
             checkout = this.writeSelectedGradesToCheckout(elem);
+            console.log(checkout);
             model.save(checkout.toJSON(), {
                 success: function (response) {
                     var product = response.attributes;

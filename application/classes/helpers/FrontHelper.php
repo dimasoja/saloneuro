@@ -4,14 +4,12 @@ defined('SYSPATH') or die('No direct script access.');
 
 class FrontHelper
 {
-    private static $spam_filter = array(
-        'http',
-        'www'
-    );
+    private static $spam_filter = array('http', 'www');
 
     public function __construct() {
         self::$instances[] = $this;
     }
+
     static function setParamRedirect($param, $value, $controller, $action = 'index', $id = '') {
         Session::instance()->set($param, $value);
         if ($id == '') {
@@ -422,7 +420,7 @@ class FrontHelper
             $margin_left = ($in_height - $sizes['newwidth']) / 2;
             $margin_top = ($in_width - $sizes['newheight']) / 2;
             if ($path != '') {
-                $html = "<img src = '" . $path . "' width = '" . $sizes['newwidth'] . "' height = '" . $sizes['newheight'] . "' style = 'margin-top:" . $margin_top . "px;margin-left:" . $margin_left . "px; width: ".$sizes['newwidth']."px; height: ".$sizes['newheight']."px;'/>";
+                $html = "<img src = '" . $path . "' width = '" . $sizes['newwidth'] . "' height = '" . $sizes['newheight'] . "' style = 'margin-top:" . $margin_top . "px;margin-left:" . $margin_left . "px; width: " . $sizes['newwidth'] . "px; height: " . $sizes['newheight'] . "px;'/>";
             }
         }
         return $html;
@@ -855,7 +853,7 @@ class FrontHelper
                     $gradestep2[$i]['checked'] = '0';
                     if (in_array($grade_opt[0], $data_sel_grade)) {
                         $gradestep2[$i]['checked'] = '1';
-                        if(!isset($maingrades[$i])) {
+                        if (!isset($maingrades[$i])) {
                             $fororder_grades[] = $gradestep2[$i];
                         }
                     }
@@ -906,7 +904,7 @@ class FrontHelper
             foreach ($massage as $mas) {
 
                 $massage_image = json_decode($mas->value, true);
-//                die(var_dump($is_electronic));
+                //                die(var_dump($is_electronic));
                 if ($is_electronic) {
                     if (isset($massage_image[7])) {
                         $id_image = $massage_image[7];
@@ -1013,7 +1011,11 @@ class FrontHelper
             }
         }
         $result['accessories'] = $accessories;
-        $priceglobal += $additional_price;
+
+        if ($additional_price != 0) {
+            $priceglobal = $additional_price;
+        }
+
         $result['pricehtml'] = number_format((double)$priceglobal, 0, ' ', ' ');
         $result['price'] = $priceglobal;
         $result['fororder_massages'] = $fororder;
@@ -1231,9 +1233,9 @@ class FrontHelper
     }
 
     static function isSpam($strings) {
-        foreach($strings as $string) {
-            foreach(self::$spam_filter as $spam_filter_value) {
-                if(strpos($string, $spam_filter_value)) {
+        foreach ($strings as $string) {
+            foreach (self::$spam_filter as $spam_filter_value) {
+                if (strpos($string, $spam_filter_value)) {
                     return true;
                 }
             }
