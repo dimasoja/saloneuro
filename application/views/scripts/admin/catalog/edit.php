@@ -448,7 +448,7 @@
                                                     var underoption_for_massage = jQuery('.underoption_for_massage').html();
                                                     var portfolio = jQuery('.massage-options');
 
-                                                        jQuery('.imagerel<?php echo $id_image; ?> .del_block').append('<a href="javascript:void:(0);" class="del_vid del_vid' + id_image + '" onclick="deletePnevmo('+id_image+', <?php echo $id_image; ?>);">Удалить Пневмо</a>');
+                                                    jQuery('.imagerel<?php echo $id_image; ?> .del_block').append('<a href="javascript:void:(0);" class="del_vid del_vid' + id_image + '" onclick="deletePnevmo(' + id_image + ', <?php echo $id_image; ?>);">Удалить Пневмо</a>');
 
                                                     var image_html = '<img src="' + path + '" style="height: 136px !important;">';
                                                     jQuery('#upload<?php echo $id_image; ?>').css('display', 'none');
@@ -461,7 +461,7 @@
                                     </script>
 
                                     <div class="del_block">
-                                        <?php if(isset($id_im_pnevmo)) { ?>
+                                        <?php if (isset($id_im_pnevmo)) { ?>
                                             <a href="javascript:void:(0);"
                                                class="del_vid pnevmo del_vid<?php echo $id_image; ?>"
                                                onclick="deletePnevmo(<?php echo $id_im_pnevmo; ?>, <?php echo $id_image; ?>);">Удалить
@@ -685,64 +685,66 @@
         </div>
     </div>
 </div>
-<div class="form-row complekt">
-    <?php $options = ORM::factory('options')->where('type', '=', 'products')->where('id_product', '=', $id_prod)->find_all()->as_array(); ?>
-    <label class="field-name" for="standard">С этим товаром часто покупают (акссесуары):</label>
+<?php if ($category->type_filter != 'accessory') { ?>
+    <div class="form-row complekt">
+        <?php $options = ORM::factory('options')->where('type', '=', 'products')->where('id_product', '=', $id_prod)->find_all()->as_array(); ?>
+        <label class="field-name" for="standard">С этим товаром часто покупают (акссесуары):</label>
 
-    <div class="field" style="text-align:left;">
-        <!--<select multiple name="products[]" style="height: 100%">
+        <div class="field" style="text-align:left;">
+            <!--<select multiple name="products[]" style="height: 100%">
             <option value=""></option>
             <?php foreach ($products as $ac) { ?>
                 <?php $selected = ''; ?>
                 <?php foreach ($options as $option) {
-            if ($ac->id == $option->value) {
-                $selected = 'selected';
-            }
-        } ?>
+                if ($ac->id == $option->value) {
+                    $selected = 'selected';
+                }
+            } ?>
                 <?php if ($ac->id != $product->id) { ?>
                     <option
                         value="<?php echo $ac->id; ?>" <?php echo $selected; ?>><?php echo $ac->name; ?></option>
                 <?php } ?>
             <?php } ?>
         </select>-->
-        <div class="row-fluid" style="width: 100%;float: left;clear:none">
-            <div class="span6" style="width:100%">
-                <div class="widget">
-                    <div class="table-container">
-                        <table cellpading="0" cellspacing="0" border="0"
-                               class="default-table stripped turquoise dataTable" id="dynamic4">
-                            <thead>
-                            <tr align="left">
-                                <th></th>
-                                <th></th>
-                                <th>Наименование</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php $count = 1; ?>
-                            <?php foreach ($products as $item) { ?>
-                                <tr>
-                                    <td><?php echo $count++; ?></td>
-                                    <?php $selected = ''; ?>
-                                    <?php foreach ($options as $option) {
-                                        if ($item->id == $option->value) {
-                                            $selected = 'checked="checked"';
-                                        }
-                                    } ?>
-                                    <td><input type="checkbox" value="<?php echo $item->id; ?>"
-                                               name="products[]" <?php echo $selected; ?>/>
-                                    </td>
-                                    <td><?php echo $item->name; ?></td>
+            <div class="row-fluid" style="width: 100%;float: left;clear:none">
+                <div class="span6" style="width:100%">
+                    <div class="widget">
+                        <div class="table-container">
+                            <table cellpading="0" cellspacing="0" border="0"
+                                   class="default-table stripped turquoise dataTable" id="dynamic4">
+                                <thead>
+                                <tr align="left">
+                                    <th></th>
+                                    <th></th>
+                                    <th>Наименование</th>
                                 </tr>
-                            <?php } ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                <?php $count = 1; ?>
+                                <?php foreach ($products as $item) { ?>
+                                    <tr>
+                                        <td><?php echo $count++; ?></td>
+                                        <?php $selected = ''; ?>
+                                        <?php foreach ($options as $option) {
+                                            if ($item->id == $option->value) {
+                                                $selected = 'checked="checked"';
+                                            }
+                                        } ?>
+                                        <td><input type="checkbox" value="<?php echo $item->id; ?>"
+                                                   name="products[]" <?php echo $selected; ?>/>
+                                        </td>
+                                        <td><?php echo $item->name; ?></td>
+                                    </tr>
+                                <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+<?php } ?>
 <div class="form-row">
     <label class="field-name" for="standard">Изображения:</label>
     <?php $options = ORM::factory('options')->where('type', '=', 'image')->where('id_product', '=', $id_prod)->find_all()->as_array(); ?>
@@ -911,10 +913,10 @@
     function deletePnevmo(id, ids) {
         jQuery('.image' + id).remove();
 //        jQuery('.imagerel' + id).remove();
-        jQuery('.imagerel'+ids+' .img_block img:eq(1)').remove();
-        jQuery('.del_vid'+ids).remove();
-        jQuery('.del_vid'+id).remove();
-        jQuery('#upload'+ids).css('display','block');
+        jQuery('.imagerel' + ids + ' .img_block img:eq(1)').remove();
+        jQuery('.del_vid' + ids).remove();
+        jQuery('.del_vid' + id).remove();
+        jQuery('#upload' + ids).css('display', 'block');
     }
     jQuery(document).ready(function () {
         var btnUpload = jQuery('#upload3');
@@ -1019,7 +1021,7 @@
                             var image_html = '<img src="' + path + '" style="height: 136px !important;">';
                             var hidden = '<input type="hidden" class="image' + id_image + '" name="pnevmo[' + ids_image + ']" value="' + id_image + '" rel="' + id_image + '"/> ';
                             console.log(image_html);
-                            jQuery('.imagerel'+ids_image+' .del_block').append('<a href="javascript:void:(0);" class="del_vid del_vid' + id_image + '" onclick="deletePnevmo(' + id_image + ', ' + ids_image + ');">Удалить Пневмо</a>');
+                            jQuery('.imagerel' + ids_image + ' .del_block').append('<a href="javascript:void:(0);" class="del_vid del_vid' + id_image + '" onclick="deletePnevmo(' + id_image + ', ' + ids_image + ');">Удалить Пневмо</a>');
                             jQuery('#upload' + ids_image).css('display', 'none');
                             jQuery('#upload' + ids_image).parent().find('.img_block').append(image_html).append(hidden).css('height', '137px').parent().css('height', '538px');
                         }
@@ -1092,7 +1094,7 @@
 
         $('.button-send-main').click(function (event) {
             var $form = jQuery('.form-horizontal');
-            var $formhidden =  jQuery('.hidden-block');
+            var $formhidden = jQuery('.hidden-block');
             if (jQuery('#dynamic2').length) {
                 var nHidden1 = table2.fnGetHiddenTrNodes();
                 $formhidden.append(nHidden1);

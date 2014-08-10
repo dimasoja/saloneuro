@@ -414,40 +414,44 @@
         </select>
     </div>
 </div>-->
-<div class="form-row">
-    <label class="field-name" for="standard">С этим товаром покупают (аксессуары):</label>
+<?php if (isset($_GET['type'])) { ?>
+    <?php if ($_GET['type']!='1') { ?>
+        <div class="form-row">
+            <label class="field-name" for="standard">С этим товаром покупают (аксессуары):</label>
 
-    <div class="row-fluid" style="width: 82%;float: left;clear:none">
-        <div class="span6" style="width:100%">
-            <div class="widget">
-                <div class="table-container">
+            <div class="row-fluid" style="width: 82%;float: left;clear:none">
+                <div class="span6" style="width:100%">
+                    <div class="widget">
+                        <div class="table-container">
 
-                    <table cellpading="0" cellspacing="0" border="0"
-                           class="default-table stripped turquoise dataTable" id="dynamic4">
-                        <thead>
-                        <tr align="left">
-                            <th></th>
-                            <th></th>
-                            <th>Наименование</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php $count = 1; ?>
-                        <?php foreach ($products as $item) { ?>
-                            <tr>
-                                <td><?php echo $count++; ?></td>
-                                <td><input type="checkbox" value="<?php echo $item->id; ?>" name="products[]"/>
-                                </td>
-                                <td><?php echo $item->name; ?></td>
-                            </tr>
-                        <?php } ?>
-                        </tbody>
-                    </table>
+                            <table cellpading="0" cellspacing="0" border="0"
+                                   class="default-table stripped turquoise dataTable" id="dynamic4">
+                                <thead>
+                                <tr align="left">
+                                    <th></th>
+                                    <th></th>
+                                    <th>Наименование</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php $count = 1; ?>
+                                <?php foreach ($products as $item) { ?>
+                                    <tr>
+                                        <td><?php echo $count++; ?></td>
+                                        <td><input type="checkbox" value="<?php echo $item->id; ?>" name="products[]"/>
+                                        </td>
+                                        <td><?php echo $item->name; ?></td>
+                                    </tr>
+                                <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    <?php } ?>
+<?php } ?>
 <div class="form-row">
     <label class="field-name" for="standard">Изображения:</label>
 
@@ -503,7 +507,7 @@
 
     <div class="field" style="text-align: left;">
         <select class="form-control uniform" name="published">
-            <option value="on" >Да</option>
+            <option value="on">Да</option>
             <option value="off">Нет</option>
         </select>
     </div>
@@ -618,7 +622,7 @@
                     var image_html = '<div class="sws_img_block imagerel' + id_image + '">\n\
                                            <div class="img_block">\n\
                                                 <img src="' + path + '" style="height:136px !important;clear:both">\n\
-                                           </div><a id="upload'+id_image+'">Загрузить изображение пневмо</a>\n\
+                                           </div><a id="upload' + id_image + '">Загрузить изображение пневмо</a>\n\
                                            <div class="del_block">\n\
                                                 <a href="javascript:void:(0);" class="del_vid" onclick="deletePortfolio(' + id_image + ');">Удалить</a>\n\
                                            </div>' + select_html + forsun_html + price_for_massage + default_for_massage + required_for_massage + underoption_for_massage + '\n\
@@ -629,7 +633,7 @@
                     portfolio.append(image_html);
 
                     portfolio.append(hidden);
-                    var upload1 = new AjaxUpload(jQuery('#upload'+id_image), {
+                    var upload1 = new AjaxUpload(jQuery('#upload' + id_image), {
                         action: '/admin/catalog/uploadmassage',
                         name: 'uploadfile',
                         data: {id: '123'},
@@ -652,11 +656,11 @@
                             var underoption_for_massage = jQuery('.underoption_for_massage').html();
                             var portfolio = jQuery('.massage-options');
                             var image_html = '<img src="' + path + '" style="height: 136px !important;">';
-                            var hidden = '<input type="hidden" class="image' + id_image + '" name="pnevmo['+ids_image+']" value="' + id_image + '" rel="' + id_image + '"/> ';
+                            var hidden = '<input type="hidden" class="image' + id_image + '" name="pnevmo[' + ids_image + ']" value="' + id_image + '" rel="' + id_image + '"/> ';
                             console.log(image_html);
-                            jQuery('.del_block').append('<a href="javascript:void:(0);" class="del_vid del_vid'+id_image+'" onclick="deletePnevmo('+id_image+', '+ids_image+');">Удалить Пневмо</a>');
-                            jQuery('#upload'+ids_image).css('display','none');
-                            jQuery('#upload'+ids_image).parent().find('.img_block').append(image_html).append(hidden).css('height','137px').parent().css('height','538px');
+                            jQuery('.del_block').append('<a href="javascript:void:(0);" class="del_vid del_vid' + id_image + '" onclick="deletePnevmo(' + id_image + ', ' + ids_image + ');">Удалить Пневмо</a>');
+                            jQuery('#upload' + ids_image).css('display', 'none');
+                            jQuery('#upload' + ids_image).parent().find('.img_block').append(image_html).append(hidden).css('height', '137px').parent().css('height', '538px');
                         }
                     });
                 }
@@ -676,8 +680,8 @@
         jQuery('.image' + id).remove();
         jQuery('.imagerel' + id).remove();
         jQuery('.img_block img:eq(1)').remove();
-        jQuery('.del_vid'+id).remove();
-        jQuery('#upload'+ids).css('display','block');
+        jQuery('.del_vid' + id).remove();
+        jQuery('#upload' + ids).css('display', 'block');
     }
 </script>
 
@@ -711,23 +715,24 @@
                 } ?>
 
                 <td style="text-align: left;"><i><?php echo $category; ?></i></td>
-                <td><?php if($item->published) {
+                <td><?php if ($item->published) {
                         echo 'Да';
                     } else {
                         echo 'Нет';
                     } ?></td>
                 <td><?php echo date("Y-m-d H:i:s", $item->time); ?></td>
-                <td style="padding-left: 0px !important;padding-right: 0px !important;"><a href="/admin/catalog/editpage/<?php echo $item->id; ?>"><input
+                <td style="padding-left: 0px !important;padding-right: 0px !important;"><a
+                        href="/admin/catalog/editpage/<?php echo $item->id; ?>"><input
                             class="button-turquoise button" style="width:120px;" value="Редактировать"
                             /></a>
                 </td>
 
                 <td style="padding-left: 0px !important;padding-right: 0px !important;"><input
                         class="button-turquoise button" value="Удалить"
-                        onclick="deletecat(<?php echo $item->id; ?>)" style="width:82px;" /></td>
+                        onclick="deletecat(<?php echo $item->id; ?>)" style="width:82px;"/></td>
                 <td style="padding-left: 0px !important;padding-right: 0px !important;"><input
                         class="button-turquoise button" value="Копировать"
-                        onclick="copy(<?php echo $item->id; ?>)" style="width:102px;" /></td>
+                        onclick="copy(<?php echo $item->id; ?>)" style="width:102px;"/></td>
             </tr>
         <?php } ?>
         </tbody>
