@@ -264,6 +264,7 @@ jQuery(document).ready(function () {
 
     jQuery(".fancybox").fancybox({
         'beforeShow': function () {
+            $('.fancybox-wrap').addClass('certif-fancybox');
             var city = jQuery('.geocity').html();
             jQuery('.city-item').each(function(index, value){
                 var e = $(this);

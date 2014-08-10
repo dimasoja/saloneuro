@@ -50,17 +50,26 @@ class Mails {
         $template = $templates->getTemplate($template);
         $template['template'] = str_replace('%s%', $param, $template['template']);
         if($order) {
-            $template['template'] = str_replace('%order%', self::generateOrderHtml($order), $template['template']);
+            $productid = ORM::factory('orders')->where('id','=',$param)->find()->productid;
+            $template['template'] = str_replace('%order%', self::generateOrderHtml($order, $productid), $template['template']);
         }
         self::sendLetterToEmail($template, $email);
         return true;
     }
 
-    static function generateOrderHtml($order) {
+    static function generateOrderHtml($order, $productid = false) {
         $arr = json_decode($order);
         $count_summ = 0;
         $arr = (array)$arr;
-        if($arr['corner']=='left') $corner = '(Левая)'; else $corner = '(Правая)';
+        if(isset($arr['corner'])) {
+            if($arr['corner']=='left') $corner = '(Левая)'; else $corner = '(Правая)';
+        }
+        if(isset($arr['lr'])) {
+            if($arr['lr']=='left') $corner = '(Левая)'; else $corner = '(Правая)';
+        }
+        if($productid) {
+            $arr['id'] = $productid;
+        }
         $html = '';
         $html .= '<table border="1" style="border-collapse: collapse">
             <tr>

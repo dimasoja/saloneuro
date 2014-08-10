@@ -11,7 +11,7 @@
 <div class="hidden-container dn"></div>
 <script type="text/template" id="order">
 <div class="order fixed">
-    <a href="<%= product.image %>" class="order-image button fancybox" rel="groupfancy" style="display: block;">
+    <a href="<%= product.image %>" class="order-image button " rel="groupfancy" style="display: block;">
         <%= product.smallimage %>
     </a>
     <span class="your-order">Ваш заказ:</span><br>
@@ -260,7 +260,7 @@
                                                                             </div>
             <div class="nextstep">
                 <a href="#!/step2">
-                    <input class="big-button step1-button1 step-button" rel="1" value="Далее"/>
+                    <span class="big-button step1-button1 step-button" style="cursor:pointer;" rel="1">Далее</span>
                 </a>
             </div>
         </div>
@@ -349,9 +349,9 @@
 
                                                             <% }); %>
 
-                                                            <a href="#!/step3">
-                <input class="big-button step2-button step-button" rel="2" value="Далее"/>
-            </a>
+            <a href="#!/step3">
+            <span class="big-button step1-button1 step-button" style="cursor:pointer;" rel="3">Далее</span>
+        </a>
         </div>
         </div>
     </script>
@@ -608,12 +608,13 @@ _.extend(Backbone.View.prototype, {
         var template = that.template({ product: product});
         that.manufacturer.val(product.manufacturer);
         this.hc.html(template).promise().done(function(){
-            $('.bodystep').fadeOut();
+
             var imagesCount = that.hc.find('img').length;
             var imagesLoaded = 0;
             that.hc.find('img').load(function() {
                 ++imagesLoaded;
-                if (imagesLoaded >= imagesCount-2) {
+
+                if (imagesLoaded >= imagesCount-1) {
                     $(that.el).html(that.hc.html()).promise().done(function(){
                         that.writeSelectedGradesToCheckout();
                         that.clickOrderEvent();
@@ -817,7 +818,7 @@ var Controller = Backbone.Router.extend({
         "*actions"               : "redirect"
     },
     initialize: function() {
-        if(window.location.hash!='#!/step1') window.location.hash = '#!/step1';
+        if((window.location.hash!='#!/step1')&&(window.location.hash!='#!/success')) window.location.hash = '#!/step1';
     },
     loader: $('.tp-loader-bath'),
     body: $('.bodystep'),
@@ -830,6 +831,7 @@ var Controller = Backbone.Router.extend({
         }
     },
     start: function () {
+        $('.bodystep').fadeOut();
         this.loader.show();
         if (Steps != null) {
             Steps.render('1');

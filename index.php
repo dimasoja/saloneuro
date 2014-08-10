@@ -1,4 +1,4 @@
-<?php																		
+<?php
 
 /**
  * The directory in which your application specific resources are located.

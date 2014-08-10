@@ -422,7 +422,7 @@ class FrontHelper
             $margin_left = ($in_height - $sizes['newwidth']) / 2;
             $margin_top = ($in_width - $sizes['newheight']) / 2;
             if ($path != '') {
-                $html = "<img src = '" . $path . "' width = '" . $sizes['newwidth'] . "' height = '" . $sizes['newheight'] . "' style = 'margin-top:" . $margin_top . "px;margin-left:" . $margin_left . "px;'/>";
+                $html = "<img src = '" . $path . "' width = '" . $sizes['newwidth'] . "' height = '" . $sizes['newheight'] . "' style = 'margin-top:" . $margin_top . "px;margin-left:" . $margin_left . "px; width: ".$sizes['newwidth']."px; height: ".$sizes['newheight']."px;'/>";
             }
         }
         return $html;
