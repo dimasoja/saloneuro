@@ -938,7 +938,7 @@
                     var response_image = response.split("~");
                     var id_image = response_image[0];
                     var path = response_image[1];
-                    var portfolio = jQuery('.images');
+                    var portfolio = jQuery('.images').not('.massage-options');
                     var image_html = '<div class="sws_img_block imagerel' + id_image + '">\n\
                                            <div class="img_block">\n\
                                                 <img src="' + path + '" style="max-width: 194px;">\n\
