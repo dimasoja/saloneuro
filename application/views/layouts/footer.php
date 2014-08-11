@@ -211,6 +211,13 @@
         s.parentNode.insertBefore(hcc, s.nextSibling);
     })();
 </script>
-
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery('.twitter-link').attr('href','<?php echo ORM::factory('settings')->getSetting('twitter'); ?>');
+        jQuery('.vkontakte-link').attr('href','<?php echo ORM::factory('settings')->getSetting('vk'); ?>');
+        jQuery('.facebook-link').attr('href','<?php echo ORM::factory('settings')->getSetting('facebook'); ?>');
+        jQuery('.odnoklassniki-link').attr('href','<?php echo ORM::factory('settings')->getSetting('odnoklassniki'); ?>');
+    });
+</script>
 </body>
 </html>
