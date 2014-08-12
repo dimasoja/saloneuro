@@ -233,7 +233,7 @@
                 </div>
                 <div class="grade-second-col">
                     <div class="grade-price active padding415 required" style="padding: 15px 15px;">
-                                        <span class="grade-price-value" data-grade="<?php echo $bath->id; ?>"
+                                        <span class="grade-price-value" data-price="<?php echo $bath->price; ?>" data-grade="<?php echo $bath->id; ?>"
                                               rel="<?php echo $bath->price; ?>"><?php echo number_format((double)$bath->price, 0, ' ', ' '); ?>
                                             руб.</span>
                         <br>
@@ -803,8 +803,9 @@ $(document).ready(function () {
     <?php foreach ($options as $option) {
         $grade_opt = json_decode($option->value);
         if(isset($grade_opt[2])) {
-        if($grade_opt[2]=='1') { ?>
-    order['grades'][<?php echo $grade_opt[0]; ?>] = "0";
+        if($grade_opt[2]=='1') {
+        $sel_grades = ORM::factory('grade')->where('id', '=', $grade_opt[0])->find();?>
+        order['grades'][<?php echo $grade_opt[0]; ?>] = <?php echo $sel_grades->price ?>;
     <?php }
 }
     }
@@ -931,6 +932,7 @@ $(document).ready(function () {
     });
 
     jQuery('.grade-product .grade-item').not('.required').not('.grade-price').not('.first').click(function (e) {
+        var minus_summ = 0;
         var className = e.target.className;
 
         if ((className !== 'add-grade') && (className !== 'grade-price-value') && (className !== 'grade-price padding415 active')) {
@@ -945,19 +947,40 @@ $(document).ready(function () {
             var hasActive = e.parent().hasClass('active');
 
             if (hasActive) {
-                if(rama_elem.length==1) {
-                    if($('.gidromassage .grade-price').hasClass('active')) {
-                        $('.gidromassage .grade-price').trigger('click');
-                    }
-                    if($('.others .massage-price').hasClass('active')) {
-                        $('.others .massage-price').trigger('click');
-                    }
-                }
+
                 e.parent().removeClass('active');
                 e.html('Добавить комплектацию');
+                if(rama_elem.length==1) {
+
+                    $.each($('.gidromassage .grade-price'), function(elem) {
+                        if($(this).hasClass('active')) {
+                            $(this).trigger('click');
+                        }
+                    });
+                    $.each($('.others .massage-price'), function(elem) {
+                        if($(this).hasClass('active')) {
+                            $(this).trigger('click');
+                        }
+                    });
+
+                    var all_summ = 0;
+
+                    $.each(order, function(index, value){
+                        if (typeof value === 'object') {
+                            $.each(value, function(index_value, value_value){
+                                all_summ = all_summ + parseInt(value_value);
+                            });
+                        }
+                    });
+                    all_summ = all_summ - parseInt(price);
+                }
                 delete order['grades'][grade];
                 jQuery('.order-grade[data-id=' + grade + ']').remove();
-                globalprice = parseInt(globalprice) - parseInt(price);
+                if( all_summ === undefined) {
+                    globalprice = parseInt(globalprice) - parseInt(price);
+                } else {
+                    globalprice = parseInt(all_summ);
+                }
             } else {
 
                 e.parent().addClass('active');
@@ -985,19 +1008,38 @@ $(document).ready(function () {
         var hasActive = e.parent().hasClass('active');
 
         if (hasActive) {
-            if(rama_elem.length==1) {
-                if($('.gidromassage .grade-price').hasClass('active')) {
-                    $('.gidromassage .grade-price').trigger('click');
-                }
-                if($('.others .massage-price').hasClass('active')) {
-                    $('.others .massage-price').trigger('click');
-                }
-            }
             e.parent().removeClass('active');
             e.html('Добавить комплектацию');
             delete order['grades'][grade];
+            if(rama_elem.length==1) {
+
+                $.each($('.gidromassage .grade-price'), function(elem) {
+                    if($(this).hasClass('active')) {
+                        $(this).trigger('click');
+                    }
+                });
+                $.each($('.others .massage-price'), function(elem) {
+                    if($(this).hasClass('active')) {
+                        $(this).trigger('click');
+                    }
+                });
+
+                var all_summ = 0;
+                $.each(order, function(index, value){
+                    if (typeof value === 'object') {
+                        $.each(value, function(index_value, value_value){
+                            all_summ = all_summ + parseInt(value_value);
+                        });
+                    }
+                });
+            }
             jQuery('.order-grade[data-id=' + grade + ']').remove();
-            globalprice = parseInt(globalprice) - parseInt(price);
+            if( all_summ === undefined) {
+                globalprice = parseInt(globalprice) - parseInt(price);
+            } else {
+                globalprice = parseInt(all_summ);
+            }
+            console.log(order);
         } else {
             e.parent().addClass('active');
             e.html('Убрать комплектацию');
@@ -1134,7 +1176,6 @@ $(document).ready(function () {
         order_place.switchHeaders(order);
         priceproduct.html(number_format(globalprice, 0, ' ', ' ') + ' руб.');
         priceproduct.attr('data-value', globalprice);
-
         var resp_order = JSON.stringify(order);
         jQuery.post('/index/generatesimages', {id: product_id, image: mainimage, order: resp_order, electronic: isElectronic}, function (response) {
 
